@@ -356,6 +356,14 @@ def make_audio():
                     f"loudnorm=I=-17:TP=-1.5:LRA=11", "-ar", "48000", "-ac", "2", f"{AUD}/{name}.wav"])
 
 
+def make_soft_glitch():
+    """A short, band-limited TV blip from the bundled glitch-1: only the transient (0.5 s), static above
+    4.5 kHz and rumble below 180 Hz removed, faded out. Replaces the long screeching glitch tails."""
+    run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-i", f"{SFXSRC}/glitch-1.mp3", "-t", "0.5",
+         "-af", "highpass=f=180,lowpass=f=4500,afade=t=in:d=0.01,afade=t=out:st=0.3:d=0.2,volume=0.6",
+         "-ar", "48000", "-ac", "2", f"{AUD}/sfx/tv-blip-soft.wav"])
+
+
 def copy_sfx():
     for f in os.listdir(SFXSRC):
         if f.endswith(".mp3"):
@@ -389,3 +397,5 @@ if __name__ == "__main__":
         make_audio(); print("audio")
     if want("sfx"):
         copy_sfx(); print("sfx")
+    if want("sfx") or want("soft_glitch"):
+        make_soft_glitch(); print("soft glitch")

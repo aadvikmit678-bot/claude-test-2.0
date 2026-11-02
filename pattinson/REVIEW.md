@@ -43,6 +43,11 @@
 - **v4**: v3 plus two ideas from the user's second reference video. Nothing else was taken from it.
   1. **Box grid at "Robert Pattinson":** a 3×3 grid of 640×360 boxes builds on black: centre first, then the corners, then the edges, a new box every two frames. Each box is pure white for one frame, then plays a different film or red-carpet clip, darkened, under the glowing one-line name. It ends on a white flash into "is having a generational run".
   2. **Cold-open text:** the words streak in, smeared wide for two frames, then snapping sharp. Venice uses bold italic Inter Tight; the Odyssey line uses italic Instrument Serif with a bold italic "beggars".
+  3. **Primetime audio cleanup:** the user heard the TV screech as loud and distorted.
+     - In v2, energy above 4 kHz reached 26–40 % of the mix there, against 0.2 % elsewhere. Three long glitch tails also ran under the "have a seat" line.
+     - The glitch tails are gone. A single 0.5 s band-limited TV blip (`tv-blip-soft.wav`: 180 Hz–4.5 kHz, faded) now marks "the internet", the PRIMETIME title and the REC frames.
+     - The dialogue plays with nothing under it.
+  4. **"He became Batman":** restored exactly as in v1, at the user's request. The v2 punch-in and the extra flash are removed.
 
 ## Measured vs looked at
 

@@ -487,10 +487,12 @@ SFX = []  # (name, picture_time, volume, media_start, duration)
 
 PEAK = {"whoosh.mp3": 0.16, "whoosh-short.mp3": 0.16, "impact-bass-1.mp3": 0.04, "impact-bass-2.mp3": 2.06,
         "pop.mp3": 0.12, "click.mp3": 0.06, "click-soft.mp3": 0.06, "key-press.mp3": 0.06, "sparkle.mp3": 0.08,
-        "glitch-1.mp3": 0.22, "glitch-2.mp3": 0.2, "glitch-3.mp3": 0.24, "whoosh-cinematic.mp3": 2.54}
+        "glitch-1.mp3": 0.22, "glitch-2.mp3": 0.2, "glitch-3.mp3": 0.24, "whoosh-cinematic.mp3": 2.54,
+        "tv-blip-soft.wav": 0.257}
 SFXDUR = {"whoosh.mp3": 0.57, "whoosh-short.mp3": 0.57, "impact-bass-1.mp3": 2.12, "impact-bass-2.mp3": 2.59,
           "pop.mp3": 0.72, "click.mp3": 0.37, "click-soft.mp3": 0.37, "key-press.mp3": 0.4, "sparkle.mp3": 1.8,
-          "glitch-1.mp3": 2.64, "glitch-2.mp3": 3.5, "glitch-3.mp3": 3.1, "whoosh-cinematic.mp3": 5.54}
+          "glitch-1.mp3": 2.64, "glitch-2.mp3": 3.5, "glitch-3.mp3": 3.1, "whoosh-cinematic.mp3": 5.54,
+          "tv-blip-soft.wav": 0.5}
 
 
 def sfx(name, t, vol=0.35, ms=0.0, dur=None):
@@ -700,7 +702,7 @@ s.neg(T(63), 2)
 s.video("c_spider.mp4", 30.30, 32.60, ms=0.10, grade="film8mm", push=(1.0, 1.05))
 SCENES.append(s)
 sfx("whoosh-short.mp3", T(57), 0.18)
-sfx("glitch-1.mp3", T(59), 0.16)
+sfx("tv-blip-soft.wav", T(59), 0.26)
 sfx("whoosh-short.mp3", T(61), 0.18)
 sfx("whoosh-short.mp3", T(63), 0.22)
 # user note 7: full-width glowing Instrument Serif, one line each; "Twilight jokes" lands on the word
@@ -730,22 +732,20 @@ for k, (im, name) in enumerate(dirs):
     s.text(name, a, b, 960, 880, 64, family="Inter Tight", weight=700, anim="none")
 s.video("c_backhead.mp4", T(74), T(77), grade="matte", push=(1.0, 1.04))
 s.video("c_cowl.mp4", T(77), T(79), grade="matte", push=(1.0, 1.08))
-s.neg(T(77), 2)
-camG, vG = s.video("c_gotham.mp4", T(79), 38.90, grade="matte", push=None)
-s.scale_keys(camG, [(T(79), 1.2, 1.0, 0.3, "expo.out"), (T(79) + 0.3, 1.0, 1.04, round(38.90 - T(79) - 0.3, 3), "none")])
+# "he became Batman": the user asked to keep v1's reveal exactly as it was
+s.video("c_gotham.mp4", T(79), 38.90, grade="matte", push=(1.06, 1.0), pushease="power2.out")
 s.neg(T(79), 3)
 SCENES.append(s)
 sfx("whoosh-short.mp3", 32.58, 0.22)
 sfx("whoosh.mp3", T(69) - 0.04, 0.28)
-sfx("whoosh-short.mp3", T(77), 0.20)
 sfx("impact-bass-2.mp3", T(79), 0.42)
 sfx("impact-bass-1.mp3", T(79), 0.50)
 cap([[W(65, "S", "he"), W(66, "S", "was")], [W(67, "BI", "quietly")]], T(68), y=560, lh=0.95)
 cap([[W(68, "M", "working")]], T(69), y=560)
 cap([[W(69, "S", "with"), W(70, "S", "the"), W(71, "S", "best")], [W(72, "B", "directors")]], T(73), y=560, lh=0.95)
 cap([[W(73, "XLI", "alive,")]], T(74), y=520)
-cap([[W(74, "S", "until")]], T(75), y=560)
-cap([[W(75, "S", "one"), W(76, "S", "day,")]], T(77), y=560)
+cap([[W(74, "S", "until")]], T(75), y=800)
+cap([[W(75, "S", "one"), W(76, "S", "day,")]], T(77), y=800)
 cap([[W(77, "S", "he"), W(78, "S", "became")]], T(79), x=1780, y=560, align="right")
 cap([[W(79, "XL", "Batman.")]], 38.90, y=800)
 
@@ -878,13 +878,14 @@ s.video("c_strobeface.mp4", T(130), 57.80, grade="vhs_soft", push=(1.0, 1.06))
 s.video("c_seat1.mp4", 57.80, 59.28, grade="vhs_soft", push=(1.0, 1.06))
 s.video("c_seat2.mp4", 59.28, 59.90, grade="vhs_soft", push=(1.04, 1.0))
 SCENES.append(s)
+# user: the TV screech in Primetime was loud and distorted. The long glitch tails are gone; one short,
+# band-limited TV blip marks the title and the REC frames, and the "have a seat" line plays clean
 sfx("whoosh.mp3", T(113), 0.26)
-sfx("glitch-1.mp3", T(115), 0.15)
+sfx("tv-blip-soft.wav", T(115), 0.30)
 sfx("whoosh-short.mp3", T(117), 0.14)
-sfx("glitch-3.mp3", T(122), 0.14)
-sfx("glitch-1.mp3", T(128), 0.15)
-sfx("glitch-2.mp3", T(129), 0.13)
-sfx("glitch-3.mp3", 57.80, 0.12)
+sfx("whoosh-short.mp3", T(122), 0.12)
+sfx("whoosh-short.mp3", T(128), 0.10)
+sfx("tv-blip-soft.wav", T(129), 0.24)
 cap([[W(113, "S", "then"), W(114, "S", "came")]], T(115), x=1500, y=900)
 cap([[W(117, "S", "with"), W(118, "S", "Pattinson")]], T(119), x=1800, y=860, align="right")
 cap([[W(119, "S", "playing"), W(120, "S", "a")]], T(121), x=1800, y=860, align="right")
