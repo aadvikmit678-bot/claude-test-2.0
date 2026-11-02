@@ -95,6 +95,40 @@ CLIP_SPECS = {
     # payoff split halves (960 wide)
     "h_edward": ("FACE", 7.45, 1.35, 960, 1080, 0.5, 0.5, 1.0, None),
     "h_batman": ("BAT", 29.85, 1.10, 960, 1080, 0.40, 0.5, 1.0, "LB"),
+    # ---- v2: full-frame footage instead of paper and stills ----
+    # twilight (Montage of pattison crops stay above its bottom watermark)
+    "c_tw_lab": ("MON", 26.74, 0.45, 1920, 1080, 0.5, 0.45, 1.0, None),
+    "c_tw_wed": ("MON", 1.94, 0.42, 1920, 1080, 0.5, 0.40, 1.0, None),
+    "c_fans_full": ("STORY", 20.40, 0.55, 1920, 1080, 0.5, 0.30, 1.0, None),
+    "c_tw_stare": ("TW", 148.55, 0.50, 1920, 1080, 0.36, 0.5, 1.0, "LB"),
+    "c_tw_van": ("MON", 33.22, 0.70, 1920, 1080, 0.5, 0.45, 1.0, None),
+    "c_tw_battle": ("MON", 50.65, 0.55, 1920, 1080, 0.5, 0.45, 1.0, None),
+    "c_tw_glitch": ("TW", 207.40, 0.55, 1920, 1080, 0.40, 0.5, 1.0, "LB"),
+    "c_tw_party": ("MON", 43.60, 0.70, 1920, 1080, 0.5, 0.45, 1.0, None),
+    # film run, one full-frame shot per title
+    "c_goodtime": ("FACE", 9.00, 1.05, 1920, 1080, 0.5, 0.45, 1.0, None),
+    "c_lighthouse": ("FACE", 13.75, 1.10, 1920, 1080, 0.5, 0.42, 1.0, None),
+    "c_tenet_a": ("MON", 2.85, 0.40, 1920, 1080, 0.5, 0.42, 1.0, None),
+    "c_tenet_b": ("MON", 28.20, 0.50, 1920, 1080, 0.5, 0.45, 1.0, None),
+    "c_batroof": ("CRAZY", 16.12, 0.66, 1920, 1080, 0.5, 0.5, 1.0, None),
+    "c_mickey": ("MON", 33.95, 1.50, 1920, 1080, 0.5, 0.42, 1.0, None),
+    # directors
+    "c_rover": ("CL", 52.30, 0.95, 1920, 1080, 0.62, 0.62, 1.30, None),
+    "c_lh_work": ("CL", 43.60, 0.40, 1920, 1080, 0.60, 0.62, 1.30, None),
+    "c_nolan_set": ("STORY", 66.10, 1.20, 1920, 1080, 0.5, 0.16, 1.0, None),
+    # respect
+    "c_fans2": ("STORY", 21.00, 0.40, 1920, 1080, 0.5, 0.30, 1.0, None),
+    "c_venice": ("VENICE", 4.00, 0.65, 1920, 1080, 0.5, 0.36, 1.0, None),
+    "c_frame_cu": ("FRAME", 4.20, 0.85, 1920, 1080, 0.5, 0.37, 1.0, None),
+    # odyssey
+    "c_antinous_glasses": ("SF", 6.86, 0.45, 1920, 1080, 0.5, 0.42, 1.0, None),
+    # primetime: the real "have a seat right there" moment, cropped above its burned caption
+    "c_hansen_cu": ("M2", 0.05, 0.92, 1920, 1080, 0.5, 0.45, 1.0, None),
+    "c_pt_worried": ("PT", 12.35, 0.66, 1920, 1080, 0.5, 0.45, 1.0, None),
+    "c_seat1": ("PT", 0.25, 1.50, 1920, 1080, 0.47, 0.23, 1.22, None),
+    "c_seat2": ("PT", 1.75, 0.66, 1920, 1080, 0.5, 0.5, 1.0, None),
+    # payoff role switch (King -> Mickey 17 -> Devil All the Time -> Good Time)
+    "c_roles": ("MON", 0.22, 1.00, 1920, 1080, 0.5, 0.42, 1.0, None),
 }
 
 # stills pulled from video (id: source, time, W, H, cx, cy, zoom, content-box)
@@ -146,6 +180,9 @@ STILLS = {
     "solo06": "solo-portraits/solo-portraits-06.jpg",
     "solo02": "solo-portraits/solo-portraits-02.jpg",
     "solo03": "solo-portraits/solo-portraits-03.jpg",
+    "solo05": "solo-portraits/solo-portraits-05.jpg",
+    "solo07": "solo-portraits/solo-portraits-07.jpg",
+    "solo08": "solo-portraits/solo-portraits-08.jpg",
     "pt_pink": "primetime/primetime-02.jpg",
     "pt_poster": "primetime/primetime-11.jpg",
     "dune_scy": "dune/dune-56.jpg",
