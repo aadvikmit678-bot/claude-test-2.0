@@ -1,62 +1,69 @@
 # REVIEW — "The Post-Twilight Reinvention"
 
 74.0 s · 1920×1080 (horizontal) · 30 fps · HyperFrames. Style source:
-`../reference/f1-horner-reel-breakdown.md`. Shot-by-shot plan: `SPEC.md`.
+`../reference/f1-horner-reel-breakdown.md`. Shot-by-shot plan: `SPEC.md`. Generator: `tools/build.py`.
 
-## Creative calls
+## Versions
 
-- **The reference's grammar, re-mapped to this script.**
-  - Cold open on a real moment with diegetic audio: the Venice fan yells "Somebody get these beggars out of here", then the original line from *The Odyssey*.
-  - A pixel-mosaic resolve into the hero name.
-  - Paper interstitials for the punchlines.
-  - Photo cards that drop onto paper.
-  - A rolling year counter (2012 → 2026).
-  - A 5-panel film-title build.
-  - The tile wall.
-  - Negative flashes on hard cuts.
-  - Archival audio stings as punctuation ("…spider monkey", "…have a seat right there?").
-  - "And this year?" becomes the reference's **1-2-3 triptych**, so *The Odyssey*, *Primetime* and *Dune* are the three chapters.
-- **Typography.**
-  - Small words use Inter Tight Bold, a free stand-in for the reference's Helvetica Neue Bold.
-  - Hero words use **Instrument Serif** (regular and italic), as you asked.
-  - White words get the **glow entrance**: blur 16 px → 0, scale 1.12 → 1, and a bloom text-shadow → resting glow, in 0.24 s, landing 2 frames before the word.
-  - Black ink on paper cuts in at 114 % and settles.
-- **Textures.**
-  - **Halftone** (CMYK print) on the Twilight-era tabloid and "internet jokes" moments.
-  - **VHS** (tape damage, scanlines, chroma bleed) on Primetime, plus a CRT glitch on the chat screen and hidden camera.
-  - **Old film** (8mm dust, scratches, vignette, grain) on the Twilight memories.
-  - Global grain and two light-leak burns, at "after Twilight" and "post-Twilight".
-- **Sound: no music, as you asked.**
-  - Your VO, normalised to about -16 LUFS.
-  - Three dialogue stings, with the music the source edits had added removed by Demucs (vocal stems only).
-  - 93 sound-effect cues from the bundled HyperFrames library: whooshes on moving transitions, pops on card drops, key ticks on counters and strobes, bass hits on "Batman." and "Dune.", glitches in Primetime and a sparkle on "Edward Cullen".
-- **Source clean-up.**
-  - The cold-open clip had burned-in captions. They were removed by temporal-mask inpainting (`tools/clean_captions.py`) and our captions sit over that band.
-  - Watermarks and film-title cards in the montages were cropped out at prep.
+- **v1** (`8c212a6`): first cut.
+- **v2** (`a313966`): rebuilt against the reference after a frame-by-frame audit of v1.
+  - **What the audit found in v1:**
+    - About 40 % of the runtime was paper (the reference uses about 20 %).
+    - Everyday captions were 54 px; the reference's are about 110–120 px.
+    - There was a 2 s still under the Primetime line.
+    - Only 6 inversion flashes (the reference: one every ~5 s).
+    - Frame-to-frame motion was about 3.5× lower than the reference.
+  - **What changed:**
+    - Mostly full-frame footage, with 27 new clips cut from footage v1 hadn't used.
+    - Captions at the reference's sizes.
+    - Paper words one at a time.
+    - Whip pans, snap zooms, exposure blowouts and RGB-split frames.
+    - A Mickey 1→17 counter.
+    - Photo-to-card shrink and zoom-through.
+    - A CRT glitch with a REC glyph.
+    - The real, lip-synced "have a seat right there" footage.
+- **v3**: the user's notes on v1, in order.
+  1. **Opening:** three fast real-life clips (Venice, red carpet, Kimmel), darkened, under a one-line, full-width, heavier Instrument Serif "Robert Pattinson". The two words glow in and glide together.
+  2. **"Is having a generational run":** his roles flick by under a light halftone. The 2026 slate is cut into four strips (The Drama, The Odyssey, Primetime, Dune), and each steps up from below at a low frame rate, one per word. The text sits on the right.
+  3. **"Honestly":** the same Kimmel laugh, as clearly moving video.
+  4. **Textures:** halftone, VHS and glitch effects cut to about 25–55 % of their v2 strength. Halftone is at 25 %.
+  5. **Sounds removed:**
+     - every pop, click and tick, including at 11 s and on the counters and director strobe;
+     - the sparkle chime on "Edward Cullen";
+     - the dark whoosh into "vampire".
+
+     The Primetime glitch effects are at half volume.
+  6. **Film titles:** centred in frame. The five panels now build over the Mickey 17 shot, which keeps playing behind them.
+  7. **"And while the internet / kept making / Twilight jokes":** full-width, glowing Instrument Serif lines. "Twilight jokes" lands on the word at 29.25 s.
+  8. **"Spider monkey":** now in the glowing serif instead of the blue shout.
+  9. **"Respected actors in Hollywood":** red-carpet video plays behind five portraits that pop in.
+  10. **"Christopher Nolan's The Odyssey":** Odyssey footage with Nolan's photo popping in. No poster, no click.
+  11. **"One box":** Edward plays as video inside the framed square.
+  12. **"Pattinson" (payoff):** video, not a still.
 
 ## Measured vs looked at
 
-- `hyperframes lint`: 0 errors. `hyperframes check`: ok, 0 errors.
-- Snapshots of every scene start and middle, all 16 seams and the phone-width sheet were reviewed.
-- Audio was **measured, not heard**: stem levels, kick removal (bass energy fell from about 35–40 dB to 5–15 dB) and loudness.
+- `hyperframes check`: ok, 0 errors (v2 and v3).
+- Every changed beat was snapshot-reviewed. v1 was audited from the render at 4 fps against the reference at 5 fps.
+- Motion and cut rate were compared with `motion.py` (mean frame difference and histogram cuts) against the reference.
+- Audio was measured, not heard. v1 measured -16.2 LUFS integrated, -2.9 dBTP, no clipping.
 
 ## Warnings kept on purpose
 
-- `line_unread`: the year counter and the director-name strobe flash 3–5 frames per item, like the reference's photo strobe. They are texture, not reading.
-- `timeline_track_too_dense` and `composition_file_too_large`: every caption lives in one captions composition, as the captions guide asks.
-- `contrast_aa_failure` (2): small year labels over bright panel footage for under a second.
+- **`line_unread`:** the year counter, the Mickey counter and the director strobe flash 2–5 frames per item, like the reference's strobe and counters.
+- **`contrast_aa_failure` (3):** a year label during the Tenet blowout (0.2 s), and "with Pattinson" over a light wall (still readable thanks to its glow and shadow).
+- **`timeline_track_too_dense` / `composition_file_too_large`:** every caption lives in one captions composition.
 
 ## Weakest shots / next pass
 
-1. The "Twilight" burn (67.8–68.4 s) reads as a warm light leak rather than film actually burning through.
-2. "with the best directors alive" shows only Nolan clearly. The other directors are names over their films' stills, because the only director footage had red names burned in.
-3. The 2012–2016 counter stills come from the labelled-clips compilation, cropped and upscaled, so they are slightly soft.
+1. "With the best directors alive" still shows only Nolan clearly. The others are names over their films' stills.
+2. The 2012–2016 counter stills come from the labelled-clips compilation and are slightly soft.
 
 ## Assets that would make it better
 
-- The Venice autograph clip and *The Odyssey* "beggars" clip **without burned-in captions**.
-- Clean photos of Safdie, Eggers, Bong, Reeves and Villeneuve.
-- A high-resolution landscape portrait for the "Robert Pattinson" hero card.
+- The Venice autograph clip and *The Odyssey* "beggars" clip without burned-in captions.
+- Clean photos or footage of Safdie, Eggers, Bong, Reeves and Villeneuve.
+- More non-Antinous *Odyssey* footage (ships, sea, Nolan's set) for the chapter opener.
 
 ## Rebuild
 

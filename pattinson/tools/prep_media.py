@@ -111,14 +111,14 @@ CLIP_SPECS = {
     "c_tenet_a": ("MON", 2.85, 0.40, 1920, 1080, 0.5, 0.42, 1.0, None),
     "c_tenet_b": ("MON", 28.20, 0.50, 1920, 1080, 0.5, 0.45, 1.0, None),
     "c_batroof": ("CRAZY", 16.12, 0.66, 1920, 1080, 0.5, 0.5, 1.0, None),
-    "c_mickey": ("MON", 33.95, 1.50, 1920, 1080, 0.5, 0.42, 1.0, None),
+    "c_mickey": ("MON", 33.95, 3.00, 1920, 1080, 0.5, 0.42, 1.0, None),
     # directors
     "c_rover": ("CL", 52.30, 0.95, 1920, 1080, 0.62, 0.62, 1.30, None),
     "c_lh_work": ("CL", 43.60, 0.40, 1920, 1080, 0.60, 0.62, 1.30, None),
     "c_nolan_set": ("STORY", 66.10, 1.20, 1920, 1080, 0.5, 0.16, 1.0, None),
     # respect
     "c_fans2": ("STORY", 21.00, 0.40, 1920, 1080, 0.5, 0.30, 1.0, None),
-    "c_venice": ("VENICE", 4.00, 0.65, 1920, 1080, 0.5, 0.36, 1.0, None),
+    "c_venice": ("VENICE", 4.00, 0.65, 1920, 1080, 0.5, 0.39, 1.0, None),
     "c_frame_cu": ("FRAME", 4.20, 0.85, 1920, 1080, 0.5, 0.37, 1.0, None),
     # odyssey
     "c_antinous_glasses": ("SF", 6.86, 0.45, 1920, 1080, 0.5, 0.42, 1.0, None),
@@ -129,7 +129,23 @@ CLIP_SPECS = {
     "c_seat2": ("PT", 1.75, 0.66, 1920, 1080, 0.5, 0.5, 1.0, None),
     # payoff role switch (King -> Mickey 17 -> Devil All the Time -> Good Time)
     "c_roles": ("MON", 0.22, 1.00, 1920, 1080, 0.5, 0.42, 1.0, None),
+    # ---- v3 (user notes) ----
+    # opening: three fast real-life clips behind the one-line name
+    "c_open1": ("VENICE", 1.20, 0.40, 1920, 1080, 0.5, 0.40, 1.0, None),
+    "c_open2": ("FRAME", 0.30, 0.40, 1920, 1080, 0.5, 0.30, 1.0, None),
+    "c_open3": ("KIM", 72.00, 0.40, 1920, 1080, 0.5, 0.45, 1.0, None),
+    # "having a generational run": Batman glider over Gotham under the sliding slate strips
+    "c_glider": ("MON", 30.02, 1.18, 1920, 1080, 0.5, 0.42, 1.0, None),
+    "c_genbg": ("MON", 1.10, 1.55, 1920, 1080, 0.5, 0.42, 1.0, None),
+    # "honestly": the same Kimmel laugh, from where it moves most
+    "c_kimmel_laugh2": ("KIM", 211.65, 0.85, 1920, 1080, 0.5, 0.45, 1.0, None),
+    # "respected actors in Hollywood": Venice arrival behind the popping portraits
+    "c_carpet_bg": ("FRAME", 1.00, 2.90, 1920, 1080, 0.5, 0.30, 1.0, None),
 }
+
+# the 2026 slate cut into its four film strips (y0, y1 in the 1350x1688 still)
+SLATE_STRIPS = {"slate_drama": (0, 416), "slate_odyssey": (416, 831), "slate_prime": (831, 1264),
+                "slate_dune": (1264, 1688)}
 
 # stills pulled from video (id: source, time, W, H, cx, cy, zoom, content-box)
 FRAME_SPECS = {
@@ -288,6 +304,12 @@ def make_still(sid):
     return out
 
 
+def make_slate_strips():
+    for sid, (y0, y1) in SLATE_STRIPS.items():
+        run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-i", f"{IMG}/slate.jpg", "-vf",
+             f"crop=1350:{y1 - y0}:0:{y0}", "-q:v", "2", f"{IMG}/{sid}.jpg"])
+
+
 def make_paper():
     W, H = 1920, 1080
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
@@ -355,6 +377,8 @@ if __name__ == "__main__":
     for sid in STILLS:
         if want(sid):
             make_still(sid); print("still", sid)
+    if want("slate_strips"):
+        make_slate_strips(); print("slate strips")
     if want("paper"):
         make_paper(); print("paper")
     if want("cutouts"):
