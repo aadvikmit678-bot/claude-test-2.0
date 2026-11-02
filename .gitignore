@@ -3,3 +3,10 @@ renders/
 .hyperframes/
 *.log
 .thumbnails/
+
+# Pattinson edit: raw Drive download, scratch work and derived media stay local
+pattinson-src/
+pattinson-work/
+pattinson/assets/clips/
+pattinson/assets/img/
+pattinson/assets/audio/
