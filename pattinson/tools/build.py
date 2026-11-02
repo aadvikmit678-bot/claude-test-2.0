@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the HyperFrames compositions for the Pattinson edit (v3) from one shot/caption table.
+"""Generate the HyperFrames compositions for the Pattinson edit (v4) from one shot/caption table.
 
 v2 follows the reference's grammar closely (see ../reference/f1-horner-reel-breakdown.md):
 mostly full-frame footage under white glow captions at the reference's sizes, about one cut
@@ -76,6 +76,7 @@ FONTS_CSS = """
   @font-face { font-family: 'Inter Tight'; src: url('assets/fonts/InterTight-600.woff2') format('woff2'); font-weight: 600; font-style: normal; }
   @font-face { font-family: 'Inter Tight'; src: url('assets/fonts/InterTight-700.woff2') format('woff2'); font-weight: 700; font-style: normal; }
   @font-face { font-family: 'Inter Tight'; src: url('assets/fonts/InterTight-800.woff2') format('woff2'); font-weight: 800; font-style: normal; }
+  @font-face { font-family: 'Inter Tight'; src: url('assets/fonts/InterTight-800-Italic.woff2') format('woff2'); font-weight: 800; font-style: italic; }
 """
 
 GLOW_REST = "0 0 12px rgba(255,255,255,0.55), 0 0 34px rgba(255,255,255,0.22), 0 3px 10px rgba(0,0,0,0.42)"
@@ -363,6 +364,9 @@ STY = {
     "FSI": ("Instrument Serif", 400, True, 220, "#F7F4F7", True),
     "FN": ("Instrument Serif", 400, False, 312, "#F7F4F7", True),   # the one-line name title
     "C": ("Inter Tight", 800, False, 96, "#F7F4F7", True),  # cold-open cover words
+    "CI": ("Inter Tight", 800, True, 104, "#F7F4F7", True),    # v4 cold open: bold italic sans
+    "CIB": ("Inter Tight", 800, True, 150, "#F7F4F7", True),
+    "CS": ("Instrument Serif", 400, True, 118, "#F7F4F7", True),
     "CB": ("Instrument Serif", 400, True, 230, "#F7F4F7", True),
 }
 
@@ -426,6 +430,10 @@ def build_captions():
                 elif st == "SH":
                     js.append(f'tl.fromTo("#{sid}", {{ opacity: 0, scale: 1.35 }}, {{ opacity: 1, scale: 1, duration: 0.16, '
                               f'ease: "back.out(2)" }}, {r3(t0 + lt)});')
+                elif g["kind"] == "streak":
+                    js.append(f'tl.fromTo("#{sid}", {{ opacity: 0.85, scaleX: 1.9, x: -24, filter: "blur(12px)", '
+                              f'textShadow: "{GLOW_BLOOM}" }}, {{ opacity: 1, scaleX: 1, x: 0, filter: "blur(0px)", '
+                              f'textShadow: "{GLOW_REST}", duration: 0.1, ease: "steps(3)" }}, {r3(t0 + lt)});')
                 elif g["kind"] == "name":
                     # the title glow: a bigger bloom that tracks in as it sharpens
                     dx = -90 if wi == 0 else 90  # the words glide in towards each other (transform, not tracking)
@@ -503,25 +511,35 @@ sfx("whoosh-short.mp3", 0.98, 0.16)
 sfx("whoosh-short.mp3", 3.10, 0.28)
 sfx("whoosh-short.mp3", 3.83, 0.14)
 # cover captions (the burned ones are inpainted underneath)
-cap([[("somebody", 0.13, "C")]], 0.53, y=546)
-cap([[("get these", 0.53, "C")]], 1.03, y=546)
-cap([[("beggars", 1.03, "CB")]], 1.33, y=556)
-cap([[("out of here?", 1.33, "C")]], 2.10, y=546)
-cap([[("somebody", 3.23, "C"), ("get", 3.47, "C"), ("these", 3.63, "C")]], 3.90, y=548)
-cap([[("beggars", 3.90, "CB")]], 4.27, y=560)
-cap([[("out", 4.27, "C"), ("of", 4.43, "C"), ("here!", 4.60, "C")]], 5.05, y=548)
+# v4: the streak-in text style the user picked (bold italic sans in Venice, italic serif + a punched
+# bold "beggars" for the Odyssey line); sizes keep the inpainted caption band covered
+cap([[("Somebody", 0.13, "CI")]], 0.53, y=546, kind="streak")
+cap([[("get these", 0.53, "CI")]], 1.03, y=546, kind="streak")
+cap([[("beggars", 1.03, "CI")]], 1.33, y=546, kind="streak")
+cap([[("out of here!", 1.33, "CI")]], 2.10, y=546, kind="streak")
+cap([[("Somebody", 3.23, "CS"), ("get", 3.47, "CS"), ("these", 3.63, "CS")]], 3.90, y=550, kind="streak")
+cap([[("beggars", 3.90, "CIB")]], 4.27, y=556, kind="streak")
+cap([[("out", 4.27, "CS"), ("of", 4.43, "CS"), ("here!", 4.60, "CS")]], 5.05, y=550, kind="streak")
 
 # ---------------- S02 thesis ----------------
 s = Scene("s02", 5.40, T(13))
-# opening (user note 1): three fast real-life clips, darkened, under a one-line glowing name
-DARK = "--hf-color-grading-exposure: -0.95;"
-o1c, o1v = s.video("c_open1.mp4", 5.40, 5.75, grade="pixel", push=(1.07, 1.0),
-                   vars_style="--hf-color-grading-pixelate: 0.9; " + DARK)
-s.js.append(f'tl.to("#{o1v}", {{ "--hf-color-grading-pixelate": 0, duration: 0.3, ease: "power2.out" }}, 0);')
-s.video("c_open2.mp4", 5.75, 6.10, grade="matte", push=(1.0, 1.07), vars_style=DARK)
-s.neg(5.75, 1)
-s.video("c_open3.mp4", 6.10, T(2), grade="matte", push=(1.07, 1.0), vars_style=DARK)
-s.neg(6.10, 1)
+# opening (v4): a 3x3 box grid builds on black under the one-line glowing name. Each box is pure white for one
+# frame, then plays a clip; a new box every two frames (centre, corners, edges); the grid ends on a white flash
+DARK = "--hf-color-grading-exposure: -0.55;"
+s.solid(5.40, T(2), "#000000")
+grid_order = [(1, 1), (0, 0), (2, 2), (0, 2), (2, 0), (0, 1), (2, 1), (1, 0), (1, 2)]
+grid_clips = [("c_carpet_bg.mp4", 0.5), ("c_goodtime.mp4", 0.05), ("c_hansen.mp4", 0.2), ("c_kimmel_laugh2.mp4", 0.0),
+              ("c_lighthouse.mp4", 0.1), ("c_scytale.mp4", 1.0), ("c_batroof.mp4", 0.0), ("c_mickey.mp4", 0.3),
+              ("c_antinous_feast.mp4", 0.2)]
+for k, ((row, col), (clip, ms)) in enumerate(zip(grid_order, grid_clips)):
+    t0 = round(5.40 + k * 2 / 30, 3)
+    box = (col * 640, row * 360, 640, 360)
+    cam, vid = s.video(clip, t0, T(2), ms=ms, grade="matte", push=None, box=box, vars_style=DARK)
+    s.js.append(f'tl.fromTo("#{cam}", {{ scale: 1.08 }}, {{ scale: 1.0, duration: 0.3, ease: "expo.out" }}, {s.at(t0)});')
+    fl = s.uid("box")
+    s.raw(f'<div id="{fl}" class="clip solid" {s.timed(t0, t0 + 1 / 30)} data-track-index="5" '
+          f'style="left:{box[0]}px;top:{box[1]}px;width:640px;height:360px;background:#ffffff;z-index:{s.nz()}"></div>')
+s.whiteflash(T(2), 0.16, 0.95)
 # "is having a generational run" (user note 2): his roles flicking by under a light texture, and the 2026 slate
 # cut into its four films, each strip stepping up from below at a low frame rate, one per word
 s.video("c_genbg.mp4", T(2), T(6), grade="halftone_soft", push=(1.04, 1.1), vars_style="--hf-color-grading-exposure: -0.3;")
@@ -543,8 +561,7 @@ s.silhouette("kimmel-sil.png", T(8), 2)
 s.paper(T(9), T(13))
 SCENES.append(s)
 sfx("impact-bass-1.mp3", 5.40, 0.36)
-sfx("whoosh-short.mp3", 5.75, 0.12)
-sfx("whoosh-short.mp3", 6.10, 0.12)
+sfx("whoosh-short.mp3", 5.40, 0.12)
 sfx("whoosh-short.mp3", T(2), 0.14)
 sfx("whoosh.mp3", T(6), 0.30)
 cap([[W(0, "FN", "Robert"), W(1, "FN", "Pattinson")]], T(2), y=560, kind="name")

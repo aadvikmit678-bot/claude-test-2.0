@@ -40,6 +40,9 @@
   10. **"Christopher Nolan's The Odyssey":** Odyssey footage with Nolan's photo popping in. No poster, no click.
   11. **"One box":** Edward plays as video inside the framed square.
   12. **"Pattinson" (payoff):** video, not a still.
+- **v4**: v3 plus two ideas from the user's second reference video. Nothing else was taken from it.
+  1. **Box grid at "Robert Pattinson":** a 3×3 grid of 640×360 boxes builds on black: centre first, then the corners, then the edges, a new box every two frames. Each box is pure white for one frame, then plays a different film or red-carpet clip, darkened, under the glowing one-line name. It ends on a white flash into "is having a generational run".
+  2. **Cold-open text:** the words streak in, smeared wide for two frames, then snapping sharp. Venice uses bold italic Inter Tight; the Odyssey line uses italic Instrument Serif with a bold italic "beggars".
 
 ## Measured vs looked at
 
