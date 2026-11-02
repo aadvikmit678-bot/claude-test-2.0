@@ -1,0 +1,13 @@
+source/
+renders/
+.hyperframes/
+.thumbnails/
+work/
+snapshots/
+assets/clips/
+assets/img/
+assets/audio/
+*.mp4.json
+*.jpg.json
+gdown.log
+assets/baked/

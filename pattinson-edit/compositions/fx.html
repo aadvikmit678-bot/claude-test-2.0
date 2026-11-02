@@ -1,0 +1,35 @@
+<template>
+  <style>
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;src:url("assets/fonts/InstrumentSerif-Italic.ttf") format("truetype");}
+@font-face{font-family:"Instrument Serif";font-style:normal;font-weight:400;src:url("assets/fonts/InstrumentSerif-Regular.ttf") format("truetype");}
+@font-face{font-family:"Inter Tight";font-style:normal;font-weight:100 900;src:url("assets/fonts/InterTight[wght].ttf") format("truetype");}
+
+#root{position:absolute;inset:0;pointer-events:none}
+.slam{position:absolute;left:-200px;right:-200px;top:50%;transform-origin:50% 50%;text-align:center;font-family:"Instrument Serif";font-style:italic;font-size:430px;line-height:1;margin-top:-230px;color:#fff;letter-spacing:-0.02em;white-space:nowrap;text-shadow:0 0 18px rgba(255,255,255,0.95),0 0 60px rgba(255,255,255,0.8),0 0 140px rgba(255,255,255,0.6)}
+.flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#ffffff 0%,#ffffff 50%,#e6e6e6 100%)}
+.sting{position:absolute;left:0;right:0;top:50%;margin-top:-60px;text-align:center;white-space:nowrap;color:#fff;transform-origin:50% 50%;text-shadow:0 0 2px rgba(255,255,255,0.95), 0 0 9px rgba(255,255,255,0.55), 0 0 26px rgba(255,255,255,0.32), 0 0 64px rgba(255,255,255,0.18);font-family:"Instrument Serif";font-style:italic;font-size:110px}
+.sting .si{font-family:"Instrument Serif";font-style:italic;font-size:110px}
+.sting .sb{font-family:"Inter Tight";font-weight:780;font-size:92px;letter-spacing:-0.04em}
+</style>
+  <div id="root" data-composition-id="fx" data-width="1440" data-height="1080">
+        <div id="fx-000" class="clip" data-start="5.833133" data-duration="0.041867" data-track-index="0"><div class="flash"></div></div>
+    <div id="fx-001" class="clip" data-start="6.4998" data-duration="0.083533" data-track-index="0" data-layout-allow-overflow data-layout-ignore><div class="slam" id="fx-001-t">PATTINSON</div></div>
+    <div id="fx-002" class="clip" data-start="14.666467" data-duration="0.041867" data-track-index="0"><div class="flash"></div></div>
+    <div id="fx-003" class="clip" data-start="16.208133" data-duration="0.083533" data-track-index="0" data-layout-allow-overflow data-layout-ignore><div class="slam" id="fx-003-t">TWILIGHT</div></div>
+    <div id="fx-004" class="clip" data-start="38.083133" data-duration="0.083533" data-track-index="0" data-layout-allow-overflow data-layout-ignore><div class="slam" id="fx-004-t">BATMAN</div></div>
+    <div id="fx-005" class="clip" data-start="50.4998" data-duration="0.083533" data-track-index="0" data-layout-allow-overflow data-layout-ignore><div class="slam" id="fx-005-t">ODYSSEY</div></div>
+    <div id="fx-006" class="clip" data-start="64.1248" data-duration="0.083533" data-track-index="0" data-layout-allow-overflow data-layout-ignore><div class="slam" id="fx-006-t">DUNE</div></div>
+    <div id="fx-007" class="clip" data-start="73.8998" data-duration="2.9002" data-track-index="0" data-layout-allow-overflow><div class="sting" id="fx-007-t"><span class="si">Robert</span> <span class="sb">PATTINSON</span></div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#fx-001-t",{scale:1.18,opacity:1},{scale:1.0,opacity:0.9,duration:0.0833,ease:"power2.out"},6.5000);
+    tl.fromTo("#fx-003-t",{scale:1.18,opacity:1},{scale:1.0,opacity:0.9,duration:0.0833,ease:"power2.out"},16.2083);
+    tl.fromTo("#fx-004-t",{scale:1.18,opacity:1},{scale:1.0,opacity:0.9,duration:0.0833,ease:"power2.out"},38.0833);
+    tl.fromTo("#fx-005-t",{scale:1.18,opacity:1},{scale:1.0,opacity:0.9,duration:0.0833,ease:"power2.out"},50.5000);
+    tl.fromTo("#fx-006-t",{scale:1.18,opacity:1},{scale:1.0,opacity:0.9,duration:0.0833,ease:"power2.out"},64.1250);
+    tl.fromTo("#fx-007-t",{scale:1.6,opacity:0},{scale:1.0,opacity:1,duration:0.5,ease:"steps(6)"},73.9000);
+    tl.to("#fx-007-t",{opacity:0,duration:0.6,ease:"steps(7)"},76.1800);
+    window.__timelines["fx"] = tl;
+  </script>
+</template>
