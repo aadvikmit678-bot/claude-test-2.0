@@ -51,6 +51,8 @@ def _soften(base, scale, keys):
 
 
 GR["halftone_soft"] = _soften("halftone", 0.28, ["halftone"])
+# first-10s v3 (user: "the screen feels more curved, like a fish-eye"): curvature alone, as lens geometry
+GR["curved"] = _derive("matte", effects={"crtCurvature": 0.22})
 GR["vhs_soft"] = _soften("vhs", 0.55, ["chromaBleed", "tapeDamage", "tapeTracking", "scanlines", "chromaticAberration"])
 GR["glitch_soft"] = _soften("glitch", 0.65, ["tapeDamage", "tapeTracking", "scanlines", "chromaticAberration",
                                              "digitalGlitch", "digitalGlitchColorSplit", "digitalGlitchLineTear",
@@ -661,73 +663,115 @@ for k, ((row, col), (clip, ms)) in enumerate(zip(grid_order, grid_clips)):
 s.flare(5.40, frames=3, corner="tl")
 s.block(round(T(1) - 2 / 30, 3), 2, (800, 400, 330, 300), "#63E6E2", blend="difference")
 s.lightstreak(round(T(2) - 2 / 30, 3), frames=3)
-# "is on a generational run": rebuilt from the references, measured frame by frame
-#  - Legora ("a group of founders in their 20s"): the shot eases back from full frame to a centred frame over ~0.9 s,
-#    most of it in the first 8 frames (power4-like), drifting slightly left, black around it
-#  - General Catalyst ("Logan Roy"): small pictures land around the centre on black, each a white box first; the
-#    collage drifts up and turns ~2 deg as they land, pushes in ~6 %, inverts for two frames, the outer pictures fall
-#    out of focus, then the whole wall accelerates left into the cut and the next shot arrives still moving left
-#  - low-frame-rate steps: the four film cut-outs tilt into perspective in 4 steps at 12 fps
+# "is on a generational run" (first-10s v3, the user's notes + the Hemant Taneja wall measured frame by frame):
+#  - the shot eases back from full frame to a centred window (Legora: power4.out, ~0.9 s)
+#  - the cut-outs and four role clips pop out from behind the window in low-frame-rate steps, land as white
+#    boxes and turn into pictures; the role tiles are PLAYING VIDEO and one blows out for a frame, like the
+#    Hemant Taneja wall, so the wall is never still
+#  - the wall sits on a gentle dome (outer edges fall away, like a fish-eye); the dome deepens and the window
+#    bends into a curved screen while the whole wall keeps slowly pulling back, then the accelerating pan out
+#    carries into the run cut
 FR = 0.66
-PICS = [  # image, centre x, centre y, w, h, tilt, perspective (rotationY) for the film cut-outs
-    ("slate_drama.jpg", 300, 190, 460, 142, -4, -22), ("gt_neon.jpg", 1745, 545, 300, 190, 3, 0),
-    ("slate_prime.jpg", 300, 895, 460, 142, 3, -22), ("mk_helmet.jpg", 760, 105, 300, 170, -2, 0),
-    ("slate_odyssey.jpg", 1620, 200, 460, 142, 4, 22), ("bt_cowl.jpg", 175, 560, 300, 190, -3, 0),
-    ("slate_dune.jpg", 1625, 885, 460, 142, -4, 22), ("lh_portrait.jpg", 1190, 980, 280, 170, 2, 0),
+PICS = [  # source, centre x, centre y, w, h, tilt, video media-start, video rate
+    ("slate_drama.jpg", 300, 190, 460, 142, -4, None, None),
+    ("c_tenet_b.mp4", 1745, 545, 300, 190, 3, 0.0, 0.45),
+    ("slate_prime.jpg", 300, 895, 460, 142, 3, None, None),
+    ("c_mickey.mp4", 760, 105, 300, 170, -2, 0.3, 1.0),
+    ("slate_odyssey.jpg", 1620, 200, 460, 142, 4, None, None),
+    ("c_cowl.mp4", 175, 560, 300, 190, -3, 0.0, 1.0),
+    ("slate_dune.jpg", 1625, 885, 460, 142, -4, None, None),
+    ("c_lighthouse.mp4", 1190, 980, 280, 170, 2, 0.1, 1.0),
 ]
-PIC_T0 = round(T(3) + 3 * F1, 3)          # the first picture lands ~0.2 s after the shot starts easing back
+PIC_T0 = round(T(3) + 3 * F1, 3)            # the first picture lands ~0.2 s after the shot starts easing back
 INV = round(PIC_T0 + 8 * 2 * F1 + 0.10, 3)  # the wall inverts for two frames once all eight are in
 PAN = 0.30                                  # the accelerating pan out, ending on the cut into "run,"
+CURVE_T0, CURVE_T1 = round(T(5) - 0.08, 3), round(T(6) - PAN, 3)  # the dome deepens / the wall pulls back here
+
+
+def dome(cx, cy, f):
+    """Placement on a convex dome: outer edges recede (rotateY>0 recedes the right edge, rotateX>0 the top)."""
+    nx, ny = (cx - 960) / 960, (cy - 540) / 540
+    return dict(rotationY=round(30 * nx * f, 2), rotationX=round(-18 * ny * f, 2), z=round(-170 * (nx * nx + ny * ny) * f, 1))
+
+
+s.solid(T(2), T(6), "#000000")
 grp_first = len(s.els)
 pic_els = []
-for k, (im, cx, cy, w, h, rot, ry) in enumerate(PICS):  # made first, so they sit behind the centre frame
+for k, (src, cx, cy, w, h, rot, ms, rate) in enumerate(PICS):  # made first, so they sit behind the centre window
     t0 = round(PIC_T0 + k * 2 * F1, 3)               # one picture every two frames
     box = (cx - w // 2, cy - h // 2, w, h)
-    # the white box pops out from behind the centre frame in three low-frame-rate steps, lands soft then crisp,
-    # and turns into the picture
+    d0, d1 = dome(cx, cy, 0.55), dome(cx, cy, 1.0)
+    # the white box pops out from behind the window in three low-frame-rate steps, lands soft then crisp
     bid = s.uid("pbox")
     s.raw(f'<div id="{bid}" class="clip pbox" {s.timed(round(t0 - 4 * F1, 3), t0)} data-track-index="5" '
           f'style="left:{box[0]}px;top:{box[1]}px;width:{w}px;height:{h}px;z-index:{s.nz()}"></div>')
-    s.js.append(f'tl.fromTo("#{bid}", {{ x: {round((960 - cx) * 0.8)}, y: {round((540 - cy) * 0.8)}, scale: 0.45, rotation: 0 }}, '
-                f'{{ x: 0, y: 0, scale: 1, rotation: {rot}, duration: {r3(3 * F1)}, ease: "steps(3)" }}, {s.at(t0 - 4 * F1)});')
+    s.js.append(f'tl.fromTo("#{bid}", {{ x: {round((960 - cx) * 0.8)}, y: {round((540 - cy) * 0.8)}, scale: 0.45, rotation: 0, '
+                f'rotationY: 0, rotationX: 0, z: 0 }}, {{ x: 0, y: 0, scale: 1, rotation: {rot}, rotationY: {d0["rotationY"]}, '
+                f'rotationX: {d0["rotationX"]}, z: {d0["z"]}, duration: {r3(3 * F1)}, ease: "steps(3)" }}, {s.at(t0 - 4 * F1)});')
     s.js.append(f'tl.set("#{bid}", {{ filter: "blur(0px)" }}, {s.at(t0 - F1)});')
-    cam, imid = s.image(im, t0, T(6), grade="matte", push=None, box=box, card=True, pos="50% 35%",
-                        vars_style="--hf-color-grading-blur: 0; --hf-color-grading-exposure: 0.85;")
-    # lands overexposed and a touch big, then settles in two steps (stepped like the reference)
-    s.js.append(f'tl.set("#{cam}", {{ scale: 1.06, rotation: {rot}, transformPerspective: 1500 }}, {s.at(t0)});')
-    s.js.append(f'tl.set("#{imid}", {{ "--hf-color-grading-exposure": 0.25 }}, {s.at(t0 + F1)});')
+    if src.endswith(".mp4"):
+        cam, mid = s.video(src, t0, T(6), ms=ms, rate=rate if rate != 1.0 else None, grade="matte", push=None, box=box,
+                           card=True, vars_style="--hf-color-grading-exposure: 0.85;")
+    else:
+        cam, mid = s.image(src, t0, T(6), grade="matte", push=None, box=box, card=True, pos="50% 35%",
+                           vars_style="--hf-color-grading-blur: 0; --hf-color-grading-exposure: 0.85;")
+    # lands overexposed and a touch big on the dome, settles in two steps
+    s.js.append(f'tl.set("#{cam}", {{ scale: 1.06, rotation: {rot}, rotationY: {d0["rotationY"]}, rotationX: {d0["rotationX"]}, '
+                f'z: {d0["z"]} }}, {s.at(t0)});')
+    s.js.append(f'tl.set("#{mid}", {{ "--hf-color-grading-exposure": 0.25 }}, {s.at(t0 + F1)});')
     s.js.append(f'tl.set("#{cam}", {{ scale: 1.0 }}, {s.at(t0 + 2 * F1)});')
-    s.js.append(f'tl.set("#{imid}", {{ "--hf-color-grading-exposure": 0 }}, {s.at(t0 + 2 * F1)});')
-    if ry:
-        # the film cut-outs tilt back into perspective in four steps at 12 fps
-        s.js.append(f'tl.to("#{cam}", {{ rotationY: {ry}, duration: 0.33, ease: "steps(4)" }}, {s.at(t0 + 3 * F1)});')
-    pic_els.append((cam, imid, cx, cy, t0))
-# a picture blinks out for a frame now and then (the reference's flicker)
-for k, (cam, imid, cx, cy, t0) in enumerate(pic_els):
-    if k in (1, 4, 6):
-        s.js.append(f'tl.set("#{imid}", {{ opacity: 0 }}, {s.at(t0 + 0.30)});')
-        s.js.append(f'tl.set("#{imid}", {{ opacity: 1 }}, {s.at(t0 + 0.30 + F1)});')
-    # out of focus behind the sharp centre after the inversion
-    s.js.append(f'tl.to("#{imid}", {{ "--hf-color-grading-blur": 0.36, duration: 0.24, ease: "power2.out" }}, {s.at(INV + 2 * F1)});')
+    s.js.append(f'tl.set("#{mid}", {{ "--hf-color-grading-exposure": 0 }}, {s.at(t0 + 2 * F1)});')
+    # the dome deepens and the picture drifts outward as the camera pulls back (parallax: the outer ones move most)
+    nx, ny = (cx - 960) / 960, (cy - 540) / 540
+    c0 = round(max(CURVE_T0, t0 + 2 * F1), 3)  # a picture that lands late starts deepening on landing
+    s.js.append(f'tl.to("#{cam}", {{ rotationY: {d1["rotationY"]}, rotationX: {d1["rotationX"]}, z: {d1["z"]}, '
+                f'x: {round(46 * nx)}, y: {round(30 * ny)}, duration: {r3(CURVE_T1 - c0)}, ease: "sine.inOut" }}, '
+                f'{s.at(c0)});')
+    pic_els.append((cam, mid, cx, cy, t0, src.endswith(".mp4")))
+for k, (cam, mid, cx, cy, t0, isvid) in enumerate(pic_els):
+    if k in (0, 4, 6):  # a still blinks out for a frame now and then (the reference's flicker)
+        s.js.append(f'tl.set("#{mid}", {{ opacity: 0 }}, {s.at(t0 + 0.30)});')
+        s.js.append(f'tl.set("#{mid}", {{ opacity: 1 }}, {s.at(t0 + 0.30 + F1)});')
+    if not isvid:  # the stills fall out of focus behind the window after the inversion; the video tiles stay sharp
+        s.js.append(f'tl.to("#{mid}", {{ "--hf-color-grading-blur": 0.32, duration: 0.24, ease: "power2.out" }}, {s.at(INV + 2 * F1)});')
+# one video tile blows out for two frames, like the cyan wash on the Hemant Taneja wall
+bl_cam, bl_mid = pic_els[1][0], pic_els[1][1]
+s.js.append(f'tl.set("#{bl_mid}", {{ "--hf-color-grading-exposure": 1.5 }}, {s.at(INV + 0.30)});')
+s.js.append(f'tl.set("#{bl_mid}", {{ "--hf-color-grading-exposure": 0 }}, {s.at(INV + 0.30 + 2 * F1)});')
+# the centre window: the flat shot, and the same shot through the curved-screen treatment fading in over it
 camG, vG = s.video("c_genbg.mp4", T(2), T(6), grade="matte", push=None,
                    cam_extra="box-shadow: 0 40px 120px rgba(0,0,0,0.7);")
-# Legora's ease back: 100 % -> 66 % over 0.9 s, power4.out, drifting 20 px left
+vGc, vGw = s.uid("v"), s.uid("cvw")
+s.els[-1] = s.els[-1].replace(
+    "</div>",
+    f'<div id="{vGw}" style="position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0">'
+    f'<video id="{vGc}" class="clip" src="assets/clips/c_genbg.mp4" muted playsinline {s.timed(CURVE_T0, T(6))} '
+    f'data-hf-media-start-basis="local" data-media-start="{r3(round(CURVE_T0 - T(2), 3))}" '
+    f'data-color-grading="{esc(GR["curved"])}" data-track-index="2" '
+    f'style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover"></video></div></div>', 1)
+s.js.append(f'tl.to("#{vGw}", {{ opacity: 1, duration: 0.3, ease: "sine.inOut" }}, {s.at(CURVE_T0)});')
+# Legora's ease back: 100 % -> 66 % over 0.9 s, power4.out, drifting 20 px left; then it keeps receding and
+# leans back a little (it goes farther in perspective) until the pan
 s.js.append(f'tl.fromTo("#{camG}", {{ scale: 1.0, x: 0 }}, {{ scale: {FR}, x: -20, duration: 0.9, ease: "power4.out" }}, {s.at(T(2))});')
-s.js.append(f'tl.to("#{camG}", {{ scale: {FR + 0.012}, duration: {r3(T(6) - T(2) - 0.9)}, ease: "none" }}, {s.at(T(2) + 0.9)});')
-# everything made since grp_first moves as one collage under the camera
+s.js.append(f'tl.to("#{camG}", {{ scale: {FR - 0.035}, duration: {r3(T(6) - T(2) - 0.9)}, ease: "none" }}, {s.at(T(2) + 0.9)});')
+s.js.append(f'tl.fromTo("#{camG}", {{ rotationY: 0, rotationX: 0 }}, {{ rotationY: -6, rotationX: 3, duration: {r3(CURVE_T1 - CURVE_T0)}, '
+            f'ease: "sine.inOut" }}, {s.at(CURVE_T0)});')
+# everything made since grp_first moves as one wall, under one perspective (so the dome reads as one curved space)
 gid = s.uid("wall")
 inner = "".join(s.els[grp_first:])
 del s.els[grp_first:]
-s.els.append(f'<div class="cam" id="{gid}" style="position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:{s.nz()}">{inner}</div>')
-# the wall's camera: drift up and a ~2 deg turn as the pictures land, push in ~6 %, then accelerate left into the cut
+s.els.append(f'<div class="cam" id="{gid}" style="position:absolute;left:0;top:0;width:1920px;height:1080px;'
+             f'perspective:1400px;perspective-origin:50% 50%;z-index:{s.nz()}">{inner}</div>')
+# the wall's camera: drift up and a ~2 deg turn as the pictures land; a continuous slow pull-back from then on;
+# then the accelerating pan left into the cut
 s.js.append(f'tl.fromTo("#{gid}", {{ y: 0, rotation: 0 }}, {{ y: -16, rotation: -2, duration: 0.3, ease: "power2.out" }}, {s.at(PIC_T0)});')
-s.js.append(f'tl.fromTo("#{gid}", {{ scale: 1.0 }}, {{ scale: 1.06, duration: 0.3, ease: "power2.out", immediateRender: false }}, {s.at(INV - 0.12)});')
+s.js.append(f'tl.fromTo("#{gid}", {{ scale: 1.0 }}, {{ scale: 0.86, duration: {r3(T(6) - PIC_T0)}, ease: "sine.inOut", '
+            f'immediateRender: false }}, {s.at(PIC_T0)});')
 s.js.append(f'tl.fromTo("#{gid}", {{ x: 0 }}, {{ x: -230, duration: {PAN}, ease: "power2.in", immediateRender: false }}, {s.at(T(6) - PAN)});')
 s.neg(INV, 2)  # the wall inverts for two frames
-# "run,": the fast stretch of the user's Batman cut; it arrives still moving left and decelerates (pan continuity),
-# and runs on under "and"
-camR, vR = s.video("c_run2.mp4", T(6), T(8), grade="matte", push=None, rate=round(1.0 / (T(8) - T(6)), 3))
+# "run,": the fast stretch of the user's Batman cut; it arrives still moving left and decelerates (pan continuity);
 # x and scale ease together, so the frame stays covered while it slides (needs scale >= 1 + 2x/1920)
+camR, vR = s.video("c_run2.mp4", T(6), T(8), grade="matte", push=None, rate=round(1.0 / (T(8) - T(6)), 3))
 s.js.append(f'tl.fromTo("#{camR}", {{ x: 220, scale: 1.26 }}, {{ x: 0, scale: 1.03, duration: 0.34, ease: "power2.out" }}, {s.at(T(6))});')
 s.js.append(f'tl.to("#{camR}", {{ scale: 1.05, duration: {r3(T(8) - T(6) - 0.34)}, ease: "none" }}, {s.at(T(6) + 0.34)});')
 # "and honestly," (user: keep the full-frame talk-show video and the white silhouette; reference: General Catalyst
