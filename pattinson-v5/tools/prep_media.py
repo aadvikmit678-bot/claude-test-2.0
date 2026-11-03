@@ -41,6 +41,7 @@ V = {
     "TEN": "patison clear video wo text.mp4",
     "RUNUSER": "user-clips/run_clip.mp4",  # the user's Batman cut for "run" (v5)
     "TWNEW": "user-clips/twilight_new.mp4",  # the user's 1080p Twilight footage (v5 segment 2)
+    "WORLD": "user-clips/world_right.mp4",  # the user's red-carpet clip for "the world sees him" (right panel)
 }
 
 # id: (source key, in, duration, W, H, cx, cy, zoom, content-box [x,y,w,h] relative or None)
@@ -65,7 +66,7 @@ CLIP_SPECS = {
     # swing
     "c_soot": ("SF", 20.55, 1.0, 1920, 1080, 0.5, 0.45, 1.0, None),
     "c_connie": ("CL", 24.8, 1.2, 1920, 1080, 0.62, 0.62, 1.30, None),
-    "c_king": ("MON", 17.0, 0.55, 1920, 1080, 0.5, 0.5, 1.0, None),
+    "c_king": ("MON", 17.0, 0.65, 1920, 1080, 0.5, 0.5, 1.0, None),
     # jokes
     "c_sparkle2": ("TW", 209.4, 1.4, 1920, 1080, 0.40, 0.45, 1.0, "LB"),
     "c_spider": ("TW", 398.2, 2.6, 1920, 1080, 0.42, 0.5, 1.0, "LB"),
@@ -160,6 +161,16 @@ CLIP_SPECS = {
     "p_carpet_a": ("CARPET", 1.85, 0.55, 640, 1080, 0.5, 0.42, 1.0, None),     # sees him: three premiere panels
     "p_carpet_b": ("CARPET", 3.10, 0.55, 640, 1080, 0.5, 0.42, 1.0, None),
     "p_carpet_c": ("CARPET", 9.95, 0.55, 640, 1080, 0.5, 0.42, 1.0, None),
+    # ---- v5 segment 2, round 2 (user notes) ----
+    # "He spent the last 15 years": his roles for the split-box bands (McConaughey reference)
+    "c_k15_king": ("MON", 16.95, 0.50, 1920, 1080, 0.5, 0.5, 1.0, None),     # The King
+    "c_k15_barb": ("MON", 22.62, 0.60, 1920, 1080, 0.5, 0.5, 1.0, None),     # Waiting for the Barbarians
+    "c_k15_tenet": ("FACE", 11.95, 0.40, 1920, 1080, 0.5, 0.5, 1.0, None),   # Tenet
+    "c_k15_drama": ("FACE", 16.00, 0.40, 1920, 1080, 0.5, 0.5, 1.0, None),   # The Drama (the merged picture)
+    "c_k15_mk17h": ("MON", 38.00, 0.45, 1920, 1080, 0.5, 0.5, 1.0, None),    # Mickey 17, the hallway
+    # "the world sees him": the user's two clips for the left and right panels (the centre stays)
+    "p_frame_l": ("FRAME", 0.50, 0.55, 640, 1080, 0.5, 0.40, 1.0, None),
+    "p_world_r": ("WORLD", 3.20, 0.55, 640, 1080, 0.5, 0.45, 1.0, None),
 }
 
 # the 2026 slate cut into its four film strips (y0, y1 in the 1350x1688 still)
@@ -382,6 +393,16 @@ def make_vo2():
          "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-ar", "48000", "-ac", "2", f"{AUD}/vo2.wav"])
 
 
+def make_clip_audio():
+    """Source sound kept under two shots, as the user asked: the Batman run cut (sped up 1.5625x like its picture,
+    pitch kept) and Pattinson's laugh on Kimmel (synced so its 211.65 s lands when the clip starts moving)."""
+    run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-ss", "1.05", "-t", "1.0", "-i", f"{SRC}/{V['RUNUSER']}",
+         "-af", "atempo=1.5625,afade=t=in:d=0.02,afade=t=out:st=0.56:d=0.08", "-ar", "48000", "-ac", "2",
+         f"{AUD}/a_run.wav"])
+    run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-ss", "211.23", "-t", "0.90", "-i", f"{SRC}/{V['KIM']}",
+         "-af", "afade=t=in:d=0.03,afade=t=out:st=0.72:d=0.18", "-ar", "48000", "-ac", "2", f"{AUD}/a_kimmel.wav"])
+
+
 def make_soft_glitch():
     """A short, band-limited TV blip from the bundled glitch-1: only the transient (0.5 s), static above
     4.5 kHz and rumble below 180 Hz removed, faded out. Replaces the long screeching glitch tails."""
@@ -423,6 +444,8 @@ if __name__ == "__main__":
         make_audio(); print("audio")
     if want("sfx"):
         copy_sfx(); print("sfx")
+    if want("clip_audio"):
+        make_clip_audio(); print("clip audio")
     if want("vo2"):
         make_vo2(); print("vo2")
     if want("sfx") or want("soft_glitch"):
