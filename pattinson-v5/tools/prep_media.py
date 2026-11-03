@@ -40,6 +40,7 @@ V = {
     "CRAZY": "Robert Pattison crazy batman edit.mp4",
     "TEN": "patison clear video wo text.mp4",
     "RUNUSER": "user-clips/run_clip.mp4",  # the user's Batman cut for "run" (v5)
+    "TWNEW": "user-clips/twilight_new.mp4",  # the user's 1080p Twilight footage (v5 segment 2)
 }
 
 # id: (source key, in, duration, W, H, cx, cy, zoom, content-box [x,y,w,h] relative or None)
@@ -148,6 +149,17 @@ CLIP_SPECS = {
     # "run": the fast stretch of the user's clip (afterburner, speedometer, Batman driving, chase POV); a slight
     # zoom drops the small watermark at the bottom of the chase shots
     "c_run2": ("RUNUSER", 1.05, 1.0, 1920, 1080, 0.5, 0.44, 1.1, None),
+    # ---- v5 segment 2 (10.85-23.41): "To some people ... the vampire kid." ----
+    "c_twn_hall": ("TWNEW", 24.30, 0.95, 1920, 1080, 0.5, 0.5, 1.0, None),     # he'll always be: Edward turns
+    "c_twn_warm": ("TWNEW", 96.80, 1.25, 1920, 1080, 0.5, 0.5, 1.0, None),     # Edward Cullen.: warm close-up
+    "c_twn_eyes": ("TWNEW", 107.45, 0.70, 1920, 1080, 0.5, 0.5, 1.0, None),    # But everything: gold eyes
+    "c_twn_walk": ("TWNEW", 137.30, 0.70, 1920, 1080, 0.5, 0.5, 1.0, None),    # he did after: the walk
+    "c_twn_forest": ("TWNEW", 204.05, 0.55, 1920, 1080, 0.5, 0.45, 1.0, None), # more than just
+    "c_ven_hair": ("VENICE", 2.55, 0.62, 1920, 1080, 0.5, 0.377, 1.0, None),   # making sure (below the Gala mark)
+    "c_ven_crowd": ("VENICE", 14.00, 0.45, 1920, 1080, 0.9, 0.258, 1.35, None),  # the world (right of the mark)
+    "p_carpet_a": ("CARPET", 1.85, 0.55, 640, 1080, 0.5, 0.42, 1.0, None),     # sees him: three premiere panels
+    "p_carpet_b": ("CARPET", 3.10, 0.55, 640, 1080, 0.5, 0.42, 1.0, None),
+    "p_carpet_c": ("CARPET", 9.95, 0.55, 640, 1080, 0.5, 0.42, 1.0, None),
 }
 
 # the 2026 slate cut into its four film strips (y0, y1 in the 1350x1688 still)
@@ -173,6 +185,7 @@ FRAME_SPECS = {
     "f_hansen": ("FACE", 5.2, 1920, 1080, 0.5, 0.42, 1.0, None),
     "f_bruce": ("FACE", 1.5, 1920, 1080, 0.5, 0.45, 1.0, None),
     "f_drama": ("FACE", 16.4, 1920, 1080, 0.5, 0.40, 1.0, None),
+    "f_twn_vamp": ("TWNEW", 26.30, 1920, 1080, 0.5, 0.5, 1.0, None),  # the vampire kid plate (v5)
 }
 
 STILLS = {

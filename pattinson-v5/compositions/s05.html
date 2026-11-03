@@ -1,0 +1,41 @@
+<template>
+  <style>
+  
+  #root { position: absolute; inset: 0; overflow: hidden; background: #0b0b0b; }
+  #root .cam { position: absolute; transform-origin: 50% 50%; }
+  #root .paper { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; object-fit: cover; }
+  #root .solid { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #root .neg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #ffffff; mix-blend-mode: difference; }
+  #root .flashw { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #ffffff; opacity: 0; }
+  #root .card { box-sizing: border-box; border: 9px solid #F4EFEB; box-shadow: 0 22px 48px rgba(0,0,0,0.30), 0 3px 8px rgba(0,0,0,0.18); }
+  #root .numwrap { position: absolute; display: flex; align-items: center; justify-content: center; }
+  #root .num { font-family: 'Instrument Serif'; font-weight: 400; line-height: 1; display: inline-block;
+    background: linear-gradient(180deg, #F7F4F7 38%, rgba(247,244,247,0.0) 92%); -webkit-background-clip: text;
+    background-clip: text; color: transparent; letter-spacing: -0.02em; }
+  #root .txw { position: absolute; display: flex; align-items: center; justify-content: center; }
+  #root .txw.al { justify-content: flex-start; }
+  #root .txw.ar { justify-content: flex-end; }
+  #root .tx { display: inline-block; white-space: nowrap; line-height: 1; letter-spacing: -0.03em; }
+  #root .gridbox { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #0b0b0b; }
+  #root .rule { position: absolute; height: 6px; background: #0B0B0B; transform-origin: 50% 50%; }
+  #root .streak { position: absolute; left: 0; width: 1920px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.85) 38%, #ffffff 50%, rgba(255,255,255,0.85) 62%, rgba(255,255,255,0) 100%);
+    box-shadow: 0 0 80px 30px rgba(255,255,255,0.55); }
+  #root .pbox { position: absolute; background: #ffffff; filter: blur(3px);
+    box-shadow: 0 0 22px 4px rgba(255,255,255,0.85), 0 0 60px rgba(255,255,255,0.4); }
+  #root .flare { position: absolute; width: 900px; height: 760px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255,255,255,0.95), rgba(255,255,255,0.45) 45%, rgba(255,255,255,0) 100%); }
+  #root .rec { position: absolute; display: flex; align-items: center; gap: 22px; font-family: 'Inter Tight'; font-weight: 800;
+    font-size: 64px; letter-spacing: 0.04em; color: #FF2A3D; text-shadow: 0 0 18px rgba(255,42,61,0.8); }
+  #root .rec i { display: block; width: 46px; height: 46px; border-radius: 50%; background: #FF2A3D; box-shadow: 0 0 24px rgba(255,42,61,0.9); }
+  </style>
+  <div id="root" data-composition-id="s05" data-width="1920" data-height="1080">
+    <img id="s05-paper1" class="clip paper" src="assets/tex/paper.png" alt="" data-start="0" data-duration="1.04" data-track-index="1" style="z-index:2" />
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.to({}, { duration: 1.04 }, 0);
+    
+    window.__timelines["s05"] = tl;
+  </script>
+</template>

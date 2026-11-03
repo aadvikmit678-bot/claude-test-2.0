@@ -21,7 +21,7 @@ import html, json, os, re, shutil
 ROOT = "/home/user/claude-test-2.0"
 PRJ = f"{ROOT}/pattinson-v5"
 COMP = f"{PRJ}/compositions"
-DUR = 10.85  # end of the segments built so far (segment 1)
+DUR = 23.41  # end of the segments built so far (segments 1-2: up to "the vampire kid.")
 LEAD = 0.07  # captions and cuts arrive 2 frames before the word
 
 GR = json.load(open(f"{PRJ}/tools/gradings.json"))
@@ -53,6 +53,13 @@ def _soften(base, scale, keys):
 GR["halftone_soft"] = _soften("halftone", 0.28, ["halftone"])
 # first-10s v3 (user: "the screen feels more curved, like a fish-eye"): curvature alone, as lens geometry
 GR["curved"] = _derive("matte", effects={"crtCurvature": 0.22})
+# segment 2: halftone at half the v3 strength, and the 8mm film look with much less dust, grain and vignette
+GR["halftone_faint"] = _soften("halftone", 0.15, ["halftone"])
+_fs = json.loads(GR["film8mm"])
+_fs["effects"]["filmArtifacts"] = 0.22
+_fs["details"]["grain"] = 0.14
+_fs["details"]["vignette"] = 0.18
+GR["film_soft"] = json.dumps(_fs, separators=(",", ":"))
 GR["vhs_soft"] = _soften("vhs", 0.55, ["chromaBleed", "tapeDamage", "tapeTracking", "scanlines", "chromaticAberration"])
 GR["glitch_soft"] = _soften("glitch", 0.65, ["tapeDamage", "tapeTracking", "scanlines", "chromaticAberration",
                                              "digitalGlitch", "digitalGlitchColorSplit", "digitalGlitchLineTear",
@@ -417,6 +424,9 @@ STY = {
 STY["OS"] = ("Instrument Serif", 400, False, 150, "#F7F4F7", True)    # cold open, The Odyssey line
 STY["OSB"] = ("Instrument Serif", 400, False, 230, "#F7F4F7", True)
 STY["LS"] = ("Instrument Serif", 400, False, 96, "#F7F4F7", True)     # small serif in a small-big lockup
+STY["FNS"] = ("Instrument Serif", 400, False, 250, "#F7F4F7", True)   # a stacked name ("Edward / Cullen.")
+STY["SM"] = ("Inter Tight", 700, False, 64, "#F7F4F7", True)          # small line under a counter
+STY["NUM"] = ("Inter Tight", 800, False, 300, "#F7F4F7", True)        # a big number in a lockup ("15 years")
 for _k, _v in list(STY.items()):  # v5 (user): no slanted type anywhere
     STY[_k] = (_v[0], _v[1], False, _v[3], _v[4], _v[5])
 # v5 (user): black words on paper are bold Helvetica (as in the F1 reference), punch words just bigger
@@ -466,6 +476,7 @@ def build_captions():
         for li, line in enumerate(g["lines"]):
             spans = []
             for wi, (text, tt, st) in enumerate(line):
+                fk = sum(len(l) for l in g["lines"][:li]) + wi  # word order within the group
                 fam, wt, it, size, color, glow = STY[st]
                 sid = f"{gid}-w{li}{wi}"
                 shadow = f"text-shadow:{GLOW_REST};" if glow else ""
@@ -485,6 +496,8 @@ def build_captions():
                         stroke = "-webkit-text-stroke:1.4px #F7F4F7;"
                     if st == "FN":
                         stroke = "-webkit-text-stroke:3px #F7F4F7;"
+                    if st == "FNS":
+                        stroke = "-webkit-text-stroke:2.4px #F7F4F7;"
                     spans.append(
                         f'<span id="{sid}" class="w ws" style="{ml}font-family:\'{fam}\';font-weight:{wt};font-style:normal;'
                         f'font-size:{size}px;color:{color};letter-spacing:{track};">'
@@ -494,17 +507,17 @@ def build_captions():
                     if g["kind"] == "name":
                         # "Dario Amodei": the first word blooms in; two glitch frames (first word goes dark, a pale-
                         # yellow block where the second word lands); the second word blooms in; exit word by word
-                        if wi == 1:
+                        if fk == 1:
                             js.append(f'tl.set("#{sid}-f", {{ opacity: 1, backgroundColor: "#EFE3A0", boxShadow: "none" }}, {r3(t0 + lt - 2 * F1)});')
                             js.append(f'tl.set("#{sid}-f", {{ opacity: 0 }}, {at});')
-                            first = f"{gid}-w{li}0-t"
+                            first = f"{gid}-w00-t"
                             js.append(f'tl.set("#{first}", {{ color: "#0d0d0d", textShadow: "none", webkitTextStrokeColor: "#0d0d0d" }}, {r3(t0 + lt - 2 * F1)});')
                             js.append(f'tl.set("#{first}", {{ color: "#F7F4F7", textShadow: "{SERIF_REST}", webkitTextStrokeColor: "#F7F4F7" }}, {at});')
                         js.append(f'tl.set("#{sid}-t", {{ opacity: 1, scale: 1.04, filter: "blur(14px)", textShadow: "{SERIF_BLOOM}" }}, {at});')
                         js.append(f'tl.set("#{sid}-t", {{ scale: 1.015, filter: "blur(5px)", textShadow: "{SERIF_SOFT}" }}, {r3(t0 + lt + F1)});')
                         js.append(f'tl.set("#{sid}-t", {{ scale: 1.005, filter: "blur(2.5px)" }}, {r3(t0 + lt + 3 * F1)});')
                         js.append(f'tl.set("#{sid}-t", {{ scale: 1, filter: "blur(0px)", textShadow: "{SERIF_REST}" }}, {r3(t0 + lt + 4 * F1)});')
-                        if wi == 0 and g.get("exit_first") is not None:
+                        if fk == 0 and g.get("exit_first") is not None:
                             js.append(f'tl.set("#{sid}-t", {{ opacity: 0 }}, {r3(g["exit_first"])});')
                     elif size >= 200:
                         # hero word, stepped like the reference's "AI" / "timing": one blown-out frame, three soft-focus
@@ -813,6 +826,208 @@ cap([[W(5, "FSL", "generational"), W(6, "FSL", "run,")]], T(7), y=610)
 cap([[W(7, "LS", "and")], [W(8, "B", "Honestly")]], T(9), x=70, y=300, align="left", lh=0.9)
 paper_words([(9, "PS", "nobody"), (10, "PS", "saw"), (11, "PS", "it"), (12, "PXL", "coming.")], T(13), last_exit="blurout")
 
+
+# ==================================================================================================
+# SEGMENT 2 (10.85 - 23.41): "To some people, he'll always be Edward Cullen. But everything he did after
+# Twilight proved he was never stuck in one role. He spent the last 15 years making sure the world sees him
+# more than just the vampire kid."  (v4's Edward scene ported; the user's 1080p Twilight footage where sharper)
+# ==================================================================================================
+
+# ---------------- S03 "To some people, he'll always be Edward Cullen." ----------------
+s = Scene("s03", T(13), T(21))
+# "To some people,": v4's three shots, the halftone fainter (user note); the words build on one line across the cuts
+s.video("c_tw_lab.mp4", T(13), T(14), grade="halftone_faint", push=(1.0, 1.04))
+s.video("c_tw_wed.mp4", T(14), T(15), grade="halftone_faint", push=(1.05, 1.0))
+s.video("c_fans_full.mp4", T(15), T(16), grade="halftone_faint", push=(1.0, 1.05))
+# "he'll always be": Edward turns to camera in the school hallway (1080p)
+s.video("c_twn_hall.mp4", T(16), T(19), grade="film_soft", push=(1.0, 1.04))
+# "Edward Cullen.": the warm close-up; the name lands like "Dario Amodei": a corner flare as "Edward" blooms,
+# two glitch frames (the word goes dark, a cyan patch, a pale-yellow block where "Cullen." lands), "Cullen." blooms,
+# "Edward" leaves first, then a horizontal light streak wipes into the next line
+s.video("c_twn_warm.mp4", T(19), T(21), grade="film_soft", push=(1.0, 1.05))
+s.neg(T(19), 2)
+s.flare(T(19), frames=3, corner="tl")
+s.block(round(T(20) - 2 * F1, 3), 2, (1180, 250, 430, 400), "#63E6E2", blend="difference")
+s.lightstreak(round(T(21) - 2 * F1, 3), frames=3)
+SCENES.append(s)
+sfx("whoosh-short.mp3", T(13), 0.12)
+sfx("whoosh-short.mp3", T(16), 0.12)
+sfx("impact-bass-1.mp3", T(19), 0.22)
+sfx("whoosh-short.mp3", T(19), 0.12)
+cap([[W(13, "M", "To"), W(14, "M", "some"), W(15, "M", "people,")]], T(16), y=560)
+cap([[W(16, "S", "he'll")], [W(17, "B", "always"), W(18, "S", "be")]], T(19), x=1820, y=540, align="right", lh=0.95)
+cap([[W(19, "FNS", "Edward")], [W(20, "FNS", "Cullen.")]], T(21), x=100, y=560, align="left", lh=0.84, kind="name",
+    exit_first=round(T(21) - 0.17, 3))
+
+# ---------------- S04 "But everything he did after Twilight proved he was never stuck" ----------------
+s = Scene("s04", T(21), T(32))
+# "But everything": the gold eyes, close (1080p)
+s.video("c_twn_eyes.mp4", T(21), T(23), grade="film_soft", push=(1.0, 1.06))
+# "he did after": a whip into Edward striding past the car
+camW, vW = s.video("c_twn_walk.mp4", T(23), T(26), grade="film_soft", push=(1.05, 1.0),
+                   vars_style="--hf-color-grading-blur: 0.85;")
+s.whip_in(camW, vW, T(23), dx=1)
+# "Twilight": the poster as a sharp card on black (it is only 1000 px wide), pushing in, then it burns to white
+s.solid(T(26), T(27), "#000000")
+camP, vP = s.image("tw_poster.jpg", T(26), T(27), grade="matte", push=None, box=(560, 110, 800, 860), card=True,
+                   pos="50% 0%", vars_style="--hf-color-grading-exposure: 0;")  # cropped above the poster's own title
+s.js.append(f'tl.fromTo("#{camP}", {{ scale: 0.9 }}, {{ scale: 1.05, duration: {r3(T(27) - T(26))}, ease: "power1.out" }}, {s.at(T(26))});')
+s.blow_out(vP, T(27), 0.24, 1.8)
+s.whiteflash(T(27), 0.16)
+s.lightstreak(round(T(27) - 2 * F1, 3), frames=2)
+# "proved he was never stuck" (improved year counter, the Hemant Taneja wall): the years roll in bold Helvetica in a
+# black band; each year's film pops out from behind the number in three low-frame-rate steps, lands as a white box
+# and turns into the picture (role clips play), filling a 5x3 wall; the wall keeps pushing in; 2026 lands on
+# "stuck" with The Odyssey and Dune and a white flash
+s.solid(T(27), T(32), "#000000")
+YEARS = [("2012", "f_belami.jpg", None, None), ("2014", "c_rover.mp4", 0.0, 0.75), ("2015", "f_queen.jpg", None, None),
+         ("2016", "f_lostcity.jpg", None, None), ("2017", "c_connie.mp4", 0.1, None), ("2018", "f_damsel.jpg", None, None),
+         ("2019", "c_lighthouse.mp4", 0.1, None), ("2020", "tn_red.jpg", None, None), ("2022", "c_cowl.mp4", 0.0, None),
+         ("2025", "c_mickey.mp4", 0.4, None), ("2026", "c_antinous_fire.mp4", 0.6, None)]
+EXTRA_2026 = ("c_scytale.mp4", 0.8, None)
+STEP_D = [0.06, 0.06, 0.07, 0.07, 0.08, 0.09, 0.10, 0.12, 0.14, 0.17]  # sums to T(31) - T(27): 2026 lands on "stuck"
+FILL = [(0, 2), (2, 2), (1, 0), (1, 4), (0, 0), (2, 4), (0, 4), (2, 0), (0, 1), (2, 3), (0, 3), (2, 1)]
+CW, CH, GAP = 384, 360, 5
+times = [T(27)]
+for d in STEP_D:
+    times.append(round(times[-1] + d, 3))
+times[-1] = T(31)
+tiles = [(yr, src, ms, rate, times[k]) for k, (yr, src, ms, rate) in enumerate(YEARS)]
+tiles.append(("2026", EXTRA_2026[0], EXTRA_2026[1], EXTRA_2026[2], round(T(31) + 2 * F1, 3)))
+grp_first = len(s.els)
+for k, (yr, src, ms, rate, t0) in enumerate(tiles):
+    r_, c_ = FILL[k]
+    box = (c_ * CW + GAP, r_ * CH + GAP, CW - 2 * GAP, CH - 2 * GAP)
+    cx, cy = c_ * CW + CW // 2, r_ * CH + CH // 2
+    bid = s.uid("pbox")
+    s.raw(f'<div id="{bid}" class="clip pbox" {s.timed(round(t0 - 4 * F1, 3), t0)} data-track-index="5" '
+          f'style="left:{box[0]}px;top:{box[1]}px;width:{box[2]}px;height:{box[3]}px;z-index:{s.nz()}"></div>')
+    s.js.append(f'tl.fromTo("#{bid}", {{ x: {round((960 - cx) * 0.85)}, y: {round((540 - cy) * 0.85)}, scale: 0.4 }}, '
+                f'{{ x: 0, y: 0, scale: 1, duration: {r3(3 * F1)}, ease: "steps(3)" }}, {s.at(t0 - 4 * F1)});')
+    s.js.append(f'tl.set("#{bid}", {{ filter: "blur(0px)" }}, {s.at(t0 - F1)});')
+    if src.endswith(".mp4"):
+        cam, mid = s.video(src, t0, T(32), ms=ms or 0.0, rate=rate, grade="matte", push=None, box=box,
+                           vars_style="--hf-color-grading-exposure: 0.85;")
+    else:
+        cam, mid = s.image(src, t0, T(32), grade="matte", push=None, box=box, pos="50% 35%",
+                           vars_style="--hf-color-grading-exposure: 0.85;")
+    s.js.append(f'tl.set("#{cam}", {{ scale: 1.06 }}, {s.at(t0)});')
+    s.js.append(f'tl.set("#{mid}", {{ "--hf-color-grading-exposure": 0.25 }}, {s.at(t0 + F1)});')
+    s.js.append(f'tl.set("#{cam}", {{ scale: 1.0 }}, {s.at(t0 + 2 * F1)});')
+    s.js.append(f'tl.set("#{mid}", {{ "--hf-color-grading-exposure": 0 }}, {s.at(t0 + 2 * F1)});')
+gid = s.uid("wall")
+inner = "".join(s.els[grp_first:])
+del s.els[grp_first:]
+s.els.append(f'<div class="cam" id="{gid}" style="position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:{s.nz()}">{inner}</div>')
+s.js.append(f'tl.fromTo("#{gid}", {{ scale: 1.0 }}, {{ scale: 1.045, duration: {r3(T(32) - T(27))}, ease: "sine.inOut" }}, {s.at(T(27))});')
+s.counter([(yr, t) for (yr, src, ms, rate, t) in tiles[:-1]], T(32), 960, 560, 260)
+s.whiteflash(T(31), 0.18, 0.85)
+SCENES.append(s)
+sfx("whoosh-short.mp3", T(21), 0.18)
+sfx("whoosh.mp3", T(23) - 0.04, 0.26)
+sfx("whoosh-short.mp3", T(26), 0.14)
+sfx("whoosh.mp3", T(27) - 0.05, 0.24)
+sfx("impact-bass-1.mp3", T(31), 0.26)
+cap([[W(21, "S", "But"), W(22, "B", "everything")]], T(23), y=820)
+cap([[W(23, "S", "he"), W(24, "S", "did"), W(25, "S", "after")]], T(26), x=110, y=540, align="left")
+cap([[W(26, "XL", "Twilight")]], T(27), y=600)
+cap([[W(27, "SM", "proved"), W(28, "SM", "he"), W(29, "SM", "was"), W(30, "SM", "never"), W(31, "SM", "stuck")]],
+    T(32), y=672)
+
+# ---------------- S05 paper: "in / one / role." (kept as before) ----------------
+s = Scene("s05", T(32), T(35))
+s.paper(T(32), T(35))
+SCENES.append(s)
+paper_words([(32, "PS", "in"), (33, "PS", "one"), (34, "PXL", "role.")], T(35), last_exit="blurout")
+
+# ---------------- S06 "He spent the last 15 years making sure the world sees him more than just the vampire kid." ----
+s = Scene("s06", T(35), T(53))
+# "He spent the last 15 years" (Legora: "and their first office was", a small centred photo on black with the words
+# placed around it): his portraits strobe and accelerate inside a fixed frame, hitting "15" with a flash; the frame
+# then holds on him between "15" and "years", so no word sits on his face
+s.solid(T(35), T(41), "#000000")
+FB = (500, 230, 920, 620)
+STROBE = [("solo01.jpg", 0.22), ("solo02.jpg", 0.18), ("solo03.jpg", 0.15), ("solo05.jpg", 0.13), ("solo06.jpg", 0.12),
+          ("solo07.jpg", 0.12), ("hero.jpg", 0.12)]
+grp_first = len(s.els)
+tcur = T(35)
+for im, d in STROBE:
+    t_next = round(tcur + d, 3)
+    s.image(im, tcur, t_next, grade="matte", push=(1.06, 1.0), box=(0, 0, FB[2], FB[3]),
+            pos="50% 42%" if im != "hero.jpg" else "50% 35%")
+    tcur = t_next
+camF, imF = s.image("solo04.jpg", T(39), T(41), grade="matte", push=(1.0, 1.07), box=(0, 0, FB[2], FB[3]), pos="50% 42%",
+                    vars_style="--hf-color-grading-exposure: 1.1;")
+s.blow_in(imF, T(39), 0.3)
+frm = s.uid("frame")
+inner = "".join(s.els[grp_first:])
+del s.els[grp_first:]
+s.els.append(f'<div class="cam" id="{frm}" style="position:absolute;left:{FB[0]}px;top:{FB[1]}px;width:{FB[2]}px;'
+             f'height:{FB[3]}px;overflow:hidden;box-sizing:border-box;border:5px solid #F4EFEB;'
+             f'box-shadow:0 30px 80px rgba(0,0,0,0.6);z-index:{s.nz()}">{inner}</div>')
+s.js.append(f'tl.fromTo("#{frm}", {{ scale: 0.94 }}, {{ scale: 1.0, duration: {r3(T(41) - T(35))}, ease: "sine.out" }}, {s.at(T(35))});')
+s.whiteflash(T(39), 0.14, 0.7)
+# "making sure": Venice, arriving (1080p crop from the phone original, below the watermark)
+s.video("c_ven_hair.mp4", T(41), T(43), grade="matte", push=(1.0, 1.05))
+s.neg(T(41), 2)
+# "the world": the crowd's cameras and phones on him
+s.video("c_ven_crowd.mp4", T(43), T(45), grade="matte", push=(1.06, 1.0))
+# "sees him": three premiere panels at native size wipe in left to right; camera flashes pop on them
+for k, src in enumerate(["p_carpet_a.mp4", "p_carpet_b.mp4", "p_carpet_c.mp4"]):
+    t0 = round(T(45) + k * 2 * F1, 3)
+    cam, vid = s.video(src, t0, T(47), grade="matte", push=None, box=(k * 640, 0, 640, 1080),
+                       cam_extra="clip-path:inset(0% 100% 0% 0%);")
+    s.js.append(f'tl.fromTo("#{cam}", {{ clipPath: "inset(0% 100% 0% 0%)" }}, {{ clipPath: "inset(0% 0% 0% 0%)", '
+                f'duration: 0.16, ease: "expo.out" }}, {s.at(t0)});')
+for t, k, fr in [(T(45) + 0.12, 1, 1), (T(45) + 0.20, 0, 2), (T(46), 2, 2), (T(46) + 0.10, 1, 1), (T(46) + 0.15, 0, 1)]:
+    s.block(round(t, 3), fr, (k * 640, 0, 640, 1080), "#ffffff", opacity=0.85)
+# "more than just": back to Edward, in the forest (1080p)
+s.video("c_twn_forest.mp4", T(47), T(50), grade="film_soft", push=(1.0, 1.05))
+s.neg(T(47), 2)
+# "the vampire kid.": text behind him: the plate, "vampire" in glowing serif, then his cut-out over it, all pushing in
+cam = s.uid("cam")
+z = s.nz()
+s.uses_text = True
+vw, vt = f"{cam}-vw", f"{cam}-vampire"
+s.raw(f'<div class="cam" id="{cam}" style="position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:{z}">'
+      f'<img id="{cam}-plate" class="clip" src="assets/img/f_twn_vamp.jpg" alt="" {s.timed(T(50), T(53))} '
+      f'data-color-grading="{esc(GR["film_soft"])}" data-track-index="3" '
+      f'style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover" />'
+      f'<div id="{vw}" class="clip txw al" {s.timed(T(51), T(53))} data-track-index="6" '
+      f'style="left:230px;width:1600px;top:120px;height:440px;text-align:left">'
+      f'<span id="{vt}" class="tx" style="font-family:\'Instrument Serif\';font-size:330px;color:#F7F4F7;opacity:0;'
+      f'text-shadow:{SERIF_REST}">vampire</span></div>'
+      f'<img id="{cam}-cut" class="clip" src="assets/img/f_twn_vamp-cut.png" alt="" {s.timed(T(50), T(53))} '
+      f'data-color-grading="{esc(GR["film_soft"])}" data-track-index="4" data-layout-allow-occlusion '
+      f'style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover" />'
+      f'</div>')
+s.js.append(f'tl.fromTo("#{cam}", {{ scale: 1.0 }}, {{ scale: 1.07, duration: {r3(T(53) - T(50))}, ease: "none" }}, {s.at(T(50))});')
+# the serif hero settle, measured on the reference: one blown-out frame, three soft frames, then crisp
+s.js.append(f'tl.set("#{vt}", {{ opacity: 1, scale: 1.04, filter: "blur(14px)", textShadow: "{SERIF_BLOOM}" }}, {s.at(T(51))});')
+s.js.append(f'tl.set("#{vt}", {{ scale: 1.015, filter: "blur(5px)", textShadow: "{SERIF_SOFT}" }}, {s.at(T(51) + F1)});')
+s.js.append(f'tl.set("#{vt}", {{ scale: 1.005, filter: "blur(2.5px)" }}, {s.at(T(51) + 3 * F1)});')
+s.js.append(f'tl.set("#{vt}", {{ scale: 1, filter: "blur(0px)", textShadow: "{SERIF_REST}" }}, {s.at(T(51) + 4 * F1)});')
+SCENES.append(s)
+sfx("whoosh-short.mp3", T(35), 0.14)
+sfx("impact-bass-1.mp3", T(39), 0.24)
+sfx("whoosh-short.mp3", T(41), 0.14)
+sfx("whoosh-short.mp3", T(43), 0.12)
+sfx("whoosh-short.mp3", T(45), 0.14)
+sfx("whoosh-short.mp3", T(47), 0.12)
+sfx("whoosh-short.mp3", T(50), 0.12)
+cap([[W(35, "S", "He")]], T(39), x=455, y=540, align="right")
+cap([[W(36, "S", "spent")]], T(39), x=1465, y=540, align="left")
+cap([[W(37, "S", "the"), W(38, "S", "last")]], T(39), y=955)
+cap([[W(39, "NUM", "15")]], T(41), x=465, y=600, align="right")
+cap([[W(40, "B", "years")]], T(41), x=1460, y=600, align="left")
+cap([[W(41, "S", "making"), W(42, "S", "sure")]], T(43), y=900)
+cap([[W(43, "S", "the"), W(44, "B", "world")]], T(45), y=860)
+cap([[W(45, "M", "sees"), W(46, "M", "him")]], T(47), y=560)
+cap([[W(47, "S", "more"), W(48, "S", "than"), W(49, "S", "just")]], T(50), y=880)
+cap([[W(50, "M", "the")]], T(53), x=150, y=190, align="left")
+cap([[W(52, "M", "kid.")]], T(53), x=1790, y=940, align="right")
+
+
 # --------------------------------------------------------------------------------------------
 # write everything
 # --------------------------------------------------------------------------------------------
@@ -825,7 +1040,7 @@ def write_root():
             f'<div id="{sc.sid}" class="clip" data-composition-id="{sc.sid}" data-composition-src="compositions/{sc.sid}.html" '
             f'data-start="{r3(sc.start)}" data-duration="{r3(sc.dur)}" data-track-index="1" data-track-kind="graphics" '
             f'data-width="1920" data-height="1080" style="z-index:{10 + k}"></div>')
-    for lid, t0, d in (("leak1", T(26) + 0.30, 0.80), ("leak2", T(182) + 0.10, 1.30)):
+    for lid, t0, d in (("leak1", T(26) + 0.05, 0.75), ("leak2", T(182) + 0.10, 1.30)):
         if t0 + d <= DUR:
             hosts.append(
                 f'<div id="{lid}" class="clip" data-composition-id="{lid}" data-composition-src="compositions/{lid}.html" '
