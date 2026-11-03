@@ -410,8 +410,13 @@ STY = {
 
 STY["OS"] = ("Instrument Serif", 400, False, 150, "#F7F4F7", True)    # cold open, The Odyssey line
 STY["OSB"] = ("Instrument Serif", 400, False, 230, "#F7F4F7", True)
+STY["LS"] = ("Instrument Serif", 400, False, 96, "#F7F4F7", True)     # small serif in a small-big lockup
 for _k, _v in list(STY.items()):  # v5 (user): no slanted type anywhere
     STY[_k] = (_v[0], _v[1], False, _v[3], _v[4], _v[5])
+# v5 (user): black words on paper are bold Helvetica (as in the F1 reference), punch words just bigger
+STY["PM"] = ("Inter Tight", 800, False, 130, "#0B0B0B", False)
+STY["PB"] = ("Inter Tight", 800, False, 160, "#0B0B0B", False)
+STY["PXL"] = ("Inter Tight", 800, False, 200, "#0B0B0B", False)
 
 CAPS = []  # list of dicts
 
@@ -646,40 +651,90 @@ for k, ((row, col), (clip, ms)) in enumerate(zip(grid_order, grid_clips)):
 s.flare(5.40, frames=3, corner="tl")
 s.block(round(T(1) - 2 / 30, 3), 2, (800, 400, 330, 300), "#63E6E2", blend="difference")
 s.lightstreak(round(T(2) - 2 / 30, 3), frames=3)
-# "is on a generational run": his roles flick by under a light halftone; the 2026 slate cut into its four films,
-# each strip stepping up from below at a low frame rate, one per word
-s.video("c_genbg.mp4", T(2), T(6), grade="halftone_soft", push=(1.04, 1.1), vars_style="--hf-color-grading-exposure: -0.3;")
-strips = [("slate_drama.jpg", T(2)), ("slate_odyssey.jpg", T(3)), ("slate_prime.jpg", T(4)), ("slate_dune.jpg", T(5))]
-SW, SHH, SX, SY, SG = 700, 216, 110, 84, 14
-for k, (im, t0) in enumerate(strips):
-    y = SY + k * (SHH + SG)
-    cam, imid = s.image(im, t0, T(6), grade="matte", push=None, box=(SX, y, SW, SHH), card=True)
-    s.js.append(f'tl.fromTo("#{cam}", {{ y: {1080 - y + 30} }}, {{ y: 0, duration: 0.42, ease: "steps(6)" }}, {s.at(t0)});')
-    s.js.append(f'tl.to("#{cam}", {{ scale: 1.025, duration: {r3(T(6) - t0 - 0.42)}, ease: "none" }}, {s.at(t0 + 0.42)});')
-camR, vR = s.video("c_run.mp4", T(6), T(7), grade="matte", push=(1.18, 1.0), pushease="expo.out",
-                   vars_style="--hf-color-grading-exposure: 1.2;")
-s.blow_in(vR, T(6), 0.3)
-s.whiteflash(T(6), 0.18)
-s.solid(T(7), T(8), "#050505")
-# "honestly": the Kimmel laugh as a playing video card at its native 1280x720 (the source is 720p, so full frame
-# would be soft), dropped onto the paper that carries "nobody saw it coming."
-s.paper(T(8), T(13))
-camK, vK = s.video("c_kimmel_card.mp4", T(8), T(9), grade="matte", push=None, box=(110, 250, 1024, 576), card=True)
-s.js.append(f'tl.fromTo("#{camK}", {{ scale: 1.2, y: -30, rotation: -4.5, opacity: 0 }}, {{ scale: 1, y: 0, rotation: -1.5, '
-            f'opacity: 1, duration: 0.26, ease: "expo.out" }}, {s.at(T(8))});')
-s.js.append(f'tl.to("#{camK}", {{ scale: 1.035, duration: {r3(T(9) - T(8) - 0.26)}, ease: "none" }}, {s.at(T(8) + 0.26)});')
+# "is on a generational run" (user references: Legora "a group of founders in their 20s" and the General Catalyst
+# "Logan Roy" collage): the role footage plays full frame, snaps back into a centred frame with black around it, and
+# small pictures (the four 2026 film cut-outs and four of his roles) flash in around it on the black as white boxes
+# that turn into glowing pictures; the collage inverts for two frames, then the pictures fall out of focus behind the
+# sharp centre; on "run," the camera pushes into the centre and through into the Batman car scene
+FR = 0.62
+PICS = [  # image, centre x, centre y, w, h, tilt
+    ("slate_drama.jpg", 250, 180, 440, 136, -4), ("gt_neon.jpg", 1700, 520, 300, 190, 3),
+    ("slate_prime.jpg", 260, 905, 440, 136, 3), ("mk_helmet.jpg", 700, 95, 300, 170, -2),
+    ("slate_odyssey.jpg", 1665, 195, 440, 136, 4), ("bt_cowl.jpg", 205, 545, 300, 190, -3),
+    ("slate_dune.jpg", 1670, 890, 440, 136, -4), ("lh_portrait.jpg", 1225, 985, 280, 170, 2),
+]
+PIC_T0 = round(T(4) + 0.10, 3)
+pic_cams = []
+for k, (im, cx, cy, w, h, rot) in enumerate(PICS):  # made first, so they sit behind the centre frame
+    t0 = round(PIC_T0 + k * 0.05, 3)
+    box = (cx - w // 2, cy - h // 2, w, h)
+    s.block(round(t0 - 2 / 30, 3), 2, box, "#ffffff")  # the white box that becomes the picture
+    cam, imid = s.image(im, t0, T(6), grade="matte", push=None, box=box, card=True, pos="50% 35%",
+                        vars_style="--hf-color-grading-blur: 0;")
+    s.js.append(f'tl.fromTo("#{cam}", {{ scale: 0.9, rotation: {rot} }}, {{ scale: 1, rotation: {rot}, duration: 0.3, '
+                f'ease: "power3.out" }}, {s.at(t0)});')
+    s.js.append(f'tl.fromTo("#{imid}", {{ boxShadow: "0 0 40px 6px rgba(255,255,255,0.75)" }}, '
+                f'{{ boxShadow: "0 0 18px 2px rgba(255,255,255,0.28)", duration: 0.3, ease: "power3.out" }}, {s.at(t0)});')
+    pic_cams.append((cam, imid, cx, cy, t0))
+camG, vG = s.video("c_genbg.mp4", T(2), T(6), grade="matte", push=None,
+                   cam_extra="box-shadow: 0 40px 120px rgba(0,0,0,0.7);")
+PUSH = 0.2  # the push into "run," starts this long before the word
+s.scale_keys(camG, [(T(2), 1.0, 1.02, round(T(4) - T(2), 3), "none"),
+                    (T(4), 1.02, FR, 0.24, "power3.out"),
+                    (round(T(4) + 0.24, 3), FR, FR + 0.02, round(T(6) - PUSH - T(4) - 0.24, 3), "none"),
+                    (round(T(6) - PUSH, 3), FR + 0.02, 1.25, PUSH, "power2.in")])
+# a picture blinks out for a frame here and there, like the reference's flicker
+for k, (cam, imid, cx, cy, t0) in enumerate(pic_cams):
+    if k % 3 == 1:
+        s.js.append(f'tl.set("#{imid}", {{ opacity: 0 }}, {s.at(t0 + 0.27)});')
+        s.js.append(f'tl.set("#{imid}", {{ opacity: 1 }}, {s.at(t0 + 0.27 + 1 / 30)});')
+INV = round(PIC_T0 + 8 * 0.05 + 0.12, 3)
+s.neg(INV, 2)  # the collage inverts for two frames
+for cam, imid, cx, cy, t0 in pic_cams:
+    # out of focus behind the sharp centre, then thrown outward by the push
+    s.js.append(f'tl.to("#{imid}", {{ "--hf-color-grading-blur": 0.38, duration: 0.3, ease: "power2.out" }}, '
+                f'{s.at(INV + 2 / 30)});')
+    s.js.append(f'tl.to("#{cam}", {{ x: {round((cx - 960) * 0.8)}, y: {round((cy - 540) * 0.8)}, scale: 1.5, '
+                f'duration: {PUSH}, ease: "power2.in" }}, {s.at(T(6) - PUSH)});')
+# "run,": the fast stretch of the user's Batman cut, arriving inside the push and settling; it runs on under "and"
+camR, vR = s.video("c_run2.mp4", T(6), T(8), grade="matte", push=None, rate=round(1.0 / (T(8) - T(6)), 3))
+s.scale_keys(camR, [(T(6), 1.22, 1.0, 0.36, "expo.out"), (round(T(6) + 0.36, 3), 1.0, 1.02, round(T(8) - T(6) - 0.36, 3), "none")])
+s.lightstreak(round(T(6) - 1 / 30, 3), frames=2)
+# "and honestly," (user: keep the full-frame talk-show video and the white silhouette; reference: General Catalyst
+# opening): his first frame as a glowing white silhouette over the darkened frame, flickering back to the real frame
+# for single frames, with glitch boxes; then the clip plays
+KS = T(8)
+KP = round(KS + 0.42, 3)  # the video starts moving here
+s.image("kim2_f0.jpg", KS, KP, grade="matte", push=(1.0, 1.015), vars_style="--hf-color-grading-exposure: -0.95;")
+sil_segments = [(KS, round(KS + 0.14, 3)), (round(KS + 0.175, 3), round(KS + 0.34, 3)), (round(KS + 0.375, 3), KP)]
+for a, b in sil_segments:
+    sid_ = s.uid("ksil")
+    s.raw(f'<img id="{sid_}" class="clip" src="assets/img/kim2_sil.png" alt="" {s.timed(a, b)} data-track-index="4" '
+          f'style="position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0.94;z-index:{s.nz()}" />')
+# glitch: a band of the real frame cut through the silhouette, plus small white bars
+gl = s.uid("kgl")
+s.raw(f'<img id="{gl}" class="clip" src="assets/img/kim2_f0.jpg" alt="" {s.timed(round(KS + 0.25, 3), round(KS + 0.317, 3))} '
+      f'data-color-grading="{esc(GR["matte"])}" data-track-index="5" '
+      f'style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;'
+      f'clip-path:inset(46% 30% 42% 22%);z-index:{s.nz()}" />')
+s.block(round(KS + 0.25, 3), 2, (1270, 300, 46, 210), "#ffffff")
+s.block(round(KS + 0.283, 3), 1, (1330, 470, 70, 14), "#ffffff")
+s.block(round(KS + 0.36, 3), 2, (1180, 420, 36, 160), "#ffffff")
+s.video("c_kimmel_laugh2.mp4", KP, T(9), grade="matte", push=(1.0, 1.04))
+s.paper(T(9), T(13))
 SCENES.append(s)
 sfx("impact-bass-1.mp3", 5.40, 0.36)
 sfx("whoosh-short.mp3", 5.40, 0.12)
 sfx("whoosh-short.mp3", T(2), 0.14)
-sfx("whoosh.mp3", T(6), 0.30)
-sfx("whoosh-short.mp3", T(8), 0.14)
+sfx("whoosh-short.mp3", T(4), 0.14)
+sfx("whoosh.mp3", round(T(6) - PUSH, 3), 0.24)
+sfx("whoosh-short.mp3", KS, 0.12)
+sfx("impact-bass-1.mp3", T(6), 0.20)
 cap([[("Robert", 5.40, "FN"), W(1, "FN", "Pattinson")]], T(2), y=560, kind="name", exit_first=round(T(2) - 0.17, 3))
-cap([[W(2, "S", "is"), W(3, "S", "on"), W(4, "S", "a")], [W(5, "MI", "generational")]], T(6), x=900, y=540,
-    align="left", lh=1.0)
-cap([[W(6, "XL", "run,")]], T(7), y=560)
-cap([[W(7, "S", "and")]], T(8), y=545)
-cap([[W(8, "PM", "honestly,")]], T(9), x=1820, y=560, align="right", kind="paper")
+cap([[W(2, "S", "is"), W(3, "S", "on"), W(4, "S", "a")]], T(6), y=380)
+cap([[W(5, "FSL", "generational"), W(6, "FSL", "run,")]], T(7), y=610)
+# the reference's lockup: a small serif word, then a big one on the same baseline, beside the silhouette
+cap([[W(7, "LS", "and"), W(8, "B", "honestly,")]], T(9), x=130, y=330, align="left")
 paper_words([(9, "PS", "nobody"), (10, "PS", "saw"), (11, "PS", "it"), (12, "PXL", "coming.")], T(13), last_exit="blurout")
 
 # --------------------------------------------------------------------------------------------

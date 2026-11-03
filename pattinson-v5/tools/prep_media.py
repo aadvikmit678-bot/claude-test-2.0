@@ -39,6 +39,7 @@ V = {
     "VENICE": "Pattison raw video.mp4",
     "CRAZY": "Robert Pattison crazy batman edit.mp4",
     "TEN": "patison clear video wo text.mp4",
+    "RUNUSER": "user-clips/run_clip.mp4",  # the user's Batman cut for "run" (v5)
 }
 
 # id: (source key, in, duration, W, H, cx, cy, zoom, content-box [x,y,w,h] relative or None)
@@ -144,6 +145,9 @@ CLIP_SPECS = {
     # ---- v5 ----
     # the Kimmel laugh at its native 1280x720 (no enlargement), shown as a card
     "c_kimmel_card": ("KIM", 211.65, 0.85, 1280, 720, 0.5, 0.45, 1.0, None),
+    # "run": the fast stretch of the user's clip (afterburner, speedometer, Batman driving, chase POV); a slight
+    # zoom drops the small watermark at the bottom of the chase shots
+    "c_run2": ("RUNUSER", 1.05, 1.0, 1920, 1080, 0.5, 0.44, 1.1, None),
 }
 
 # the 2026 slate cut into its four film strips (y0, y1 in the 1350x1688 still)
