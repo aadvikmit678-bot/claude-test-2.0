@@ -42,6 +42,9 @@ V = {
     "RUNUSER": "user-clips/run_clip.mp4",  # the user's Batman cut for "run" (v5)
     "TWNEW": "user-clips/twilight_new.mp4",  # the user's 1080p Twilight footage (v5 segment 2)
     "WORLD": "user-clips/world_right.mp4",  # the user's red-carpet clip for "the world sees him" (right panel)
+    "NOLAN": "user-clips/nolan_clip.mp4",  # The Odyssey featurette (1080p): Nolan at the IMAX camera at 27.8 s
+    "BAT2": "user-clips/batman_new.mp4",  # the user's second Batman edit (2880x2160): 6-7 s for "he became Batman"
+    "ROLES": "user-clips/roles_new.mp4",  # the user's Batman makeup test (1992x1436) for "He doesn't play characters..."
 }
 
 # id: (source key, in, duration, W, H, cx, cy, zoom, content-box [x,y,w,h] relative or None)
@@ -128,8 +131,10 @@ CLIP_SPECS = {
     # primetime: the real "have a seat right there" moment, cropped above its burned caption
     "c_hansen_cu": ("M2", 0.05, 0.92, 1920, 1080, 0.5, 0.45, 1.0, None),
     "c_pt_worried": ("PT", 12.35, 0.66, 1920, 1080, 0.5, 0.45, 1.0, None),
-    "c_seat1": ("PT", 0.25, 1.50, 1920, 1080, 0.47, 0.23, 1.22, None),
-    "c_seat2": ("PT", 1.75, 0.66, 1920, 1080, 0.5, 0.5, 1.0, None),
+    # v5 (user): his body shows -- full width of the square source, from just above his head; the film's own
+    # subtitle stays (it sits mid-chest and is in sync with the sting audio), so no caption of ours duplicates it
+    "c_seat1": ("PT", 0.25, 1.47, 1920, 1080, 0.5, 0.42, 1.0, None),
+    "c_seat2": ("PT", 1.733, 0.70, 1920, 1080, 0.5, 0.337, 1.0, None),
     # payoff role switch (King -> Mickey 17 -> Devil All the Time -> Good Time)
     "c_roles": ("MON", 0.22, 1.00, 1920, 1080, 0.5, 0.42, 1.0, None),
     # ---- v3 (user notes) ----
@@ -171,6 +176,18 @@ CLIP_SPECS = {
     # "the world sees him": the user's two clips for the left and right panels (the centre stays)
     "p_frame_l": ("FRAME", 0.50, 0.55, 640, 1080, 0.5, 0.40, 1.0, None),
     "p_world_r": ("WORLD", 3.20, 0.55, 640, 1080, 0.5, 0.45, 1.0, None),
+    # ---- v5 segment 4 (37.68-43.52): "he was quietly working with the best directors alive, until one day he became Batman"
+    "c_quiet": ("MON", 14.30, 0.85, 1920, 1080, 0.5, 0.42, 1.0, None),        # he was quietly: The Lighthouse, by the lamp
+    "c_nolan_imax": ("NOLAN", 27.80, 1.90, 1920, 1080, 0.5, 0.5, 1.0, None),  # the whole directors line: Nolan at the IMAX camera
+    # ---- v5 segment 5 (43.52-51.44): "He doesn't play characters, he becomes them. He picks roles that scare the shit out
+    # of others, the ones everyone else runs from." -- the user's makeup-test clip, shot by shot (cuts at 4.21 / 8.43 /
+    # 11.35 / 14.26 / 16.22 s)
+    "c_r_face": ("ROLES", 0.00, 1.25, 1920, 1080, 0.5, 0.40, 1.0, None),    # the clean face, before the spray bottle enters
+    "c_r_tears": ("ROLES", 5.80, 1.32, 1920, 1080, 0.5, 0.40, 1.0, None),   # the eye black running
+    "c_r_wide": ("ROLES", 8.55, 0.92, 1920, 1080, 0.5, 0.45, 1.0, None),    # alone in the studio
+    "c_r_low": ("ROLES", 11.40, 1.86, 1920, 1080, 0.5, 0.40, 1.0, None),    # the low angle
+    "c_r_red": ("ROLES", 14.32, 1.22, 1920, 1080, 0.5, 0.50, 1.0, None),    # the red room
+    "c_r_mon": ("ROLES", 16.28, 0.92, 1920, 1080, 0.5, 0.50, 1.0, None),    # the monitors
 }
 
 # the 2026 slate cut into its four film strips (y0, y1 in the 1350x1688 still)
@@ -315,6 +332,21 @@ def make_clip(cid):
     return out
 
 
+def make_bat2():
+    """The user's second Batman edit, 6-7 s: ten flashes of three frames each, then the cowl close-up.
+    Strobe: frames 180-209 with every third frame dropped (two frames per flash, 20 frames) for "he became".
+    Cowl: frames 210-228 at half speed (each frame twice, 38 frames) for "Batman". 4:3 source, 16:9 crop."""
+    src = f"{SRC}/{V['BAT2']}"
+    crop = "crop=2880:1620:0:97,scale=1920:1080:flags=lanczos,setsar=1"
+    enc = ["-an", "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-g", "15", "-movflags", "+faststart"]
+    run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-ss", "6.0", "-i", src,
+         "-vf", f"select='lt(n\\,30)*not(eq(mod(n\\,3)\\,2))',setpts=N/(30*TB),{crop},format=yuv420p",
+         "-r", "30", "-frames:v", "20", *enc, f"{CLIPS}/c_bat2_strobe.mp4"])
+    run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-ss", "7.0", "-i", src,
+         "-vf", f"select='lt(n\\,19)',setpts=2*N/(30*TB),fps=30,{crop},format=yuv420p",
+         "-r", "30", "-frames:v", "38", *enc, f"{CLIPS}/c_bat2_cowl.mp4"])
+
+
 def make_frame(fid):
     key, t, Wt, Ht, cx, cy, zoom, lb = FRAME_SPECS[fid]
     src = f"{SRC}/{V[key]}"
@@ -432,6 +464,8 @@ if __name__ == "__main__":
     for sid in STILLS:
         if want(sid):
             make_still(sid); print("still", sid)
+    if want("bat2"):
+        make_bat2(); print("bat2")
     if want("slate_strips"):
         make_slate_strips(); print("slate strips")
     if want("paper"):

@@ -21,7 +21,7 @@ import html, json, os, re, shutil
 ROOT = "/home/user/claude-test-2.0"
 PRJ = f"{ROOT}/pattinson-v5"
 COMP = f"{PRJ}/compositions"
-DUR = 37.68  # end of the segments built so far (segments 1-3: up to the end of the "spider monkey" line)
+DUR = 81.37  # the whole film: v4's 2.55 s end card after "seen" (end card at 78.82)
 LEAD = 0.07  # captions and cuts arrive 2 frames before the word
 
 GR = json.load(open(f"{PRJ}/tools/gradings.json"))
@@ -1180,6 +1180,362 @@ cap([[W(82, "FSL", "Twilight"), W(83, "FSL", "jokes")]], 35.33, y=540)
 cap([[("you better hold on tight", 35.43, "R")]], 36.53, y=150)
 cap([[("spider", 36.53, "FSI"), ("monkey", 36.71, "FSI")]], 37.68, y=880)
 
+# ---------------- S10 "he was quietly working with the best directors alive, until one day he became Batman" ----------
+# v4's beat with the user's changes: a new "quietly" shot, Nolan at the IMAX camera for the whole directors line
+# (no director strobe), and the user's second Batman edit (6-7 s) behind "he became Batman" under v4's reveal
+s = Scene("s10", T(84), T(99))
+s.video("c_quiet.mp4", T(84), T(87), grade="matte_bw", push=(1.0, 1.05))   # The Lighthouse, by the lamp
+s.neg(T(84), 2)
+s.video("c_lh_work.mp4", T(87), T(88), grade="matte_bw", push=(1.0, 1.04))
+# one shot for "with the best directors alive": the camera itself pulls back ~23 %, so no push; it whips in from
+# the left and is scaled up while it slides, so the frame stays covered (scale >= 1 + 2x/1920)
+camN, vN = s.video("c_nolan_imax.mp4", T(88), T(93), grade="matte", push=None,
+                   vars_style="--hf-color-grading-blur: 0.85;")
+s.js.append(f'tl.fromTo("#{camN}", {{ x: -220, scale: 1.24 }}, {{ x: 0, scale: 1.0, duration: 0.22, ease: "power3.out" }}, '
+            f'{s.at(T(88))});')
+s.js.append(f'tl.to("#{vN}", {{ "--hf-color-grading-blur": 0, duration: 0.28, ease: "power2.out" }}, {s.at(T(88))});')
+s.video("c_backhead.mp4", T(93), T(96), grade="matte", push=(1.0, 1.04))
+# "he became": the user's clip, 6-7 s, ten flashes at two frames each; "Batman": the cowl close-up that follows,
+# with v4's reveal (negative, settle from 106 %, the two impacts)
+s.video("c_bat2_strobe.mp4", T(96), T(98), grade="matte", push=(1.0, 1.08))
+s.video("c_bat2_cowl.mp4", T(98), T(99), grade="matte", push=(1.06, 1.0), pushease="power2.out")
+s.neg(T(98), 3)
+SCENES.append(s)
+sfx("whoosh-short.mp3", T(84) - 0.02, 0.22)
+sfx("whoosh.mp3", T(88) - 0.04, 0.28)
+sfx("impact-bass-2.mp3", T(98), 0.42)
+sfx("impact-bass-1.mp3", T(98), 0.50)
+# captions keep off the faces: "quietly" over the dark half of the lamp shot, the directors line over Nolan's coat
+cap([[W(84, "S", "he"), W(85, "S", "was")], [W(86, "B", "quietly")]], T(87), x=150, y=540, align="left", lh=0.95)
+cap([[W(87, "M", "working")]], T(88), y=560)
+cap([[W(88, "S", "with"), W(89, "S", "the"), W(90, "S", "best")], [W(91, "B", "directors")]], T(92), x=110, y=470,
+    align="left", lh=0.95)
+cap([[W(92, "XL", "alive")]], T(93), x=110, y=470, align="left")
+cap([[W(93, "S", "until")]], T(94), y=800)
+cap([[W(94, "S", "one"), W(95, "S", "day")]], T(96), y=800)
+cap([[W(96, "S", "he"), W(97, "S", "became")]], T(98), x=1780, y=560, align="right")
+cap([[W(98, "XL", "Batman")]], T(99), y=905)
+
+# ---------------- S11 "He doesn't play characters, he becomes them. He picks roles that scare the shit out of others, the
+# ones everyone else runs from." The user's Batman makeup test, shot by shot, animated from the references: Legora's
+# ease back into a centred frame, the Dario serif glow and corner flare, the Hemant Taneja white silhouette, F1's sans
+s = Scene("s11", T(99), T(122))
+# "He doesn't play characters": the clean face (slowed, before the spray bottle comes in) eases back from full frame
+# into a centred frame (Legora: power4.out over 0.9 s), lifted so the line sits under it
+camF, vF = s.video("c_r_face.mp4", T(99), T(103), rate=round(1.22 / (T(103) - T(99)), 3), grade="matte", push=None,
+                   cam_extra="box-shadow: 0 40px 120px rgba(0,0,0,0.7);")
+s.js.append(f'tl.fromTo("#{camF}", {{ scale: 1.0, y: 0 }}, {{ scale: 0.62, y: -84, duration: 0.9, ease: "power4.out" }}, '
+            f'{s.at(T(99) + 0.12)});')
+s.js.append(f'tl.to("#{camF}", {{ scale: 0.6, duration: {r3(T(103) - T(99) - 1.02)}, ease: "none" }}, {s.at(T(99) + 1.02)});')
+s.whiteflash(T(99), 0.2, 0.85)
+# "he becomes them": the eye black running, full frame again; his white silhouette for two frames on "becomes"
+s.video("c_r_tears.mp4", T(103), T(106), grade="matte", push=(1.0, 1.06))
+s.neg(T(103), 2)
+s.silhouette("r_tears_sil.png", T(104), frames=2)
+s.flare(T(105), frames=3, corner="tr")
+# "He picks roles": alone in the studio, arriving from the right (scaled while it slides, so the frame stays covered)
+camW, vW = s.video("c_r_wide.mp4", T(106), T(109), grade="matte", push=None, vars_style="--hf-color-grading-blur: 0.85;")
+s.js.append(f'tl.fromTo("#{camW}", {{ x: 220, scale: 1.24 }}, {{ x: 0, scale: 1.02, duration: 0.22, ease: "power3.out" }}, '
+            f'{s.at(T(106))});')
+s.js.append(f'tl.to("#{camW}", {{ scale: 1.06, duration: {r3(T(109) - T(106) - 0.22)}, ease: "none" }}, {s.at(T(106) + 0.22)});')
+s.js.append(f'tl.to("#{vW}", {{ "--hf-color-grading-blur": 0, duration: 0.28, ease: "power2.out" }}, {s.at(T(106))});')
+# "that scare the shit out of others": the low angle creeping in; "scare" hits with a negative and a channel split
+s.video("c_r_low.mp4", T(109), T(116), grade="matte", push=(1.0, 1.1))
+s.neg(T(110), 2)
+s.rgbsplit("c_r_low.mp4", round(T(110) + 2 * F1, 3), ms=round(T(110) + 2 * F1 - T(109), 3), frames=2)
+# "the ones everyone else runs from": the red room pulling back, then the monitors
+s.video("c_r_red.mp4", T(116), T(120), grade="matte", push=(1.06, 1.0))
+s.video("c_r_mon.mp4", T(120), T(122), grade="matte", push=(1.0, 1.05))
+s.neg(T(120), 2)
+SCENES.append(s)
+sfx("whoosh.mp3", T(99) - 0.02, 0.24)
+sfx("whoosh-short.mp3", T(103), 0.16)
+sfx("tv-blip-soft.wav", T(104), 0.18)
+sfx("whoosh-short.mp3", T(106) - 0.02, 0.18)
+sfx("impact-bass-1.mp3", T(110), 0.30)
+sfx("whoosh-short.mp3", T(116), 0.14)
+sfx("whoosh-short.mp3", T(120), 0.14)
+cap([[W(99, "S", "He"), W(100, "S", "doesn't"), W(101, "S", "play"), W(102, "B", "characters")]], T(103), y=905)
+cap([[W(103, "S", "he"), W(104, "S", "becomes")], [W(105, "XL", "them")]], T(106), x=96, y=400, align="left", lh=0.95)
+cap([[W(106, "S", "He"), W(107, "S", "picks")], [W(108, "B", "roles")]], T(109), x=1820, y=540, align="right", lh=0.95)
+cap([[W(109, "S", "that")], [W(110, "B", "scare")]], T(111), x=96, y=430, align="left", lh=0.95)
+cap([[W(111, "S", "the"), W(112, "S", "shit"), W(113, "S", "out"), W(114, "S", "of")], [W(115, "B", "others")]], T(116),
+    x=1820, y=250, align="right", lh=0.95)
+cap([[W(116, "S", "the"), W(117, "S", "ones")], [W(118, "B", "everyone"), W(119, "B", "else")]], T(120), y=860, lh=0.95)
+cap([[W(120, "M", "runs"), W(121, "M", "from")]], T(122), y=880)
+
+# ---------------- S12 "And in 2026, we saw him do it all." (v4's "and this year?" paper, then the 1-2-3 triptych) ------
+s = Scene("s12", T(122), T(131))
+s.paper(T(122), T(125))
+tri = [("t_odyssey.mp4", "1", T(125), 4.0), ("t_prime.mp4", "2", T(126), 2.5), ("t_dune.mp4", "3", T(127), 0.95)]
+for k, (src, num, t0, clen) in enumerate(tri):
+    d = T(131) - t0
+    cam2, vid = s.video(src, t0, T(131), ms=0.0, rate=round(min(1, clen / d), 3), grade="matte", push=None,
+                        box=(k * 640, 0, 640, 1080), cam_extra="clip-path:inset(0% 100% 0% 0%);")
+    s.js.append(f'tl.fromTo("#{cam2}", {{ clipPath: "inset(0% 100% 0% 0%)" }}, {{ clipPath: "inset(0% 0% 0% 0%)", '
+                f'duration: 0.24, ease: "expo.out" }}, {s.at(t0)});')
+    s.numeral(num, round(t0 + 0.06, 3), T(131), x=k * 640 + 320, y=560, size=520)
+    sfx("whoosh-short.mp3", t0, 0.20)
+SCENES.append(s)
+sfx("whoosh-short.mp3", T(122), 0.12)
+paper_words([(122, "PS", "and"), (123, "PS", "in"), (124, "PXL", "2026")], T(125))
+cap([[W(125, "S", "we"), W(126, "S", "saw"), W(127, "S", "him"), W(128, "M", "do"), W(129, "M", "it"), W(130, "M", "all")]],
+    T(131), y=930)
+
+# ---------------- S13 chapter 1: The Odyssey (v4, on the new words; "one of the story's central antagonists" is gone) ----
+s = Scene("s13", T(131), T(139))
+for k, (src, clen) in enumerate([("t_prime.mp4", 2.5), ("t_dune.mp4", 0.95)], start=1):
+    cam2, vid = s.video(src, T(131), round(T(131) + 0.4, 3), ms=round(min(0.8, clen - 0.42), 2), grade="matte", push=None,
+                        box=(k * 640, 0, 640, 1080))
+    s.js.append(f'tl.fromTo("#{cam2}", {{ x: 0 }}, {{ x: 1300, duration: 0.34, ease: "power3.in" }}, 0);')
+cam, vid = s.video("c_antinous_fire.mp4", T(131), T(133), ms=0.0, grade="matte", push=None,
+                   cam_extra="clip-path:inset(0% 66.67% 0% 0%);")
+s.js.append(f'tl.fromTo("#{cam}", {{ clipPath: "inset(0% 66.67% 0% 0%)", scale: 1.0 }}, {{ clipPath: "inset(0% 0% 0% 0%)", '
+            f'scale: 1.0, duration: 0.36, ease: "power3.inOut" }}, 0);')
+s.js.append(f'tl.to("#{cam}", {{ scale: 1.05, duration: {r3(T(133) - T(131) - 0.36)}, ease: "none" }}, 0.36);')
+s.numeral("1", T(131), T(133), x=1500, y=470, size=600)
+s.video("c_antinous_feast.mp4", T(133), T(135), grade="matte", push=(1.0, 1.06))
+s.neg(T(133), 2)
+camNo, imNo = s.image("nolan.jpg", round(T(133) + 0.04, 3), T(135), grade="matte", push=None, box=(1210, 150, 520, 620),
+                      card=True)
+s.js.append(f'tl.fromTo("#{camNo}", {{ scale: 0.35, opacity: 0, rotation: -6 }}, {{ scale: 1, opacity: 1, rotation: 3, '
+            f'duration: 0.34, ease: "back.out(1.7)" }}, {s.at(T(133) + 0.04)});')
+s.js.append(f'tl.to("#{camNo}", {{ scale: 1.04, duration: {r3(T(135) - T(133) - 0.38)}, ease: "none" }}, {s.at(T(133) + 0.38)});')
+s.video("c_antinous_arch.mp4", T(135), T(137), grade="matte", push=(1.0, 1.07))
+s.video("c_antinous_fire.mp4", T(137), T(139), ms=1.2, grade="matte", push=(1.0, 1.05))
+s.neg(T(137), 2)
+SCENES.append(s)
+sfx("whoosh.mp3", T(131), 0.30)
+sfx("whoosh-short.mp3", T(133), 0.16)
+sfx("whoosh-short.mp3", T(135), 0.18)
+sfx("whoosh-short.mp3", T(137), 0.18)
+sfx("impact-bass-1.mp3", T(138), 0.22)
+cap([[W(131, "S", "walked"), W(132, "S", "into")]], T(133), x=1500, y=900)
+cap([[W(133, "S", "Christopher")], [W(134, "B", "Nolan's")]], T(135), x=140, y=620, align="left", lh=0.92)
+cap([[W(135, "FSL", "The"), W(136, "FSL", "Odyssey")]], T(137), y=540)
+cap([[W(137, "S", "as")], [W(138, "B", "Antinous")]], T(139), x=150, y=640, align="left")
+
+# ---------------- S14 chapter 2: Primetime (v4) with the TV texture (VHS lines plus a CRT screen, user) --------------
+GR["tv"] = _derive("vhs_soft", effects={"crtCurvature": 0.2})
+s = Scene("s14", T(139), 66.70)
+cam, vid = s.video("c_hansen.mp4", T(139), T(141), ms=0.0, grade="tv", push=None,
+                   cam_extra="clip-path:inset(0% 33.33% 0% 33.33%);")
+s.js.append(f'tl.fromTo("#{cam}", {{ clipPath: "inset(0% 33.33% 0% 33.33%)" }}, {{ clipPath: "inset(0% 0% 0% 0%)", '
+            f'duration: 0.36, ease: "power3.inOut" }}, 0);')
+s.numeral("2", T(139), T(141), x=1500, y=470, size=600)
+s.video("c_prime_title.mp4", T(141), T(142), grade="tv", push=(1.0, 1.05))
+s.neg(T(141), 2)
+s.video("c_hansen_cu.mp4", T(142), T(144), grade="tv", push=(1.0, 1.05))
+s.video("c_hansen.mp4", T(144), T(147), ms=0.9, grade="tv", push=(1.05, 1.0))
+s.video("c_schedule.mp4", T(147), T(148), grade="tv", push=(1.0, 1.05))
+s.video("c_stinghouse.mp4", T(148), T(152), grade="tv", push=(1.0, 1.04))
+s.video("c_pt_worried.mp4", T(152), T(153), grade="tv", push=(1.0, 1.06), rate=0.9)
+s.video("c_chat.mp4", T(153), T(154), grade="glitch_soft", push=(1.0, 1.06))
+s.neg(T(153), 2)
+s.video("c_hiddencam.mp4", T(154), T(155), grade="glitch_soft", push=(1.0, 1.06))
+s.video("c_hiddencam.mp4", T(154), round(T(154) + 4 / 30, 3), grade="crt", push=None)
+rid = s.uid("rec")
+s.raw(f'<div id="{rid}" class="clip rec" {s.timed(T(154), T(155))} data-track-index="6" '
+      f'style="left:120px;top:96px;z-index:{s.nz()}"><i></i><span>REC</span></div>')
+s.uses_text = True
+s.video("c_strobeface.mp4", T(155), 64.55, grade="tv", push=(1.0, 1.06))
+# the real "...why don't you have a seat right there?" moment, in sync with the sting audio; reframed (user) so his
+# body shows -- the film's own subtitle carries the line, so ours is gone
+s.video("c_seat1.mp4", 64.55, 66.02, grade="tv", push=(1.0, 1.04))
+s.video("c_seat2.mp4", 66.02, 66.70, grade="tv", push=(1.04, 1.0))
+SCENES.append(s)
+sfx("whoosh.mp3", T(139), 0.26)
+sfx("tv-blip-soft.wav", T(141), 0.30)
+sfx("whoosh-short.mp3", T(142), 0.14)
+sfx("whoosh-short.mp3", T(147), 0.12)
+sfx("whoosh-short.mp3", T(153), 0.10)
+sfx("tv-blip-soft.wav", T(154), 0.24)
+cap([[W(139, "S", "then"), W(140, "S", "came")]], T(141), x=1500, y=900)
+cap([[W(142, "S", "with"), W(143, "S", "Pattinson")]], T(144), x=1800, y=860, align="right")
+cap([[W(144, "S", "playing"), W(145, "S", "a")]], T(146), x=1800, y=860, align="right")
+cap([[W(146, "B", "television")]], T(147), x=1800, y=830, align="right")
+cap([[W(147, "B", "journalist")]], T(148), y=880)
+cap([[W(148, "S", "at"), W(149, "S", "the"), W(150, "S", "center"), W(151, "S", "of")]], T(152), y=880)
+cap([[W(152, "B", "controversial")]], T(153), y=860)
+cap([[W(153, "XL", "predator")]], T(154), y=860)
+cap([[W(154, "M", "sting")]], T(155), y=560)
+cap([[W(155, "B", "operations")]], 64.55, y=860)
+
+# ---------------- S15 chapter 3: Dune (v4), the poster beat rebuilt as a Hemant Taneja wall (user) ------------------
+s = Scene("s15", 66.70, T(167))
+cam, vid = s.video("c_scytale.mp4", 66.70, T(158), ms=0.0, grade="matte", push=None,
+                   cam_extra="clip-path:inset(0% 0% 0% 66.67%);")
+s.js.append(f'tl.fromTo("#{cam}", {{ clipPath: "inset(0% 0% 0% 66.67%)" }}, {{ clipPath: "inset(0% 0% 0% 0%)", '
+            f'duration: 0.36, ease: "power3.inOut" }}, 0);')
+s.numeral("3", 66.70, T(158), x=1500, y=470, size=600)
+camY, vY = s.video("c_scytale.mp4", T(158), T(161), ms=1.0, grade="matte", push=None,
+                   vars_style="--hf-color-grading-blur: 0.85;")
+s.js.append(f'tl.fromTo("#{camY}", {{ x: 220, scale: 1.26 }}, {{ x: 0, scale: 1.05, duration: 0.22, ease: "power3.out" }}, '
+            f'{s.at(T(158))});')
+s.js.append(f'tl.to("#{camY}", {{ scale: 1.0, duration: {r3(T(161) - T(158) - 0.22)}, ease: "none" }}, {s.at(T(158) + 0.22)});')
+s.js.append(f'tl.to("#{vY}", {{ "--hf-color-grading-blur": 0, duration: 0.28, ease: "power2.out" }}, {s.at(T(158))});')
+s.video("c_scytale.mp4", T(161), T(163), ms=2.2, grade="matte", push=(1.0, 1.05))
+s.neg(T(161), 2)
+# "with Dune Part Three": the poster lands as a centred card on black (a white box first, one blown-out frame), then the
+# Dune pictures pop out from behind it two frames apart, white boxes stepping out at a low frame rate, on a gentle dome;
+# the wall keeps pulling back, a video tile blows out on "Part", the wall inverts on "Three", then pans out into the cut
+DW, DW1, DT0 = T(163), T(167), T(164)
+PST = (730, 110, 460, 690)
+DTILES = [  # source, centre x, centre y, w, h, tilt, video media-start
+    ("dune_scy.jpg", 400, 300, 280, 350, -4, None),
+    ("c_scytale.mp4", 1540, 260, 380, 214, 3, 0.4),
+    ("f_scytale.jpg", 380, 690, 380, 214, 3, None),
+    ("dune_scy2.jpg", 1560, 650, 380, 214, -3, None),
+    ("t_dune.mp4", 140, 470, 180, 304, -2, 0.0),
+    ("f_kimmel_scytale.jpg", 1785, 455, 240, 135, 4, None),
+]
+
+
+def ddome(cx, cy, f):
+    nx, ny = (cx - 960) / 960, (cy - 540) / 540
+    return dict(rotationY=round(26 * nx * f, 2), rotationX=round(-16 * ny * f, 2), z=round(-150 * (nx * nx + ny * ny) * f, 1))
+
+
+grp_first = len(s.els)
+dt_els = []
+for k, (src, cx, cy, w, h, rot, ms) in enumerate(DTILES):  # made first, so they sit behind the poster
+    t0 = round(DT0 + k * 2 * F1, 3)
+    box = (cx - w // 2, cy - h // 2, w, h)
+    d0, d1 = ddome(cx, cy, 0.6), ddome(cx, cy, 1.0)
+    bid = s.uid("pbox")
+    s.raw(f'<div id="{bid}" class="clip pbox" {s.timed(round(t0 - 4 * F1, 3), t0)} data-track-index="5" '
+          f'style="left:{box[0]}px;top:{box[1]}px;width:{w}px;height:{h}px;z-index:{s.nz()}"></div>')
+    s.js.append(f'tl.fromTo("#{bid}", {{ x: {round((960 - cx) * 0.8)}, y: {round((455 - cy) * 0.8)}, scale: 0.45, rotation: 0, '
+                f'rotationY: 0, rotationX: 0, z: 0 }}, {{ x: 0, y: 0, scale: 1, rotation: {rot}, rotationY: {d0["rotationY"]}, '
+                f'rotationX: {d0["rotationX"]}, z: {d0["z"]}, duration: {r3(3 * F1)}, ease: "steps(3)" }}, {s.at(t0 - 4 * F1)});')
+    s.js.append(f'tl.set("#{bid}", {{ filter: "blur(0px)" }}, {s.at(t0 - F1)});')
+    if src.endswith(".mp4"):
+        rate = round(min(1.0, (0.95 - ms) / (DW1 - t0)), 3) if src == "t_dune.mp4" else None  # the short Dune panel slows
+        cam, mid = s.video(src, t0, DW1, ms=ms, rate=rate, grade="matte", push=None, box=box, card=True,
+                           vars_style="--hf-color-grading-exposure: 0.85;")
+    else:
+        cam, mid = s.image(src, t0, DW1, grade="matte", push=None, box=box, card=True, pos="50% 35%",
+                           vars_style="--hf-color-grading-blur: 0; --hf-color-grading-exposure: 0.85;")
+    s.js.append(f'tl.set("#{cam}", {{ scale: 1.06, rotation: {rot}, rotationY: {d0["rotationY"]}, rotationX: {d0["rotationX"]}, '
+                f'z: {d0["z"]} }}, {s.at(t0)});')
+    s.js.append(f'tl.set("#{mid}", {{ "--hf-color-grading-exposure": 0.25 }}, {s.at(t0 + F1)});')
+    s.js.append(f'tl.set("#{cam}", {{ scale: 1.0 }}, {s.at(t0 + 2 * F1)});')
+    s.js.append(f'tl.set("#{mid}", {{ "--hf-color-grading-exposure": 0 }}, {s.at(t0 + 2 * F1)});')
+    nx, ny = (cx - 960) / 960, (cy - 540) / 540
+    s.js.append(f'tl.to("#{cam}", {{ rotationY: {d1["rotationY"]}, rotationX: {d1["rotationX"]}, z: {d1["z"]}, '
+                f'x: {round(40 * nx)}, y: {round(26 * ny)}, duration: {r3(DW1 - t0 - 2 * F1)}, ease: "sine.inOut" }}, '
+                f'{s.at(t0 + 2 * F1)});')
+    dt_els.append((cam, mid, src.endswith(".mp4")))
+pbid = s.uid("pbox")
+s.raw(f'<div id="{pbid}" class="clip pbox" {s.timed(round(DW - 2 * F1, 3), DW)} data-track-index="5" '
+      f'style="left:{PST[0]}px;top:{PST[1]}px;width:{PST[2]}px;height:{PST[3]}px;z-index:{s.nz()}"></div>')
+s.js.append(f'tl.set("#{pbid}", {{ filter: "blur(0px)" }}, {s.at(DW - F1)});')
+camP, imP = s.image("dune_poster.jpg", DW, DW1, grade="matte", push=None, box=PST, card=True, pos="50% 40%",
+                    vars_style="--hf-color-grading-blur: 0; --hf-color-grading-exposure: 0.85;")
+s.js.append(f'tl.set("#{camP}", {{ scale: 1.06 }}, {s.at(DW)});')
+s.js.append(f'tl.set("#{imP}", {{ "--hf-color-grading-exposure": 0.25 }}, {s.at(DW + F1)});')
+s.js.append(f'tl.set("#{camP}", {{ scale: 1.0 }}, {s.at(DW + 2 * F1)});')
+s.js.append(f'tl.set("#{imP}", {{ "--hf-color-grading-exposure": 0 }}, {s.at(DW + 2 * F1)});')
+gid = s.uid("wall")
+inner = "".join(s.els[grp_first:])
+del s.els[grp_first:]
+s.els.append(f'<div class="cam" id="{gid}" style="position:absolute;left:0;top:0;width:1920px;height:1080px;'
+             f'perspective:1400px;perspective-origin:50% 45%;z-index:{s.nz()}">{inner}</div>')
+s.js.append(f'tl.fromTo("#{gid}", {{ y: 0, rotation: 0 }}, {{ y: -14, rotation: -1.5, duration: 0.3, ease: "power2.out" }}, '
+            f'{s.at(DT0)});')
+s.js.append(f'tl.fromTo("#{gid}", {{ scale: 1.0 }}, {{ scale: 0.9, duration: {r3(DW1 - DW)}, ease: "sine.inOut", '
+            f'immediateRender: false }}, {s.at(DW)});')
+s.js.append(f'tl.fromTo("#{gid}", {{ x: 0 }}, {{ x: -230, duration: 0.3, ease: "power2.in", immediateRender: false }}, '
+            f'{s.at(DW1 - 0.3)});')
+s.neg(DT0, 3)  # v4's hit on "Dune"
+bl_mid = dt_els[1][1]  # the Scytale video tile blows out for two frames on "Part"
+s.js.append(f'tl.set("#{bl_mid}", {{ "--hf-color-grading-exposure": 1.5 }}, {s.at(T(165))});')
+s.js.append(f'tl.set("#{bl_mid}", {{ "--hf-color-grading-exposure": 0 }}, {s.at(T(165) + 2 * F1)});')
+s.neg(T(166), 2)  # the wall inverts on "Three"; the stills fall out of focus behind the poster
+for cam, mid, isvid in dt_els:
+    if not isvid:
+        s.js.append(f'tl.to("#{mid}", {{ "--hf-color-grading-blur": 0.32, duration: 0.24, ease: "power2.out" }}, '
+                    f'{s.at(T(166) + 2 * F1)});')
+SCENES.append(s)
+sfx("whoosh.mp3", 66.70, 0.28)
+sfx("whoosh.mp3", T(158) - 0.04, 0.24)
+sfx("whoosh-short.mp3", T(161), 0.16)
+sfx("whoosh-short.mp3", DW, 0.14)
+sfx("impact-bass-1.mp3", DT0, 0.42)
+sfx("tv-blip-soft.wav", T(166), 0.16)
+cap([[W(156, "S", "and"), W(157, "S", "now")]], T(158), x=1500, y=900)
+cap([[W(158, "S", "he's"), W(159, "S", "closing"), W(160, "S", "out")]], T(161), y=880)
+cap([[W(161, "S", "the"), W(162, "S", "year")]], T(163), y=880)
+cap([[W(163, "S", "with"), W(164, "XL", "Dune"), W(165, "S", "Part"), W(166, "S", "Three")]], T(167), y=905)
+
+# ---------------- S16 payoff + end card (v4, on the new words) ----------------
+END = round(WORDS[192]["g_start"] + 0.63, 3)  # v4: the end card lands 0.63 s after "seen" starts
+s = Scene("s16", T(167), DUR)
+camP1, vP1 = s.video("c_venice.mp4", T(167), T(168), rate=0.75, grade="matte", push=(1.0, 1.06),
+                     vars_style="--hf-color-grading-exposure: 1.0;")
+s.blow_in(vP1, T(167), 0.3)
+s.rgbsplit("c_venice.mp4", T(167), frames=2)
+s.video("c_roles.mp4", T(168), T(171), grade="matte", push=(1.0, 1.04))
+tiles = ["f_edward_cu.jpg", "gt_neon.jpg", "lh_soot.jpg", "tn_red.jpg", "bt_cowl.jpg", "mk_helmet.jpg", "f_hansen.jpg",
+         "f_scytale.jpg", "f_king.jpg", "f_devil.jpg", "f_rover.jpg", "f_queen.jpg", "f_damsel.jpg", "f_dali.jpg",
+         "f_bruce.jpg", "f_drama.jpg"]
+s.grid(tiles, 4, 4, T(171), T(174))
+s.neg(T(171), 2)
+s.grid(tiles[:9], 3, 3, T(174), T(176))
+s.grid(tiles[:4], 2, 2, T(176), T(178))
+# "one box": Edward, playing inside a single framed square on paper, which then zooms through to full frame
+s.paper(T(178), round(T(180) + 0.3, 3))
+camB, vB = s.video("c_edward_cu.mp4", T(178), round(T(180) + 0.3, 3), grade="film_soft", push=None,
+                   box=(660, 240, 600, 600), card=True)
+s.js.append(f'tl.fromTo("#{camB}", {{ scale: 1.24, y: -34, rotation: -3, opacity: 0 }}, {{ scale: 1, y: 0, rotation: 0, '
+            f'opacity: 1, duration: 0.26, ease: "expo.out" }}, {s.at(T(178))});')
+s.js.append(f'tl.to("#{camB}", {{ scale: 1.03, duration: {r3(T(180) - T(178) - 0.26)}, ease: "none" }}, {s.at(T(178) + 0.26)});')
+s.js.append(f'tl.to("#{camB}", {{ scale: 3.4, duration: 0.3, ease: "power3.in" }}, {s.at(T(180))});')
+camE, vE = s.video("c_sparkle.mp4", round(T(180) + 0.3, 3), T(183), ms=0.2, grade="film_soft", push=(1.06, 1.12),
+                   vars_style="--hf-color-grading-exposure: 0;")
+s.blow_out(vE, T(183), 0.5, 1.9)
+s.whiteflash(T(183), 0.22, 0.9)
+cam, vid = s.video("h_edward.mp4", T(183), T(184), grade="film_soft", push=None, box=(0, 0, 960, 1080))
+camBt, vBt = s.video("h_batman.mp4", T(183), T(184), grade="matte", push=None, box=(960, 0, 960, 1080))
+s.js.append(f'tl.fromTo("#{camBt}", {{ x: 960 }}, {{ x: 0, duration: 0.28, ease: "expo.out" }}, {s.at(T(183) + 0.06)});')
+s.paper(T(184), DUR)
+# end card: the name in bold sans on paper (v5: paper words are bold Helvetica), a rule drawing out, a year counter
+s.text("Robert", END, DUR, 960, 470, 170, family="Inter Tight", weight=800, color="#0B0B0B", glow=False, anim="ink",
+       style="letter-spacing:-0.035em;")
+s.text("Pattinson", round(END + 0.10, 3), DUR, 960, 640, 170, family="Inter Tight", weight=800, color="#0B0B0B",
+       glow=False, anim="ink", style="letter-spacing:-0.035em;")
+rule = s.uid("rule")
+s.raw(f'<div id="{rule}" class="clip rule" {s.timed(round(END + 0.25, 3), DUR)} data-track-index="6" '
+      f'style="left:660px;top:742px;width:600px;z-index:{s.nz()}"></div>')
+s.js.append(f'tl.fromTo("#{rule}", {{ scaleX: 0 }}, {{ scaleX: 1, duration: 0.5, ease: "expo.out" }}, {s.at(END + 0.25)});')
+yrs = ["2008", "2011", "2014", "2017", "2019", "2022", "2024", "2025", "2026"]
+ytm = [round(END + d, 3) for d in (0.13, 0.16, 0.19, 0.23, 0.27, 0.32, 0.38, 0.45, 0.53)]
+s.counter([(v, t) for v, t in zip(yrs, ytm)], DUR, 960, 850, 64, family="Inter Tight", weight=700, color="#0B0B0B",
+          glow=False, ink=True)
+SCENES.append(s)
+TW = round(T(182) + 0.32, 3)  # "post-Twilight" is one token in the new transcript: "Twilight" lands 0.32 s after "post"
+sfx("impact-bass-1.mp3", T(167), 0.28)
+sfx("whoosh-short.mp3", T(168), 0.18)
+sfx("whoosh-short.mp3", T(171), 0.16)
+sfx("whoosh.mp3", T(180), 0.26)
+sfx("whoosh-cinematic.mp3", TW, 0.28)
+sfx("whoosh-short.mp3", T(183), 0.24)
+sfx("impact-bass-1.mp3", END, 0.28)
+cap([[W(167, "B", "Pattinson")]], T(168), y=900)
+cap([[W(168, "S", "keeps"), W(169, "S", "choosing")]], T(170), y=880)
+cap([[W(170, "XL", "roles")]], T(171), y=600)
+cap([[W(171, "M", "that"), W(172, "M", "stop"), W(173, "M", "anyone")]], T(174), y=560)
+cap([[W(174, "M", "from"), W(175, "M", "putting"), W(176, "M", "him")]], T(177), y=560)
+cap([[W(177, "PS", "in"), W(178, "PS", "one")]], T(179), kind="paper", y=960)
+cap([[W(179, "PB", "box")]], T(180), kind="paper", y=960)
+cap([[W(180, "S", "and"), W(181, "S", "that")]], T(182), y=560)
+cap([[("post", T(182), "S")]], TW, y=560)
+cap([[("Twilight", TW, "XL")]], T(183), y=580)
+cap([[W(183, "XL", "reinvention")]], T(184), y=580)
+paper_words([(184, "PS", "might"), (185, "PS", "be"), (186, "PS", "one"), (187, "PS", "of"), (188, "PS", "the"),
+             (189, "PXL", "best"), (190, "PS", "we've"), (191, "PS", "ever"), (192, "PXL", "seen")], END,
+            last_exit="blurout")
+
 # --------------------------------------------------------------------------------------------
 # write everything
 # --------------------------------------------------------------------------------------------
@@ -1232,14 +1588,18 @@ def write_root():
     for k, (name, t, vol, ms, dur) in enumerate(sorted(SFX, key=lambda x: x[1])):
         start = max(0.0, round(t + 1 / 30 - PEAK.get(name, 0.05), 3))
         d = dur or SFXDUR.get(name, 1.0)
-        if start + d > DUR:
+        fade = ""
+        if start + d > DUR:  # cut by the end of the built part: fade it rather than stop it dead
             d = round(DUR - start, 3)
+            fade = ' data-fade-out="0.25"'
+        if d <= 0:
+            continue
         lane = next((i for i, e in enumerate(lanes) if e <= start), None)
         if lane is None:
             lanes.append(0.0); lane = len(lanes) - 1
         lanes[lane] = start + d
         auds.append(f'<audio id="sfx{k:03d}" class="clip" src="assets/audio/sfx/{name}" data-start="{r3(start)}" '
-                    f'data-duration="{r3(d)}" data-media-start="{r3(ms)}" data-volume="{vol}" data-track-index="{20 + lane}"></audio>')
+                    f'data-duration="{r3(d)}" data-media-start="{r3(ms)}" data-volume="{vol}"{fade} data-track-index="{20 + lane}"></audio>')
     page = f"""<!doctype html>
 <html lang="en">
   <head>
