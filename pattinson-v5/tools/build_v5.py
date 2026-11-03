@@ -90,6 +90,8 @@ SERIF_REST = ("0 0 14px rgba(255,255,255,0.62), 0 0 42px rgba(255,255,255,0.30),
               "0 3px 10px rgba(0,0,0,0.35)")
 SERIF_BLOOM = ("0 0 22px rgba(255,255,255,1), 0 0 60px rgba(255,255,255,0.95), 0 0 130px rgba(255,255,255,0.7), "
                "0 3px 10px rgba(0,0,0,0)")
+SERIF_SOFT = ("0 0 18px rgba(255,255,255,0.85), 0 0 50px rgba(255,255,255,0.45), 0 0 100px rgba(255,255,255,0.18), "
+              "0 3px 10px rgba(0,0,0,0.2)")
 F1 = 1 / 30  # one frame
 
 # --------------------------------------------------------------------------------------------
@@ -352,6 +354,8 @@ class Scene:
   #root .streak {{ position: absolute; left: 0; width: 1920px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%,
     rgba(255,255,255,0.85) 38%, #ffffff 50%, rgba(255,255,255,0.85) 62%, rgba(255,255,255,0) 100%);
     box-shadow: 0 0 80px 30px rgba(255,255,255,0.55); }}
+  #root .pbox {{ position: absolute; background: #ffffff; filter: blur(3px);
+    box-shadow: 0 0 22px 4px rgba(255,255,255,0.85), 0 0 60px rgba(255,255,255,0.4); }}
   #root .flare {{ position: absolute; width: 900px; height: 760px; border-radius: 50%;
     background: radial-gradient(closest-side, rgba(255,255,255,0.95), rgba(255,255,255,0.45) 45%, rgba(255,255,255,0) 100%); }}
   #root .rec {{ position: absolute; display: flex; align-items: center; gap: 22px; font-family: 'Inter Tight'; font-weight: 800;
@@ -428,7 +432,7 @@ def cap(lines, end, x=960, y=540, align="center", kind=None, start=None, exit=No
         st0 = lines[0][0][2]
         fam, _, _, size, _, glow = STY[st0]
         # a serif line word's box flashes two frames before the word, so the group starts two frames early
-        start = first - 2 / 30 if (fam == "Instrument Serif" and glow and size < 200 and kind not in ("paper", "name")) else first
+        start = first - 4 / 30 if (fam == "Instrument Serif" and glow and size < 200 and kind not in ("paper", "name")) else first
     CAPS.append(dict(lines=lines, start=round(start, 3), end=end, x=x, y=y,
                      align=align, kind=kind, exit=exit, lh=lh, exit_first=exit_first))
 
@@ -494,23 +498,28 @@ def build_captions():
                             first = f"{gid}-w{li}0-t"
                             js.append(f'tl.set("#{first}", {{ color: "#0d0d0d", textShadow: "none", webkitTextStrokeColor: "#0d0d0d" }}, {r3(t0 + lt - 2 * F1)});')
                             js.append(f'tl.set("#{first}", {{ color: "#F7F4F7", textShadow: "{SERIF_REST}", webkitTextStrokeColor: "#F7F4F7" }}, {at});')
-                        js.append(f'tl.set("#{sid}-t", {{ opacity: 1, filter: "blur(12px)", textShadow: "{SERIF_BLOOM}" }}, {at});')
-                        js.append(f'tl.to("#{sid}-t", {{ filter: "blur(0px)", textShadow: "{SERIF_REST}", duration: 0.22, '
-                                  f'ease: "power2.out" }}, {r3(t0 + lt + F1)});')
+                        js.append(f'tl.set("#{sid}-t", {{ opacity: 1, scale: 1.04, filter: "blur(14px)", textShadow: "{SERIF_BLOOM}" }}, {at});')
+                        js.append(f'tl.set("#{sid}-t", {{ scale: 1.015, filter: "blur(5px)", textShadow: "{SERIF_SOFT}" }}, {r3(t0 + lt + F1)});')
+                        js.append(f'tl.set("#{sid}-t", {{ scale: 1.005, filter: "blur(2.5px)" }}, {r3(t0 + lt + 3 * F1)});')
+                        js.append(f'tl.set("#{sid}-t", {{ scale: 1, filter: "blur(0px)", textShadow: "{SERIF_REST}" }}, {r3(t0 + lt + 4 * F1)});')
                         if wi == 0 and g.get("exit_first") is not None:
                             js.append(f'tl.set("#{sid}-t", {{ opacity: 0 }}, {r3(g["exit_first"])});')
                     elif size >= 200:
-                        # hero word: one blown-out bloom frame, then crisp with the lasting halo
-                        js.append(f'tl.set("#{sid}-t", {{ opacity: 1, filter: "blur(12px)", textShadow: "{SERIF_BLOOM}" }}, {at});')
-                        js.append(f'tl.to("#{sid}-t", {{ filter: "blur(0px)", textShadow: "{SERIF_REST}", duration: 0.22, '
-                                  f'ease: "power2.out" }}, {r3(t0 + lt + F1)});')
+                        # hero word, stepped like the reference's "AI" / "timing": one blown-out frame, three soft-focus
+                        # frames, then crisp with the lasting halo
+                        js.append(f'tl.set("#{sid}-t", {{ opacity: 1, scale: 1.04, filter: "blur(14px)", textShadow: "{SERIF_BLOOM}" }}, {at});')
+                        js.append(f'tl.set("#{sid}-t", {{ scale: 1.015, filter: "blur(5px)", textShadow: "{SERIF_SOFT}" }}, {r3(t0 + lt + F1)});')
+                        js.append(f'tl.set("#{sid}-t", {{ scale: 1.005, filter: "blur(2.5px)" }}, {r3(t0 + lt + 3 * F1)});')
+                        js.append(f'tl.set("#{sid}-t", {{ scale: 1, filter: "blur(0px)", textShadow: "{SERIF_REST}" }}, {r3(t0 + lt + 4 * F1)});')
                     else:
                         # line word: a glowing white box flashes for two frames where the word lands, then it writes on
-                        js.append(f'tl.set("#{sid}-f", {{ opacity: 1 }}, {r3(max(t0, t0 + lt - 2 * F1))});')
-                        js.append(f'tl.set("#{sid}-f", {{ opacity: 0 }}, {at});')
-                        js.append(f'tl.set("#{sid}-t", {{ opacity: 1, filter: "blur(6px)", textShadow: "{SERIF_BLOOM}" }}, {at});')
-                        js.append(f'tl.to("#{sid}-t", {{ filter: "blur(0px)", textShadow: "{SERIF_REST}", duration: 0.18, '
-                                  f'ease: "power2.out" }}, {r3(t0 + lt + F1)});')
+                        b0 = max(t0, t0 + lt - 4 * F1)
+                        js.append(f'tl.set("#{sid}-f", {{ opacity: 1, filter: "blur(3px)" }}, {r3(b0)});')
+                        js.append(f'tl.set("#{sid}-f", {{ filter: "blur(0px)" }}, {r3(b0 + F1)});')
+                        js.append(f'tl.set("#{sid}-f", {{ opacity: 0 }}, {r3(max(b0 + 2 * F1, t0 + lt - F1))});')
+                        js.append(f'tl.set("#{sid}-t", {{ opacity: 1, filter: "blur(8px)", textShadow: "{SERIF_BLOOM}" }}, {at});')
+                        js.append(f'tl.set("#{sid}-t", {{ filter: "blur(3px)", textShadow: "{SERIF_SOFT}" }}, {r3(t0 + lt + F1)});')
+                        js.append(f'tl.set("#{sid}-t", {{ filter: "blur(0px)", textShadow: "{SERIF_REST}" }}, {r3(t0 + lt + 3 * F1)});')
                     continue
                 spans.append(
                     f'<span id="{sid}" class="w" style="{ml}font-family:\'{fam}\';font-weight:{wt};'
@@ -617,15 +626,16 @@ sfx("whoosh-short.mp3", 3.83, 0.14)
 # word blooms in centred about two frames before it is spoken and replaces the last. Venice in the bold
 # Helvetica-style sans; the Odyssey line in upright Instrument Serif with glow, written word by word.
 # Word onsets measured from the dialogue audio; captions sit over the inpainted caption band.
-VEN = [("Somebody", 0.05), ("get", 0.41), ("these", 0.53), ("beggars", 0.93)]
-for k, (wd, t0) in enumerate(VEN):
-    cap([[(wd, t0, "S")]], VEN[k + 1][1] if k < len(VEN) - 1 else 1.25, y=548)
+# first-10s v2 (user): "Somebody get these" builds word by word on one line exactly like "out of here!" does;
+# "beggars" lands on its own in between (the punch word, as in the Odyssey line)
+cap([[("Somebody", 0.05, "S"), ("get", 0.41, "S"), ("these", 0.53, "S")]], 0.93, y=548)
+cap([[("beggars", 0.93, "S")]], 1.25, y=548)
 cap([[("out", 1.25, "S"), ("of", 1.39, "S"), ("here!", 1.49, "S")]], 2.30, y=548)
 # The Odyssey line writes on like the user's second reference: a glowing white box flashes two frames where each
 # word lands, then the word blooms in and keeps a soft halo; "beggars" bursts in as a hero word
-cap([[("Somebody", 3.167, "OS"), ("get", 3.37, "OS"), ("these", 3.53, "OS")]], 3.77, y=575)
+cap([[("Somebody", 3.20, "OS"), ("get", 3.37, "OS"), ("these", 3.53, "OS")]], 3.77, y=575, start=3.10)
 cap([[("beggars", 3.77, "OSB")]], 4.183, y=580)
-cap([[("out", 4.25, "OS"), ("of", 4.41, "OS"), ("here.", 4.57, "OS")]], 5.05, y=575)
+cap([[("out", 4.29, "OS"), ("of", 4.43, "OS"), ("here.", 4.59, "OS")]], 5.05, y=575, start=4.183)
 
 # ---------------- S02 "Robert Pattinson is on a generational run, and honestly, nobody saw it coming." ----------------
 s = Scene("s02", 5.40, T(13))
@@ -651,55 +661,75 @@ for k, ((row, col), (clip, ms)) in enumerate(zip(grid_order, grid_clips)):
 s.flare(5.40, frames=3, corner="tl")
 s.block(round(T(1) - 2 / 30, 3), 2, (800, 400, 330, 300), "#63E6E2", blend="difference")
 s.lightstreak(round(T(2) - 2 / 30, 3), frames=3)
-# "is on a generational run" (user references: Legora "a group of founders in their 20s" and the General Catalyst
-# "Logan Roy" collage): the role footage plays full frame, snaps back into a centred frame with black around it, and
-# small pictures (the four 2026 film cut-outs and four of his roles) flash in around it on the black as white boxes
-# that turn into glowing pictures; the collage inverts for two frames, then the pictures fall out of focus behind the
-# sharp centre; on "run," the camera pushes into the centre and through into the Batman car scene
-FR = 0.62
-PICS = [  # image, centre x, centre y, w, h, tilt
-    ("slate_drama.jpg", 250, 180, 440, 136, -4), ("gt_neon.jpg", 1700, 520, 300, 190, 3),
-    ("slate_prime.jpg", 260, 905, 440, 136, 3), ("mk_helmet.jpg", 700, 95, 300, 170, -2),
-    ("slate_odyssey.jpg", 1665, 195, 440, 136, 4), ("bt_cowl.jpg", 205, 545, 300, 190, -3),
-    ("slate_dune.jpg", 1670, 890, 440, 136, -4), ("lh_portrait.jpg", 1225, 985, 280, 170, 2),
+# "is on a generational run": rebuilt from the references, measured frame by frame
+#  - Legora ("a group of founders in their 20s"): the shot eases back from full frame to a centred frame over ~0.9 s,
+#    most of it in the first 8 frames (power4-like), drifting slightly left, black around it
+#  - General Catalyst ("Logan Roy"): small pictures land around the centre on black, each a white box first; the
+#    collage drifts up and turns ~2 deg as they land, pushes in ~6 %, inverts for two frames, the outer pictures fall
+#    out of focus, then the whole wall accelerates left into the cut and the next shot arrives still moving left
+#  - low-frame-rate steps: the four film cut-outs tilt into perspective in 4 steps at 12 fps
+FR = 0.66
+PICS = [  # image, centre x, centre y, w, h, tilt, perspective (rotationY) for the film cut-outs
+    ("slate_drama.jpg", 300, 190, 460, 142, -4, -22), ("gt_neon.jpg", 1745, 545, 300, 190, 3, 0),
+    ("slate_prime.jpg", 300, 895, 460, 142, 3, -22), ("mk_helmet.jpg", 760, 105, 300, 170, -2, 0),
+    ("slate_odyssey.jpg", 1620, 200, 460, 142, 4, 22), ("bt_cowl.jpg", 175, 560, 300, 190, -3, 0),
+    ("slate_dune.jpg", 1625, 885, 460, 142, -4, 22), ("lh_portrait.jpg", 1190, 980, 280, 170, 2, 0),
 ]
-PIC_T0 = round(T(4) + 0.10, 3)
-pic_cams = []
-for k, (im, cx, cy, w, h, rot) in enumerate(PICS):  # made first, so they sit behind the centre frame
-    t0 = round(PIC_T0 + k * 0.05, 3)
+PIC_T0 = round(T(3) + 3 * F1, 3)          # the first picture lands ~0.2 s after the shot starts easing back
+INV = round(PIC_T0 + 8 * 2 * F1 + 0.10, 3)  # the wall inverts for two frames once all eight are in
+PAN = 0.30                                  # the accelerating pan out, ending on the cut into "run,"
+grp_first = len(s.els)
+pic_els = []
+for k, (im, cx, cy, w, h, rot, ry) in enumerate(PICS):  # made first, so they sit behind the centre frame
+    t0 = round(PIC_T0 + k * 2 * F1, 3)               # one picture every two frames
     box = (cx - w // 2, cy - h // 2, w, h)
-    s.block(round(t0 - 2 / 30, 3), 2, box, "#ffffff")  # the white box that becomes the picture
+    # the white box pops out from behind the centre frame in three low-frame-rate steps, lands soft then crisp,
+    # and turns into the picture
+    bid = s.uid("pbox")
+    s.raw(f'<div id="{bid}" class="clip pbox" {s.timed(round(t0 - 4 * F1, 3), t0)} data-track-index="5" '
+          f'style="left:{box[0]}px;top:{box[1]}px;width:{w}px;height:{h}px;z-index:{s.nz()}"></div>')
+    s.js.append(f'tl.fromTo("#{bid}", {{ x: {round((960 - cx) * 0.8)}, y: {round((540 - cy) * 0.8)}, scale: 0.45, rotation: 0 }}, '
+                f'{{ x: 0, y: 0, scale: 1, rotation: {rot}, duration: {r3(3 * F1)}, ease: "steps(3)" }}, {s.at(t0 - 4 * F1)});')
+    s.js.append(f'tl.set("#{bid}", {{ filter: "blur(0px)" }}, {s.at(t0 - F1)});')
     cam, imid = s.image(im, t0, T(6), grade="matte", push=None, box=box, card=True, pos="50% 35%",
-                        vars_style="--hf-color-grading-blur: 0;")
-    s.js.append(f'tl.fromTo("#{cam}", {{ scale: 0.9, rotation: {rot} }}, {{ scale: 1, rotation: {rot}, duration: 0.3, '
-                f'ease: "power3.out" }}, {s.at(t0)});')
-    s.js.append(f'tl.fromTo("#{imid}", {{ boxShadow: "0 0 40px 6px rgba(255,255,255,0.75)" }}, '
-                f'{{ boxShadow: "0 0 18px 2px rgba(255,255,255,0.28)", duration: 0.3, ease: "power3.out" }}, {s.at(t0)});')
-    pic_cams.append((cam, imid, cx, cy, t0))
+                        vars_style="--hf-color-grading-blur: 0; --hf-color-grading-exposure: 0.85;")
+    # lands overexposed and a touch big, then settles in two steps (stepped like the reference)
+    s.js.append(f'tl.set("#{cam}", {{ scale: 1.06, rotation: {rot}, transformPerspective: 1500 }}, {s.at(t0)});')
+    s.js.append(f'tl.set("#{imid}", {{ "--hf-color-grading-exposure": 0.25 }}, {s.at(t0 + F1)});')
+    s.js.append(f'tl.set("#{cam}", {{ scale: 1.0 }}, {s.at(t0 + 2 * F1)});')
+    s.js.append(f'tl.set("#{imid}", {{ "--hf-color-grading-exposure": 0 }}, {s.at(t0 + 2 * F1)});')
+    if ry:
+        # the film cut-outs tilt back into perspective in four steps at 12 fps
+        s.js.append(f'tl.to("#{cam}", {{ rotationY: {ry}, duration: 0.33, ease: "steps(4)" }}, {s.at(t0 + 3 * F1)});')
+    pic_els.append((cam, imid, cx, cy, t0))
+# a picture blinks out for a frame now and then (the reference's flicker)
+for k, (cam, imid, cx, cy, t0) in enumerate(pic_els):
+    if k in (1, 4, 6):
+        s.js.append(f'tl.set("#{imid}", {{ opacity: 0 }}, {s.at(t0 + 0.30)});')
+        s.js.append(f'tl.set("#{imid}", {{ opacity: 1 }}, {s.at(t0 + 0.30 + F1)});')
+    # out of focus behind the sharp centre after the inversion
+    s.js.append(f'tl.to("#{imid}", {{ "--hf-color-grading-blur": 0.36, duration: 0.24, ease: "power2.out" }}, {s.at(INV + 2 * F1)});')
 camG, vG = s.video("c_genbg.mp4", T(2), T(6), grade="matte", push=None,
                    cam_extra="box-shadow: 0 40px 120px rgba(0,0,0,0.7);")
-PUSH = 0.2  # the push into "run," starts this long before the word
-s.scale_keys(camG, [(T(2), 1.0, 1.02, round(T(4) - T(2), 3), "none"),
-                    (T(4), 1.02, FR, 0.24, "power3.out"),
-                    (round(T(4) + 0.24, 3), FR, FR + 0.02, round(T(6) - PUSH - T(4) - 0.24, 3), "none"),
-                    (round(T(6) - PUSH, 3), FR + 0.02, 1.25, PUSH, "power2.in")])
-# a picture blinks out for a frame here and there, like the reference's flicker
-for k, (cam, imid, cx, cy, t0) in enumerate(pic_cams):
-    if k % 3 == 1:
-        s.js.append(f'tl.set("#{imid}", {{ opacity: 0 }}, {s.at(t0 + 0.27)});')
-        s.js.append(f'tl.set("#{imid}", {{ opacity: 1 }}, {s.at(t0 + 0.27 + 1 / 30)});')
-INV = round(PIC_T0 + 8 * 0.05 + 0.12, 3)
-s.neg(INV, 2)  # the collage inverts for two frames
-for cam, imid, cx, cy, t0 in pic_cams:
-    # out of focus behind the sharp centre, then thrown outward by the push
-    s.js.append(f'tl.to("#{imid}", {{ "--hf-color-grading-blur": 0.38, duration: 0.3, ease: "power2.out" }}, '
-                f'{s.at(INV + 2 / 30)});')
-    s.js.append(f'tl.to("#{cam}", {{ x: {round((cx - 960) * 0.8)}, y: {round((cy - 540) * 0.8)}, scale: 1.5, '
-                f'duration: {PUSH}, ease: "power2.in" }}, {s.at(T(6) - PUSH)});')
-# "run,": the fast stretch of the user's Batman cut, arriving inside the push and settling; it runs on under "and"
+# Legora's ease back: 100 % -> 66 % over 0.9 s, power4.out, drifting 20 px left
+s.js.append(f'tl.fromTo("#{camG}", {{ scale: 1.0, x: 0 }}, {{ scale: {FR}, x: -20, duration: 0.9, ease: "power4.out" }}, {s.at(T(2))});')
+s.js.append(f'tl.to("#{camG}", {{ scale: {FR + 0.012}, duration: {r3(T(6) - T(2) - 0.9)}, ease: "none" }}, {s.at(T(2) + 0.9)});')
+# everything made since grp_first moves as one collage under the camera
+gid = s.uid("wall")
+inner = "".join(s.els[grp_first:])
+del s.els[grp_first:]
+s.els.append(f'<div class="cam" id="{gid}" style="position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:{s.nz()}">{inner}</div>')
+# the wall's camera: drift up and a ~2 deg turn as the pictures land, push in ~6 %, then accelerate left into the cut
+s.js.append(f'tl.fromTo("#{gid}", {{ y: 0, rotation: 0 }}, {{ y: -16, rotation: -2, duration: 0.3, ease: "power2.out" }}, {s.at(PIC_T0)});')
+s.js.append(f'tl.fromTo("#{gid}", {{ scale: 1.0 }}, {{ scale: 1.06, duration: 0.3, ease: "power2.out", immediateRender: false }}, {s.at(INV - 0.12)});')
+s.js.append(f'tl.fromTo("#{gid}", {{ x: 0 }}, {{ x: -230, duration: {PAN}, ease: "power2.in", immediateRender: false }}, {s.at(T(6) - PAN)});')
+s.neg(INV, 2)  # the wall inverts for two frames
+# "run,": the fast stretch of the user's Batman cut; it arrives still moving left and decelerates (pan continuity),
+# and runs on under "and"
 camR, vR = s.video("c_run2.mp4", T(6), T(8), grade="matte", push=None, rate=round(1.0 / (T(8) - T(6)), 3))
-s.scale_keys(camR, [(T(6), 1.22, 1.0, 0.36, "expo.out"), (round(T(6) + 0.36, 3), 1.0, 1.02, round(T(8) - T(6) - 0.36, 3), "none")])
-s.lightstreak(round(T(6) - 1 / 30, 3), frames=2)
+# x and scale ease together, so the frame stays covered while it slides (needs scale >= 1 + 2x/1920)
+s.js.append(f'tl.fromTo("#{camR}", {{ x: 220, scale: 1.26 }}, {{ x: 0, scale: 1.03, duration: 0.34, ease: "power2.out" }}, {s.at(T(6))});')
+s.js.append(f'tl.to("#{camR}", {{ scale: 1.05, duration: {r3(T(8) - T(6) - 0.34)}, ease: "none" }}, {s.at(T(6) + 0.34)});')
 # "and honestly," (user: keep the full-frame talk-show video and the white silhouette; reference: General Catalyst
 # opening): his first frame as a glowing white silhouette over the darkened frame, flickering back to the real frame
 # for single frames, with glitch boxes; then the clip plays
@@ -727,14 +757,16 @@ sfx("impact-bass-1.mp3", 5.40, 0.36)
 sfx("whoosh-short.mp3", 5.40, 0.12)
 sfx("whoosh-short.mp3", T(2), 0.14)
 sfx("whoosh-short.mp3", T(4), 0.14)
-sfx("whoosh.mp3", round(T(6) - PUSH, 3), 0.24)
+sfx("whoosh.mp3", round(T(6) - 0.30, 3), 0.24)
 sfx("whoosh-short.mp3", KS, 0.12)
 sfx("impact-bass-1.mp3", T(6), 0.20)
 cap([[("Robert", 5.40, "FN"), W(1, "FN", "Pattinson")]], T(2), y=560, kind="name", exit_first=round(T(2) - 0.17, 3))
 cap([[W(2, "S", "is"), W(3, "S", "on"), W(4, "S", "a")]], T(6), y=380)
 cap([[W(5, "FSL", "generational"), W(6, "FSL", "run,")]], T(7), y=610)
 # the reference's lockup: a small serif word, then a big one on the same baseline, beside the silhouette
-cap([[W(7, "LS", "and"), W(8, "B", "honestly,")]], T(9), x=130, y=330, align="left")
+# first-10s v2 (user): "Honestly" with a capital H and no comma, moved left off his face: a small-over-big
+# stack (the reference's lockup) that ends well before his head
+cap([[W(7, "LS", "and")], [W(8, "B", "Honestly")]], T(9), x=70, y=300, align="left", lh=0.9)
 paper_words([(9, "PS", "nobody"), (10, "PS", "saw"), (11, "PS", "it"), (12, "PXL", "coming.")], T(13), last_exit="blurout")
 
 # --------------------------------------------------------------------------------------------
