@@ -1,0 +1,1505 @@
+[
+{
+"i": 0,
+"text": "Robert",
+"seg": "A",
+"vo_start": 0,
+"vo_end": 0.4,
+"g_start": 5.4,
+"g_end": 5.8
+},
+{
+"i": 1,
+"text": "Pattinson",
+"seg": "A",
+"vo_start": 0.4,
+"vo_end": 1.12,
+"g_start": 5.8,
+"g_end": 6.52
+},
+{
+"i": 2,
+"text": "is",
+"seg": "A",
+"vo_start": 1.12,
+"vo_end": 1.28,
+"g_start": 6.52,
+"g_end": 6.68
+},
+{
+"i": 3,
+"text": "having",
+"seg": "A",
+"vo_start": 1.28,
+"vo_end": 1.52,
+"g_start": 6.68,
+"g_end": 6.92
+},
+{
+"i": 4,
+"text": "a",
+"seg": "A",
+"vo_start": 1.52,
+"vo_end": 1.76,
+"g_start": 6.92,
+"g_end": 7.16
+},
+{
+"i": 5,
+"text": "generational",
+"seg": "A",
+"vo_start": 1.76,
+"vo_end": 2.4,
+"g_start": 7.16,
+"g_end": 7.8
+},
+{
+"i": 6,
+"text": "run,",
+"seg": "A",
+"vo_start": 2.56,
+"vo_end": 3.12,
+"g_start": 7.96,
+"g_end": 8.52
+},
+{
+"i": 7,
+"text": "and",
+"seg": "A",
+"vo_start": 3.12,
+"vo_end": 3.36,
+"g_start": 8.52,
+"g_end": 8.76
+},
+{
+"i": 8,
+"text": "honestly,",
+"seg": "A",
+"vo_start": 3.36,
+"vo_end": 4.16,
+"g_start": 8.76,
+"g_end": 9.56
+},
+{
+"i": 9,
+"text": "nobody",
+"seg": "A",
+"vo_start": 4.16,
+"vo_end": 4.64,
+"g_start": 9.56,
+"g_end": 10.04
+},
+{
+"i": 10,
+"text": "saw",
+"seg": "A",
+"vo_start": 4.64,
+"vo_end": 4.96,
+"g_start": 10.04,
+"g_end": 10.36
+},
+{
+"i": 11,
+"text": "it",
+"seg": "A",
+"vo_start": 4.96,
+"vo_end": 5.12,
+"g_start": 10.36,
+"g_end": 10.52
+},
+{
+"i": 12,
+"text": "coming.",
+"seg": "A",
+"vo_start": 5.12,
+"vo_end": 5.76,
+"g_start": 10.52,
+"g_end": 11.16
+},
+{
+"i": 13,
+"text": "To",
+"seg": "A",
+"vo_start": 5.76,
+"vo_end": 6.08,
+"g_start": 11.16,
+"g_end": 11.48
+},
+{
+"i": 14,
+"text": "some",
+"seg": "A",
+"vo_start": 6.08,
+"vo_end": 6.32,
+"g_start": 11.48,
+"g_end": 11.72
+},
+{
+"i": 15,
+"text": "people,",
+"seg": "A",
+"vo_start": 6.32,
+"vo_end": 6.72,
+"g_start": 11.72,
+"g_end": 12.12
+},
+{
+"i": 16,
+"text": "he'll",
+"seg": "A",
+"vo_start": 6.72,
+"vo_end": 7.12,
+"g_start": 12.12,
+"g_end": 12.52
+},
+{
+"i": 17,
+"text": "always",
+"seg": "A",
+"vo_start": 7.12,
+"vo_end": 7.36,
+"g_start": 12.52,
+"g_end": 12.76
+},
+{
+"i": 18,
+"text": "be",
+"seg": "A",
+"vo_start": 7.36,
+"vo_end": 7.6,
+"g_start": 12.76,
+"g_end": 13.0
+},
+{
+"i": 19,
+"text": "Edward",
+"seg": "A",
+"vo_start": 7.6,
+"vo_end": 8,
+"g_start": 13.0,
+"g_end": 13.4
+},
+{
+"i": 20,
+"text": "Cullen.",
+"seg": "A",
+"vo_start": 8,
+"vo_end": 8.8,
+"g_start": 13.4,
+"g_end": 14.2
+},
+{
+"i": 21,
+"text": "But",
+"seg": "A",
+"vo_start": 8.8,
+"vo_end": 9.04,
+"g_start": 14.2,
+"g_end": 14.44
+},
+{
+"i": 22,
+"text": "everything",
+"seg": "A",
+"vo_start": 9.04,
+"vo_end": 9.44,
+"g_start": 14.44,
+"g_end": 14.84
+},
+{
+"i": 23,
+"text": "he",
+"seg": "A",
+"vo_start": 9.44,
+"vo_end": 9.6,
+"g_start": 14.84,
+"g_end": 15.0
+},
+{
+"i": 24,
+"text": "did",
+"seg": "A",
+"vo_start": 9.6,
+"vo_end": 9.84,
+"g_start": 15.0,
+"g_end": 15.24
+},
+{
+"i": 25,
+"text": "after",
+"seg": "A",
+"vo_start": 9.84,
+"vo_end": 10.08,
+"g_start": 15.24,
+"g_end": 15.48
+},
+{
+"i": 26,
+"text": "Twilight",
+"seg": "A",
+"vo_start": 10.08,
+"vo_end": 10.8,
+"g_start": 15.48,
+"g_end": 16.2
+},
+{
+"i": 27,
+"text": "proved",
+"seg": "A",
+"vo_start": 10.8,
+"vo_end": 11.2,
+"g_start": 16.2,
+"g_end": 16.6
+},
+{
+"i": 28,
+"text": "he",
+"seg": "A",
+"vo_start": 11.2,
+"vo_end": 11.36,
+"g_start": 16.6,
+"g_end": 16.76
+},
+{
+"i": 29,
+"text": "was",
+"seg": "A",
+"vo_start": 11.36,
+"vo_end": 11.52,
+"g_start": 16.76,
+"g_end": 16.92
+},
+{
+"i": 30,
+"text": "never",
+"seg": "A",
+"vo_start": 11.52,
+"vo_end": 11.76,
+"g_start": 16.92,
+"g_end": 17.16
+},
+{
+"i": 31,
+"text": "stuck",
+"seg": "A",
+"vo_start": 11.76,
+"vo_end": 12.08,
+"g_start": 17.16,
+"g_end": 17.48
+},
+{
+"i": 32,
+"text": "with",
+"seg": "A",
+"vo_start": 12.08,
+"vo_end": 12.24,
+"g_start": 17.48,
+"g_end": 17.64
+},
+{
+"i": 33,
+"text": "one",
+"seg": "A",
+"vo_start": 12.24,
+"vo_end": 12.48,
+"g_start": 17.64,
+"g_end": 17.88
+},
+{
+"i": 34,
+"text": "role.",
+"seg": "A",
+"vo_start": 12.48,
+"vo_end": 13.2,
+"g_start": 17.88,
+"g_end": 18.6
+},
+{
+"i": 35,
+"text": "Good",
+"seg": "A",
+"vo_start": 13.2,
+"vo_end": 13.68,
+"g_start": 18.6,
+"g_end": 19.08
+},
+{
+"i": 36,
+"text": "time,",
+"seg": "A",
+"vo_start": 13.68,
+"vo_end": 14.16,
+"g_start": 19.08,
+"g_end": 19.56
+},
+{
+"i": 37,
+"text": "The",
+"seg": "A",
+"vo_start": 14.16,
+"vo_end": 14.4,
+"g_start": 19.56,
+"g_end": 19.8
+},
+{
+"i": 38,
+"text": "Lighthouse,",
+"seg": "A",
+"vo_start": 14.4,
+"vo_end": 15.2,
+"g_start": 19.8,
+"g_end": 20.6
+},
+{
+"i": 39,
+"text": "Tenet,",
+"seg": "A",
+"vo_start": 15.2,
+"vo_end": 16,
+"g_start": 20.6,
+"g_end": 21.4
+},
+{
+"i": 40,
+"text": "The",
+"seg": "A",
+"vo_start": 16,
+"vo_end": 16.16,
+"g_start": 21.4,
+"g_end": 21.56
+},
+{
+"i": 41,
+"text": "Batman,",
+"seg": "A",
+"vo_start": 16.16,
+"vo_end": 16.88,
+"g_start": 21.56,
+"g_end": 22.28
+},
+{
+"i": 42,
+"text": "Mickey",
+"seg": "A",
+"vo_start": 16.88,
+"vo_end": 17.36,
+"g_start": 22.28,
+"g_end": 22.76
+},
+{
+"i": 43,
+"text": "17.",
+"seg": "A",
+"vo_start": 17.52,
+"vo_end": 18.32,
+"g_start": 22.92,
+"g_end": 23.72
+},
+{
+"i": 44,
+"text": "Every",
+"seg": "A",
+"vo_start": 18.32,
+"vo_end": 18.72,
+"g_start": 23.72,
+"g_end": 24.12
+},
+{
+"i": 45,
+"text": "one",
+"seg": "A",
+"vo_start": 18.72,
+"vo_end": 18.88,
+"g_start": 24.12,
+"g_end": 24.28
+},
+{
+"i": 46,
+"text": "of",
+"seg": "A",
+"vo_start": 18.88,
+"vo_end": 18.96,
+"g_start": 24.28,
+"g_end": 24.36
+},
+{
+"i": 47,
+"text": "them",
+"seg": "A",
+"vo_start": 18.96,
+"vo_end": 19.2,
+"g_start": 24.36,
+"g_end": 24.6
+},
+{
+"i": 48,
+"text": "was",
+"seg": "A",
+"vo_start": 19.2,
+"vo_end": 19.44,
+"g_start": 24.6,
+"g_end": 24.84
+},
+{
+"i": 49,
+"text": "a",
+"seg": "A",
+"vo_start": 19.44,
+"vo_end": 19.6,
+"g_start": 24.84,
+"g_end": 25.0
+},
+{
+"i": 50,
+"text": "weird,",
+"seg": "A",
+"vo_start": 19.6,
+"vo_end": 20,
+"g_start": 25.0,
+"g_end": 25.4
+},
+{
+"i": 51,
+"text": "bold",
+"seg": "A",
+"vo_start": 20,
+"vo_end": 20.48,
+"g_start": 25.4,
+"g_end": 25.88
+},
+{
+"i": 52,
+"text": "swing",
+"seg": "A",
+"vo_start": 20.48,
+"vo_end": 20.88,
+"g_start": 25.88,
+"g_end": 26.28
+},
+{
+"i": 53,
+"text": "nobody",
+"seg": "A",
+"vo_start": 21.04,
+"vo_end": 21.44,
+"g_start": 26.44,
+"g_end": 26.84
+},
+{
+"i": 54,
+"text": "expected",
+"seg": "A",
+"vo_start": 21.44,
+"vo_end": 21.92,
+"g_start": 26.84,
+"g_end": 27.32
+},
+{
+"i": 55,
+"text": "from",
+"seg": "A",
+"vo_start": 21.92,
+"vo_end": 22.16,
+"g_start": 27.32,
+"g_end": 27.56
+},
+{
+"i": 56,
+"text": "him.",
+"seg": "A",
+"vo_start": 22.16,
+"vo_end": 22.56,
+"g_start": 27.56,
+"g_end": 27.96
+},
+{
+"i": 57,
+"text": "And",
+"seg": "A",
+"vo_start": 22.56,
+"vo_end": 22.72,
+"g_start": 27.96,
+"g_end": 28.12
+},
+{
+"i": 58,
+"text": "while",
+"seg": "A",
+"vo_start": 22.72,
+"vo_end": 22.96,
+"g_start": 28.12,
+"g_end": 28.36
+},
+{
+"i": 59,
+"text": "the",
+"seg": "A",
+"vo_start": 22.96,
+"vo_end": 23.12,
+"g_start": 28.36,
+"g_end": 28.52
+},
+{
+"i": 60,
+"text": "internet",
+"seg": "A",
+"vo_start": 23.12,
+"vo_end": 23.28,
+"g_start": 28.52,
+"g_end": 28.68
+},
+{
+"i": 61,
+"text": "kept",
+"seg": "A",
+"vo_start": 23.44,
+"vo_end": 23.68,
+"g_start": 28.84,
+"g_end": 29.08
+},
+{
+"i": 62,
+"text": "making",
+"seg": "A",
+"vo_start": 23.68,
+"vo_end": 23.92,
+"g_start": 29.08,
+"g_end": 29.32
+},
+{
+"i": 63,
+"text": "Twilight",
+"seg": "A",
+"vo_start": 23.92,
+"vo_end": 24.48,
+"g_start": 29.32,
+"g_end": 29.88
+},
+{
+"i": 64,
+"text": "jokes,",
+"seg": "A",
+"vo_start": 24.48,
+"vo_end": 24.96,
+"g_start": 29.88,
+"g_end": 30.3
+},
+{
+"i": 65,
+"text": "he",
+"seg": "B",
+"vo_start": 24.96,
+"vo_end": 25.12,
+"g_start": 32.66,
+"g_end": 32.82
+},
+{
+"i": 66,
+"text": "was",
+"seg": "B",
+"vo_start": 25.12,
+"vo_end": 25.28,
+"g_start": 32.82,
+"g_end": 32.98
+},
+{
+"i": 67,
+"text": "quietly",
+"seg": "B",
+"vo_start": 25.28,
+"vo_end": 25.84,
+"g_start": 32.98,
+"g_end": 33.54
+},
+{
+"i": 68,
+"text": "working",
+"seg": "B",
+"vo_start": 25.84,
+"vo_end": 26.16,
+"g_start": 33.54,
+"g_end": 33.86
+},
+{
+"i": 69,
+"text": "with",
+"seg": "B",
+"vo_start": 26.16,
+"vo_end": 26.32,
+"g_start": 33.86,
+"g_end": 34.02
+},
+{
+"i": 70,
+"text": "the",
+"seg": "B",
+"vo_start": 26.32,
+"vo_end": 26.48,
+"g_start": 34.02,
+"g_end": 34.18
+},
+{
+"i": 71,
+"text": "best",
+"seg": "B",
+"vo_start": 26.48,
+"vo_end": 26.72,
+"g_start": 34.18,
+"g_end": 34.42
+},
+{
+"i": 72,
+"text": "directors",
+"seg": "B",
+"vo_start": 26.72,
+"vo_end": 27.28,
+"g_start": 34.42,
+"g_end": 34.98
+},
+{
+"i": 73,
+"text": "alive,",
+"seg": "B",
+"vo_start": 27.28,
+"vo_end": 27.92,
+"g_start": 34.98,
+"g_end": 35.62
+},
+{
+"i": 74,
+"text": "until",
+"seg": "B",
+"vo_start": 27.92,
+"vo_end": 28.4,
+"g_start": 35.62,
+"g_end": 36.1
+},
+{
+"i": 75,
+"text": "one",
+"seg": "B",
+"vo_start": 28.4,
+"vo_end": 28.64,
+"g_start": 36.1,
+"g_end": 36.34
+},
+{
+"i": 76,
+"text": "day,",
+"seg": "B",
+"vo_start": 28.64,
+"vo_end": 29.04,
+"g_start": 36.34,
+"g_end": 36.74
+},
+{
+"i": 77,
+"text": "he",
+"seg": "B",
+"vo_start": 29.04,
+"vo_end": 29.2,
+"g_start": 36.74,
+"g_end": 36.9
+},
+{
+"i": 78,
+"text": "became",
+"seg": "B",
+"vo_start": 29.2,
+"vo_end": 29.6,
+"g_start": 36.9,
+"g_end": 37.3
+},
+{
+"i": 79,
+"text": "Batman.",
+"seg": "B",
+"vo_start": 29.6,
+"vo_end": 30.56,
+"g_start": 37.3,
+"g_end": 38.0
+},
+{
+"i": 80,
+"text": "The",
+"seg": "C",
+"vo_start": 30.56,
+"vo_end": 30.72,
+"g_start": 39.16,
+"g_end": 39.32
+},
+{
+"i": 81,
+"text": "vampire",
+"seg": "C",
+"vo_start": 30.72,
+"vo_end": 31.28,
+"g_start": 39.32,
+"g_end": 39.88
+},
+{
+"i": 82,
+"text": "kid",
+"seg": "C",
+"vo_start": 31.28,
+"vo_end": 31.68,
+"g_start": 39.88,
+"g_end": 40.28
+},
+{
+"i": 83,
+"text": "everyone",
+"seg": "C",
+"vo_start": 31.68,
+"vo_end": 32,
+"g_start": 40.28,
+"g_end": 40.6
+},
+{
+"i": 84,
+"text": "laughed",
+"seg": "C",
+"vo_start": 32,
+"vo_end": 32.4,
+"g_start": 40.6,
+"g_end": 41.0
+},
+{
+"i": 85,
+"text": "at",
+"seg": "C",
+"vo_start": 32.4,
+"vo_end": 32.56,
+"g_start": 41.0,
+"g_end": 41.16
+},
+{
+"i": 86,
+"text": "is",
+"seg": "C",
+"vo_start": 32.64,
+"vo_end": 32.8,
+"g_start": 41.24,
+"g_end": 41.4
+},
+{
+"i": 87,
+"text": "now",
+"seg": "C",
+"vo_start": 32.8,
+"vo_end": 32.96,
+"g_start": 41.4,
+"g_end": 41.56
+},
+{
+"i": 88,
+"text": "one",
+"seg": "C",
+"vo_start": 32.96,
+"vo_end": 33.12,
+"g_start": 41.56,
+"g_end": 41.72
+},
+{
+"i": 89,
+"text": "of",
+"seg": "C",
+"vo_start": 33.12,
+"vo_end": 33.28,
+"g_start": 41.72,
+"g_end": 41.88
+},
+{
+"i": 90,
+"text": "the",
+"seg": "C",
+"vo_start": 33.28,
+"vo_end": 33.36,
+"g_start": 41.88,
+"g_end": 41.96
+},
+{
+"i": 91,
+"text": "most",
+"seg": "C",
+"vo_start": 33.36,
+"vo_end": 33.6,
+"g_start": 41.96,
+"g_end": 42.2
+},
+{
+"i": 92,
+"text": "respected",
+"seg": "C",
+"vo_start": 33.6,
+"vo_end": 34.08,
+"g_start": 42.2,
+"g_end": 42.68
+},
+{
+"i": 93,
+"text": "actors",
+"seg": "C",
+"vo_start": 34.08,
+"vo_end": 34.64,
+"g_start": 42.68,
+"g_end": 43.24
+},
+{
+"i": 94,
+"text": "Hollywood.",
+"seg": "C",
+"vo_start": 34.64,
+"vo_end": 35.44,
+"g_start": 43.24,
+"g_end": 44.04
+},
+{
+"i": 95,
+"text": "And",
+"seg": "C",
+"vo_start": 35.44,
+"vo_end": 35.68,
+"g_start": 44.04,
+"g_end": 44.28
+},
+{
+"i": 96,
+"text": "this",
+"seg": "C",
+"vo_start": 35.68,
+"vo_end": 35.92,
+"g_start": 44.28,
+"g_end": 44.52
+},
+{
+"i": 97,
+"text": "year,",
+"seg": "C",
+"vo_start": 35.92,
+"vo_end": 36.32,
+"g_start": 44.52,
+"g_end": 44.85
+},
+{
+"i": 98,
+"text": "he",
+"seg": "D",
+"vo_start": 36.32,
+"vo_end": 36.56,
+"g_start": 45.92,
+"g_end": 46.16
+},
+{
+"i": 99,
+"text": "walked",
+"seg": "D",
+"vo_start": 36.56,
+"vo_end": 36.8,
+"g_start": 46.16,
+"g_end": 46.4
+},
+{
+"i": 100,
+"text": "into",
+"seg": "D",
+"vo_start": 36.8,
+"vo_end": 37.04,
+"g_start": 46.4,
+"g_end": 46.64
+},
+{
+"i": 101,
+"text": "Christopher",
+"seg": "D",
+"vo_start": 37.04,
+"vo_end": 37.44,
+"g_start": 46.64,
+"g_end": 47.04
+},
+{
+"i": 102,
+"text": "Nolan's",
+"seg": "D",
+"vo_start": 37.44,
+"vo_end": 38,
+"g_start": 47.04,
+"g_end": 47.6
+},
+{
+"i": 103,
+"text": "The",
+"seg": "D",
+"vo_start": 38,
+"vo_end": 38.16,
+"g_start": 47.6,
+"g_end": 47.76
+},
+{
+"i": 104,
+"text": "Odyssey",
+"seg": "D",
+"vo_start": 38.16,
+"vo_end": 38.72,
+"g_start": 47.76,
+"g_end": 48.32
+},
+{
+"i": 105,
+"text": "as",
+"seg": "D",
+"vo_start": 38.72,
+"vo_end": 38.8,
+"g_start": 48.32,
+"g_end": 48.4
+},
+{
+"i": 106,
+"text": "Antonus,",
+"seg": "D",
+"vo_start": 38.8,
+"vo_end": 39.6,
+"g_start": 48.4,
+"g_end": 49.2
+},
+{
+"i": 107,
+"text": "one",
+"seg": "D",
+"vo_start": 39.6,
+"vo_end": 39.68,
+"g_start": 49.2,
+"g_end": 49.28
+},
+{
+"i": 108,
+"text": "of",
+"seg": "D",
+"vo_start": 39.68,
+"vo_end": 39.76,
+"g_start": 49.28,
+"g_end": 49.36
+},
+{
+"i": 109,
+"text": "the",
+"seg": "D",
+"vo_start": 39.76,
+"vo_end": 39.84,
+"g_start": 49.36,
+"g_end": 49.44
+},
+{
+"i": 110,
+"text": "story's",
+"seg": "D",
+"vo_start": 39.84,
+"vo_end": 40.32,
+"g_start": 49.44,
+"g_end": 49.92
+},
+{
+"i": 111,
+"text": "central",
+"seg": "D",
+"vo_start": 40.32,
+"vo_end": 40.72,
+"g_start": 49.92,
+"g_end": 50.32
+},
+{
+"i": 112,
+"text": "antagonists.",
+"seg": "D",
+"vo_start": 40.72,
+"vo_end": 41.76,
+"g_start": 50.32,
+"g_end": 51.36
+},
+{
+"i": 113,
+"text": "Then",
+"seg": "D",
+"vo_start": 41.76,
+"vo_end": 42.08,
+"g_start": 51.36,
+"g_end": 51.68
+},
+{
+"i": 114,
+"text": "came",
+"seg": "D",
+"vo_start": 42.08,
+"vo_end": 42.32,
+"g_start": 51.68,
+"g_end": 51.92
+},
+{
+"i": 115,
+"text": "Prime",
+"seg": "D",
+"vo_start": 42.32,
+"vo_end": 42.64,
+"g_start": 51.92,
+"g_end": 52.24
+},
+{
+"i": 116,
+"text": "Time,",
+"seg": "D",
+"vo_start": 42.72,
+"vo_end": 43.04,
+"g_start": 52.32,
+"g_end": 52.64
+},
+{
+"i": 117,
+"text": "with",
+"seg": "D",
+"vo_start": 43.04,
+"vo_end": 43.28,
+"g_start": 52.64,
+"g_end": 52.88
+},
+{
+"i": 118,
+"text": "Pattinson",
+"seg": "D",
+"vo_start": 43.28,
+"vo_end": 43.76,
+"g_start": 52.88,
+"g_end": 53.36
+},
+{
+"i": 119,
+"text": "playing",
+"seg": "D",
+"vo_start": 43.92,
+"vo_end": 44.16,
+"g_start": 53.52,
+"g_end": 53.76
+},
+{
+"i": 120,
+"text": "a",
+"seg": "D",
+"vo_start": 44.16,
+"vo_end": 44.24,
+"g_start": 53.76,
+"g_end": 53.84
+},
+{
+"i": 121,
+"text": "television",
+"seg": "D",
+"vo_start": 44.24,
+"vo_end": 44.72,
+"g_start": 53.84,
+"g_end": 54.32
+},
+{
+"i": 122,
+"text": "journalist",
+"seg": "D",
+"vo_start": 44.72,
+"vo_end": 45.2,
+"g_start": 54.32,
+"g_end": 54.8
+},
+{
+"i": 123,
+"text": "at",
+"seg": "D",
+"vo_start": 45.2,
+"vo_end": 45.36,
+"g_start": 54.8,
+"g_end": 54.96
+},
+{
+"i": 124,
+"text": "the",
+"seg": "D",
+"vo_start": 45.36,
+"vo_end": 45.44,
+"g_start": 54.96,
+"g_end": 55.04
+},
+{
+"i": 125,
+"text": "center",
+"seg": "D",
+"vo_start": 45.44,
+"vo_end": 45.76,
+"g_start": 55.04,
+"g_end": 55.36
+},
+{
+"i": 126,
+"text": "of",
+"seg": "D",
+"vo_start": 45.76,
+"vo_end": 45.92,
+"g_start": 55.36,
+"g_end": 55.52
+},
+{
+"i": 127,
+"text": "controversial",
+"seg": "D",
+"vo_start": 45.92,
+"vo_end": 46.48,
+"g_start": 55.52,
+"g_end": 56.08
+},
+{
+"i": 128,
+"text": "predator",
+"seg": "D",
+"vo_start": 46.56,
+"vo_end": 47.12,
+"g_start": 56.16,
+"g_end": 56.72
+},
+{
+"i": 129,
+"text": "sting",
+"seg": "D",
+"vo_start": 47.12,
+"vo_end": 47.6,
+"g_start": 56.72,
+"g_end": 57.2
+},
+{
+"i": 130,
+"text": "operations.",
+"seg": "D",
+"vo_start": 47.6,
+"vo_end": 48.4,
+"g_start": 57.2,
+"g_end": 57.8
+},
+{
+"i": 131,
+"text": "And",
+"seg": "E",
+"vo_start": 48.4,
+"vo_end": 48.64,
+"g_start": 60.1,
+"g_end": 60.34
+},
+{
+"i": 132,
+"text": "now",
+"seg": "E",
+"vo_start": 48.64,
+"vo_end": 48.88,
+"g_start": 60.34,
+"g_end": 60.58
+},
+{
+"i": 133,
+"text": "he's",
+"seg": "E",
+"vo_start": 48.96,
+"vo_end": 49.28,
+"g_start": 60.66,
+"g_end": 60.98
+},
+{
+"i": 134,
+"text": "closing",
+"seg": "E",
+"vo_start": 49.28,
+"vo_end": 49.68,
+"g_start": 60.98,
+"g_end": 61.38
+},
+{
+"i": 135,
+"text": "out",
+"seg": "E",
+"vo_start": 49.68,
+"vo_end": 49.84,
+"g_start": 61.38,
+"g_end": 61.54
+},
+{
+"i": 136,
+"text": "the",
+"seg": "E",
+"vo_start": 49.84,
+"vo_end": 49.92,
+"g_start": 61.54,
+"g_end": 61.62
+},
+{
+"i": 137,
+"text": "year",
+"seg": "E",
+"vo_start": 49.92,
+"vo_end": 50.16,
+"g_start": 61.62,
+"g_end": 61.86
+},
+{
+"i": 138,
+"text": "with",
+"seg": "E",
+"vo_start": 50.16,
+"vo_end": 50.4,
+"g_start": 61.86,
+"g_end": 62.1
+},
+{
+"i": 139,
+"text": "Dune.",
+"seg": "E",
+"vo_start": 50.4,
+"vo_end": 51.2,
+"g_start": 62.1,
+"g_end": 62.9
+},
+{
+"i": 140,
+"text": "Pattinson",
+"seg": "E",
+"vo_start": 51.2,
+"vo_end": 52,
+"g_start": 62.9,
+"g_end": 63.7
+},
+{
+"i": 141,
+"text": "keeps",
+"seg": "E",
+"vo_start": 52,
+"vo_end": 52.24,
+"g_start": 63.7,
+"g_end": 63.94
+},
+{
+"i": 142,
+"text": "choosing",
+"seg": "E",
+"vo_start": 52.24,
+"vo_end": 52.56,
+"g_start": 63.94,
+"g_end": 64.26
+},
+{
+"i": 143,
+"text": "roles",
+"seg": "E",
+"vo_start": 52.56,
+"vo_end": 52.88,
+"g_start": 64.26,
+"g_end": 64.58
+},
+{
+"i": 144,
+"text": "that",
+"seg": "E",
+"vo_start": 52.88,
+"vo_end": 53.12,
+"g_start": 64.58,
+"g_end": 64.82
+},
+{
+"i": 145,
+"text": "stop",
+"seg": "E",
+"vo_start": 53.12,
+"vo_end": 53.44,
+"g_start": 64.82,
+"g_end": 65.14
+},
+{
+"i": 146,
+"text": "anyone",
+"seg": "E",
+"vo_start": 53.44,
+"vo_end": 53.84,
+"g_start": 65.14,
+"g_end": 65.54
+},
+{
+"i": 147,
+"text": "from",
+"seg": "E",
+"vo_start": 53.84,
+"vo_end": 54,
+"g_start": 65.54,
+"g_end": 65.7
+},
+{
+"i": 148,
+"text": "putting",
+"seg": "E",
+"vo_start": 54,
+"vo_end": 54.32,
+"g_start": 65.7,
+"g_end": 66.02
+},
+{
+"i": 149,
+"text": "him",
+"seg": "E",
+"vo_start": 54.32,
+"vo_end": 54.48,
+"g_start": 66.02,
+"g_end": 66.18
+},
+{
+"i": 150,
+"text": "in",
+"seg": "E",
+"vo_start": 54.48,
+"vo_end": 54.64,
+"g_start": 66.18,
+"g_end": 66.34
+},
+{
+"i": 151,
+"text": "one",
+"seg": "E",
+"vo_start": 54.64,
+"vo_end": 54.88,
+"g_start": 66.34,
+"g_end": 66.58
+},
+{
+"i": 152,
+"text": "box,",
+"seg": "E",
+"vo_start": 54.88,
+"vo_end": 55.44,
+"g_start": 66.58,
+"g_end": 67.14
+},
+{
+"i": 153,
+"text": "and",
+"seg": "E",
+"vo_start": 55.44,
+"vo_end": 55.6,
+"g_start": 67.14,
+"g_end": 67.3
+},
+{
+"i": 154,
+"text": "that",
+"seg": "E",
+"vo_start": 55.6,
+"vo_end": 55.84,
+"g_start": 67.3,
+"g_end": 67.54
+},
+{
+"i": 155,
+"text": "post",
+"seg": "E",
+"vo_start": 55.84,
+"vo_end": 56.08,
+"g_start": 67.54,
+"g_end": 67.78
+},
+{
+"i": 156,
+"text": "Twilight",
+"seg": "E",
+"vo_start": 56.16,
+"vo_end": 56.8,
+"g_start": 67.86,
+"g_end": 68.5
+},
+{
+"i": 157,
+"text": "reinvention",
+"seg": "E",
+"vo_start": 56.8,
+"vo_end": 57.52,
+"g_start": 68.5,
+"g_end": 69.22
+},
+{
+"i": 158,
+"text": "might",
+"seg": "E",
+"vo_start": 57.52,
+"vo_end": 57.76,
+"g_start": 69.22,
+"g_end": 69.46
+},
+{
+"i": 159,
+"text": "be",
+"seg": "E",
+"vo_start": 57.76,
+"vo_end": 57.84,
+"g_start": 69.46,
+"g_end": 69.54
+},
+{
+"i": 160,
+"text": "one",
+"seg": "E",
+"vo_start": 57.84,
+"vo_end": 58,
+"g_start": 69.54,
+"g_end": 69.7
+},
+{
+"i": 161,
+"text": "of",
+"seg": "E",
+"vo_start": 58,
+"vo_end": 58.08,
+"g_start": 69.7,
+"g_end": 69.78
+},
+{
+"i": 162,
+"text": "the",
+"seg": "E",
+"vo_start": 58.08,
+"vo_end": 58.24,
+"g_start": 69.78,
+"g_end": 69.94
+},
+{
+"i": 163,
+"text": "best",
+"seg": "E",
+"vo_start": 58.24,
+"vo_end": 58.56,
+"g_start": 69.94,
+"g_end": 70.26
+},
+{
+"i": 164,
+"text": "we've",
+"seg": "E",
+"vo_start": 58.56,
+"vo_end": 58.88,
+"g_start": 70.26,
+"g_end": 70.58
+},
+{
+"i": 165,
+"text": "ever",
+"seg": "E",
+"vo_start": 58.88,
+"vo_end": 59.12,
+"g_start": 70.58,
+"g_end": 70.82
+},
+{
+"i": 166,
+"text": "seen.",
+"seg": "E",
+"vo_start": 59.12,
+"vo_end": 59.6,
+"g_start": 70.82,
+"g_end": 71.3
+}
+]

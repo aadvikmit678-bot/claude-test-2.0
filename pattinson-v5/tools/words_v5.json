@@ -1,0 +1,1546 @@
+[
+{
+"i": 0,
+"text": "Robert",
+"vo_start": 0,
+"vo_end": 0.4,
+"g_start": 5.4,
+"g_end": 5.8
+},
+{
+"i": 1,
+"text": "Pattinson",
+"vo_start": 0.4,
+"vo_end": 1.12,
+"g_start": 5.8,
+"g_end": 6.52
+},
+{
+"i": 2,
+"text": "is",
+"vo_start": 1.12,
+"vo_end": 1.2,
+"g_start": 6.52,
+"g_end": 6.6
+},
+{
+"i": 3,
+"text": "on",
+"vo_start": 1.2,
+"vo_end": 1.36,
+"g_start": 6.6,
+"g_end": 6.76
+},
+{
+"i": 4,
+"text": "a",
+"vo_start": 1.36,
+"vo_end": 1.6,
+"g_start": 6.76,
+"g_end": 7.0
+},
+{
+"i": 5,
+"text": "generational",
+"vo_start": 1.6,
+"vo_end": 2.24,
+"g_start": 7.0,
+"g_end": 7.64
+},
+{
+"i": 6,
+"text": "run,",
+"vo_start": 2.4,
+"vo_end": 2.8,
+"g_start": 7.8,
+"g_end": 8.2
+},
+{
+"i": 7,
+"text": "and",
+"vo_start": 2.8,
+"vo_end": 3.04,
+"g_start": 8.2,
+"g_end": 8.44
+},
+{
+"i": 8,
+"text": "honestly,",
+"vo_start": 3.04,
+"vo_end": 3.84,
+"g_start": 8.44,
+"g_end": 9.24
+},
+{
+"i": 9,
+"text": "nobody",
+"vo_start": 3.84,
+"vo_end": 4.32,
+"g_start": 9.24,
+"g_end": 9.72
+},
+{
+"i": 10,
+"text": "saw",
+"vo_start": 4.32,
+"vo_end": 4.64,
+"g_start": 9.72,
+"g_end": 10.04
+},
+{
+"i": 11,
+"text": "it",
+"vo_start": 4.64,
+"vo_end": 4.8,
+"g_start": 10.04,
+"g_end": 10.2
+},
+{
+"i": 12,
+"text": "coming.",
+"vo_start": 4.8,
+"vo_end": 5.52,
+"g_start": 10.2,
+"g_end": 10.92
+},
+{
+"i": 13,
+"text": "To",
+"vo_start": 5.52,
+"vo_end": 5.84,
+"g_start": 10.92,
+"g_end": 11.24
+},
+{
+"i": 14,
+"text": "some",
+"vo_start": 5.84,
+"vo_end": 6.08,
+"g_start": 11.24,
+"g_end": 11.48
+},
+{
+"i": 15,
+"text": "people,",
+"vo_start": 6.08,
+"vo_end": 6.48,
+"g_start": 11.48,
+"g_end": 11.88
+},
+{
+"i": 16,
+"text": "he'll",
+"vo_start": 6.48,
+"vo_end": 6.88,
+"g_start": 11.88,
+"g_end": 12.28
+},
+{
+"i": 17,
+"text": "always",
+"vo_start": 6.88,
+"vo_end": 7.12,
+"g_start": 12.28,
+"g_end": 12.52
+},
+{
+"i": 18,
+"text": "be",
+"vo_start": 7.12,
+"vo_end": 7.36,
+"g_start": 12.52,
+"g_end": 12.76
+},
+{
+"i": 19,
+"text": "Edward",
+"vo_start": 7.36,
+"vo_end": 7.76,
+"g_start": 12.76,
+"g_end": 13.16
+},
+{
+"i": 20,
+"text": "Cullen.",
+"vo_start": 7.76,
+"vo_end": 8.56,
+"g_start": 13.16,
+"g_end": 13.96
+},
+{
+"i": 21,
+"text": "But",
+"vo_start": 8.56,
+"vo_end": 8.8,
+"g_start": 13.96,
+"g_end": 14.2
+},
+{
+"i": 22,
+"text": "everything",
+"vo_start": 8.8,
+"vo_end": 9.2,
+"g_start": 14.2,
+"g_end": 14.6
+},
+{
+"i": 23,
+"text": "he",
+"vo_start": 9.2,
+"vo_end": 9.36,
+"g_start": 14.6,
+"g_end": 14.76
+},
+{
+"i": 24,
+"text": "did",
+"vo_start": 9.36,
+"vo_end": 9.6,
+"g_start": 14.76,
+"g_end": 15.0
+},
+{
+"i": 25,
+"text": "after",
+"vo_start": 9.6,
+"vo_end": 9.84,
+"g_start": 15.0,
+"g_end": 15.24
+},
+{
+"i": 26,
+"text": "Twilight",
+"vo_start": 9.84,
+"vo_end": 10.56,
+"g_start": 15.24,
+"g_end": 15.96
+},
+{
+"i": 27,
+"text": "proved",
+"vo_start": 10.56,
+"vo_end": 10.96,
+"g_start": 15.96,
+"g_end": 16.36
+},
+{
+"i": 28,
+"text": "he",
+"vo_start": 10.96,
+"vo_end": 11.12,
+"g_start": 16.36,
+"g_end": 16.52
+},
+{
+"i": 29,
+"text": "was",
+"vo_start": 11.12,
+"vo_end": 11.28,
+"g_start": 16.52,
+"g_end": 16.68
+},
+{
+"i": 30,
+"text": "never",
+"vo_start": 11.28,
+"vo_end": 11.52,
+"g_start": 16.68,
+"g_end": 16.92
+},
+{
+"i": 31,
+"text": "stuck",
+"vo_start": 11.52,
+"vo_end": 11.84,
+"g_start": 16.92,
+"g_end": 17.24
+},
+{
+"i": 32,
+"text": "in",
+"vo_start": 11.84,
+"vo_end": 12,
+"g_start": 17.24,
+"g_end": 17.4
+},
+{
+"i": 33,
+"text": "one",
+"vo_start": 12,
+"vo_end": 12.24,
+"g_start": 17.4,
+"g_end": 17.64
+},
+{
+"i": 34,
+"text": "role.",
+"vo_start": 12.24,
+"vo_end": 12.88,
+"g_start": 17.64,
+"g_end": 18.28
+},
+{
+"i": 35,
+"text": "He",
+"vo_start": 12.88,
+"vo_end": 13.12,
+"g_start": 18.28,
+"g_end": 18.52
+},
+{
+"i": 36,
+"text": "spent",
+"vo_start": 13.12,
+"vo_end": 13.44,
+"g_start": 18.52,
+"g_end": 18.84
+},
+{
+"i": 37,
+"text": "the",
+"vo_start": 13.44,
+"vo_end": 13.6,
+"g_start": 18.84,
+"g_end": 19.0
+},
+{
+"i": 38,
+"text": "last",
+"vo_start": 13.6,
+"vo_end": 13.92,
+"g_start": 19.0,
+"g_end": 19.32
+},
+{
+"i": 39,
+"text": "15",
+"vo_start": 13.92,
+"vo_end": 14.4,
+"g_start": 19.32,
+"g_end": 19.8
+},
+{
+"i": 40,
+"text": "years",
+"vo_start": 14.4,
+"vo_end": 14.72,
+"g_start": 19.8,
+"g_end": 20.12
+},
+{
+"i": 41,
+"text": "making",
+"vo_start": 14.72,
+"vo_end": 15.04,
+"g_start": 20.12,
+"g_end": 20.44
+},
+{
+"i": 42,
+"text": "sure",
+"vo_start": 15.04,
+"vo_end": 15.28,
+"g_start": 20.44,
+"g_end": 20.68
+},
+{
+"i": 43,
+"text": "the",
+"vo_start": 15.28,
+"vo_end": 15.36,
+"g_start": 20.68,
+"g_end": 20.76
+},
+{
+"i": 44,
+"text": "world",
+"vo_start": 15.36,
+"vo_end": 15.68,
+"g_start": 20.76,
+"g_end": 21.08
+},
+{
+"i": 45,
+"text": "sees",
+"vo_start": 15.68,
+"vo_end": 15.92,
+"g_start": 21.08,
+"g_end": 21.32
+},
+{
+"i": 46,
+"text": "him",
+"vo_start": 15.92,
+"vo_end": 16.16,
+"g_start": 21.32,
+"g_end": 21.56
+},
+{
+"i": 47,
+"text": "more",
+"vo_start": 16.16,
+"vo_end": 16.32,
+"g_start": 21.56,
+"g_end": 21.72
+},
+{
+"i": 48,
+"text": "than",
+"vo_start": 16.32,
+"vo_end": 16.48,
+"g_start": 21.72,
+"g_end": 21.88
+},
+{
+"i": 49,
+"text": "just",
+"vo_start": 16.48,
+"vo_end": 16.64,
+"g_start": 21.88,
+"g_end": 22.04
+},
+{
+"i": 50,
+"text": "the",
+"vo_start": 16.64,
+"vo_end": 16.8,
+"g_start": 22.04,
+"g_end": 22.2
+},
+{
+"i": 51,
+"text": "vampire",
+"vo_start": 16.8,
+"vo_end": 17.44,
+"g_start": 22.2,
+"g_end": 22.84
+},
+{
+"i": 52,
+"text": "kid.",
+"vo_start": 17.44,
+"vo_end": 18.08,
+"g_start": 22.84,
+"g_end": 23.48
+},
+{
+"i": 53,
+"text": "Good",
+"vo_start": 18.08,
+"vo_end": 18.48,
+"g_start": 23.48,
+"g_end": 23.88
+},
+{
+"i": 54,
+"text": "Time,",
+"vo_start": 18.48,
+"vo_end": 19.04,
+"g_start": 23.88,
+"g_end": 24.44
+},
+{
+"i": 55,
+"text": "The",
+"vo_start": 19.04,
+"vo_end": 19.2,
+"g_start": 24.44,
+"g_end": 24.6
+},
+{
+"i": 56,
+"text": "Lighthouse,",
+"vo_start": 19.2,
+"vo_end": 20,
+"g_start": 24.6,
+"g_end": 25.4
+},
+{
+"i": 57,
+"text": "Tenet,",
+"vo_start": 20,
+"vo_end": 20.72,
+"g_start": 25.4,
+"g_end": 26.12
+},
+{
+"i": 58,
+"text": "The",
+"vo_start": 20.72,
+"vo_end": 20.88,
+"g_start": 26.12,
+"g_end": 26.28
+},
+{
+"i": 59,
+"text": "Batman,",
+"vo_start": 20.88,
+"vo_end": 21.44,
+"g_start": 26.28,
+"g_end": 26.84
+},
+{
+"i": 60,
+"text": "and",
+"vo_start": 21.44,
+"vo_end": 21.6,
+"g_start": 26.84,
+"g_end": 27.0
+},
+{
+"i": 61,
+"text": "Mickey",
+"vo_start": 21.6,
+"vo_end": 22.08,
+"g_start": 27.0,
+"g_end": 27.48
+},
+{
+"i": 62,
+"text": "17.",
+"vo_start": 22.24,
+"vo_end": 23.2,
+"g_start": 27.64,
+"g_end": 28.6
+},
+{
+"i": 63,
+"text": "Every",
+"vo_start": 23.2,
+"vo_end": 23.52,
+"g_start": 28.6,
+"g_end": 28.92
+},
+{
+"i": 64,
+"text": "one",
+"vo_start": 23.6,
+"vo_end": 23.76,
+"g_start": 29.0,
+"g_end": 29.16
+},
+{
+"i": 65,
+"text": "of",
+"vo_start": 23.76,
+"vo_end": 23.92,
+"g_start": 29.16,
+"g_end": 29.32
+},
+{
+"i": 66,
+"text": "them",
+"vo_start": 23.92,
+"vo_end": 24.08,
+"g_start": 29.32,
+"g_end": 29.48
+},
+{
+"i": 67,
+"text": "was",
+"vo_start": 24.08,
+"vo_end": 24.32,
+"g_start": 29.48,
+"g_end": 29.72
+},
+{
+"i": 68,
+"text": "a",
+"vo_start": 24.32,
+"vo_end": 24.48,
+"g_start": 29.72,
+"g_end": 29.88
+},
+{
+"i": 69,
+"text": "weird,",
+"vo_start": 24.48,
+"vo_end": 24.96,
+"g_start": 29.88,
+"g_end": 30.36
+},
+{
+"i": 70,
+"text": "bold",
+"vo_start": 24.96,
+"vo_end": 25.36,
+"g_start": 30.36,
+"g_end": 30.76
+},
+{
+"i": 71,
+"text": "swing",
+"vo_start": 25.36,
+"vo_end": 25.76,
+"g_start": 30.76,
+"g_end": 31.16
+},
+{
+"i": 72,
+"text": "nobody",
+"vo_start": 25.92,
+"vo_end": 26.32,
+"g_start": 31.32,
+"g_end": 31.72
+},
+{
+"i": 73,
+"text": "expected",
+"vo_start": 26.32,
+"vo_end": 26.8,
+"g_start": 31.72,
+"g_end": 32.2
+},
+{
+"i": 74,
+"text": "from",
+"vo_start": 26.8,
+"vo_end": 27.04,
+"g_start": 32.2,
+"g_end": 32.44
+},
+{
+"i": 75,
+"text": "him.",
+"vo_start": 27.04,
+"vo_end": 27.44,
+"g_start": 32.44,
+"g_end": 32.84
+},
+{
+"i": 76,
+"text": "And",
+"vo_start": 27.44,
+"vo_end": 27.68,
+"g_start": 32.84,
+"g_end": 33.08
+},
+{
+"i": 77,
+"text": "while",
+"vo_start": 27.68,
+"vo_end": 27.92,
+"g_start": 33.08,
+"g_end": 33.32
+},
+{
+"i": 78,
+"text": "the",
+"vo_start": 27.92,
+"vo_end": 28.08,
+"g_start": 33.32,
+"g_end": 33.48
+},
+{
+"i": 79,
+"text": "internet",
+"vo_start": 28.08,
+"vo_end": 28.24,
+"g_start": 33.48,
+"g_end": 33.64
+},
+{
+"i": 80,
+"text": "kept",
+"vo_start": 28.4,
+"vo_end": 28.64,
+"g_start": 33.8,
+"g_end": 34.04
+},
+{
+"i": 81,
+"text": "making",
+"vo_start": 28.64,
+"vo_end": 28.88,
+"g_start": 34.04,
+"g_end": 34.28
+},
+{
+"i": 82,
+"text": "Twilight",
+"vo_start": 28.88,
+"vo_end": 29.44,
+"g_start": 34.28,
+"g_end": 34.84
+},
+{
+"i": 83,
+"text": "jokes,",
+"vo_start": 29.44,
+"vo_end": 30,
+"g_start": 34.84,
+"g_end": 35.4
+},
+{
+"i": 84,
+"text": "he",
+"vo_start": 30,
+"vo_end": 30.08,
+"g_start": 37.75,
+"g_end": 37.83
+},
+{
+"i": 85,
+"text": "was",
+"vo_start": 30.08,
+"vo_end": 30.24,
+"g_start": 37.83,
+"g_end": 37.99
+},
+{
+"i": 86,
+"text": "quietly",
+"vo_start": 30.24,
+"vo_end": 30.8,
+"g_start": 37.99,
+"g_end": 38.55
+},
+{
+"i": 87,
+"text": "working",
+"vo_start": 30.8,
+"vo_end": 31.12,
+"g_start": 38.55,
+"g_end": 38.87
+},
+{
+"i": 88,
+"text": "with",
+"vo_start": 31.12,
+"vo_end": 31.28,
+"g_start": 38.87,
+"g_end": 39.03
+},
+{
+"i": 89,
+"text": "the",
+"vo_start": 31.28,
+"vo_end": 31.44,
+"g_start": 39.03,
+"g_end": 39.19
+},
+{
+"i": 90,
+"text": "best",
+"vo_start": 31.44,
+"vo_end": 31.68,
+"g_start": 39.19,
+"g_end": 39.43
+},
+{
+"i": 91,
+"text": "directors",
+"vo_start": 31.68,
+"vo_end": 32.32,
+"g_start": 39.43,
+"g_end": 40.07
+},
+{
+"i": 92,
+"text": "alive,",
+"vo_start": 32.32,
+"vo_end": 32.96,
+"g_start": 40.07,
+"g_end": 40.71
+},
+{
+"i": 93,
+"text": "until",
+"vo_start": 32.96,
+"vo_end": 33.44,
+"g_start": 40.71,
+"g_end": 41.19
+},
+{
+"i": 94,
+"text": "one",
+"vo_start": 33.44,
+"vo_end": 33.68,
+"g_start": 41.19,
+"g_end": 41.43
+},
+{
+"i": 95,
+"text": "day",
+"vo_start": 33.68,
+"vo_end": 33.92,
+"g_start": 41.43,
+"g_end": 41.67
+},
+{
+"i": 96,
+"text": "he",
+"vo_start": 34.08,
+"vo_end": 34.32,
+"g_start": 41.83,
+"g_end": 42.07
+},
+{
+"i": 97,
+"text": "became",
+"vo_start": 34.32,
+"vo_end": 34.72,
+"g_start": 42.07,
+"g_end": 42.47
+},
+{
+"i": 98,
+"text": "Batman.",
+"vo_start": 34.72,
+"vo_end": 35.84,
+"g_start": 42.47,
+"g_end": 43.59
+},
+{
+"i": 99,
+"text": "He",
+"vo_start": 35.84,
+"vo_end": 36.08,
+"g_start": 43.59,
+"g_end": 43.83
+},
+{
+"i": 100,
+"text": "doesn't",
+"vo_start": 36.08,
+"vo_end": 36.48,
+"g_start": 43.83,
+"g_end": 44.23
+},
+{
+"i": 101,
+"text": "play",
+"vo_start": 36.48,
+"vo_end": 36.8,
+"g_start": 44.23,
+"g_end": 44.55
+},
+{
+"i": 102,
+"text": "characters,",
+"vo_start": 36.8,
+"vo_end": 37.68,
+"g_start": 44.55,
+"g_end": 45.43
+},
+{
+"i": 103,
+"text": "he",
+"vo_start": 37.68,
+"vo_end": 37.92,
+"g_start": 45.43,
+"g_end": 45.67
+},
+{
+"i": 104,
+"text": "becomes",
+"vo_start": 37.92,
+"vo_end": 38.56,
+"g_start": 45.67,
+"g_end": 46.31
+},
+{
+"i": 105,
+"text": "them.",
+"vo_start": 38.56,
+"vo_end": 38.96,
+"g_start": 46.31,
+"g_end": 46.71
+},
+{
+"i": 106,
+"text": "He",
+"vo_start": 38.96,
+"vo_end": 39.2,
+"g_start": 46.71,
+"g_end": 46.95
+},
+{
+"i": 107,
+"text": "picks",
+"vo_start": 39.2,
+"vo_end": 39.52,
+"g_start": 46.95,
+"g_end": 47.27
+},
+{
+"i": 108,
+"text": "roles",
+"vo_start": 39.52,
+"vo_end": 39.84,
+"g_start": 47.27,
+"g_end": 47.59
+},
+{
+"i": 109,
+"text": "that",
+"vo_start": 39.84,
+"vo_end": 40,
+"g_start": 47.59,
+"g_end": 47.75
+},
+{
+"i": 110,
+"text": "scare",
+"vo_start": 40,
+"vo_end": 40.4,
+"g_start": 47.75,
+"g_end": 48.15
+},
+{
+"i": 111,
+"text": "the",
+"vo_start": 40.4,
+"vo_end": 40.56,
+"g_start": 48.15,
+"g_end": 48.31
+},
+{
+"i": 112,
+"text": "shit",
+"vo_start": 40.56,
+"vo_end": 40.88,
+"g_start": 48.31,
+"g_end": 48.63
+},
+{
+"i": 113,
+"text": "out",
+"vo_start": 40.88,
+"vo_end": 41.04,
+"g_start": 48.63,
+"g_end": 48.79
+},
+{
+"i": 114,
+"text": "of",
+"vo_start": 41.04,
+"vo_end": 41.12,
+"g_start": 48.79,
+"g_end": 48.87
+},
+{
+"i": 115,
+"text": "others,",
+"vo_start": 41.12,
+"vo_end": 41.68,
+"g_start": 48.87,
+"g_end": 49.43
+},
+{
+"i": 116,
+"text": "the",
+"vo_start": 41.68,
+"vo_end": 41.84,
+"g_start": 49.43,
+"g_end": 49.59
+},
+{
+"i": 117,
+"text": "ones",
+"vo_start": 41.84,
+"vo_end": 42.16,
+"g_start": 49.59,
+"g_end": 49.91
+},
+{
+"i": 118,
+"text": "everyone",
+"vo_start": 42.16,
+"vo_end": 42.56,
+"g_start": 49.91,
+"g_end": 50.31
+},
+{
+"i": 119,
+"text": "else",
+"vo_start": 42.56,
+"vo_end": 42.88,
+"g_start": 50.31,
+"g_end": 50.63
+},
+{
+"i": 120,
+"text": "runs",
+"vo_start": 42.88,
+"vo_end": 43.28,
+"g_start": 50.63,
+"g_end": 51.03
+},
+{
+"i": 121,
+"text": "from.",
+"vo_start": 43.28,
+"vo_end": 43.76,
+"g_start": 51.03,
+"g_end": 51.51
+},
+{
+"i": 122,
+"text": "And",
+"vo_start": 43.76,
+"vo_end": 44,
+"g_start": 51.51,
+"g_end": 51.75
+},
+{
+"i": 123,
+"text": "in",
+"vo_start": 44,
+"vo_end": 44.16,
+"g_start": 51.75,
+"g_end": 51.91
+},
+{
+"i": 124,
+"text": "2026,",
+"vo_start": 44.16,
+"vo_end": 45.2,
+"g_start": 51.91,
+"g_end": 52.95
+},
+{
+"i": 125,
+"text": "we",
+"vo_start": 45.2,
+"vo_end": 45.44,
+"g_start": 52.95,
+"g_end": 53.19
+},
+{
+"i": 126,
+"text": "saw",
+"vo_start": 45.44,
+"vo_end": 45.68,
+"g_start": 53.19,
+"g_end": 53.43
+},
+{
+"i": 127,
+"text": "him",
+"vo_start": 45.68,
+"vo_end": 45.92,
+"g_start": 53.43,
+"g_end": 53.67
+},
+{
+"i": 128,
+"text": "do",
+"vo_start": 45.92,
+"vo_end": 46.08,
+"g_start": 53.67,
+"g_end": 53.83
+},
+{
+"i": 129,
+"text": "it",
+"vo_start": 46.08,
+"vo_end": 46.32,
+"g_start": 53.83,
+"g_end": 54.07
+},
+{
+"i": 130,
+"text": "all.",
+"vo_start": 46.32,
+"vo_end": 46.88,
+"g_start": 54.07,
+"g_end": 54.63
+},
+{
+"i": 131,
+"text": "Walked",
+"vo_start": 46.88,
+"vo_end": 47.28,
+"g_start": 54.63,
+"g_end": 55.03
+},
+{
+"i": 132,
+"text": "into",
+"vo_start": 47.28,
+"vo_end": 47.44,
+"g_start": 55.03,
+"g_end": 55.19
+},
+{
+"i": 133,
+"text": "Christopher",
+"vo_start": 47.44,
+"vo_end": 47.92,
+"g_start": 55.19,
+"g_end": 55.67
+},
+{
+"i": 134,
+"text": "Nolan's",
+"vo_start": 47.92,
+"vo_end": 48.4,
+"g_start": 55.67,
+"g_end": 56.15
+},
+{
+"i": 135,
+"text": "The",
+"vo_start": 48.4,
+"vo_end": 48.56,
+"g_start": 56.15,
+"g_end": 56.31
+},
+{
+"i": 136,
+"text": "Odyssey",
+"vo_start": 48.56,
+"vo_end": 49.12,
+"g_start": 56.31,
+"g_end": 56.87
+},
+{
+"i": 137,
+"text": "as",
+"vo_start": 49.12,
+"vo_end": 49.28,
+"g_start": 56.87,
+"g_end": 57.03
+},
+{
+"i": 138,
+"text": "Antinous.",
+"vo_start": 49.28,
+"vo_end": 50.16,
+"g_start": 57.03,
+"g_end": 57.91
+},
+{
+"i": 139,
+"text": "Then",
+"vo_start": 50.16,
+"vo_end": 50.48,
+"g_start": 57.91,
+"g_end": 58.23
+},
+{
+"i": 140,
+"text": "came",
+"vo_start": 50.48,
+"vo_end": 50.72,
+"g_start": 58.23,
+"g_end": 58.47
+},
+{
+"i": 141,
+"text": "Primetime,",
+"vo_start": 50.72,
+"vo_end": 51.44,
+"g_start": 58.47,
+"g_end": 59.19
+},
+{
+"i": 142,
+"text": "with",
+"vo_start": 51.44,
+"vo_end": 51.6,
+"g_start": 59.19,
+"g_end": 59.35
+},
+{
+"i": 143,
+"text": "Pattinson",
+"vo_start": 51.6,
+"vo_end": 52.24,
+"g_start": 59.35,
+"g_end": 59.99
+},
+{
+"i": 144,
+"text": "playing",
+"vo_start": 52.24,
+"vo_end": 52.56,
+"g_start": 59.99,
+"g_end": 60.31
+},
+{
+"i": 145,
+"text": "a",
+"vo_start": 52.56,
+"vo_end": 52.64,
+"g_start": 60.31,
+"g_end": 60.39
+},
+{
+"i": 146,
+"text": "television",
+"vo_start": 52.64,
+"vo_end": 53.12,
+"g_start": 60.39,
+"g_end": 60.87
+},
+{
+"i": 147,
+"text": "journalist",
+"vo_start": 53.12,
+"vo_end": 53.6,
+"g_start": 60.87,
+"g_end": 61.35
+},
+{
+"i": 148,
+"text": "at",
+"vo_start": 53.6,
+"vo_end": 53.76,
+"g_start": 61.35,
+"g_end": 61.51
+},
+{
+"i": 149,
+"text": "the",
+"vo_start": 53.76,
+"vo_end": 53.84,
+"g_start": 61.51,
+"g_end": 61.59
+},
+{
+"i": 150,
+"text": "center",
+"vo_start": 53.84,
+"vo_end": 54.16,
+"g_start": 61.59,
+"g_end": 61.91
+},
+{
+"i": 151,
+"text": "of",
+"vo_start": 54.16,
+"vo_end": 54.32,
+"g_start": 61.91,
+"g_end": 62.07
+},
+{
+"i": 152,
+"text": "controversial",
+"vo_start": 54.32,
+"vo_end": 55.04,
+"g_start": 62.07,
+"g_end": 62.79
+},
+{
+"i": 153,
+"text": "predator",
+"vo_start": 55.04,
+"vo_end": 55.52,
+"g_start": 62.79,
+"g_end": 63.27
+},
+{
+"i": 154,
+"text": "sting",
+"vo_start": 55.6,
+"vo_end": 56.08,
+"g_start": 63.35,
+"g_end": 63.83
+},
+{
+"i": 155,
+"text": "operations.",
+"vo_start": 56.08,
+"vo_end": 56.96,
+"g_start": 63.83,
+"g_end": 64.71
+},
+{
+"i": 156,
+"text": "And",
+"vo_start": 56.96,
+"vo_end": 57.2,
+"g_start": 66.86,
+"g_end": 67.1
+},
+{
+"i": 157,
+"text": "now",
+"vo_start": 57.2,
+"vo_end": 57.36,
+"g_start": 67.1,
+"g_end": 67.26
+},
+{
+"i": 158,
+"text": "he's",
+"vo_start": 57.52,
+"vo_end": 57.76,
+"g_start": 67.42,
+"g_end": 67.66
+},
+{
+"i": 159,
+"text": "closing",
+"vo_start": 57.76,
+"vo_end": 58.24,
+"g_start": 67.66,
+"g_end": 68.14
+},
+{
+"i": 160,
+"text": "out",
+"vo_start": 58.24,
+"vo_end": 58.4,
+"g_start": 68.14,
+"g_end": 68.3
+},
+{
+"i": 161,
+"text": "the",
+"vo_start": 58.4,
+"vo_end": 58.48,
+"g_start": 68.3,
+"g_end": 68.38
+},
+{
+"i": 162,
+"text": "year",
+"vo_start": 58.48,
+"vo_end": 58.64,
+"g_start": 68.38,
+"g_end": 68.54
+},
+{
+"i": 163,
+"text": "with",
+"vo_start": 58.64,
+"vo_end": 58.88,
+"g_start": 68.54,
+"g_end": 68.78
+},
+{
+"i": 164,
+"text": "Dune",
+"vo_start": 58.88,
+"vo_end": 59.36,
+"g_start": 68.78,
+"g_end": 69.26
+},
+{
+"i": 165,
+"text": "Part",
+"vo_start": 59.52,
+"vo_end": 59.76,
+"g_start": 69.42,
+"g_end": 69.66
+},
+{
+"i": 166,
+"text": "3.",
+"vo_start": 59.76,
+"vo_end": 60.24,
+"g_start": 69.66,
+"g_end": 70.14
+},
+{
+"i": 167,
+"text": "Pattinson",
+"vo_start": 60.45,
+"vo_end": 61.33,
+"g_start": 70.35,
+"g_end": 71.23
+},
+{
+"i": 168,
+"text": "keeps",
+"vo_start": 61.33,
+"vo_end": 61.57,
+"g_start": 71.23,
+"g_end": 71.47
+},
+{
+"i": 169,
+"text": "choosing",
+"vo_start": 61.57,
+"vo_end": 61.89,
+"g_start": 71.47,
+"g_end": 71.79
+},
+{
+"i": 170,
+"text": "roles",
+"vo_start": 61.89,
+"vo_end": 62.21,
+"g_start": 71.79,
+"g_end": 72.11
+},
+{
+"i": 171,
+"text": "that",
+"vo_start": 62.21,
+"vo_end": 62.37,
+"g_start": 72.11,
+"g_end": 72.27
+},
+{
+"i": 172,
+"text": "stop",
+"vo_start": 62.37,
+"vo_end": 62.61,
+"g_start": 72.27,
+"g_end": 72.51
+},
+{
+"i": 173,
+"text": "anyone",
+"vo_start": 62.77,
+"vo_end": 63.09,
+"g_start": 72.67,
+"g_end": 72.99
+},
+{
+"i": 174,
+"text": "from",
+"vo_start": 63.09,
+"vo_end": 63.33,
+"g_start": 72.99,
+"g_end": 73.23
+},
+{
+"i": 175,
+"text": "putting",
+"vo_start": 63.33,
+"vo_end": 63.65,
+"g_start": 73.23,
+"g_end": 73.55
+},
+{
+"i": 176,
+"text": "him",
+"vo_start": 63.65,
+"vo_end": 63.81,
+"g_start": 73.55,
+"g_end": 73.71
+},
+{
+"i": 177,
+"text": "in",
+"vo_start": 63.81,
+"vo_end": 63.97,
+"g_start": 73.71,
+"g_end": 73.87
+},
+{
+"i": 178,
+"text": "one",
+"vo_start": 63.97,
+"vo_end": 64.21,
+"g_start": 73.87,
+"g_end": 74.11
+},
+{
+"i": 179,
+"text": "box,",
+"vo_start": 64.21,
+"vo_end": 64.77,
+"g_start": 74.11,
+"g_end": 74.67
+},
+{
+"i": 180,
+"text": "and",
+"vo_start": 64.77,
+"vo_end": 64.93,
+"g_start": 74.67,
+"g_end": 74.83
+},
+{
+"i": 181,
+"text": "that",
+"vo_start": 64.93,
+"vo_end": 65.17,
+"g_start": 74.83,
+"g_end": 75.07
+},
+{
+"i": 182,
+"text": "post-Twilight",
+"vo_start": 65.17,
+"vo_end": 66.05,
+"g_start": 75.07,
+"g_end": 75.95
+},
+{
+"i": 183,
+"text": "reinvention",
+"vo_start": 66.05,
+"vo_end": 66.69,
+"g_start": 75.95,
+"g_end": 76.59
+},
+{
+"i": 184,
+"text": "might",
+"vo_start": 66.69,
+"vo_end": 66.93,
+"g_start": 76.59,
+"g_end": 76.83
+},
+{
+"i": 185,
+"text": "be",
+"vo_start": 66.93,
+"vo_end": 67.09,
+"g_start": 76.83,
+"g_end": 76.99
+},
+{
+"i": 186,
+"text": "one",
+"vo_start": 67.09,
+"vo_end": 67.25,
+"g_start": 76.99,
+"g_end": 77.15
+},
+{
+"i": 187,
+"text": "of",
+"vo_start": 67.25,
+"vo_end": 67.33,
+"g_start": 77.15,
+"g_end": 77.23
+},
+{
+"i": 188,
+"text": "the",
+"vo_start": 67.33,
+"vo_end": 67.41,
+"g_start": 77.23,
+"g_end": 77.31
+},
+{
+"i": 189,
+"text": "best",
+"vo_start": 67.41,
+"vo_end": 67.73,
+"g_start": 77.31,
+"g_end": 77.63
+},
+{
+"i": 190,
+"text": "we've",
+"vo_start": 67.73,
+"vo_end": 68.05,
+"g_start": 77.63,
+"g_end": 77.95
+},
+{
+"i": 191,
+"text": "ever",
+"vo_start": 68.05,
+"vo_end": 68.29,
+"g_start": 77.95,
+"g_end": 78.19
+},
+{
+"i": 192,
+"text": "seen.",
+"vo_start": 68.29,
+"vo_end": 68.69,
+"g_start": 78.19,
+"g_end": 78.59
+}
+]
