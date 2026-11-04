@@ -733,6 +733,12 @@ camC, vC = s.video("c_start_clean.mp4", O, round(5.40 - CUT_D, 3), ms=3.10, push
 s.scale_keys(camC, [(O, 1.0, 1.03, 0.73, "none"), (round(3.83 - CUT_D, 3), 1.03, 1.12, 0.14, "expo.out"),
                     (round(3.97 - CUT_D, 3), 1.12, 1.16, 1.43, "none")])
 s.neg(O, 3)
+# v5 notes 6 (user): the name comes first -- "Robert Pattinson" blooms in over the Odyssey frame in the silence after
+# "out of here." (the corner flare as "Robert" blooms, the cyan patch over his face as "Pattinson" lands), and only
+# then does the background cut to the square montage, on the spoken "Robert" (4.30)
+NAME_T, PAT_T = 3.98, 4.20
+s.flare(NAME_T, frames=3, corner="tl")
+s.block(round(PAT_T - 2 / 30, 3), 2, (800, 400, 330, 300), "#63E6E2", blend="difference")
 SCENES.append(s)
 sfx("whoosh-short.mp3", 0.98, 0.16)
 sfx("whoosh-short.mp3", O, 0.28)
@@ -768,8 +774,6 @@ for k, ((row, col), (clip, ms)) in enumerate(zip(grid_order, grid_clips)):
 # the name lands like "Dario Amodei" in the second reference: a corner flare as "Robert" blooms in, two glitch
 # frames (the word goes dark, a cyan patch over his face, a pale-yellow block where "Pattinson" lands), then
 # "Pattinson"; "Robert" leaves first; a horizontal light streak wipes into the next beat
-s.flare(5.40, frames=3, corner="tl")
-s.block(round(T(1) - 2 / 30, 3), 2, (800, 400, 330, 300), "#63E6E2", blend="difference")
 s.lightstreak(round(T(2) - 2 / 30, 3), frames=3)
 # "is on a generational run" (first-10s v3, the user's notes + the Hemant Taneja wall measured frame by frame):
 #  - the shot eases back from full frame to a centred window (Legora: power4.out, ~0.9 s)
@@ -912,7 +916,8 @@ sfx("whoosh-short.mp3", T(4), 0.14)
 sfx("whoosh.mp3", round(T(6) - 0.30, 3), 0.24)
 sfx("whoosh-short.mp3", KS, 0.12)
 sfx("impact-bass-1.mp3", T(6), 0.20)
-cap([[("Robert", 5.40, "FN"), W(1, "FN", "Pattinson")]], T(2), y=560, kind="name", exit_first=round(T(2) - 0.17, 3))
+cap([[("Robert", round(NAME_T + CUT_D, 3), "FN"), ("Pattinson", round(PAT_T + CUT_D, 3), "FN")]], T(2), y=560,
+    kind="name", exit_first=round(T(2) - 0.17, 3))  # v5 notes 6: on the Odyssey frame first (this cap is on the old clock)
 cap([[W(2, "S", "is"), W(3, "S", "on"), W(4, "S", "a")]], T(6), y=380)
 cap([[W(5, "FSL", "Generational"), W(6, "FSL", "Run")]], T(7), y=610)  # v5 notes: capital G and R
 # the reference's lockup: a small serif word, then a big one on the same baseline, beside the silhouette
