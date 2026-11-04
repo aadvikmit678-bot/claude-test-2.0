@@ -762,6 +762,7 @@ def build_captions():
 # --------------------------------------------------------------------------------------------
 SCENES = []
 SFX = []  # (name, picture_time, volume, media_start, duration)
+SFX_ON = False  # v5 notes 8 (user): no sound effects at all -- only the voice and the two dialogue stings
 
 PEAK = {"whoosh.mp3": 0.16, "whoosh-short.mp3": 0.16, "impact-bass-1.mp3": 0.04, "impact-bass-2.mp3": 2.06,
         "pop.mp3": 0.12, "click.mp3": 0.06, "click-soft.mp3": 0.06, "key-press.mp3": 0.06, "sparkle.mp3": 0.08,
@@ -2027,7 +2028,7 @@ def write_root():
                     f'data-volume="1" data-fade-out="0.12" data-track-index="11"></audio>')
     # v5 notes: no source sound under the Batman run or the Kimmel laugh any more
     lanes = []  # end time per lane
-    for k, (name, t, vol, ms, dur) in enumerate(sorted(SFX, key=lambda x: x[1])):
+    for k, (name, t, vol, ms, dur) in enumerate(sorted(SFX, key=lambda x: x[1]) if SFX_ON else []):
         start = max(0.0, round(t + 1 / 30 - PEAK.get(name, 0.05), 3))
         d = dur or SFXDUR.get(name, 1.0)
         fade = ""
