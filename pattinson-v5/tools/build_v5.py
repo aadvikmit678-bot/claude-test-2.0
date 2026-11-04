@@ -931,7 +931,7 @@ paper_words([(9, "PS", "nobody"), (10, "PS", "saw"), (11, "PS", "it"), (12, "PXL
 # ---------------- S03 "To some people, he'll always be Edward Cullen." ----------------
 s = Scene("s03", T(13), T(21))
 # "To some people,": v4's three shots, the halftone fainter (user note); the words build on one line across the cuts
-s.video("c_tw_lab.mp4", T(13), T(14), grade="halftone_faint", push=(1.0, 1.04))
+s.video("c_tw_lab.mp4", T(13), T(14), grade="halftone_faint", push=None)  # v5 notes 5: no zoom on the first shot
 s.video("c_tw_wed.mp4", T(14), T(15), grade="halftone_faint", push=(1.05, 1.0))
 s.video("c_fans_full.mp4", T(15), T(16), grade="halftone_faint", push=(1.0, 1.05))
 # "he'll always be": Edward turns to camera in the school hallway (1080p)
@@ -957,8 +957,30 @@ cap([[W(19, "FNS", "Edward")], [W(20, "FNS", "Cullen.")]], T(21), x=100, y=560, 
 
 # ---------------- S04 "But everything he did after Twilight proved he was never stuck" ----------------
 s = Scene("s04", T(21), T(32))
-# "But everything": the 1080p gold eyes, held still (the user asked for no pans or pushes here)
-s.video("c_twn_eyes.mp4", T(21), T(23), grade="film_soft", push=None)
+# "But everything": the 1080p gold eyes. v5 notes 5 (user): the cut into "he did after Twilight" must not be abrupt --
+# the same move as "generational run" into the Batman run: the shot eases back into a centred window over the dim window
+# light (power4.out, drifting left), leans back in perspective while the curved-screen look fades in, keeps receding,
+# then pans away to the left, accelerating, into the cut; the poster wall arrives still moving left (pan continuity)
+s.solid(T(21), T(23), "#000000")
+camE, vE = s.video("c_twn_eyes.mp4", T(21), T(23), grade="film_soft", push=None,
+                   cam_extra="box-shadow: 0 40px 120px rgba(0,0,0,0.7);")
+vEc, vEw = s.uid("v"), s.uid("cvw")
+s.els[-1] = s.els[-1].replace(
+    "</div>",
+    f'<div id="{vEw}" style="position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0">'
+    f'<video id="{vEc}" class="clip" src="assets/clips/c_twn_eyes.mp4" muted playsinline {s.timed(T(21), T(23))} '
+    f'data-hf-media-start-basis="local" data-media-start="0" data-color-grading="{esc(GR["curved"])}" data-track-index="2" '
+    f'style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover"></video></div></div>', 1)
+EB, EP = 0.40, round(T(23) - T(21) - 0.40, 3)  # the ease back, then the accelerating pan out
+s.js.append(f'tl.fromTo("#{camE}", {{ scale: 1.0, x: 0 }}, {{ scale: 0.74, x: -20, duration: {EB}, ease: "power4.out" }}, '
+            f'{s.at(T(21))});')
+s.js.append(f'tl.fromTo("#{camE}", {{ scale: 0.74 }}, {{ scale: 0.71, duration: {r3(EP)}, ease: "none", immediateRender: false }}, '
+            f'{s.at(T(21) + EB)});')
+s.js.append(f'tl.fromTo("#{camE}", {{ x: -20 }}, {{ x: -250, duration: {r3(EP)}, ease: "power2.in", immediateRender: false }}, '
+            f'{s.at(T(21) + EB)});')
+s.js.append(f'tl.fromTo("#{camE}", {{ rotationY: 0, rotationX: 0, transformPerspective: 1400 }}, {{ rotationY: -6, rotationX: 3, '
+            f'duration: {r3(T(23) - T(21) - 0.15)}, ease: "sine.inOut" }}, {s.at(T(21) + 0.15)});')
+s.js.append(f'tl.to("#{vEw}", {{ opacity: 1, duration: 0.25, ease: "sine.inOut" }}, {s.at(T(21) + 0.12)});')
 # "he did after Twilight" (user: the pop-out animation, calmer, behind the Twilight poster): the poster in the middle on
 # black; white boxes pop out from behind it in three low-frame-rate steps, land soft then crisp and turn into Twilight
 # pictures around it (one every three frames, a mild dome), while the camera slowly pulls back
@@ -1008,6 +1030,8 @@ s.els.append(f'<div class="cam" id="{gid}" style="position:absolute;left:0;top:0
              f'perspective:1400px;z-index:{s.nz()}">{inner}</div>')
 s.js.append(f'tl.fromTo("#{gid}", {{ scale: 1.0, y: 0 }}, {{ scale: 0.95, y: -10, duration: {r3(T(27) - T(23))}, '
             f'ease: "sine.inOut" }}, {s.at(T(23))});')
+# v5 notes 5: the wall arrives still moving left out of the eyes' pan, and settles
+s.js.append(f'tl.fromTo("#{gid}", {{ x: 220 }}, {{ x: 0, duration: 0.34, ease: "power2.out" }}, {s.at(T(23))});')
 # v5 notes: out of "he did after Twilight" exactly like "generational run" into the Batman cut -- the wall pans away
 # to the left, accelerating, and the year counter arrives still moving left and settles (pan continuity)
 s.js.append(f'tl.fromTo("#{gid}", {{ x: 0 }}, {{ x: -230, duration: 0.3, ease: "power2.in", immediateRender: false }}, '
@@ -1017,7 +1041,7 @@ s.js.append(f'tl.fromTo("#{gid}", {{ x: 0 }}, {{ x: -230, duration: 0.3, ease: "
 years = [("2012", "f_belami.jpg"), ("2014", "f_rover.jpg"), ("2015", "f_queen.jpg"), ("2016", "f_lostcity.jpg"),
          ("2017", "gt_neon.jpg"), ("2018", "f_damsel.jpg"), ("2019", "lh_portrait.jpg"), ("2020", "tn_red.jpg"),
          ("2022", "bt_cowl.jpg"), ("2025", "mk_helmet.jpg"), ("2026", "f_antinous.jpg")]
-durs = [0.08, 0.08, 0.08, 0.09, 0.09, 0.10, 0.11, 0.12, 0.13, 0.15, 0.18]
+durs = [round((T(32) - T(27)) / len(years), 3)] * len(years)  # v5 notes 5: every year at the same speed
 grp_first = len(s.els)
 tcur, steps = T(27), []
 for k, ((yr, im), d) in enumerate(zip(years, durs)):
@@ -1062,6 +1086,7 @@ s = Scene("s06", T(35), T(53))
 # reference's own curve -- the height fills in 0.54 s while the width keeps opening for 1.375 s -- into two full-width
 # bands with a thin black seam; the words sit on the seam; the bands flash white for a frame as their clips change, and
 # on "years" the halves become one picture across the seam
+grp_box = len(s.els)
 s.solid(T(35), T(41), "#000000")
 a0 = T(35)
 SPLIT = round(a0 + 3 * F1, 3)
@@ -1221,6 +1246,15 @@ band(False, [
 ])
 # McConaughey's seam captions grow with the box (their size follows its width, ~56 px when full)
 SEAM_ZOOM = [(t, box_wh(t)[0]) for t in GT]
+# v5 notes 5 (user): not only the two pictures -- the whole frame (the lit bed and both boxes) pushes in a little as they
+# open, slowly and at a low frame rate (about 8 fps), centred, so the seam and its words stay on the centre line
+boxcam = s.uid("boxcam")
+inner = "".join(s.els[grp_box:])
+del s.els[grp_box:]
+s.els.append(f'<div class="cam" id="{boxcam}" style="position:absolute;left:0;top:0;width:1920px;height:1080px;'
+             f'z-index:{s.nz()}">{inner}</div>')
+s.js.append(f'tl.fromTo("#{boxcam}", {{ scale: 1.0 }}, {{ scale: 1.08, duration: {r3(round(BOX_END - GROW0, 3))}, '
+            f'ease: "steps(10)" }}, {s.at(GROW0)});')
 # "making sure": Venice, arriving (1080p crop from the phone original, below the watermark)
 s.video("c_ven_hair.mp4", T(41), T(43), grade="matte", push=(1.0, 1.05))
 s.neg(T(41), 2)
@@ -1558,7 +1592,6 @@ s.video("c_antinous_arch.mp4", T(135), T(137), grade="matte", push=(1.0, 1.07))
 s.video("c_antinous_fire.mp4", T(137), T(139), ms=1.2, grade="matte", push=(1.0, 1.05))
 s.neg(T(137), 2)
 SCENES.append(s)
-sfx("whoosh.mp3", T(131), 0.30)
 sfx("whoosh-short.mp3", T(133), 0.16)
 sfx("whoosh-short.mp3", T(135), 0.18)
 sfx("whoosh-short.mp3", T(137), 0.18)
@@ -1577,7 +1610,7 @@ s.numeral("2", T(139), T(141), x=1500, y=470, size=600)
 s.video("c_prime_title.mp4", T(141), T(142), grade="tv", push=(1.0, 1.05))
 s.neg(T(141), 2)
 s.video("c_hansen_cu.mp4", T(142), T(144), grade="tv", push=(1.0, 1.05))
-s.video("c_hansen.mp4", T(144), T(147), ms=0.9, grade="tv", push=(1.05, 1.0))
+s.video("c_hansen.mp4", T(144), T(147), ms=1.07, grade="tv", push=(1.05, 1.0))  # v5 notes 5: after its cut
 s.video("c_schedule.mp4", T(147), T(148), grade="tv", push=(1.0, 1.05))
 s.video("c_stinghouse.mp4", T(148), T(152), grade="tv", push=(1.0, 1.04))
 s.video("c_pt_worried.mp4", T(152), T(153), grade="tv", push=(1.0, 1.06), rate=0.9)
@@ -1595,7 +1628,6 @@ s.video("c_strobeface.mp4", T(155), 64.55, grade="tv", push=(1.0, 1.06))
 s.video("c_seat1.mp4", 64.55, 66.02, grade="tv", push=(1.0, 1.04))
 s.video("c_seat2.mp4", 66.02, 66.70, grade="tv", push=(1.04, 1.0))
 SCENES.append(s)
-sfx("whoosh.mp3", T(139), 0.26)
 sfx("tv-blip-soft.wav", T(141), 0.30)
 sfx("whoosh-short.mp3", T(142), 0.14)
 sfx("whoosh-short.mp3", T(147), 0.12)
@@ -1618,12 +1650,9 @@ s = Scene("s15", 66.70, T(167))
 # v5 notes 4 (user): no pan into Dune -- a straight cut to the "3" frame
 s.video("c_scytale.mp4", 66.70, T(158), ms=0.0, grade="matte", push=(1.0, 1.04))
 s.numeral("3", 66.70, T(158), x=1500, y=470, size=600)
-camY, vY = s.video("c_scytale.mp4", T(158), T(161), ms=1.0, grade="matte", push=None,
-                   vars_style="--hf-color-grading-blur: 0.85;")
-s.js.append(f'tl.fromTo("#{camY}", {{ x: 220, scale: 1.26 }}, {{ x: 0, scale: 1.05, duration: 0.22, ease: "power3.out" }}, '
-            f'{s.at(T(158))});')
-s.js.append(f'tl.to("#{camY}", {{ scale: 1.0, duration: {r3(T(161) - T(158) - 0.22)}, ease: "none" }}, {s.at(T(158) + 0.22)});')
-s.js.append(f'tl.to("#{vY}", {{ "--hf-color-grading-blur": 0, duration: 0.28, ease: "power2.out" }}, {s.at(T(158))});')
+# v5 notes 5 (user): no transition into "he's closing out" -- a straight cut with one white frame
+s.video("c_scytale.mp4", T(158), T(161), ms=1.0, grade="matte", push=None)
+s.block(T(158), 1, (0, 0, 1920, 1080), "#ffffff")
 s.video("c_scytale.mp4", T(161), T(163), ms=2.2, grade="matte", push=(1.0, 1.05))
 s.neg(T(161), 2)
 # "with Dune Part Three": the poster lands as a centred card on black (a white box first, one blown-out frame), then the
@@ -1707,8 +1736,6 @@ for cam, mid, isvid in dt_els:
         s.js.append(f'tl.to("#{mid}", {{ "--hf-color-grading-blur": 0.32, duration: 0.24, ease: "power2.out" }}, '
                     f'{s.at(T(166) + 2 * F1)});')
 SCENES.append(s)
-sfx("whoosh.mp3", 66.70, 0.28)
-sfx("whoosh.mp3", T(158) - 0.04, 0.24)
 sfx("whoosh-short.mp3", T(161), 0.16)
 sfx("whoosh-short.mp3", DW, 0.14)
 sfx("impact-bass-1.mp3", DT0, 0.42)
@@ -1897,7 +1924,7 @@ def write_root():
             f'<div id="{sc.sid}" class="clip" data-composition-id="{sc.sid}" data-composition-src="compositions/{sc.sid}.html" '
             f'data-start="{r3(sc.start)}" data-duration="{r3(sc.dur)}" data-track-index="1" data-track-kind="graphics" '
             f'data-width="1920" data-height="1080" style="z-index:{10 + k}"></div>')
-    for lid, t0, d in (("leak2", SH(T(182) + 0.10), 1.30),):
+    for lid, t0, d in ():  # v5 notes 5 (user): no red light leak over "post-Twilight"
         if t0 + d <= DUR:
             hosts.append(
                 f'<div id="{lid}" class="clip" data-composition-id="{lid}" data-composition-src="compositions/{lid}.html" '
