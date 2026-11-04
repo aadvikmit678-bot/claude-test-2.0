@@ -29,12 +29,73 @@ CUT_AT, CUT_SRC = 2.00, 3.10
 CUT_D = round(CUT_SRC - CUT_AT, 3)
 
 
+def crt_outline(curv, n=16, inset=0.014):
+    """The outline of the CRT-curvature grade's picture (its shader warps uv -> c * (1 + k|c|^2), k = curv / 2, and
+    paints black outside): (the full rectangle, that outline) as two polygons with the same points, for a clip morph."""
+    k = curv * 0.5
+
+    def solve(c, g=1.0):
+        lo, hi = 0.0, 1.0
+        for _ in range(50):
+            m = (lo + hi) / 2
+            lo, hi = (m, hi) if m * (1 + k * (g * m * m + c * c)) < 1 else (lo, m)
+        return lo
+    xc = solve(0.0, 2.0)  # the corner, where x = y
+    rect, curve = [], []
+    for j in range(n):
+        u = -1 + 2 * j / n
+        curve.append((solve(u * xc), u * xc)); rect.append((1.0, u))      # right edge, downwards
+    for j in range(n):
+        u = 1 - 2 * j / n
+        curve.append((u * xc, solve(u * xc))); rect.append((u, 1.0))      # bottom edge, leftwards
+    for j in range(n):
+        u = 1 - 2 * j / n
+        curve.append((-solve(u * xc), u * xc)); rect.append((-1.0, u))    # left edge, upwards
+    for j in range(n):
+        u = -1 + 2 * j / n
+        curve.append((u * xc, -solve(u * xc))); rect.append((u, -1.0))    # top edge, rightwards
+
+    # one polygon whose every point is calc(rectangle -> outline, by --m): GSAP tweens only --m (a GSAP string tween
+    # of two 64-point polygons mis-pairs the numbers mid-way and the edge goes jagged)
+    s = 1 - inset
+    pts = []
+    for (rx, ry), (cx, cy) in zip(rect, curve):
+        ax, ay = 50 + 50 * rx, 50 + 50 * ry
+        bx, by = 50 + 50 * cx * s, 50 + 50 * cy * s
+        pts.append(f"calc({ax:.2f}% + {bx - ax:.3f}% * var(--m)) calc({ay:.2f}% + {by - ay:.3f}% * var(--m))")
+    return "polygon(" + ", ".join(pts) + ")"
+
+
 def SH(t):
     """A time on the original clock, moved to the cut clock."""
     return round(t - CUT_D, 3) if t >= CUT_AT else t
 
 GR = json.load(open(f"{PRJ}/tools/gradings.json"))
 WORDS = json.load(open(f"{PRJ}/tools/words_v5.json"))
+# v5 notes 7 (user): a 1-s pause in the voice after "run," (the Batman run plays on for a second more), and the
+# spider-monkey sting at 35 s is gone (the voice runs straight from "Twilight jokes" into "he was quietly").
+# RM() moves a time on the original clock past both edits; the words move with them.
+PAUSE_AT, PAUSE_D = 8.22, 1.0  # mid-silence between "run," and "and" (the voice is below -55 dB from 8.11 to 8.32)
+SPIDER_A, SPIDER_B = 35.33, 37.68
+SPIDER_D = round(SPIDER_B - SPIDER_A, 3)
+
+
+def RM(t):
+    if t >= SPIDER_B - 1e-6:
+        return round(t + PAUSE_D - SPIDER_D, 3)
+    if t > SPIDER_A + 1e-6:
+        return round(SPIDER_A + PAUSE_D, 3)  # inside the removed sting
+    if t >= PAUSE_AT:
+        return round(t + PAUSE_D, 3)
+    return t
+
+
+for _i, _w in enumerate(WORDS):
+    _d = (PAUSE_D if _i >= 7 else 0.0) - (SPIDER_D if _w["g_start"] >= SPIDER_B - 0.1 else 0.0)
+    _w["g_start"] = round(_w["g_start"] + _d, 3)
+    if "g_end" in _w:
+        _w["g_end"] = round(_w["g_end"] + _d, 3)
+DUR = RM(DUR)
 
 
 def _derive(base, adjust=None, effects=None, details=None, intensity=None):
@@ -883,7 +944,7 @@ s.js.append(f'tl.fromTo("#{gid}", {{ x: 0 }}, {{ x: -230, duration: {PAN}, ease:
 s.neg(INV, 2)  # the wall inverts for two frames
 # "run,": the fast stretch of the user's Batman cut; it arrives still moving left and decelerates (pan continuity);
 # x and scale ease together, so the frame stays covered while it slides (needs scale >= 1 + 2x/1920)
-camR, vR = s.video("c_run2.mp4", T(6), T(8), grade="matte", push=None, rate=round(1.0 / (T(8) - T(6)), 3))
+camR, vR = s.video("c_run2.mp4", T(6), T(8), grade="matte", push=None, rate=round(2.56 / (T(8) - T(6)), 3))
 s.js.append(f'tl.fromTo("#{camR}", {{ x: 220, scale: 1.26 }}, {{ x: 0, scale: 1.03, duration: 0.34, ease: "power2.out" }}, {s.at(T(6))});')
 s.js.append(f'tl.to("#{camR}", {{ scale: 1.05, duration: {r3(T(8) - T(6) - 0.34)}, ease: "none" }}, {s.at(T(6) + 0.34)});')
 # "and honestly," (user: keep the full-frame talk-show video and the white silhouette; reference: General Catalyst
@@ -967,8 +1028,11 @@ s = Scene("s04", T(21), T(32))
 # light (power4.out, drifting left), leans back in perspective while the curved-screen look fades in, keeps receding,
 # then pans away to the left, accelerating, into the cut; the poster wall arrives still moving left (pan continuity)
 s.solid(T(21), T(23), "#000000")
-camE, vE = s.video("c_twn_eyes.mp4", T(21), T(23), grade="film_soft", push=None,
-                   cam_extra="box-shadow: 0 40px 120px rgba(0,0,0,0.7);")
+# v5 notes 7 (user): no black frame around the window -- the curved look paints black outside its bent picture, so the
+# window is clipped to that outline (computed from the grade's barrel warp), morphing from the full rectangle as the
+# curve fades in; no drop shadow
+CRT_CLIP = crt_outline(0.22)
+camE, vE = s.video("c_twn_eyes.mp4", T(21), T(23), grade="film_soft", push=None, cam_extra=f"--m:0;clip-path:{CRT_CLIP};")
 vEc, vEw = s.uid("v"), s.uid("cvw")
 s.els[-1] = s.els[-1].replace(
     "</div>",
@@ -986,6 +1050,8 @@ s.js.append(f'tl.fromTo("#{camE}", {{ x: -20 }}, {{ x: -250, duration: {r3(EP)},
 s.js.append(f'tl.fromTo("#{camE}", {{ rotationY: 0, rotationX: 0, transformPerspective: 1400 }}, {{ rotationY: -6, rotationX: 3, '
             f'duration: {r3(T(23) - T(21) - 0.15)}, ease: "sine.inOut" }}, {s.at(T(21) + 0.15)});')
 s.js.append(f'tl.to("#{vEw}", {{ opacity: 1, duration: 0.25, ease: "sine.inOut" }}, {s.at(T(21) + 0.12)});')
+s.js.append(f'tl.fromTo("#{camE}", {{ "--m": 0 }}, {{ "--m": 1, duration: 0.18, ease: "sine.inOut", immediateRender: false }}, '
+            f'{s.at(T(21) + 0.08)});')  # the outline leads the curve's fade, so its black edge is never seen
 # "he did after Twilight" (user: the pop-out animation, calmer, behind the Twilight poster): the poster in the middle on
 # black; white boxes pop out from behind it in three low-frame-rate steps, land soft then crisp and turn into Twilight
 # pictures around it (one every three frames, a mild dome), while the camera slowly pulls back
@@ -1441,13 +1507,13 @@ paper_words([(72, "PS", "nobody"), (73, "PSF", "expected"), (74, "PS", "from"), 
             drift=(130, 7))  # v5 notes 2: clearly visible, a fade-up at ~5 fps
 
 # ---------------- S09 "And while the internet kept making Twilight jokes" + "spider monkey" (v4) ----------------
-s = Scene("s09", T(76), 37.68)
+s = Scene("s09", T(76), RM(35.33))
 s.video("c_tw_stare.mp4", T(76), T(78), grade="film_soft", push=(1.0, 1.05))
 s.video("c_tw_glitch.mp4", T(78), T(80), grade="glitch_soft", push=(1.0, 1.04))
 s.video("c_tw_battle.mp4", T(80), T(82), grade="halftone_faint", push=(1.05, 1.0))
-s.video("c_sparkle2.mp4", T(82), 35.33, grade="halftone_faint", push=(1.0, 1.06))
+s.video("c_sparkle2.mp4", T(82), RM(35.33), grade="halftone_faint", push=(1.0, 1.06))
 s.neg(T(82), 2)
-s.video("c_spider.mp4", 35.33, 37.68, ms=0.10, grade="film_soft", push=(1.0, 1.05))
+# v5 notes 7 (user): the spider-monkey sting is gone -- "Twilight jokes" runs straight into "he was quietly"
 SCENES.append(s)
 sfx("whoosh-short.mp3", T(76), 0.16)
 sfx("tv-blip-soft.wav", T(78), 0.24)
@@ -1455,9 +1521,7 @@ sfx("whoosh-short.mp3", T(80), 0.16)
 sfx("whoosh-short.mp3", T(82), 0.20)
 cap([[W(76, "FS", "and"), W(77, "FS", "while"), W(78, "FS", "the"), W(79, "FS", "internet")]], T(80), y=540)
 cap([[W(80, "FSL", "kept"), W(81, "FSL", "making")]], T(82), y=540)
-cap([[W(82, "FSL", "Twilight"), W(83, "FSL", "jokes")]], 35.33, y=540)
-cap([[("you better hold on tight", 35.43, "R")]], 36.53, y=150)
-cap([[("spider", 36.53, "FSI"), ("monkey", 36.71, "FSI")]], 37.68, y=880)
+cap([[W(82, "FSL", "Twilight"), W(83, "FSL", "jokes")]], RM(35.33), y=540)
 
 # ---------------- S10 "he was quietly working with the best directors alive, until one day he became Batman" ----------
 # v4's beat with the user's changes: a new "quietly" shot, Nolan at the IMAX camera for the whole directors line
@@ -1528,13 +1592,8 @@ s.block(round(T(103) - 2 * F1, 3), 1, (0, 0, 1920, 1080), "#ffffff")
 s.block(round(T(103) - F1, 3), 1, (0, 0, 1920, 1080), "#000000")
 # "he becomes them": the eye black running, full frame (kept: the user likes it), his white silhouette for two frames on
 # "becomes"; then (v5 notes) the shot moves out, from a far perspective, bending inward, over the dim window light
-s.solid(round(T(104) + 2 * F1, 3), T(106), "#000000")
-camTe, vTe = s.video("c_r_tears.mp4", T(103), T(106), grade="matte", push=None)
-curve_layers("c_r_tears.mp4", T(103), T(106), None, 0.0, [("curved2", round(T(104) + 2 * F1, 3), round(T(106) - 0.08, 3))])
-s.js.append(f'tl.fromTo("#{camTe}", {{ scale: 1.06, rotationX: 0, y: 0 }}, {{ scale: 1.0, duration: {r3(T(104) - T(103))}, '
-            f'ease: "none" }}, {s.at(T(103))});')
-s.js.append(f'tl.to("#{camTe}", {{ scale: 0.74, rotationX: 9, y: -14, transformPerspective: 1400, '
-            f'duration: {r3(T(106) - T(104) - 2 * F1)}, ease: "power2.inOut" }}, {s.at(T(104) + 2 * F1)});')
+# v5 notes 7 (user): just the video -- no curved frame, no pull-out into perspective; the flashes stay
+s.video("c_r_tears.mp4", T(103), T(106), grade="matte", push=(1.0, 1.04))
 s.neg(T(103), 2)
 s.silhouette("r_tears_sil.png", T(104), frames=2)
 s.flare(T(105), frames=3, corner="tr")
@@ -1570,7 +1629,9 @@ cap([[W(120, "M", "runs"), W(121, "M", "from")]], T(122), y=880)
 # ---------------- S12 "And in 2026, we saw him do it all." (v4's "and this year?" paper, then the 1-2-3 triptych) ------
 s = Scene("s12", T(122), T(131))
 s.paper(T(122), T(125))
-tri = [("t_odyssey.mp4", "1", T(125), 4.0), ("t_prime.mp4", "2", T(126), 2.5), ("t_dune.mp4", "3", T(127), 0.95)]
+# (v5 notes 7, user) the "2" column stays on one shot: Primetime's clip cuts to its split screen at 1.07 s, so only its
+# first second is used, slowed to fill the column
+tri = [("t_odyssey.mp4", "1", T(125), 4.0), ("t_prime.mp4", "2", T(126), 1.0), ("t_dune.mp4", "3", T(127), 0.95)]
 for k, (src, num, t0, clen) in enumerate(tri):
     d = T(131) - t0
     cam2, vid = s.video(src, t0, T(131), ms=0.0, rate=round(min(1, clen / d), 3), grade="matte", push=None,
@@ -1608,7 +1669,7 @@ cap([[W(137, "S", "as")], [W(138, "B", "Antinous")]], T(139), x=150, y=640, alig
 
 # ---------------- S14 chapter 2: Primetime (v4) with the TV texture (VHS lines plus a CRT screen, user) --------------
 GR["tv"] = _derive("vhs_soft", effects={"crtCurvature": 0.2})
-s = Scene("s14", T(139), 66.70)
+s = Scene("s14", T(139), RM(66.70))
 # v5 notes 4 (user): like chapters 1 and 3, a straight cut to the "2" frame (no opening-out)
 s.video("c_hansen.mp4", T(139), T(141), ms=0.0, grade="tv", push=(1.0, 1.04))
 s.numeral("2", T(139), T(141), x=1500, y=470, size=600)
@@ -1627,11 +1688,11 @@ rid = s.uid("rec")
 s.raw(f'<div id="{rid}" class="clip rec" {s.timed(T(154), T(155))} data-track-index="6" '
       f'style="left:120px;top:96px;z-index:{s.nz()}"><i></i><span>REC</span></div>')
 s.uses_text = True
-s.video("c_strobeface.mp4", T(155), 64.55, grade="tv", push=(1.0, 1.06))
+s.video("c_strobeface.mp4", T(155), RM(64.55), grade="tv", push=(1.0, 1.06))
 # the real "...why don't you have a seat right there?" moment, in sync with the sting audio; reframed (user) so his
 # body shows -- the film's own subtitle carries the line, so ours is gone
-s.video("c_seat1.mp4", 64.55, 66.02, grade="tv", push=(1.0, 1.04))
-s.video("c_seat2.mp4", 66.02, 66.70, grade="tv", push=(1.04, 1.0))
+s.video("c_seat1.mp4", RM(64.55), RM(66.02), grade="tv", push=(1.0, 1.04))
+s.video("c_seat2.mp4", RM(66.02), RM(66.70), grade="tv", push=(1.04, 1.0))
 SCENES.append(s)
 sfx("tv-blip-soft.wav", T(141), 0.30)
 sfx("whoosh-short.mp3", T(142), 0.14)
@@ -1648,13 +1709,13 @@ cap([[W(148, "S", "at"), W(149, "S", "the"), W(150, "S", "center"), W(151, "S", 
 cap([[W(152, "B", "controversial")]], T(153), y=860)
 cap([[W(153, "XL", "predator")]], T(154), y=860)
 cap([[W(154, "M", "sting")]], T(155), y=560)
-cap([[W(155, "B", "operations")]], 64.55, y=860)
+cap([[W(155, "B", "operations")]], RM(64.55), y=860)
 
 # ---------------- S15 chapter 3: Dune (v4), the poster beat rebuilt as a Hemant Taneja wall (user) ------------------
-s = Scene("s15", 66.70, T(167))
+s = Scene("s15", RM(66.70), T(167))
 # v5 notes 4 (user): no pan into Dune -- a straight cut to the "3" frame
-s.video("c_scytale.mp4", 66.70, T(158), ms=0.0, grade="matte", push=(1.0, 1.04))
-s.numeral("3", 66.70, T(158), x=1500, y=470, size=600)
+s.video("c_scytale.mp4", RM(66.70), T(158), ms=0.0, grade="matte", push=(1.0, 1.04))
+s.numeral("3", RM(66.70), T(158), x=1500, y=470, size=600)
 # v5 notes 5 (user): no transition into "he's closing out" -- a straight cut with one white frame
 s.video("c_scytale.mp4", T(158), T(161), ms=1.0, grade="matte", push=None)
 s.block(T(158), 1, (0, 0, 1920, 1080), "#ffffff")
@@ -1847,8 +1908,10 @@ s.js.append(f'tl.fromTo("#{camTw}", {{ scale: 1.0 }}, {{ scale: 1.07, duration: 
 # drifting the whole time (the picture changes, the move never stops); every cut lands with a one-frame white flash
 # and an exposure hit (McConaughey / Hemant Taneja); a light streak on "best"; a difference frame on "seen" (Dario);
 # a thin dark seam keeps the two halves crisp
-RIGHT = [("h_r_gt.mp4", T(183)), ("h_r_lh.mp4", T(184)), ("h_r_tn.mp4", T(186)), ("h_r_sc.mp4", T(189)),
-         ("h_r_hn.mp4", T(190)), ("h_r_dr.mp4", T(192))]
+# v5 notes 7 (user): the roles start on "Twilight", not "reinvention" -- each cut moves one word earlier
+TWL = round(T(182) + 0.32, 3)  # "Twilight" inside the "post-Twilight" token
+RIGHT = [("h_r_gt.mp4", TWL), ("h_r_lh.mp4", T(183)), ("h_r_tn.mp4", T(184)), ("h_r_sc.mp4", T(186)),
+         ("h_r_hn.mp4", T(189)), ("h_r_dr.mp4", T(192))]
 grp = len(s.els)
 for k, (src_, ta) in enumerate(RIGHT):
     tb = END if k == len(RIGHT) - 1 else RIGHT[k + 1][1]
@@ -1860,11 +1923,11 @@ del s.els[grp:]
 rw, rc = s.uid("roleswap"), s.uid("rolecam")
 s.els.append(f'<div class="cam" id="{rw}" style="position:absolute;left:960px;top:0;width:960px;height:1080px;overflow:hidden;'
              f'z-index:{s.nz()}"><div id="{rc}" style="position:absolute;left:0;top:0;width:960px;height:1080px">{inner}</div></div>')
-s.js.append(f'tl.fromTo("#{rc}", {{ scale: 1.03, x: 10 }}, {{ scale: 1.15, x: -30, duration: {r3(END - T(183))}, '
-            f'ease: "sine.inOut" }}, {s.at(T(183))});')
+s.js.append(f'tl.fromTo("#{rc}", {{ scale: 1.03, x: 10 }}, {{ scale: 1.15, x: -30, duration: {r3(END - TWL)}, '
+            f'ease: "sine.inOut" }}, {s.at(TWL)});')
 for src_, ta in RIGHT:
     s.block(ta, 1, (960, 0, 960, 1080), "#ffffff", opacity=0.92)
-s.block(T(183), int((END - T(183)) * 30), (957, 0, 6, 1080), "#0B0B0B")  # the seam between the halves
+s.block(TWL, int((END - TWL) * 30), (957, 0, 6, 1080), "#0B0B0B")  # the seam between the halves
 s.lightstreak(round(T(189) + F1, 3), frames=3, y=430, h=120)
 s.block(T(192), 2, (960, 0, 960, 1080), "#63E6E2", blend="difference", opacity=0.9)
 texw, tex = s.uid("texw"), s.uid("tex")
@@ -1945,7 +2008,9 @@ def write_root():
         f'data-width="1920" data-height="1080" style="z-index:100"></div>')
     auds = []
     # the new voiceover in three parts, split around the two dialogue stings
-    vo = [("vo-a", SH(5.40), 29.93, 0.00), ("vo-b", SH(37.68), 26.87, 29.93), ("vo-c", SH(66.70), 12.03, 56.80)]
+    pa = round(PAUSE_AT - 5.40, 3)  # the pause, in the voice file
+    vo = [("vo-a", SH(5.40), pa, 0.00), ("vo-a2", SH(RM(PAUSE_AT)), round(29.93 - pa, 3), pa),
+          ("vo-b", SH(RM(37.68)), 26.87, 29.93), ("vo-c", SH(RM(66.70)), 12.03, 56.80)]
     for aid, st, d, ms in vo:
         if st >= DUR:
             continue
@@ -1954,8 +2019,7 @@ def write_root():
                     f'data-media-start="{r3(ms)}" data-volume="1" data-fade-out="0.06" data-track-index="10"></audio>')
     # v5 notes: the cold-open dialogue without its pause (sting-beggars-cut.wav)
     for aid, src, st, d in [("sting-beggars", "sting-beggars-cut.wav", 0.0, round(5.50 - CUT_D, 3)),
-                            ("sting-spider", "sting-spider.wav", SH(35.33), 2.35),
-                            ("sting-seat", "sting-seat.wav", SH(64.55), 2.15)]:
+                            ("sting-seat", "sting-seat.wav", SH(RM(64.55)), 2.15)]:
         if st >= DUR:
             continue
         d = min(d, round(DUR - st, 3))

@@ -154,7 +154,7 @@ CLIP_SPECS = {
     "c_kimmel_card": ("KIM", 211.65, 0.85, 1280, 720, 0.5, 0.45, 1.0, None),
     # "run": the fast stretch of the user's clip (afterburner, speedometer, Batman driving, chase POV); a slight
     # zoom drops the small watermark at the bottom of the chase shots
-    "c_run2": ("RUNUSER", 1.05, 1.0, 1920, 1080, 0.5, 0.44, 1.1, None),
+    "c_run2": ("RUNUSER", 1.05, 2.56, 1920, 1080, 0.5, 0.44, 1.1, None),  # v5 notes 7: 1 s longer on screen (same 1.56x)
     # ---- v5 notes (this session): the payoff without the overused shots ----
     "c_box_tw": ("TWNEW", 82.30, 1.40, 600, 600, 0.56, 0.45, 1.0, None),      # "one box": the biology-class close-up
     "h_twn_left": ("TWNEW", 204.10, 2.90, 960, 1080, 0.5, 0.5, 1.0, None),   # "post-Twilight reinvention": Edward, forest
