@@ -16,3 +16,15 @@ pattinson-v5/assets/audio/
 pattinson-v5/renders/
 __pycache__/
 *.pyc
+
+# Jamie Dimon / JPMorgan edit (jpm-dimon): Drive download, work files and derived media stay local
+dimon-src/
+dimon-work/
+jpm-dimon/assets/clips/
+jpm-dimon/assets/img/
+jpm-dimon/assets/audio/
+jpm-dimon/renders/
+# Satoshi (ITF Free Font License) may not be redistributed: tools/prep_media.py downloads it from Fontshare
+jpm-dimon/assets/fonts/Satoshi-*
+# the print textures are derived from the user's own halftone scans in their Drive: rebuilt by tools/prep_media.py
+jpm-dimon/assets/tex/
