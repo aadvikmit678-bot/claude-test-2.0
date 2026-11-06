@@ -115,7 +115,8 @@ def make_still(sid, spec):
 if __name__ == "__main__":
     force = "--force" in sys.argv
     want = {a for a in sys.argv[1:] if not a.startswith("--")}
-    spec = json.load(open(f"{PRJ}/tools/media_v2.json"))
+    spec_name = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--spec=")), "media_v2.json")
+    spec = json.load(open(f"{PRJ}/tools/{spec_name}"))
     jobs = []
     for cid, s in spec["clips"].items():
         if (want and cid not in want) or (not force and not want and os.path.exists(f"{CLIPS}/{cid}.mp4")):
