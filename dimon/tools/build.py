@@ -269,8 +269,9 @@ class Scene:
                                     f'style="background:{col};mix-blend-mode:{mode};z-index:{self.nz()}"></div>')
             t, k = b, k + 1
 
-    def dust(self, t0, t1, box, seed=9, n=240):
-        """A picture breaking into white dust that blows outward and thins into the starfield."""
+    def dust(self, t0, t1, box, seed=9, n=240, spread=(160, 900)):
+        """A picture breaking into white dust: the specks appear packed where the picture was, then blow outward
+        (fast, then slowing) and thin into the starfield."""
         rnd = random.Random(seed)
         did = self.uid("dust")
         x, y, w, h = box
@@ -278,21 +279,45 @@ class Scene:
         dots = []
         for k in range(n):
             px, py = rnd.uniform(x, x + w), rnd.uniform(y, y + h)
-            r = rnd.choice([1.0, 1.4, 1.8, 2.2, 3.0])
-            dots.append(f'<circle id="{did}-p{k}" cx="{px:.0f}" cy="{py:.0f}" r="{r}" fill="#ffffff" opacity="0" />')
-            ang = math.atan2(py - cy, px - cx) + rnd.uniform(-0.5, 0.5)
-            dist = rnd.uniform(160, 900)
-            dl = rnd.uniform(0, 0.16)
-            fin = rnd.uniform(0.0, 0.55)
-            self.js.append(f'tl.fromTo("#{did}-p{k}", {{ x: 0, y: 0, opacity: 0 }}, {{ x: {math.cos(ang) * dist:.0f}, '
-                           f'y: {math.sin(ang) * dist:.0f}, opacity: 1, duration: 0.05, ease: "none" }}, {self.at(t0 + dl)});')
-            self.js.append(f'tl.to("#{did}-p{k}", {{ x: {math.cos(ang) * dist * 1.25:.0f}, y: {math.sin(ang) * dist * 1.25:.0f}, '
-                           f'opacity: {fin:.2f}, duration: {r3(t1 - t0 - dl - 0.05)}, ease: "expo.out" }}, {self.at(t0 + dl + 0.05)});')
-        self.els.append(f'<svg id="{did}" class="clip" {self.timed(t0, t1)} data-track-index="6" viewBox="0 0 1920 1080" '
+            r = rnd.choice([1.2, 1.6, 2.0, 2.4, 3.0, 3.8])
+            col = rnd.choice(["#ffffff", "#ffffff", "#f2f7ff", "#fff0d4", "#d6f3ff"])
+            dots.append(f'<circle id="{did}-p{k}" cx="{px:.0f}" cy="{py:.0f}" r="{r}" fill="{col}" opacity="0" />')
+            ang = math.atan2(py - cy, px - cx) + rnd.uniform(-0.6, 0.6)
+            dist = rnd.uniform(*spread)
+            dl = rnd.uniform(0, 0.14)
+            fin = rnd.uniform(0.0, 0.5)
+            self.js.append(f'tl.set("#{did}-p{k}", {{ opacity: 1 }}, {self.at(t0 + dl)});')
+            self.js.append(f'tl.to("#{did}-p{k}", {{ x: {math.cos(ang) * dist:.0f}, y: {math.sin(ang) * dist:.0f}, opacity: {fin:.2f}, '
+                           f'duration: {r3(t1 - t0 - dl)}, ease: "power3.out" }}, {self.at(t0 + dl)});')
+        self.els.append(f'<svg id="{did}" class="clip" {self.timed(t0, t1)} data-track-index="6" data-layout-ignore viewBox="0 0 1920 1080" '
                         f'style="position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible;z-index:{self.nz()}">'
                         f'{"".join(dots)}</svg>')
 
-    # ---- more of the reference's motion graphics ---------------------------------------------------------------
+    def globe_markup(self, t0, t1, cx, cy, R, t_pins=None, n_pins=30, seed=3, spin=110, tilt=-16, absolute=True):
+        """A dotted globe turning in 3D (dots on a sphere, back face hidden), pins lighting up one after another."""
+        rnd = random.Random(seed)
+        gid = self.uid("globe")
+        dots = []
+        for lat in range(-80, 81, 10):
+            n = max(4, int(round(36 * math.cos(math.radians(lat)))))
+            for k in range(n):
+                lon = 360 * k / n + (5 if (lat // 10) % 2 else 0)
+                dots.append(f'<i class="gdot" style="transform:rotateY({lon:.1f}deg) rotateX({lat}deg) translateZ({R:.0f}px)"></i>')
+        pins = []
+        for k in range(n_pins):
+            la, lo = rnd.uniform(-50, 62), rnd.uniform(0, 360)
+            pid = f"{gid}-p{k}"
+            pins.append(f'<i id="{pid}" class="gpin" style="transform:rotateY({lo:.1f}deg) rotateX({la:.1f}deg) translateZ({R + 1:.0f}px)"></i>')
+            tp = (t_pins[0] + (t_pins[1] - t_pins[0]) * rnd.random()) if t_pins else t0
+            self.js.append(f'tl.fromTo("#{pid}", {{ opacity: 0 }}, {{ opacity: 1, duration: {r3(F1)}, ease: "none", immediateRender: false }}, {self.at(tp)});')
+        tiltid, sph = f"{gid}-t", f"{gid}-s"
+        pos = f"left:{cx - R:.0f}px;top:{cy - R:.0f}px;" if absolute else f"left:{cx - R:.0f}px;top:{cy - R:.0f}px;"
+        self.js.append(f'tl.set("#{tiltid}", {{ rotationX: {tilt} }}, 0);')
+        self.js.append(f'tl.fromTo("#{sph}", {{ rotationY: 0 }}, {{ rotationY: {spin}, duration: {r3(t1 - t0)}, ease: "none", immediateRender: false }}, {self.at(t0)});')
+        return (f'<div id="{gid}" class="clip" {self.timed(t0, t1)} data-track-index="4" data-layout-ignore '
+                f'style="position:absolute;{pos}width:{2 * R:.0f}px;height:{2 * R:.0f}px;perspective:{R * 6:.0f}px;z-index:{self.nz()}">'
+                f'<div class="gglow"></div><div id="{tiltid}" class="gtilt"><div id="{sph}" class="gsph">{"".join(dots)}{"".join(pins)}</div></div></div>')
+
     def godrays(self, t0, t1, cx, cy, rgb="255,200,110", opacity=0.45, blend="screen"):
         """Slow-turning tinted light rays over the picture (the reference's light bursts)."""
         gid = self.uid("god")
@@ -503,7 +528,14 @@ class Scene:
         t0 = max(round(t, 3), self.start)
         t1 = min(round(t + frames * F1, 3), self.end)
         if t1 > t0:
-            NEGS.append((t0, t1))
+            NEGS.append((t0, t1, "#ffffff"))
+
+    def solar(self, t, frames=1, color="#2f6bff"):
+        """A solarised flash: the whole frame differenced with a colour (the reference's recoloured frames)."""
+        t0 = max(round(t, 3), self.start)
+        t1 = min(round(t + frames * F1, 3), self.end)
+        if t1 > t0:
+            NEGS.append((t0, t1, color))
 
     def flash(self, t, frames=1, color="#ffffff"):
         """Flat flash frames (white or grey)."""
@@ -671,6 +703,13 @@ class Scene:
   #root .scrframe {{ position: absolute; left: 0; top: 0; width: 100%; height: 100%; box-sizing: border-box;
     border: 2px solid rgba(255,255,255,0.92); box-shadow: inset 0 0 40px rgba(0,0,0,0.5), 0 0 40px rgba(255,255,255,0.22); }}
   #root .ring {{ position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }}
+  #root .gtilt, #root .gsph {{ position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }}
+  #root .gdot {{ position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%; background: #e4eeff;
+    box-shadow: 0 0 4px rgba(170,200,255,0.8); backface-visibility: hidden; }}
+  #root .gpin {{ position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: #fff4cc;
+    box-shadow: 0 0 12px 4px rgba(255,236,170,0.85); backface-visibility: hidden; opacity: 0; }}
+  #root .gglow {{ position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 50%;
+    background: radial-gradient(circle closest-side, rgba(70,130,255,0.26), rgba(70,130,255,0.08) 70%, rgba(70,130,255,0) 100%); }}
   #root .streak {{ position: absolute; height: 3px; width: 520px; border-radius: 2px;
     background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.95)); box-shadow: 0 0 14px rgba(255,255,255,0.8); }}
 """
@@ -699,6 +738,21 @@ CAPS = []
 NEGS = []
 
 
+def bank_seal(sid, r, timed):
+    """A seal ring of our own (after the reference's presidential seal): gold rims, a cream band, lettering."""
+    rt = r * 0.885
+    text = "JPMORGAN CHASE &amp; CO.  \u2605  NEW YORK  \u2605  EST. 1799  \u2605  WE BANK THE WORLD  \u2605"
+    return (f'<svg id="{sid}" class="clip" {timed} data-track-index="4" data-layout-ignore viewBox="0 0 {2 * r} {2 * r}" '
+            f'style="position:absolute;left:0;top:0;width:{2 * r}px;height:{2 * r}px;overflow:visible">'
+            f'<defs><path id="{sid}-tp" d="M {r - rt:.1f},{r} a {rt:.1f},{rt:.1f} 0 1,1 {2 * rt:.1f},0 a {rt:.1f},{rt:.1f} 0 1,1 {-2 * rt:.1f},0" /></defs>'
+            f'<circle cx="{r}" cy="{r}" r="{r * 0.885:.1f}" fill="none" stroke="#efe2bb" stroke-width="{r * 0.215:.1f}" />'
+            f'<circle cx="{r}" cy="{r}" r="{r * 0.985:.1f}" fill="none" stroke="#d9b13d" stroke-width="{r * 0.035:.1f}" />'
+            f'<circle cx="{r}" cy="{r}" r="{r * 0.78:.1f}" fill="none" stroke="#c99a2e" stroke-width="{r * 0.03:.1f}" />'
+            f'<circle cx="{r}" cy="{r}" r="{r * 0.95:.1f}" fill="none" stroke="#b8902a" stroke-width="{r * 0.008:.1f}" stroke-dasharray="3 7" />'
+            f'<text font-family="Inter Tight, sans-serif" font-weight="800" font-size="{r * 0.1:.1f}" fill="#15234a" '
+            f'textLength="{2 * math.pi * rt * 0.985:.0f}" lengthAdjust="spacing"><textPath href="#{sid}-tp">{text}</textPath></text></svg>')
+
+
 def Wr(words, size=56, weight=700):
     return dict(kind="w", words=words, size=size, weight=weight)
 
@@ -725,8 +779,8 @@ def lock(rows, end, x=None, y=540, align="center", tone="lt"):
     CAPS.append(dict(kind="lock", rows=rows, end=end, x=x, y=y, align=align, tone=tone))
 
 
-def bars(words, end, y=540, size=72):
-    CAPS.append(dict(kind="bars", words=words, end=end, y=y, size=size))
+def bars(words, end, y=540, size=72, x=None):
+    CAPS.append(dict(kind="bars", words=words, end=end, y=y, size=size, x=x))
 
 
 def typed(words, end, y=560, size=320, mode="follow", pre=None, cadence=1):
@@ -846,7 +900,7 @@ def build_captions():
                 js.append(f'tl.set("#{gid}w{wi}t", {{ opacity: 0 }}, {r3(t1 - F1)});')
             els.append(f'<div id="{gid}" class="clip cg" data-start="{r3(t0)}" data-duration="{r3(round(t1 - t0, 3))}" '
                        f'data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap '
-                       f'style="top:{g["y"] - 540}px;left:0;width:1920px;align-items:center;">'
+                       f'style="top:{g["y"] - 540}px;' + (f'left:{g["x"]}px;width:1800px;align-items:flex-start;"' if g.get("x") else 'left:0;width:1920px;align-items:center;"') + '>'
                        f'<div class="row bars" style="font-size:{g["size"]}px;font-weight:700;letter-spacing:-0.02em">'
                        f'{"".join(spans)}<i class="sweep" id="{sw}"></i></div></div>')
         elif k == "typed":
@@ -1005,25 +1059,60 @@ T_CTRY, T_WB, T_IMF, T_GOV = q2[0][1], q3[0][1], q4[0][1], q5[0][1]
 T_TWO = 7.95  # the source cuts to its wide two-shot here (sb_two starts at this frame)
 
 s = Scene("s01", 0.0, SB_END)
-s.video("sb_cu.mp4", 0.0, T_CTRY, grade="doc", push=(1.0, 1.035))
-# the reference's ghost portrait behind the quote, with a glint on the eye
-s.image("ghost_bw.jpg", 0.0, T_CTRY, grade="doc_bw", push=(1.04, 1.0), box=(60, 150, 640, 780),
-        cam_extra="opacity:0.17;mix-blend-mode:screen;")
-s.glint(1.15, 395, 455, size=170, d=0.32)
-s.hud(0.0, 0.47, seed=11, opacity=0.75)
-# "We bank countries": Dimon with heads of government, three frames each
-s.neg(T_CTRY, 2)
-s.strobe(["lead_japan1.jpg", "lead_macri.jpg", "lead_reeves1.jpg", "lead_japan2.jpg", "dimon_davos.jpg",
-          "lead_reeves2.jpg", "lead_japan3.jpg", "dimon_mcdermott.jpg"], T_CTRY, T_WB, frames=3)
-# "We bank the World Bank"
-s.neg(T_WB, 2)
-s.image("wb_2.jpg", T_WB, q3[4][1], grade="doc", push=(1.0, 1.05))
-camWB1, _ = s.image("wb_1.jpg", q3[4][1], T_IMF + 4 * F1, grade="doc", push=(1.04, 1.0))
-s.js.append(f'tl.to("#{camWB1}", {{ opacity: 0, duration: {r3(4 * F1)}, ease: "steps(4)" }}, {s.at(T_IMF)});')
-s.dust(T_IMF - F1, T_TWO - 3 * F1, (420, 180, 1080, 720), seed=9, n=260)
-# "the IMF": white bars on black (the scene's black ground)
-# "We bank the United States government": the presidential seal holding the government, on a starfield
-s.stars(T_IMF, T_TWO, seed=5)
+s.uses_text = True
+# The reference's cold open, under Dimon's own words: black, HUD wireframes, a seal ring rushing toward the
+# camera with pictures flipping inside it; the picture becomes a tilted card and bursts into dust that thins into
+# a starfield; then the ring holds a turning globe, the World Bank, and finally the presidential seal.
+T_BURST = q1[8][1]          # "countries": the card bursts into dust
+T_CARD = 1.0                # the picture leaves the ring and becomes a tilted card behind it
+R0 = 300
+RG = s.uid("ringgrp")
+LEAD_PICS = ["lead_japan1.jpg", "lead_macri.jpg", "lead_reeves1.jpg", "dimon_davos.jpg", "lead_japan2.jpg",
+             "dimon_mcdermott.jpg", "lead_reeves2.jpg", "lead_japan3.jpg", "dimon_reeves_portrait.jpg"]
+GRD = f' data-color-grading="{esc(GR["doc"])}"'
+FULL = "position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover"
+
+
+def _swaps(pics, a, b, frames, k=0):
+    out, t = [], a
+    while t < b - 0.01:
+        e = min(round(t + frames * F1, 3), b)
+        out.append(f'<img id="{s.uid("rp")}" class="clip" src="assets/img/{pics[k % len(pics)]}" alt="" {s.timed(t, e)}{GRD} '
+                   f'data-track-index="3" style="{FULL}" />')
+        t, k = e, k + 1
+    return out, k
+
+
+hole_pics, k_next = _swaps(LEAD_PICS, 0.0, T_CARD, 3)
+card_pics, _ = _swaps(LEAD_PICS, T_CARD, round(T_BURST + 4 * F1, 3), 3, k_next)
+wb_pics, _ = _swaps(["wb_2.jpg", "wb_1.jpg", "wb_3.jpg"], T_WB, T_IMF, 4)
+CARD = s.uid("card")
+HR = R0 * 0.77
+BSEAL = s.uid("bseal")
+s.hud(0.0, 0.5, seed=11, opacity=0.75)
+s.raw(f'<div class="cam" id="{RG}" style="left:{960 - R0}px;top:{540 - R0}px;width:{2 * R0}px;height:{2 * R0}px;z-index:{s.nz() + 5}">'
+      f'<div id="{CARD}" style="position:absolute;left:{R0 - 1.05 * R0:.0f}px;top:{R0 - 0.74 * R0:.0f}px;width:{2.1 * R0:.0f}px;'
+      f'height:{1.48 * R0:.0f}px;overflow:hidden">{"".join(card_pics)}</div>'
+      f'<div style="position:absolute;left:{R0 - HR:.0f}px;top:{R0 - HR:.0f}px;width:{2 * HR:.0f}px;height:{2 * HR:.0f}px;'
+      f'border-radius:50%;overflow:hidden">{"".join(hole_pics)}'
+      f'{s.globe_markup(round(T_CTRY - 2 * F1, 3), T_GOV, HR, HR, HR * 0.8, t_pins=(q2[1][1], round(q2[2][1] + 0.35, 3)), n_pins=30, spin=95, absolute=False)}'
+      f'{"".join(wb_pics)}</div>'
+      f'{bank_seal(BSEAL, R0, s.timed(0.0, T_GOV))}</div>')
+# the ring rushes toward the camera, accelerating; after the burst it moves left to make room for the column
+s.js.append(f'tl.fromTo("#{RG}", {{ scale: 0.16, x: 0, y: 0 }}, {{ scale: 0.7, duration: {r3(T_BURST)}, ease: "power1.in" }}, 0);')
+s.js.append(f'tl.to("#{RG}", {{ scale: 0.74, duration: {r3(T_CTRY - T_BURST)}, ease: "none" }}, {s.at(T_BURST)});')
+s.js.append(f'tl.to("#{RG}", {{ scale: 1.0, x: -260, y: -20, duration: 0.45, ease: "expo.out" }}, {s.at(T_CTRY)});')
+s.js.append(f'tl.to("#{RG}", {{ scale: 1.07, duration: {r3(T_GOV - T_CTRY - 0.45)}, ease: "none" }}, {s.at(T_CTRY + 0.45)});')
+s.js.append(f'tl.fromTo("#{BSEAL}", {{ rotation: -12 }}, {{ rotation: 8, duration: {r3(T_GOV)}, ease: "none" }}, 0);')
+# the picture as a tilted card behind the ring, then it breaks up
+s.js.append(f'tl.fromTo("#{CARD}", {{ rotation: -4, scale: 1.0 }}, {{ rotation: -10, scale: 1.14, duration: {r3(T_BURST - T_CARD)}, '
+            f'ease: "sine.in", immediateRender: false }}, {s.at(T_CARD)});')
+s.js.append(f'tl.to("#{CARD}", {{ opacity: 0, duration: {r3(4 * F1)}, ease: "steps(4)" }}, {s.at(T_BURST)});')
+s.dust(T_BURST - F1, round(T_CTRY + 0.7, 3), (740, 385, 441, 311), seed=9, n=950, spread=(200, 1250))
+s.stars(round(T_BURST - 0.05, 3), T_TWO, seed=5)
+s.hud(T_CTRY, T_CTRY + 0.33, seed=13, opacity=0.6)
+s.glint(T_WB + 0.28, 700 + 205, 520 - 205, size=210, d=0.32)
+s.neg(T_GOV, 2)
 SEAL = (700, 520, 300)  # centre x, y, radius
 cx, cy, R = SEAL
 seal_cam = s.uid("seal")
@@ -1048,7 +1137,7 @@ s.raw(f'<div class="cam" id="{seal_cam}" style="left:{cx - R}px;top:{cy - R}px;w
       f'-webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,0) 0 74.5%, #000 75.5%);mask-image:radial-gradient(circle closest-side, rgba(0,0,0,0) 0 74.5%, #000 75.5%)" />'
       f'<img id="{full}" class="clip" src="assets/img/seal.png" alt="" {s.timed(T_SEAL_FULL, T_TWO)} data-track-index="4" '
       f'style="position:absolute;left:0;top:0;width:{2 * R}px;height:{2 * R}px" /></div>')
-s.js.append(f'tl.fromTo("#{seal_cam}", {{ scale: 0.55, rotation: -4 }}, {{ scale: 1.0, rotation: 0, duration: 0.5, ease: "power3.out" }}, {s.at(T_GOV)});')
+s.js.append(f'tl.fromTo("#{seal_cam}", {{ scale: 0.9, rotation: -7 }}, {{ scale: 1.07, rotation: 0, duration: 0.5, ease: "expo.out" }}, {s.at(T_GOV)});')
 s.js.append(f'tl.to("#{seal_cam}", {{ scale: 1.08, duration: {r3(T_TWO - T_GOV - 0.5)}, ease: "none" }}, {s.at(T_GOV + 0.5)});')
 s.hud(T_GOV, T_GOV + 0.4, seed=12, opacity=0.6)
 s.glint(T_SEAL_FULL + 0.12, cx, cy, size=420, d=0.34)
@@ -1056,10 +1145,22 @@ s.rays(T_SEAL_FULL + 0.36, T_TWO - F1 * 3, cx=cx, cy=cy)
 s.flash(T_TWO - 3 * F1, 3, "#ffffff")
 # "You have to be big": the source's own two-shot, with a hard punch-in on "big"
 camT, vT = s.video("sb_two.mp4", T_TWO, SB_END, grade="doc", push=None)
+s.neg(T_TWO, 1)
+s.neg(T_TWO + 2 * F1, 1)
+s.solar(SB_END - 2 * F1, 1, "#2f6bff")
 T_BIG = q6[4][1]
 s.ramp_push(camT, T_BIG, SB_END, s0=1.0, s1=1.6, x1=-532, y1=108, fast=3, share=0.9)
 SCENES.append(s)
 sfx("tv-blip-soft.wav", 0.0, 0.18)
+sfx("whoosh-cinematic.mp3", 0.05, 0.1)
+sfx("pop.mp3", q1[5][1], 0.08)
+sfx("impact-bass-1.mp3", q1[7][1], 0.16)
+sfx("glitch-1.mp3", T_BURST, 0.12)
+sfx("sparkle.mp3", T_BURST, 0.12)
+sfx("impact-bass-1.mp3", T_BURST, 0.2)
+sfx("whoosh.mp3", T_CTRY, 0.12)
+for k in range(4):
+    sfx("click-soft.mp3", round(q2[1][1] + k * 0.1, 3), 0.05)
 sfx("whoosh-short.mp3", T_CTRY, 0.16)
 sfx("impact-bass-1.mp3", q2[2][1], 0.2)
 sfx("whoosh-short.mp3", T_WB, 0.13)
@@ -1070,10 +1171,13 @@ sfx("whoosh.mp3", T_GOV, 0.15)
 sfx("riser.mp3", T_TWO - 3 * F1, 0.1)
 sfx("impact-bass-2.mp3", T_BIG, 0.4)
 sfx("impact-bass-1.mp3", T_BIG, 0.28)
-quote([q1[:5], q1[5:]], T_CTRY, x=150, y=520, size=46)
-lock([Wr(q2[:2], 56), Wr(q2[2:], 200, 800)], T_WB)
-lock([Wr(q3[:3], 56), Wr(q3[3:], 170, 800)], T_IMF)
-bars(q4, T_GOV, size=120)
+# the reference's stacked column (cold open): the small words small, the nouns big
+lock([Wr(q1[0:2], 58), Wr(q1[2:5], 58), Wr(q1[5:6], 112, 800), Wr(q1[6:7], 58), Wr(q1[7:8], 210, 800), Wr(q1[8:9], 112, 800)],
+     round(T_CTRY - 0.1, 3), x=110, y=540, align="left")
+# the second column, right of the ring
+lock([Wr(q2[:2], 56), Wr(q2[2:], 150, 800)], T_WB, x=1120, y=520, align="left")
+lock([Wr(q3[:3], 56), Wr(q3[3:], 150, 800)], T_IMF, x=1120, y=520, align="left")
+bars(q4, T_GOV, size=110, x=1120, y=520)
 lock([Wr(q5[:3], 52), Wr(q5[3:5], 96, 800), Wr(q5[5:], 96, 800)], T_TWO - 3 * F1, x=1120, y=520, align="left")
 lock([Wr(q6[:4], 56), Wr(q6[4:], 330, 800)], SB_END, x=150, y=540, align="left")
 
@@ -1098,6 +1202,10 @@ s.raw(f'<div class="cam" id="{comp}" style="left:0;top:0;width:1920px;height:108
       f'data-track-index="3" data-layout-allow-occlusion style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover" /></div>')
 s.js.append(f'tl.fromTo("#{comp}", {{ scale: 1.0, x: 0, y: 0 }}, {{ scale: 1.03, duration: {r3(T_MAN - T0)}, ease: "none" }}, 0);')
 s.ramp_push(comp, T_MAN, T_NOW, s0=1.03, s1=1.47, x1=-310, y1=245, fast=4, share=0.88)
+s.js.append(f'tl.fromTo("#{sli}", {{ rotation: -8 }}, {{ rotation: 6, duration: {r3(T_NOW - T0)}, ease: "none" }}, 0);')
+s.glint(T0 + 0.42, 850, 580, size=260, d=0.34)
+s.solar(T_NOW - 2 * F1, 1, "#ff5a1f")
+s.flash(T_NOW - F1, 1, "#ffffff")
 s.neg(T0, 2)
 s.neg(T0 + 3 * F1, 1)
 s.video("c_dimon_window.mp4", T_NOW, T_HES, push=(1.0, 1.04))
@@ -1136,6 +1244,7 @@ s.ramp_into(camYD, f1[0][1], f2[0][1], s1=1.38, fast=0.15)
 s.video("c_young_dimon.mp4", f2[0][1], f3[0][1], ms=0.7, grade="glitch2", push=(1.12, 1.16), fit=False)
 s.neg(f2[0][1], 2)
 s.video("c_citigroup98.mp4", f3[0][1], f4[0][1], push=(1.0, 1.05))
+s.solar(f3[1][1], 1, "#ff7a00")
 s.video("c_weill_old.mp4", f4[0][1], f4[3][1], push=(1.0, 1.04))
 s.video("c_dimon_weill_bw.mp4", f4[3][1], f5[0][1], grade="doc_bw", push=(1.04, 1.0))
 camCS, _ = s.video("c_cash.mp4", f5[0][1], f6[0][1], push=None)
@@ -1276,7 +1385,9 @@ camCI, _ = s.video("c_citi_sign.mp4", e3[0][1], e4[0][1], push=None)
 s.ramp_into(camCI, e3[0][1], e4[0][1], s1=1.45)
 camCC, _ = s.video("c_citi_crowd.mp4", e4[0][1], e5[0][1], push=None)
 s.ramp_land(camCC, e4[0][1], e5[0][1], s0=1.5)
-s.video("c_citi_aerial.mp4", e5[0][1], s.end, push=(1.0, 1.05))
+# "in the world": the dotted globe turning, pins lighting up
+s.raw(s.globe_markup(e5[0][1], s.end, 960, 450, 300, t_pins=(e5[0][1], round(e5[2][1] + 0.1, 3)), n_pins=26, spin=80, seed=8))
+s.neg(e5[0][1], 1)
 SCENES.append(s)
 for t in (e1[0][1], e3[0][1], e5[0][1]):
     sfx("whoosh-short.mp3", t, 0.1)
@@ -1287,7 +1398,7 @@ sfx("impact-bass-1.mp3", e3[3][1], 0.16)
 line(e1, e2[0][1])
 line(e2, e3[0][1])
 lock([Wr(e3[:3], 56), Wr(e3[3:], 200, 800), Wr(e4, 56)], e5[0][1])
-line(e5, s.end)
+line(e5, s.end, y=885)
 
 # ---- S07 "He built Citigroup side by side with his mentor Sandy Weill for 16 years." ----------------------------
 b1 = VO.take("He built Citigroup")
@@ -1304,6 +1415,7 @@ for side, (clip, dx) in enumerate((("inset(0 50% 0 0)", -960), ("inset(0 0 0 50%
     s.js.append(f'tl.fromTo("#{camS}", {{ x: {dx}, scale: 1.0 }}, {{ x: 0, scale: 1.04, duration: 0.34, ease: "power3.out" }}, {s.at(b2[0][1] + side * F1)});')
 s.video("c_weill_laugh.mp4", b3[0][1], b4[0][1], push=(1.0, 1.05))
 s.video("c_citi_red.mp4", b4[0][1], s.end, push=(1.0, 1.05))
+s.solar(b4[0][1], 1, "#1fd1ff")
 SCENES.append(s)
 sfx("whoosh-short.mp3", b1[0][1], 0.1)
 sfx("impact-bass-1.mp3", b1[2][1], 0.16)
@@ -1392,11 +1504,13 @@ c4 = VO.take("in the history of Wall Street")
 s = Scene("s10", c1[0][1], VO.items[VO.k][1] + OFF - LEAD)
 s.uses_text = True
 T_CB = c3[0][1]
-camDD, _ = s.video("c_dimon_dark.mp4", c1[0][1], c2[0][1], grade="doc_warm", push=None)
-s.js.append(f'tl.fromTo("#{camDD}", {{ scale: 1.0 }}, {{ scale: 1.035, duration: {r3(c1[6][1] - c1[0][1])}, ease: "none" }}, {s.at(c1[0][1])});')
-s.js.append(f'tl.to("#{camDD}", {{ scale: 1.3, duration: {r3(3 * F1)}, ease: "power3.out" }}, {s.at(c1[6][1])});')
-s.js.append(f'tl.to("#{camDD}", {{ scale: 1.36, duration: {r3(c2[0][1] - c1[6][1] - 3 * F1)}, ease: "sine.out" }}, {s.at(c1[6][1] + 3 * F1)});')
-s.fx_frames("c_dimon_dark.mp4", c1[5][1], 3, "glitch2", ms=round(c1[5][1] - c1[0][1], 3))
+camDD, _ = s.video("c_dimon_dark.mp4", c1[0][1], c1[5][1], grade="doc_warm", push=None)
+s.js.append(f'tl.fromTo("#{camDD}", {{ scale: 1.0 }}, {{ scale: 1.035, duration: {r3(c1[3][1] - c1[0][1])}, ease: "none" }}, {s.at(c1[0][1])});')
+s.js.append(f'tl.to("#{camDD}", {{ scale: 1.3, duration: {r3(3 * F1)}, ease: "power3.out" }}, {s.at(c1[3][1])});')
+s.js.append(f'tl.to("#{camDD}", {{ scale: 1.36, duration: {r3(c1[5][1] - c1[3][1] - 3 * F1)}, ease: "sine.out" }}, {s.at(c1[3][1] + 3 * F1)});')
+s.fx_frames("c_dimon_dark.mp4", c1[4][1], 3, "glitch2", ms=round(c1[4][1] - c1[0][1], 3))
+# "premise": the reference's surreal graphic flashes (engraving, hand, clock), a new picture every few frames
+s.video("c_surreal.mp4", c1[5][1], c2[0][1], grade="doc", push=(1.0, 1.06))
 s.neg(c2[0][1] - 3 * F1, 2)
 s.flash(c2[0][1] - F1, 1, "#ffffff")
 # typed "the greatest" on black (captions), then grey, grey, white -- and the type plane turns into the white card
@@ -1422,8 +1536,9 @@ s.neg(c4[4][1], 2)
 s.video("c_old_wallst.mp4", c4[4][1], s.end, grade="doc_bw", push=(1.0, 1.05))
 SCENES.append(s)
 sfx("whoosh-short.mp3", c1[0][1], 0.1)
-sfx("glitch-1.mp3", c1[5][1], 0.12)
-sfx("impact-bass-1.mp3", c1[6][1], 0.16)
+sfx("glitch-1.mp3", c1[4][1], 0.12)
+sfx("impact-bass-1.mp3", c1[3][1], 0.16)
+sfx("whoosh-short.mp3", c1[5][1], 0.1)
 sfx("typing.mp3", c2[0][1], 0.18)
 sfx("whoosh-cinematic.mp3", T_CB, 0.2)
 sfx("impact-bass-2.mp3", T_CB, 0.3)
@@ -1546,7 +1661,9 @@ s = Scene("s15", t1w[0][1], VO.items[VO.k][1] + OFF - LEAD)
 s.video("s_stopwatch.mp4", t1w[0][1], t2w[0][1], push=(1.0, 1.06))
 s.video("r_nyse_floor.mp4", t2w[0][1], t3w[0][1], push=(1.0, 1.04))
 s.neg(t2w[0][1], 2)
-s.video("r_plunge.mp4", t3w[0][1], s.end, grade="tv", push=(1.0, 1.05))
+s.video("r_plunge.mp4", t3w[0][1], t3w[2][1], grade="tv", push=(1.0, 1.05))
+s.video("c_fire.mp4", t3w[2][1], s.end, grade="doc_warm", push=(1.04, 1.12))
+s.solar(t3w[2][1], 1, "#ff6a00")
 SCENES.append(s)
 sfx("whoosh-short.mp3", t1w[0][1], 0.1)
 sfx("impact-bass-2.mp3", t2w[0][1], 0.36)
@@ -1572,8 +1689,9 @@ s.video("s_bear_3d.mp4", d2[0][1], d3[0][1], push=(1.0, 1.05))
 s.neg(d2[0][1], int(round((d3[0][1] - d2[0][1]) / F1)))
 s.fx_frames("s_bear_3d.mp4", d2[0][1], 2, "glitch2")
 s.video("c_dimon_walk.mp4", d3[0][1], d4[0][1], push=(1.0, 1.04))
-camLM, _ = s.video("r_last_man.mp4", d4[0][1], s.end, push=None)
-s.ramp_land(camLM, d4[0][1], s.end, s0=1.25, fast=0.22)
+# "standing": the reference's 3D renders -- a glowing king standing while the other pieces fall
+camKG, _ = s.video("c_chess.mp4", d4[0][1], s.end, grade=None, push=None, box=(656, 0, 608, 1080))
+s.ramp_land(camKG, d4[0][1], s.end, s0=1.35, fast=0.24)
 SCENES.append(s)
 sfx("whoosh-short.mp3", d1[0][1], 0.1)
 for k in range(0, int((d1[4][1] - d1[0][1]) / (2 * F1)), 2):
@@ -1585,7 +1703,7 @@ sfx("whoosh-short.mp3", d3[0][1], 0.1)
 sfx("impact-bass-1.mp3", d4[0][1], 0.24)
 lock([Wr(d1, 56)], d2[0][1], y=930, tone="dk")
 lock([Wr(d2, 220, 800)], d3[0][1])
-lock([Wr(d3, 56), Wr(d4, 200, 800)], s.end)
+lock([Wr(d3, 56), Wr(d4, 200, 800)], s.end, y=860)
 
 # ---- S17 "with enough money to buy the ones that fell." -------------------------------------------------------
 v1 = VO.take("with enough money")
@@ -1620,11 +1738,14 @@ s.uses_text = True
 s.video("r_jpm_night.mp4", p1[0][1], p2[0][1], push=(1.0, 1.04))
 s.neg(p1[0][1], 2)
 s.image("park270.jpg", p2[0][1], p3[0][1], push=(1.0, 1.06), pos="50% 30%")
-s.video("c_jpmco_sign2.mp4", p3[0][1], p4[0][1], push=(1.0, 1.05))
+s.video("c_jpmco_sign2.mp4", p3[0][1], p3[3][1], push=(1.0, 1.05))
+camSC, _ = s.video("c_screens.mp4", p3[3][1], p4[0][1], grade="tv", push=None)
+s.ramp_into(camSC, p3[3][1], p4[0][1], s1=1.35, fast=0.14)
 # "$10 trillion": a ring fills around Dimon while the camera pushes in (the reference's donut around the eye)
 s.video("c_money_bg.mp4", p4[0][1], p5[0][1], grade=None, push=(1.0, 1.04), opacity=0.32, blend="screen")
 s.ring_beat(p4[0][1], p5[0][1], "c_dimon_xcu.mp4")
 camCT2, _ = s.video("r_city_top.mp4", p5[0][1], p6[0][1], push=None)
+s.solar(p6[0][1] - F1, 1, "#ff3df0")
 s.ramp_into(camCT2, p5[0][1], p6[0][1], s1=1.5, drift=0.05, fast=0.18)
 # "today" types on black (captions); then the closing face, light streaks and the Chase octagon
 T_XCU = round(VO_END + 0.1, 3)
@@ -1726,13 +1847,13 @@ def write_textures():
              _jitter("grain-tex", goffs, percent=True))
     # the global negative: white frames on a difference layer above everything (merged so they never cancel)
     merged = []
-    for a, b in sorted(NEGS):
-        if merged and a <= merged[-1][1] + 1e-6:
+    for a, b, c in sorted(NEGS):
+        if merged and merged[-1][2] == c and a <= merged[-1][1] + 1e-6:
             merged[-1][1] = max(merged[-1][1], b)
         else:
-            merged.append([a, b])
+            merged.append([a, b, c])
     divs = "".join(f'<div id="nfx{k}" class="clip nfx" data-start="{r3(a)}" data-duration="{r3(round(b - a, 3))}" '
-                   f'data-track-index="2" data-layout-ignore></div>' for k, (a, b) in enumerate(merged))
+                   f'data-track-index="2" data-layout-ignore style="background:{c}"></div>' for k, (a, b, c) in enumerate(merged))
     _overlay("negfx", "#root .nfx { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #ffffff; }",
              divs, [])
     print("negatives:", len(merged))

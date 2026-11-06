@@ -31,6 +31,10 @@ V = {
     "WF": "main/wolf_of_wall_street_clip.mp4",       # 960x720
     "PK": "pinterest/klickpin_side_hustle.mp4",      # 1280x720 cash counter
     "PM": "pinterest/money_bg_blend.mp4",            # 736x414 falling money (background blend only)
+    "CC": "main/cool_cinematic_clip.mp4",            # 720x360 surreal montage (engravings, clocks, eyes, nebula)
+    "PV": "pinterest/pint_videos.mp4",               # 720x1280 3D chess: a glowing king among falling pieces
+    "RD": "pinterest/klickpin_rustic_decor.mp4",     # 736x414 fire with a seated silhouette
+    "CT": "main/citadel_high_speed_trading.mp4",     # 640x360 trading floor screens (bug bottom right, clock top right)
 }
 # zoom / centre that crop each source's burned-in bug or label out of frame
 BUG = {"WB": (1.08, 0.48, 0.52), "NG": (1.08, 0.48, 0.52), "HJ": (1.09, 0.47, 0.53), "UT": (1.2, 0.45, 0.55),
@@ -115,6 +119,11 @@ CLIP = {
     "c_city_top": ("NG", 79.6, 1.3, None),
     # the wilderness year: alone at home under a lamp (the documentary's own picture of it)
     "c_alone": ("MP", 1133.0, 0.9, None),
+    # the reference's graphic B-roll, from the Pinterest folder
+    "c_surreal": ("CC", 0.2, 0.8, None),
+    "c_chess": ("PV", 1.55, 0.9, None),
+    "c_fire": ("RD", 2.0, 0.7, None),
+    "c_screens": ("CT", 22.2, 0.7, (1.25, 0.45, 0.5)),
 }
 
 # single frames grabbed from the documentaries (with the source's crop): id -> (source, time)
@@ -192,7 +201,10 @@ def make_clip(cid):
     key, t, dur, over = CLIP[cid]
     src = f"{SRC}/{V[key]}"
     W, H = probe(src)
-    if key == "FP":
+    if key == "PV":
+        # vertical 3D render on black: keep it whole, full height, and place it on the black frame
+        vf = "scale=-2:1080:flags=lanczos,setsar=1"
+    elif key == "FP":
         # the movie scene keeps its own 2.39:1 letterbox picture: crop the black bars, scale to 1920 wide
         vf = "crop=640:268:0:0,scale=1920:804:flags=lanczos,setsar=1"
     else:

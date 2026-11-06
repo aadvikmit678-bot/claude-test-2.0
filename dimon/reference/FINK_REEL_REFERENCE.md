@@ -345,3 +345,23 @@ Seen at 25.53–27.6 ("But then / he got / one bet wrong").
 
 ### What the Drive already holds
 The Drive folder "Jamie Dimon" (id `1nC7mwKB1Baj2aL5CQehlxG5ztOkuh7WJ`) holds documentaries, Dimon speaking, the HQ ribbon cutting, 2008 crash and Wall Street footage, a Wolf of Wall Street clip, an image pack, halftone textures and money/Pinterest clips.
+
+---
+
+## 11. What makes it read as animation (learned the hard way on Dimon v1)
+
+v1 matched the device list but still read as a documentary with captions. The reel reads as motion graphics because:
+
+- **The opening is pure graphics, no footage.** 0–2.8 s is black, HUD wireframes, a seal ring rushing toward the camera
+  (it grows about 5× in 0.9 s) with photos flipping inside it every 2–3 frames. The photo turns into a tilted card
+  behind the ring, bursts into a dense cloud of specks that fills the screen, and the specks thin into a drifting
+  starfield. The subject's face only arrives at 2.9 s, through negative flicker. Never open on a talking head.
+- **Graphic B-roll carries the abstract words.** Chess clock, a gallery of floating screens, 3D "EMERGENCY" buttons,
+  a 3D brain turned thermal, a 3D lamp, a walking pictogram, a rainbow light burst, engravings, collage art. These are
+  stylised stock renders, not documentary footage. For Dimon they come from the Pinterest folder (3D chess,
+  surreal engraving montage, fire with a silhouette) and the trading-screen clips.
+- **Plain footage is short and treated.** Interview cutaways last 0.3–0.6 s. Shots get recoloured frames: teal
+  negatives, a blue/red solarised frame before a new section, a thermal recolour, a map composited behind a walking
+  subject.
+- **Graphic compositions never hold still.** Rings grow, cards tilt, particles drift, the starfield moves, the globe
+  turns. Only the footage shots are static.
