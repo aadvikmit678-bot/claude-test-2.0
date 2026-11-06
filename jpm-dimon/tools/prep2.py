@@ -28,10 +28,14 @@ V = {
     "P06": "_pin/p06_Stylish_entryway_makeover_id.mp4", "P07": "_pin/p07_Try_these_11_Classy_side_hus.mp4",
     "P08": "_pin/p08_Well_that_is_Money_launderin.mp4", "P09": "_pin/p09_eye_mp4.mp4",
     "P10": "_pin/p10_money_can_be_used_in_differe.mp4", "P11": "_pin/p11_pint_videos_mp4.mp4",
+    # v4: the user's JP Morgan montage (4:3, burned subtitles at the bottom), the "over a bonus" cartoon, the money
+    # asset for the four-square, the user's Wolf of Wall Street cut (vertical)
+    "MONT": "_direct/jpm_montage.mp4", "BONUS": "_bonus/over_a_bonus.mp4", "MONEY": "_money/money_asset.mp4",
+    "WOLF2": "_wolf2/wolf_first_part.mp4",
 }
 # logo-safe framings: (cx, cy, zoom) of the crop window, relative to the frame
 FRAMES = {"FULL": (0.5, 0.5, 1.0), "BBG": (0.47, 0.53, 1.07), "CNBC": (0.46, 0.54, 1.08), "UNTF": (0.45, 0.56, 1.12),
-          "SIXTY": (0.56, 0.57, 1.17)}
+          "SIXTY": (0.56, 0.57, 1.17), "MONT": (0.5, 0.42, 1.0)}  # MONT: 16:9 band above the subtitles
 
 
 def run(cmd):
@@ -115,7 +119,7 @@ def make_still(sid, spec):
 if __name__ == "__main__":
     force = "--force" in sys.argv
     want = {a for a in sys.argv[1:] if not a.startswith("--")}
-    spec_name = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--spec=")), "media_v2.json")
+    spec_name = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--spec=")), "media_v4.json")
     spec = json.load(open(f"{PRJ}/tools/{spec_name}"))
     jobs = []
     for cid, s in spec["clips"].items():

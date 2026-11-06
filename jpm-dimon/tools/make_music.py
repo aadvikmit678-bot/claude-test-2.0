@@ -2,7 +2,9 @@
 """The music bed: the Bloomberg open's own music, continued under the whole film.
 
 1. Separate voice and music in the first 4 minutes of name_of_the_game.mp4 (Demucs htdemucs, two stems).
-2. The open keeps the reporter's voice only (vocals stem, spliced like the picture: src 1.12-2.68 + 5.05-12.30).
+2. The open keeps the reporter's voice only (vocals stem): "The name of the game in American capitalism, | is being
+   big, and no one is bigger | (0.5 s held) | on Wall Street than JPMorgan Chase." = src 1.12-4.05 + 6.85-9.62 +
+   0.5 s silence + 9.62-12.30 (8.88 s). The cuts sit in the stem's silences; 9.62 is the dip between "bigger" and "on".
 3. The bed is the opening cue (0-53.5 s, 120 BPM) played from 2.17 s, with one jump on a downbeat
    (source 45.085 -> 3.215, 80 ms equal-power crossfade), so the cue's own ending lands on the film's last frame:
    film 0-42.915 = cue 2.17-45.085, film 42.915-93.2 = cue 3.215-53.5. The jump was chosen by comparing the
@@ -70,9 +72,16 @@ if __name__ == "__main__":
         open(f"{WORK}/_sep.py", "w").write(SEP)
         run(["python3", "-I", f"{WORK}/_sep.py", f"{WORK}/bbg_0_240.wav", stems])
     # the reporter's voice alone, spliced like the picture
-    run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-i", f"{stems}/vocals.wav", "-filter_complex",
-         "[0:a]atrim=1.12:2.68,asetpts=PTS-STARTPTS,afade=t=out:st=1.54:d=0.02[a];"
-         "[0:a]atrim=5.05:12.30,asetpts=PTS-STARTPTS,afade=t=in:d=0.02,afade=t=out:st=7.0:d=0.25[b];[a][b]concat=n=2:v=0:a=1",
+    # Demucs put the reporter's soft "than" (src 10.18-10.44, a steady 160 Hz voiced sound) in the music stem:
+    # it is taken back from there.
+    run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-i", f"{stems}/vocals.wav", "-i", f"{stems}/no_vocals.wav",
+         "-filter_complex",
+         "[0:a]atrim=1.12:4.05,asetpts=PTS-STARTPTS,afade=t=out:st=2.90:d=0.03[a];"
+         "[0:a]atrim=6.85:9.62,asetpts=PTS-STARTPTS,afade=t=in:d=0.02,afade=t=out:st=2.75:d=0.02,apad=pad_dur=0.5[b];"
+         "[1:a]atrim=10.18:10.44,asetpts=PTS-STARTPTS,afade=t=in:d=0.02,afade=t=out:st=0.23:d=0.03,adelay=560|560[th];"
+         "[0:a]atrim=9.62:12.30,asetpts=PTS-STARTPTS[c0];[c0][th]amix=inputs=2:normalize=0:duration=first,"
+         "afade=t=in:d=0.015,afade=t=out:st=2.43:d=0.25[c];"
+         "[a][b][c]concat=n=3:v=0:a=1",
          f"{WORK}/news_voice_raw.wav"])
     loudnorm(f"{WORK}/news_voice_raw.wav", f"{AUD}/news_voice.wav", -16)
     # the bed: one bar-aligned jump, the cue's own ending on the last frame
