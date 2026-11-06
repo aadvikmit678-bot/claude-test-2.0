@@ -811,7 +811,7 @@ def sp_text_behind(sc, t0, t1, cutout, word, size=470, cut_box=(560, 120, 800, 9
             f'tl.to("#{wid}", {{ x: -160, duration: {r3(t1 - t0 - 0.25)}, ease: "none" }}, {sc.at(t0 + 0.25)});'])
     cam = sc.uid("tbc")
     sc.raw(f'<div id="{cam}" class="grp" style="z-index:{sc.nz()};transform-origin:960px 900px"><img id="{cam}-i" class="clip" '
-           f'src="assets/img2/{cutout}" alt="" {sc.timed(t0, t1)} data-track-index="3"{gattr("warm")} style="position:absolute;'
+           f'src="assets/img2/{cutout}" alt="" {sc.timed(t0, t1)} data-track-index="3" data-layout-allow-occlusion{gattr("warm")} style="position:absolute;'
            f'left:{x}px;top:{y}px;width:{w}px;height:{h}px;object-fit:contain;object-position:50% 100%" /></div>',
            [f'tl.fromTo("#{cam}", {{ scale: 1.0 }}, {{ scale: 1.04, duration: {r3(t1 - t0)}, ease: "none" }}, {sc.at(t0)});'])
 
@@ -1013,8 +1013,8 @@ def Q_(i, st, text=None):
     return (text or QUOTE[i]["text"], QT(i), st)
 
 
-def cap(lines, end=None, y=540, exit="cut", start=None, x=960):
-    CAPS.append(dict(lines=lines, end=end, y=y, exit=exit, start=start, x=x))
+def cap(lines, end=None, y=540, exit="cut", start=None, x=960, scrim=None):
+    CAPS.append(dict(lines=lines, end=end, y=y, exit=exit, start=start, x=x, scrim=scrim))
 
 
 def build_captions():
@@ -1115,6 +1115,11 @@ def build_captions():
                     d = max(0.04, min(0.2, nxt - a - 0.01))
                     js.append(f'tl.to("#{lid}", {{ x: {dx[k]:.1f}, duration: {r3(d)}, ease: "power3.out" }}, {r3(a)});')
             lines_html.append(f'<div id="{lid}" class="ln">{"".join(spans)}</div>')
+        if g.get("scrim"):
+            a = g["scrim"]
+            lines_html.insert(0, f'<div class="scrim" data-layout-ignore style="left:{g["x"] - 640}px;top:{g["y"] - 230}px;'
+                                 f'background:radial-gradient(closest-side, rgba(6,5,4,{a}) 0%, rgba(6,5,4,{round(a * 0.6, 2)}) 50%, '
+                                 f'rgba(6,5,4,0) 100%)"></div>')
         els.append(f'<div id="{gid}" class="clip cg" data-start="{r3(t0)}" data-duration="{r3(t1 - t0)}" data-track-index="1" '
                    f'data-layout-allow-overflow data-layout-allow-overlap>{"".join(lines_html)}</div>')
         if g["exit"] == "blur":
@@ -1128,6 +1133,7 @@ def build_captions():
   #root .ln {{ position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }}
   #root .w {{ position: absolute; white-space: nowrap; line-height: 1; display: inline-block; }}
   #root .w .wt {{ display: inline-block; position: relative; }}
+  #root .scrim {{ position: absolute; width: 1280px; height: 460px; }}
   #root .w .fl {{ position: absolute; left: -0.03em; right: -0.03em; top: 0.22em; bottom: 0.10em; opacity: 0;
     background: #ffffff; box-shadow: 0 0 16px rgba(255,255,255,0.9), 0 0 44px rgba(255,255,255,0.45); }}
 """
@@ -1190,7 +1196,7 @@ cap([[N_(0, "s"), N_(1, "s"), N_(2, "s"), N_(3, "s")]], end=CUT(NT(4)))
 cap([[N_(4, "ps")]], x=1330, y=600, end=CUT(NT(5)))
 cap([[N_(5, "s"), N_(9, "s"), N_(10, "s")], [N_(11, "sh")]], end=CUT(NT(12)) + 0.02)
 cap([[N_(12, "s"), N_(13, "s")]], end=CUT(NT(14)))
-cap([[N_(15, "s"), N_(16, "s"), N_(17, "s"), N_(18, "s")]], end=CUT(NT(19)))
+cap([[N_(15, "s"), N_(16, "s"), N_(17, "s"), N_(18, "s")]], end=CUT(NT(19)), scrim=0.5)
 cap([[N_(20, "s")], [N_(21, "sl"), N_(22, "sl")]], end=CUT(NT(23)))
 cap([[N_(23, "s")], [N_(24, "nm", "JPMorgan"), N_(26, "nm", "Chase")]], y=870, end=8.80, exit="fade")
 
