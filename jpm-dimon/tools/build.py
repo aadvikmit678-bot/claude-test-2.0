@@ -49,31 +49,27 @@ def envelope(path, hop=0.01):
 
 
 def snap(words, env, quiet, loud, hop=0.01):
-    """A word that follows >= 80 ms of quiet starts at the first loud frame after that quiet stretch."""
+    """Move each word's start onto the sound: forward when the transcript puts it in silence, back to the onset when
+    it starts mid-sound right after a quiet stretch. Never before the previous word."""
+    prev = -1.0
+    n = len(env)
     for w in words:
         s = w["start"]
-        lo = int(max(0.0, s - 0.35) / hop)
-        hi = min(len(env) - 1, int((s + 0.32) / hop))
-        q, i = None, lo
-        while i < hi:
-            if env[i] < quiet:
-                j = i
-                while j < hi and env[j] < quiet:
-                    j += 1
-                if j - i >= 8:
-                    q = j
-                i = j
-            else:
-                i += 1
-        if q is None:
-            continue
-        for i in range(q, hi):
-            if env[i] > loud:
-                w["start"] = round(max(0.0, i * hop - 0.015), 3)
-                break
-    for a, b in zip(words, words[1:]):
-        if b["start"] < a["start"]:
-            b["start"] = a["start"]
+        i0 = min(n - 1, max(0, int(round(s / hop))))
+        if env[i0] < quiet:  # transcribed inside silence: the word starts at the next loud frame
+            for i in range(i0, min(n, i0 + int(0.32 / hop))):
+                if env[i] > loud:
+                    s = i * hop - 0.015
+                    break
+        else:  # already sounding: walk back to where this sound began (after a quiet frame)
+            lo = int(max(prev + 0.12, s - 0.25) / hop)
+            for i in range(i0, max(lo, 0), -1):
+                if env[i - 1] < quiet:
+                    s = i * hop - 0.015
+                    break
+        s = max(s, prev + 0.06)
+        w["start"] = round(max(0.0, s), 3)
+        prev = w["start"]
     return words
 
 

@@ -28,3 +28,5 @@ jpm-dimon/renders/
 jpm-dimon/assets/fonts/Satoshi-*
 # the print textures are derived from the user's own halftone scans in their Drive: rebuilt by tools/prep_media.py
 jpm-dimon/assets/tex/
+jpm-dimon/assets/clips2/
+jpm-dimon/assets/img2/
