@@ -1,72 +1,82 @@
-# Jamie Dimon / JPMorgan Chase: review (v4, the first 30 s)
+# Jamie Dimon / JPMorgan Chase: review (v5, the first 30 s)
 
-v4 is `tools/build4.py`, with media from `tools/prep2.py --spec=media_v4.json` and `tools/prep4.py` (freezes, cut-outs, glows, the globe picture and the matte), and audio from `tools/make_music.py`.
+v5 is built by `tools/build5.py`. Media comes from:
+- `tools/prep2.py --spec=media_v5.json`
+- `tools/prep4.py`: freezes, the globe picture
+- `tools/prep5.py`: mattes and glow, smooth slow motion, Dario-aligned faces, young-Dimon squares
+- `tools/make_music.py`: audio
 
-**Rendered:** 0–31.7 s, `renders/jpm-dimon-v4-0-31.mp4`. It ends on "…the United States government."
+**Rendered:** 0–31.7 s, `renders/jpm-dimon-v5-0-31.mp4`.
 
-**Rest of the film:** after 31.7 s it is v3's edit with v4's fonts and no slide.
+**References:** every one was watched again frame by frame at its own frame rate, at the moments you named; the measurements are in `REFERENCES.md`.
 
-Every note from today was checked against the frames, and each line below was verified by snapshot.
+**Checked:** each note below against the snapshots (about 110 frames across 0–31.7 s) and, where it applies, side by side with the reference.
 
-## The open (S01, 0–9.05 s)
-- **Line re-cut:** "especially American financial capitalism" is gone. The voice runs "The name of the game in American capitalism, is being big, and no one is bigger … on Wall Street than JPMorgan Chase." The cuts are made in the voice stem's silences.
-- **Restored word:** the source's soft "than" had been put in the music stem by the separator. It is taken back, so the line no longer skips it.
-- **"bigger":** 0.5 s longer (a held silence after the word).
-- **Word times:** read off the new voice track. In v3 the first words came up about 0.5 s early.
-- **"game":** the NYSE trading floor. The picture-left/word-right paper card is gone.
-- **"capitalism":** kept as it was (counting machine, vault, the serif word). The line is now one serif lockup, "in American capitalism", with no Helvetica stacked on top.
-- **BIG:** simply there, with the negative flash on the cut. No scale-in, no zoom-out, no dive.
-- **"bigger":** Dario's SUDDENLY with glow. The word is 340 px (it was 150), the echoes sit just above and below it, there are corner squares and one glitch frame, and the texture is kept.
-- **"on Wall Street":** "on", then "Wall", then "Street", big serif words landing in place with no slide, over the Wall St/Broadway sign. "than" follows in small Helvetica.
-- **JPMORGAN CHASE:** typed at the centre (about 85% of the width) like Dario's DISAPPEAR, over JPMorgan pictures only (the J.P.Morgan flag, the JPMorgan tower). There is no Chase sign. It leaves through glitch blocks and the tower holds for 0.17 s.
-- **Dimon pop:** he pops up from the centre as the Pattinson glow cut-out (white silhouette, then him with a halo).
-- **The square:** gone. It was a shadow on an untimed wrapper, the same bug as on the s13 "premise" card, which is also fixed.
-- **Shot fix:** the crowd shot is reframed (a dark building column at its left edge had read as a black bar).
+## Your notes on v4, one by one
+| Note | v5 |
+|---|---|
+| "in American" written small | Back as it was: "in American" above, "capitalism" in big serif below. |
+| "bigger" not animated like Dario; darker; echoes moving; no small copy; more echoes at the sides | Dario's SUDDENLY, frame for frame (details below). |
+| JPMorgan Chase not like DISAPPEAR; spelling | Dario's DISAPPEAR (details below). |
+| Dimon came in from the side, zooming | His talking video, matted, slides up from the bottom in 10 fps steps with the glow, and lands where the next scene's silhouette stands, hands in frame. No zoom. |
+| "most influential man in America": a video of him, mask glow, pops up, photos at his sides like Hemant; subtle zoom on his face on "in America"; fonts misaligned | Hemant's opening and his 22–25 s layout on Dimon's talking video (details below). |
+| Textures too heavy; use CRT lines and noise, lighter | The grunge and paper overlays are down from 0.40 / 0.28 to 0.10 / 0.04 (0.05 / 0 on the interview scenes). Noise comes from the registry grain overlay at 6 %, as in the Pattinson film. CRT lines come from the grades, a bit lighter than Hemant's. |
+| "He's basically the CEO of Wall Street": Pattinson-style smooth transitions, and the move from "CEO" to "of Wall Street" | "the" (Stanford) arrives still moving and slows into place, as the run does in the Pattinson film. "CEO" eases back into a window with photo cards popping out behind it. Then an inverted frame, and the Wolf arrives moving. |
+| The Wolf shot looked cut | It is one continuous shot (12.40–13.43 s of the film), cut after the house frame. It is slowed to 0.77× by motion interpolation (`wolf_slow.mp4`), so no frames repeat. v4 had the player slow it, which repeated frames unevenly and read as a jump at 14.37. |
+| The fired photos cut his face; wrong pictures | Three photos of the young Dimon from the documentaries (1990s), cropped square on his face by face detection, head and face whole. The black-and-white portrait is the hero. |
+| "By his own mentor" like Dario's "every AI tech bro" | Eight photos of Sandy Weill (yours and documentary frames). Each is aligned by face detection so his face sits at Dario's spot (within 15 px of the same point in every photo), with edges zoom-blurred around a sharp circle. A new photo every 2–3 frames, each creeping in about 3 %, behind four fixed white lines, with "by his own mentor" building at nose height. Then the four-square comes in dark for one frame (Dario's flicker). |
+| "and a family" / "grudge" at the bottom | Both centred. |
+| "now runs the biggest bank in the world": no change | Unchanged (only the lighter texture). |
+| "We bank": textures, quote marks closer, B-roll mixed in, the ghost behind him moving like Fink's | Interview, then B-roll, interview, B-roll (details below). |
 
-## "This is the most influential man in America right now" (S02)
-- **Hemant open:** the glowing silhouette (pale grey, then bright cream) over the darkened stage, the live clip showing through at six moments. "This is the most" sits left and "influential" right, with white bars and the white band.
-- **Freeze:** the interview plays, pauses, and he comes forward with a white glow. The presidential seal rises behind his head.
-- **Cards:** five pictures of him land left, right and top, each after a white box; one lands in front of him. They are the Fortune cover, the White House, the press scrum, Congress, and the young Dimon with cash.
+### BIGGER, frame for frame like Dario's SUDDENLY
+- **Before the word:** a corner square, top left then bottom right, on the reporter shot.
+- **Two glitch frames:** first the smeared band, then the crisp black word in a glowing bar.
+- **Then:** the white word with its glow on near-black.
+- **Echoes:**
+  - Rows of repeated, blurred, faint "BIGGER" at the top and bottom rush in and slow down (expo ease-out), the top to the left and the bottom to the right.
+  - Faint copies sit at the sides of the word and drift outward.
+- **Gone:** the small copy.
 
-## "He's basically the CEO of Wall Street" (S03)
-- **Real video only:** the podium (3× longer than in v3), Stanford (longer), and a third video (walking in with his detail, from your montage) in place of the photos.
-- **Caption placement:** captions sit on the side away from him. "He's" and "basically" are spread on the left of the podium shot; "the CEO" is on the right while he walks on the left.
-- **Wolf beat:**
-  - **Footage:** your Wolf of Wall Street dollar-bill shot.
-  - **Lockup:** the face/currency boxes, and the Ackman lockup "OF WALL STREET" in big bold white caps at the bottom, each word with a motion blur.
-  - **Exit:** the purple inverted exit frame.
+### JPMorgan Chase, like Dario's DISAPPEAR
+- **Spelling and size:** "JPMorgan Chase" spelled properly, 420 px condensed to 0.7 like Dario's type, about 84 % of the width.
+- **Typing:** in place from the left on the reporter's syllables; the newest letter flares.
+- **Footage:** the flag, cutting to the JPMorgan tower mid-word.
+- **Exit:** two tile-glitch frames (the word gone on the second), then the tower holds a moment.
 
-## "a guy who got fired in 1998 by his own mentor over a bonus and a family grudge" (S04)
-- **"a guy who got FIRED":** the was-fired reference's opening, on window-lit paper with the four dots and black Helvetica. Three young-Dimon photos step up with no side assets, at the reference's speed.
-- **"in 1998":** the roller with Citigroup behind, kept.
-- **"by his own":** the Sandy Weill picture now fills the frame horizontally.
-- **"mentor":** a three-shot montage (Weill & Dimon, Weill at his desk, Weill's face) with no zooming photo.
-- **"over a bonus":**
-  - **Four-square:** faster (cells every 2 frames), with your money asset in the top-right cell in place of the money falling on black.
-  - **Cartoon:** then your "over a bonus" cartoon (Daffy fanning cash, its watermark cropped) through "bonus, and a".
-- **"family grudge":** the Weill photo starts off-centre on him and pans until his daughter is fully in the picture.
+### "This is the most influential man in America right now", Hemant style
+- **Opening:**
+  - The grey see-through silhouette turns cream.
+  - Live frames flicker through, plus the live strip and the white bars.
+  - "This is the **most**" sits left and "**influential**" right, in two sizes on one baseline, kept clear of his head.
+  - The white band runs through "influential".
+- **Transition:** the blazing white silhouette.
+- **Stage:**
+  - He talks (matted, with the glow) over a defocused copy of his own shot.
+  - Cards land behind him at head and waist height after soft white boxes; red boxes swap two.
+  - "man in **America**" then "right **now**" run across his chest.
+  - A slow push on his face from "in America" while everything else holds.
+  - The seal sits behind his head; a white sweep takes it out.
 
-## "now runs the biggest bank in the world" (S05)
-- Unchanged, as asked. Only the fonts changed, globally.
-
-## "We bank…" (S06, 23.6–31.6 s)
-- **Base:** the Bloomberg interview, one continuous take (it is 1080p, not 4K).
-- **Lines:** exactly yours, "We bank / some of these companies in 30 countries / We bank / countries / We bank the World Bank, the IMF, … the United States government", captioned in the we-bank reel's style.
-- **Globe picture:** in a difference blend at low opacity on the right, with big quote marks (the Fink Rogan screen). It sits behind him: he is matted out of the interview and laid above it, so it never crosses him.
-
-## Type, everywhere
-- **Families:** only Inter Tight (the Helvetica role) and Instrument Serif (regular, with glow). Satoshi and the italics are gone from the whole film.
-- **One family per line:** the Helvetica-over-serif stack is gone from 0–31 s, except where the we-bank reel itself mixes them ("in 30 countries", "We bank / Countries").
-- **No slide:** words land in their final place.
+### "We bank", the Fink Rogan screen
+- **Edit pattern:**
+  - Interview ("We bank some of these companies").
+  - "in 30 countries": the JPMorgan Global China Summit, then Davos on the World Economic Forum stage.
+  - Interview ("We bank"), then "countries": London from the air.
+  - Interview ("We bank the"), then "World Bank": its building.
+  - Interview ("the IMF, we bank the").
+  - "United States": with Obama; "government": testifying to Congress.
+- **Ghost:** your globe picture behind him (he is matted above it), slowly zooming and drifting. It pulls focus from soft to sharp each time we come back to him.
+- **Quote marks:** they hug the words on screen.
 
 ## Measured
-- **`check` (5 samples, contrast pass off):** ok.
+- **`check` (5 samples, contrast pass off):** ok, 0 errors.
 - **Remaining warnings:**
-  - Typed single letters and roller years flagged as brief. The whole word holds; the years flick by design.
+  - The typed letters of "Chase" and the roller years are flagged as brief; the whole word holds, and the years flick by design.
   - WebGL performance notices.
-  - Lint density warnings in later scenes, as in v3.
-- **Looked at:** about 110 frames across 0–31.7 s.
+  - Lint density warnings in later scenes, as in v4.
+- **Not heard:** the levels were measured, not listened to.
 
 ## Open
-- **"You have to be big…" (31.7–34.85 s):** it still follows your lines. Dropping it would shorten the film by about 3 s, and the music bed (timed to end on the last frame) would need re-cutting.
-- **The "was fired" reference:** used for "a guy who got fired". Tell me if it was meant for "he was fired" at 48 s instead.
+- **"was fired" reference:** used for "a guy who got fired"; tell me if it was meant for "he was fired" at 48 s.
+- **Faces in "by his own mentor":** some of Weill's photos are small. To fill the frame without a seam they are scaled up, so the biggest close-ups are soft. They are on screen for 2–3 frames each.
