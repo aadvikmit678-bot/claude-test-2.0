@@ -1,0 +1,127 @@
+<template>
+  <style>
+  
+  @font-face { font-family: 'Inter Tight'; src: url('assets/fonts/InterTight-600.woff2') format('woff2'); font-weight: 600; font-style: normal; }
+  @font-face { font-family: 'Inter Tight'; src: url('assets/fonts/InterTight-700.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+  @font-face { font-family: 'Inter Tight'; src: url('assets/fonts/InterTight-800.woff2') format('woff2'); font-weight: 800; font-style: normal; }
+
+  #root { position: absolute; inset: 0; overflow: hidden; background: #F3F2EE; }
+  #root .cam { position: absolute; transform-origin: 50% 50%; }
+  #root .solid { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #root .neg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #ffffff; mix-blend-mode: difference; }
+  #root .flashw { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #ffffff; opacity: 0; }
+  #root .hud { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; fill: none; stroke: #ffffff; stroke-width: 1.4; }
+  #root .hud text { fill: #ffffff; stroke: none; font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.06em; }
+  #root .glint { position: absolute; background:
+      linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.95) 50%, rgba(255,255,255,0) 100%) center / 100% 4px no-repeat,
+      linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.95) 50%, rgba(255,255,255,0) 100%) center / 4px 100% no-repeat,
+      radial-gradient(closest-side, rgba(255,255,255,0.9), rgba(255,255,255,0) 70%) center / 26% 26% no-repeat; }
+  #root .rays { position: absolute; width: 2800px; height: 2800px; border-radius: 50%;
+    background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.95) 0deg 5deg, rgba(255,255,255,0) 5deg 16deg);
+    -webkit-mask-image: radial-gradient(closest-side, #000 0%, #000 30%, rgba(0,0,0,0) 100%);
+    mask-image: radial-gradient(closest-side, #000 0%, #000 30%, rgba(0,0,0,0) 100%); }
+  #root .fbox { position: absolute; border: 2px solid; box-sizing: border-box; }
+  #root .fbox i { position: absolute; left: -2px; top: -22px; padding: 2px 6px; font: 600 13px 'Inter Tight', sans-serif;
+    font-style: normal; color: #ffffff; letter-spacing: 0.02em; }
+  #root .card { position: absolute; box-shadow: 0 30px 70px rgba(0,0,0,0.28), 0 4px 12px rgba(0,0,0,0.18); overflow: hidden; }
+  #root .wcard { position: absolute; background: #ffffff; box-shadow: 0 0 60px rgba(255,255,255,0.55), 0 0 140px rgba(255,255,255,0.25); }
+  #root .tx { position: absolute; white-space: nowrap; font-family: 'Inter Tight', sans-serif; line-height: 1; }
+  #root .wipebar { position: absolute; top: 0; width: 70px; height: 1080px; background: #ffffff;
+    box-shadow: 0 0 40px 18px rgba(255,255,255,0.7); }
+  #root .ccard { position: absolute; background: #ffffff; border: 7px solid #ffffff; box-sizing: border-box; overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.12); }
+  #root .calback { position: absolute; left: 10px; top: 14px; width: 100%; height: 100%; border-radius: 14px; background: #bdbdbd;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55); }
+  #root .calpage { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 14px; overflow: hidden; background: #f4f2ee;
+    transform-origin: 50% 0%; box-shadow: 0 3px 0 #d4d2ce; font-family: 'Inter Tight', sans-serif; }
+  #root .calband { height: 118px; background: #c8102e; color: #ffffff; font-weight: 800; font-size: 62px; letter-spacing: 0.02em;
+    display: flex; align-items: center; justify-content: center; }
+  #root .calmon { height: calc(100% - 118px); display: flex; align-items: center; justify-content: center; color: #111111;
+    font-weight: 800; font-size: 178px; letter-spacing: -0.04em; }
+  #root .calring { position: absolute; top: -20px; width: 22px; height: 46px; border-radius: 11px; z-index: 60;
+    background: linear-gradient(90deg, #8b8b8b, #e9e9e9 50%, #7b7b7b); }
+  #root .chart { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #root .chart .grid line { stroke: #ffffff; stroke-opacity: 0.1; stroke-width: 1.5; }
+  #root .glow { filter: drop-shadow(0 0 10px rgba(255,255,255,0.55)); }
+  #root .scr { position: absolute; background: #000000; overflow: hidden; }
+  #root .scrframe { position: absolute; left: 0; top: 0; width: 100%; height: 100%; box-sizing: border-box;
+    border: 2px solid rgba(255,255,255,0.92); box-shadow: inset 0 0 40px rgba(0,0,0,0.5), 0 0 40px rgba(255,255,255,0.22); }
+  #root .ring { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+  #root .streak { position: absolute; height: 3px; width: 520px; border-radius: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.95)); box-shadow: 0 0 14px rgba(255,255,255,0.8); }
+  </style>
+  <div id="root" data-composition-id="s05" data-width="1920" data-height="1080">
+    <svg width="0" height="0" style="position:absolute"><defs><g id="chase-oct"><path d="M19,0 L37,0 L56,19 L56,37 L37,56 L19,56 L0,37 L0,19 Z M19,19 L19,37 L37,37 L37,19 Z" fill="#ffffff" fill-rule="evenodd"/></g></defs></svg>
+    <div class="cam card" id="s05-card1" style="left:560px;top:250px;width:800px;height:500px;z-index:22"><div id="s05-cardbg2" class="clip" data-start="0.067" data-duration="1.68" data-track-index="3" style="position:absolute;left:0;top:0;width:800px;height:500px;background:linear-gradient(140deg,#0B4EA2 0%,#1468C8 55%,#0A3F86 100%)"><svg class="oct" viewBox="0 0 56 56" style="left:368px;top:293px;width:140px;height:140px;transform:rotate(-4deg);opacity:0.33"><use href="#chase-oct"/></svg><svg class="oct" viewBox="0 0 56 56" style="left:161px;top:345px;width:210px;height:210px;transform:rotate(0deg);opacity:0.37"><use href="#chase-oct"/></svg><svg class="oct" viewBox="0 0 56 56" style="left:127px;top:198px;width:250px;height:250px;transform:rotate(3deg);opacity:0.24"><use href="#chase-oct"/></svg><svg class="oct" viewBox="0 0 56 56" style="left:-46px;top:129px;width:110px;height:110px;transform:rotate(29deg);opacity:0.32"><use href="#chase-oct"/></svg><svg class="oct" viewBox="0 0 56 56" style="left:88px;top:346px;width:110px;height:110px;transform:rotate(18deg);opacity:0.24"><use href="#chase-oct"/></svg><svg class="oct" viewBox="0 0 56 56" style="left:650px;top:-39px;width:140px;height:140px;transform:rotate(-3deg);opacity:0.42"><use href="#chase-oct"/></svg><svg class="oct" viewBox="0 0 56 56" style="left:570px;top:166px;width:210px;height:210px;transform:rotate(-28deg);opacity:0.41"><use href="#chase-oct"/></svg><svg class="oct" viewBox="0 0 56 56" style="left:449px;top:295px;width:250px;height:250px;transform:rotate(-23deg);opacity:0.34"><use href="#chase-oct"/></svg><svg class="oct" viewBox="0 0 56 56" style="left:-37px;top:19px;width:170px;height:170px;transform:rotate(17deg);opacity:0.38"><use href="#chase-oct"/></svg><img class="cutimg" src="assets/img/dimon_card-cut.png" alt="" style="position:absolute;left:195px;bottom:0;height:482px" /></div></div>
+    <div id="s05-tx3" class="clip tx" data-start="0.067" data-duration="1.68" data-track-index="6" style="left:560px;top:192px;font-size:44px;font-weight:700;color:#111;z-index:23">Meet</div>
+    <div id="s05-echo4" class="clip tx" data-start="0.467" data-duration="1.28" data-track-index="4" style="left:0;top:395px;width:1920px;text-align:center;font-size:300px;font-weight:800;letter-spacing:-0.04em;color:rgba(0,0,0,0);-webkit-text-stroke:2px rgba(20,20,20,0.10);z-index:4">Jamie Dimon</div>
+    <div id="s05-name5" class="clip tx" data-start="0.467" data-duration="1.28" data-track-index="6" style="left:560px;top:776px;width:800px;text-align:right;font-size:74px;font-weight:800;letter-spacing:-0.03em;z-index:25"><span id="s05-name5l00" style="opacity:0;color:#d9d9d9">J</span><span id="s05-name5l01" style="opacity:0;color:#d9d9d9">a</span><span id="s05-name5l02" style="opacity:0;color:#d9d9d9">m</span><span id="s05-name5l03" style="opacity:0;color:#d9d9d9">i</span><span id="s05-name5l04" style="opacity:0;color:#d9d9d9">e</span><span>&nbsp;</span><span id="s05-name5l10" style="opacity:0;color:#d9d9d9">D</span><span id="s05-name5l11" style="opacity:0;color:#d9d9d9">i</span><span id="s05-name5l12" style="opacity:0;color:#d9d9d9">m</span><span id="s05-name5l13" style="opacity:0;color:#d9d9d9">o</span><span id="s05-name5l14" style="opacity:0;color:#d9d9d9">n</span></div>
+    <div class="cam" id="s05-cam6" style="left:0px;top:0px;width:1920px;height:1080px;z-index:46;"><video id="s05-v7" class="clip" src="assets/clips/c_young_window.mp4" muted playsinline data-start="1.747" data-duration="0.8" data-hf-media-start-basis="local" data-media-start="0" data-color-grading="{&quot;preset&quot;:null,&quot;intensity&quot;:1,&quot;adjust&quot;:{&quot;exposure&quot;:0,&quot;contrast&quot;:0.08,&quot;highlights&quot;:0.04,&quot;shadows&quot;:-0.08,&quot;whites&quot;:0,&quot;blacks&quot;:-0.05,&quot;temperature&quot;:0.34,&quot;tint&quot;:0.04,&quot;vibrance&quot;:0,&quot;saturation&quot;:0.06},&quot;details&quot;:{&quot;vignette&quot;:0.34,&quot;vignetteMidpoint&quot;:0.46,&quot;vignetteRoundness&quot;:0,&quot;vignetteFeather&quot;:0.7,&quot;grain&quot;:0.12,&quot;grainSize&quot;:0.2,&quot;grainRoughness&quot;:0.6},&quot;effects&quot;:{&quot;blur&quot;:0,&quot;pixelate&quot;:0,&quot;chromaBleed&quot;:0,&quot;tapeDamage&quot;:0,&quot;tapeTracking&quot;:0,&quot;tapeNoise&quot;:1,&quot;tapeSpeed&quot;:0.5,&quot;filmArtifacts&quot;:0,&quot;halftone&quot;:0,&quot;halftoneSize&quot;:0,&quot;twoInkPrint&quot;:0,&quot;twoInkPrintSize&quot;:0,&quot;ascii&quot;:0,&quot;asciiSize&quot;:0.06578947368421052,&quot;asciiInvert&quot;:0,&quot;asciiStyle&quot;:0,&quot;asciiColor&quot;:1,&quot;asciiRotation&quot;:0,&quot;dither&quot;:0,&quot;ditherSize&quot;:0,&quot;bloom&quot;:0,&quot;bloomRadius&quot;:8,&quot;monoScreen&quot;:0,&quot;monoScreenSize&quot;:0,&quot;monoScreenAngle&quot;:0,&quot;monoScreenSpread&quot;:0,&quot;monoScreenShape&quot;:0,&quot;monoScreenInvert&quot;:0,&quot;scanlines&quot;:0,&quot;scanlineCount&quot;:0,&quot;scanlineSoftness&quot;:0,&quot;chromaticAberration&quot;:0,&quot;chromaticAngle&quot;:0,&quot;crtCurvature&quot;:0,&quot;digitalGlitch&quot;:0,&quot;digitalGlitchColorSplit&quot;:0,&quot;digitalGlitchLineTear&quot;:0,&quot;digitalGlitchPixelate&quot;:0,&quot;digitalGlitchBlockAmount&quot;:0,&quot;digitalGlitchBlockDisplacement&quot;:0,&quot;digitalGlitchBlockOpacity&quot;:0,&quot;digitalGlitchSpeed&quot;:0,&quot;engraving&quot;:0,&quot;engravingSpacing&quot;:0.4117647058823529,&quot;engravingMinThickness&quot;:0.2,&quot;engravingMaxThickness&quot;:0.4571428571428572,&quot;engravingAngle&quot;:0.25,&quot;engravingContrast&quot;:0.4666666666666667,&quot;engravingSharpness&quot;:0.59,&quot;engravingWave&quot;:0.2,&quot;engravingWaveFrequency&quot;:0.2222222222222222,&quot;crosshatch&quot;:0,&quot;crosshatchSpacing&quot;:0.28,&quot;crosshatchThickness&quot;:0.25,&quot;crosshatchAngle&quot;:0.25,&quot;crosshatchContrast&quot;:0.3333333333333333,&quot;crosshatchEdges&quot;:0.5,&quot;crosshatchLineWeight&quot;:0,&quot;crosshatchWave&quot;:0.33,&quot;crosshatchWaveFrequency&quot;:0.2222222222222222,&quot;kuwahara&quot;:0,&quot;kuwaharaRadius&quot;:0.14285714285714285,&quot;kuwaharaSharpness&quot;:0.3125,&quot;kuwaharaSaturation&quot;:0.5},&quot;lut&quot;:null,&quot;colorSpace&quot;:&quot;rec709&quot;}" data-track-index="2" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;"></video></div>
+    <div id="s05-god8" class="clip rays" data-start="1.747" data-duration="0.8" data-track-index="6" data-layout-ignore style="left:20px;top:-1320px;z-index:67;mix-blend-mode:screen;background:repeating-conic-gradient(from 0deg, rgba(255,196,96,0.9) 0deg 4deg, rgba(255,196,96,0) 4deg 15deg)"></div>
+    <div class="cam" id="s05-cam9" style="left:0px;top:0px;width:1920px;height:1080px;z-index:48;"><video id="s05-v10" class="clip" src="assets/clips/c_wolf_mic.mp4" muted playsinline data-start="2.547" data-duration="0.88" data-hf-media-start-basis="local" data-media-start="0" data-color-grading="{&quot;preset&quot;:null,&quot;intensity&quot;:1,&quot;adjust&quot;:{&quot;exposure&quot;:0,&quot;contrast&quot;:0.08,&quot;highlights&quot;:-0.1,&quot;shadows&quot;:-0.08,&quot;whites&quot;:0,&quot;blacks&quot;:-0.05,&quot;temperature&quot;:0,&quot;tint&quot;:0,&quot;vibrance&quot;:0,&quot;saturation&quot;:-0.18},&quot;details&quot;:{&quot;vignette&quot;:0.34,&quot;vignetteMidpoint&quot;:0.46,&quot;vignetteRoundness&quot;:0,&quot;vignetteFeather&quot;:0.7,&quot;grain&quot;:0.12,&quot;grainSize&quot;:0.2,&quot;grainRoughness&quot;:0.6},&quot;effects&quot;:{&quot;blur&quot;:0,&quot;pixelate&quot;:0,&quot;chromaBleed&quot;:0,&quot;tapeDamage&quot;:0,&quot;tapeTracking&quot;:0,&quot;tapeNoise&quot;:1,&quot;tapeSpeed&quot;:0.5,&quot;filmArtifacts&quot;:0,&quot;halftone&quot;:0,&quot;halftoneSize&quot;:0,&quot;twoInkPrint&quot;:0,&quot;twoInkPrintSize&quot;:0,&quot;ascii&quot;:0,&quot;asciiSize&quot;:0.06578947368421052,&quot;asciiInvert&quot;:0,&quot;asciiStyle&quot;:0,&quot;asciiColor&quot;:1,&quot;asciiRotation&quot;:0,&quot;dither&quot;:0,&quot;ditherSize&quot;:0,&quot;bloom&quot;:0,&quot;bloomRadius&quot;:8,&quot;monoScreen&quot;:0,&quot;monoScreenSize&quot;:0,&quot;monoScreenAngle&quot;:0,&quot;monoScreenSpread&quot;:0,&quot;monoScreenShape&quot;:0,&quot;monoScreenInvert&quot;:0,&quot;scanlines&quot;:0,&quot;scanlineCount&quot;:0,&quot;scanlineSoftness&quot;:0,&quot;chromaticAberration&quot;:0,&quot;chromaticAngle&quot;:0,&quot;crtCurvature&quot;:0,&quot;digitalGlitch&quot;:0,&quot;digitalGlitchColorSplit&quot;:0,&quot;digitalGlitchLineTear&quot;:0,&quot;digitalGlitchPixelate&quot;:0,&quot;digitalGlitchBlockAmount&quot;:0,&quot;digitalGlitchBlockDisplacement&quot;:0,&quot;digitalGlitchBlockOpacity&quot;:0,&quot;digitalGlitchSpeed&quot;:0,&quot;engraving&quot;:0,&quot;engravingSpacing&quot;:0.4117647058823529,&quot;engravingMinThickness&quot;:0.2,&quot;engravingMaxThickness&quot;:0.4571428571428572,&quot;engravingAngle&quot;:0.25,&quot;engravingContrast&quot;:0.4666666666666667,&quot;engravingSharpness&quot;:0.59,&quot;engravingWave&quot;:0.2,&quot;engravingWaveFrequency&quot;:0.2222222222222222,&quot;crosshatch&quot;:0,&quot;crosshatchSpacing&quot;:0.28,&quot;crosshatchThickness&quot;:0.25,&quot;crosshatchAngle&quot;:0.25,&quot;crosshatchContrast&quot;:0.3333333333333333,&quot;crosshatchEdges&quot;:0.5,&quot;crosshatchLineWeight&quot;:0,&quot;crosshatchWave&quot;:0.33,&quot;crosshatchWaveFrequency&quot;:0.2222222222222222,&quot;kuwahara&quot;:0,&quot;kuwaharaRadius&quot;:0.14285714285714285,&quot;kuwaharaSharpness&quot;:0.3125,&quot;kuwaharaSaturation&quot;:0.5},&quot;lut&quot;:null,&quot;colorSpace&quot;:&quot;rec709&quot;}" data-track-index="2" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;"></video></div>
+    <div id="s05-fbox11" class="clip fbox" data-start="2.547" data-duration="0.88" data-track-index="6" data-layout-ignore style="left:560px;top:40px;width:470px;height:560px;border-color:#B23CFF;z-index:9"><i style="background:#B23CFF">person</i></div>
+    <div id="s05-fbox12" class="clip fbox" data-start="2.58" data-duration="0.847" data-track-index="6" data-layout-ignore style="left:1400px;top:300px;width:360px;height:520px;border-color:#B23CFF;z-index:10"><i style="background:#B23CFF">person</i></div>
+    <div id="s05-fbox13" class="clip fbox" data-start="2.614" data-duration="0.813" data-track-index="6" data-layout-ignore style="left:650px;top:640px;width:170px;height:300px;border-color:#2DE38A;z-index:11"><i style="background:#2DE38A">tie</i></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.to({}, { duration: 3.427 }, 0);
+    tl.fromTo("#s05-card1", { scale: 1.75, y: -40 }, { scale: 1.0, y: 0, duration: 0.36, ease: "power3.out" }, 0.067);
+    tl.to("#s05-card1", { scale: 0.97, duration: 1.32, ease: "none" }, 0.427);
+    tl.fromTo("#s05-echo4", { scale: 1.06 }, { scale: 1.0, duration: 0.7, ease: "power2.out" }, 0.467);
+    tl.set("#s05-name5l00", { opacity: 1 }, 0.5);
+    tl.set("#s05-name5l00", { color: "#8f8f8f" }, 0.567);
+    tl.set("#s05-name5l00", { color: "#111111" }, 0.634);
+    tl.set("#s05-name5l01", { opacity: 1 }, 0.567);
+    tl.set("#s05-name5l01", { color: "#8f8f8f" }, 0.634);
+    tl.set("#s05-name5l01", { color: "#111111" }, 0.7);
+    tl.set("#s05-name5l02", { opacity: 1 }, 0.6);
+    tl.set("#s05-name5l02", { color: "#8f8f8f" }, 0.667);
+    tl.set("#s05-name5l02", { color: "#111111" }, 0.734);
+    tl.set("#s05-name5l03", { opacity: 1 }, 0.534);
+    tl.set("#s05-name5l03", { color: "#8f8f8f" }, 0.6);
+    tl.set("#s05-name5l03", { color: "#111111" }, 0.667);
+    tl.set("#s05-name5l04", { opacity: 1 }, 0.467);
+    tl.set("#s05-name5l04", { color: "#8f8f8f" }, 0.534);
+    tl.set("#s05-name5l04", { color: "#111111" }, 0.6);
+    tl.set("#s05-name5l10", { opacity: 1 }, 1.08);
+    tl.set("#s05-name5l10", { color: "#8f8f8f" }, 1.147);
+    tl.set("#s05-name5l10", { color: "#111111" }, 1.214);
+    tl.set("#s05-name5l11", { opacity: 1 }, 1.014);
+    tl.set("#s05-name5l11", { color: "#8f8f8f" }, 1.08);
+    tl.set("#s05-name5l11", { color: "#111111" }, 1.147);
+    tl.set("#s05-name5l12", { opacity: 1 }, 0.947);
+    tl.set("#s05-name5l12", { color: "#8f8f8f" }, 1.014);
+    tl.set("#s05-name5l12", { color: "#111111" }, 1.08);
+    tl.set("#s05-name5l13", { opacity: 1 }, 0.98);
+    tl.set("#s05-name5l13", { color: "#8f8f8f" }, 1.047);
+    tl.set("#s05-name5l13", { color: "#111111" }, 1.114);
+    tl.set("#s05-name5l14", { opacity: 1 }, 1.047);
+    tl.set("#s05-name5l14", { color: "#8f8f8f" }, 1.114);
+    tl.set("#s05-name5l14", { color: "#111111" }, 1.18);
+    tl.fromTo("#s05-cam6", { scale: 1.0, rotation: 0 }, { scale: 1.035, duration: 0.63, ease: "sine.inOut", immediateRender: false }, 1.747);
+    tl.to("#s05-cam6", { scale: 1.4, rotation: 0, duration: 0.17, ease: "expo.in" }, 2.377);
+    tl.fromTo("#s05-god8", { scale: 0.86, rotation: -6, opacity: 0 }, { scale: 1.0, rotation: 0, opacity: 0.42, duration: 0.16, ease: "power2.out", immediateRender: false }, 1.747);
+    tl.to("#s05-god8", { scale: 1.08, rotation: 9, duration: 0.64, ease: "none" }, 1.907);
+    tl.fromTo("#s05-cam9", { scale: 1.0 }, { scale: 1.03, duration: 0.88, ease: "none" }, 2.547);
+    tl.set("#s05-fbox11", { x: 3, y: 2 }, 2.68);
+    tl.set("#s05-fbox11", { x: -4, y: -3 }, 2.814);
+    tl.set("#s05-fbox11", { x: 5, y: 2 }, 2.947);
+    tl.set("#s05-fbox11", { x: -3, y: -3 }, 3.08);
+    tl.set("#s05-fbox11", { x: 4, y: 2 }, 3.214);
+    tl.set("#s05-fbox11", { x: -5, y: -3 }, 3.347);
+    tl.set("#s05-fbox12", { x: 3, y: -2 }, 2.68);
+    tl.set("#s05-fbox12", { x: -4, y: 3 }, 2.814);
+    tl.set("#s05-fbox12", { x: 5, y: -2 }, 2.947);
+    tl.set("#s05-fbox12", { x: -3, y: 3 }, 3.08);
+    tl.set("#s05-fbox12", { x: 4, y: -2 }, 3.214);
+    tl.set("#s05-fbox12", { x: -5, y: 3 }, 3.347);
+    tl.set("#s05-fbox13", { x: 3, y: 2 }, 2.68);
+    tl.set("#s05-fbox13", { x: -4, y: -3 }, 2.814);
+    tl.set("#s05-fbox13", { x: 5, y: 2 }, 2.947);
+    tl.set("#s05-fbox13", { x: -3, y: -3 }, 3.08);
+    tl.set("#s05-fbox13", { x: 4, y: 2 }, 3.214);
+    tl.set("#s05-fbox13", { x: -5, y: -3 }, 3.347);
+    window.__timelines["s05"] = tl;
+  </script>
+</template>

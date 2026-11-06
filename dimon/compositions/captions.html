@@ -1,0 +1,608 @@
+<template>
+  <style>
+  
+  @font-face { font-family: 'Inter Tight'; src: url('assets/fonts/InterTight-600.woff2') format('woff2'); font-weight: 600; font-style: normal; }
+  @font-face { font-family: 'Inter Tight'; src: url('assets/fonts/InterTight-700.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+  @font-face { font-family: 'Inter Tight'; src: url('assets/fonts/InterTight-800.woff2') format('woff2'); font-weight: 800; font-style: normal; }
+
+  #root { position: absolute; inset: 0; overflow: visible; pointer-events: none; font-family: 'Inter Tight', sans-serif; }
+  #root .cg { position: absolute; height: 1080px; display: flex; flex-direction: column; justify-content: center; }
+  #root .row { display: flex; flex-direction: row; align-items: baseline; white-space: nowrap; position: relative; }
+  #root .w { display: inline-block; white-space: nowrap; position: relative; opacity: 0; }
+  #root .lt { color: #F6F3EE; text-shadow: 0 0 10px rgba(255,255,255,0.30), 0 2px 12px rgba(0,0,0,0.60); }
+  #root .lt.big { text-shadow: 0 0 22px rgba(255,255,255,0.34), 0 0 64px rgba(255,255,255,0.14), 0 6px 26px rgba(0,0,0,0.50); }
+  #root .dk { color: #111111; }
+  #root .chrome { background: linear-gradient(180deg, #ffffff 0%, #f3f6f8 38%, #9fb6c6 52%, #e9f2f6 64%, #ffffff 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none;
+    filter: drop-shadow(0 0 18px rgba(170,230,255,0.35)); }
+  #root .swap { position: relative; }
+  #root .swapv { position: absolute; top: 0; left: 0; }
+  #root .cutw .half { position: absolute; left: 0; top: 0; }
+  #root .cutw .top { clip-path: inset(0 0 52% 0); }
+  #root .cutw .bot { clip-path: inset(48% 0 0 0); }
+  #root .cutline { position: absolute; left: -4%; width: 108%; top: 50%; height: 4px; background: #ffffff; opacity: 0;
+    box-shadow: 0 0 18px 4px rgba(255,255,255,0.8); }
+  #root .bars { color: #F6F3EE; }
+  #root .bw { position: relative; display: inline-block; }
+  #root .bb { position: absolute; left: -0.05em; right: -0.05em; top: 0.16em; bottom: 0.02em; background: #ffffff; opacity: 0; }
+  #root .bt { opacity: 0; font-weight: 700; }
+  #root .sweep { position: absolute; left: -0.08em; right: -0.08em; top: 0.16em; bottom: 0.02em; background: #ffffff; transform-origin: 0% 50%; }
+  #root .typedrow { position: relative; width: 1920px; display: flex; justify-content: center; }
+  #root .tw { display: flex; flex-direction: row; white-space: nowrap; font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+    text-shadow: 0 0 26px rgba(255,255,255,0.55), 0 0 80px rgba(255,255,255,0.22); }
+  #root .ch { display: inline-block; opacity: 0; color: #5c5c5c; }
+  #root .tpre { font-weight: 700; color: #F6F3EE; opacity: 0; text-shadow: 0 0 10px rgba(255,255,255,0.30), 0 2px 12px rgba(0,0,0,0.60); transform-origin: 50% 50%; margin-bottom: 10px; }
+  #root .qm { font-size: 170px; font-weight: 800; color: #ffffff; line-height: 0.6; height: 0.62em; text-shadow: 0 0 10px rgba(255,255,255,0.30), 0 2px 12px rgba(0,0,0,0.60); }
+  #root .qm2 { align-self: flex-end; margin-right: 60px; margin-top: 20px; }
+  #root .qrow { font-weight: 700; color: #F6F3EE; line-height: 1.12; letter-spacing: -0.015em; text-shadow: 0 0 10px rgba(255,255,255,0.30), 0 2px 12px rgba(0,0,0,0.60); }
+  #root .qw { position: relative; display: inline-block; }
+  #root .qb { position: absolute; left: -0.06em; right: -0.06em; top: 0.12em; bottom: 0.06em; background: rgba(255,255,255,0.85);
+    box-shadow: 0 0 14px rgba(255,255,255,0.55); opacity: 0; }
+  #root .qt { opacity: 0; font-weight: 700; }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1920" data-height="1080">
+        <div id="cg000" class="clip cg" data-start="-0.123" data-duration="2.773" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:-20px;left:150px;width:1000px;align-items:flex-start;"><div class="qm">&ldquo;</div><div class="row qrow" style="font-size:46px"><span class="qw" style=""><i class="qb" id="cg000l0w0b"></i><b class="qt" id="cg000l0w0t">We</b></span><span class="qw" style="margin-left:0.26em;"><i class="qb" id="cg000l0w1b"></i><b class="qt" id="cg000l0w1t">bank</b></span><span class="qw" style="margin-left:0.26em;"><i class="qb" id="cg000l0w2b"></i><b class="qt" id="cg000l0w2t">some</b></span><span class="qw" style="margin-left:0.26em;"><i class="qb" id="cg000l0w3b"></i><b class="qt" id="cg000l0w3t">of</b></span><span class="qw" style="margin-left:0.26em;"><i class="qb" id="cg000l0w4b"></i><b class="qt" id="cg000l0w4t">these</b></span></div><div class="row qrow" style="font-size:46px"><span class="qw" style=""><i class="qb" id="cg000l1w0b"></i><b class="qt" id="cg000l1w0t">companies</b></span><span class="qw" style="margin-left:0.26em;"><i class="qb" id="cg000l1w1b"></i><b class="qt" id="cg000l1w1t">in</b></span><span class="qw" style="margin-left:0.26em;"><i class="qb" id="cg000l1w2b"></i><b class="qt" id="cg000l1w2t">30</b></span><span class="qw" style="margin-left:0.26em;"><i class="qb" id="cg000l1w3b"></i><b class="qt" id="cg000l1w3t">countries</b></span></div><div class="qm qm2">&rdquo;</div></div>
+    <div id="cg001" class="clip cg" data-start="2.65" data-duration="1.28" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg001-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg001-r0w0" class="w lt" style="">We</span><span id="cg001-r0w1" class="w lt" style="margin-left:0.24em;">bank</span></div><div class="row" id="cg001-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg001-r1w0" class="w lt big" style="">countries</span></div></div>
+    <div id="cg002" class="clip cg" data-start="3.93" data-duration="1.28" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg002-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg002-r0w0" class="w lt" style="">We</span><span id="cg002-r0w1" class="w lt" style="margin-left:0.24em;">bank</span><span id="cg002-r0w2" class="w lt" style="margin-left:0.24em;">the</span></div><div class="row" id="cg002-r1" style="font-size:170px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg002-r1w0" class="w lt big" style="">World</span><span id="cg002-r1w1" class="w lt big" style="margin-left:0.24em;">Bank</span></div></div>
+    <div id="cg003" class="clip cg" data-start="5.11" data-duration="0.9" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row bars" style="font-size:120px;font-weight:700;letter-spacing:-0.02em"><span class="bw" style=""><i class="bb" id="cg003w0b"></i><b class="bt" id="cg003w0t">the</b></span><span class="bw" style="margin-left:0.26em;"><i class="bb" id="cg003w1b"></i><b class="bt" id="cg003w1t">IMF</b></span><i class="sweep" id="cg003sw"></i></div></div>
+    <div id="cg004" class="clip cg" data-start="6.01" data-duration="1.84" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:-20px;left:1120px;width:1800px;align-items:flex-start;"><div class="row" id="cg004-r0" style="font-size:52px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg004-r0w0" class="w lt" style="">We</span><span id="cg004-r0w1" class="w lt" style="margin-left:0.24em;">bank</span><span id="cg004-r0w2" class="w lt" style="margin-left:0.24em;">the</span></div><div class="row" id="cg004-r1" style="font-size:96px;font-weight:800;letter-spacing:-0.02em;line-height:1.0;"><span id="cg004-r1w0" class="w lt" style="">United</span><span id="cg004-r1w1" class="w lt" style="margin-left:0.24em;">States</span></div><div class="row" id="cg004-r2" style="font-size:96px;font-weight:800;letter-spacing:-0.02em;line-height:1.0;"><span id="cg004-r2w0" class="w lt" style="">government</span></div></div>
+    <div id="cg005" class="clip cg" data-start="7.93" data-duration="1.22" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:150px;width:1800px;align-items:flex-start;"><div class="row" id="cg005-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg005-r0w0" class="w lt" style="">You</span><span id="cg005-r0w1" class="w lt" style="margin-left:0.24em;">have</span><span id="cg005-r0w2" class="w lt" style="margin-left:0.24em;">to</span><span id="cg005-r0w3" class="w lt" style="margin-left:0.24em;">be</span></div><div class="row" id="cg005-r1" style="font-size:330px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg005-r1w0" class="w lt big" style="">big</span></div></div>
+    <div id="cg006" class="clip cg" data-start="9.08" data-duration="1.68" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:-210px;left:130px;width:1800px;align-items:flex-start;"><div class="row" id="cg006-r0" style="font-size:64px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg006-r0w0" class="w lt" style="">This</span></div><div class="row" id="cg006-r1" style="font-size:64px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg006-r1w0" class="w lt" style="">is</span><span id="cg006-r1w1" class="w lt" style="margin-left:0.24em;">the</span><span id="cg006-r1w2" class="w lt" style="margin-left:0.24em;">most</span></div><div class="row" id="cg006-r2" style="font-size:150px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg006-r2w0" class="w lt big" style="">influential</span></div></div>
+    <div id="cg007" class="clip cg" data-start="10.76" data-duration="0.88" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg007-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg007-r0w0" class="w lt" style="">man</span><span id="cg007-r0w1" class="w lt" style="margin-left:0.24em;">in</span><span id="cg007-r0w2" class="w lt" style="margin-left:0.24em;">America</span></div></div>
+    <div id="cg008" class="clip cg" data-start="11.64" data-duration="0.64" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg008-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg008-r0w0" class="w lt" style="">right</span><span id="cg008-r0w1" class="w lt" style="margin-left:0.24em;">now</span></div></div>
+    <div id="cg009" class="clip cg" data-start="12.28" data-duration="0.8" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg009-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg009-r0w0" class="w lt" style="">He&#x27;s</span><span id="cg009-r0w1" class="w lt" style="margin-left:0.24em;">basically</span></div></div>
+    <div id="cg010" class="clip cg" data-start="13.08" data-duration="2" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg010-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg010-r0w0" class="w lt" style="">the</span></div><div class="row" id="cg010-r1" style="font-size:210px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg010-r1w0" class="w lt big" style="">CEO</span></div><div class="row" id="cg010-r2" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-top:0.02em;"><span id="cg010-r2w0" class="w lt" style="">of</span><span id="cg010-r2w1" class="w lt" style="margin-left:0.24em;">Wall</span><span id="cg010-r2w2" class="w lt" style="margin-left:0.24em;">Street</span></div></div>
+    <div id="cg011" class="clip cg" data-start="15.08" data-duration="0.72" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg011-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg011-r0w0" class="w lt" style="">A</span><span id="cg011-r0w1" class="w lt" style="margin-left:0.24em;">guy</span><span id="cg011-r0w2" class="w lt" style="margin-left:0.24em;">who</span><span id="cg011-r0w3" class="w lt" style="margin-left:0.24em;">got</span></div></div>
+    <div id="cg012" class="clip cg" data-start="15.8" data-duration="0.4" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg012-r0" style="font-size:230px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg012-r0w0" class="w lt big" style="">fired</span></div></div>
+    <div id="cg013" class="clip cg" data-start="16.2" data-duration="1.04" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg013-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg013-r0w0" class="w lt" style="">in</span></div><div class="row" id="cg013-r1" style="font-size:230px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg013-r1w0" class="w lt big" style="">1998</span></div></div>
+    <div id="cg014" class="clip cg" data-start="17.24" data-duration="1.36" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg014-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg014-r0w0" class="w lt" style="">by</span><span id="cg014-r0w1" class="w lt" style="margin-left:0.24em;">his</span><span id="cg014-r0w2" class="w lt" style="margin-left:0.24em;">own</span><span id="cg014-r0w3" class="w lt" style="margin-left:0.24em;">mentor</span></div></div>
+    <div id="cg015" class="clip cg" data-start="18.6" data-duration="0.96" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg015-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg015-r0w0" class="w lt" style="">over</span><span id="cg015-r0w1" class="w lt" style="margin-left:0.24em;">a</span></div><div class="row" id="cg015-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg015-r1w0" class="w lt big" style="">bonus</span></div></div>
+    <div id="cg016" class="clip cg" data-start="19.56" data-duration="1.6" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg016-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg016-r0w0" class="w lt" style="">and</span><span id="cg016-r0w1" class="w lt" style="margin-left:0.24em;">a</span><span id="cg016-r0w2" class="w lt" style="margin-left:0.24em;">family</span></div><div class="row" id="cg016-r1" style="font-size:210px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg016-r1w0" class="w lt big" style="">grudge</span></div></div>
+    <div id="cg017" class="clip cg" data-start="21.16" data-duration="0.88" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg017-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg017-r0w0" class="w lt" style="">Now</span><span id="cg017-r0w1" class="w lt" style="margin-left:0.24em;">runs</span><span id="cg017-r0w2" class="w lt" style="margin-left:0.24em;">a</span><span id="cg017-r0w3" class="w lt" style="margin-left:0.24em;">bank</span></div></div>
+    <div id="cg018" class="clip cg" data-start="22.04" data-duration="1.36" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg018-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg018-r0w0" class="w lt" style="">that</span><span id="cg018-r0w1" class="w lt" style="margin-left:0.24em;">lends</span><span id="cg018-r0w2" class="w lt" style="margin-left:0.24em;">to</span><span id="cg018-r0w3" class="w lt" style="margin-left:0.24em;">countries</span></div></div>
+    <div id="cg019" class="clip cg" data-start="23.4" data-duration="0.8" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg019-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg019-r0w0" class="w lt" style="">World</span><span id="cg019-r0w1" class="w lt" style="margin-left:0.24em;">Bank</span></div></div>
+    <div id="cg020" class="clip cg" data-start="24.2" data-duration="1.84" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg020-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg020-r0w0" class="w lt" style="">and</span><span id="cg020-r0w1" class="w lt" style="margin-left:0.24em;">even</span><span id="cg020-r0w2" class="w lt" style="margin-left:0.24em;">the</span></div><div class="row" id="cg020-r1" style="font-size:124px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg020-r1w0" class="w lt big" style="">US</span><span id="cg020-r1w1" class="w lt big" style="margin-left:0.24em;">government</span></div></div>
+    <div id="cg021" class="clip cg" data-start="27.72" data-duration="0.8" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg021-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg021-r0w0" class="w lt" style="">the</span></div><div class="row" id="cg021-r1" style="font-size:180px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg021-r1w0" class="w lt big" style="">golden</span><span id="cg021-r1w1" class="w lt big" style="margin-left:0.24em;">boy</span></div></div>
+    <div id="cg022" class="clip cg" data-start="28.52" data-duration="0.88" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg022-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg022-r0w0" class="w lt" style="">of</span><span id="cg022-r0w1" class="w lt" style="margin-left:0.24em;">Wall</span><span id="cg022-r0w2" class="w lt" style="margin-left:0.24em;">Street</span></div></div>
+    <div id="cg023" class="clip cg" data-start="29.4" data-duration="1.12" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg023-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg023-r0w0" class="w lt" style="">the</span><span id="cg023-r0w1" class="w lt" style="margin-left:0.24em;">guy</span><span id="cg023-r0w2" class="w lt" style="margin-left:0.24em;">everyone</span><span id="cg023-r0w3" class="w lt" style="margin-left:0.24em;">said</span></div></div>
+    <div id="cg024" class="clip cg" data-start="30.52" data-duration="0.96" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg024-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg024-r0w0" class="w lt" style="">was</span><span id="cg024-r0w1" class="w lt" style="margin-left:0.24em;">next</span><span id="cg024-r0w2" class="w lt" style="margin-left:0.24em;">in</span><span id="cg024-r0w3" class="w lt" style="margin-left:0.24em;">line</span></div></div>
+    <div id="cg025" class="clip cg" data-start="31.48" data-duration="1.76" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg025-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg025-r0w0" class="w lt" style="">to</span><span id="cg025-r0w1" class="w lt" style="margin-left:0.24em;">run</span><span id="cg025-r0w2" class="w lt" style="margin-left:0.24em;">the</span></div><div class="row" id="cg025-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg025-r1w0" class="w lt big" style="">biggest</span></div><div class="row" id="cg025-r2" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-top:0.02em;"><span id="cg025-r2w0" class="w lt" style="">financial</span><span id="cg025-r2w1" class="w lt" style="margin-left:0.24em;">company</span></div></div>
+    <div id="cg026" class="clip cg" data-start="33.24" data-duration="0.88" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg026-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg026-r0w0" class="w lt" style="">in</span><span id="cg026-r0w1" class="w lt" style="margin-left:0.24em;">the</span><span id="cg026-r0w2" class="w lt" style="margin-left:0.24em;">world</span></div></div>
+    <div id="cg027" class="clip cg" data-start="34.12" data-duration="1.28" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg027-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg027-r0w0" class="w lt" style="">He</span><span id="cg027-r0w1" class="w lt" style="margin-left:0.24em;">built</span></div><div class="row" id="cg027-r1" style="font-size:190px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg027-r1w0" class="w lt big" style="">Citigroup</span></div></div>
+    <div id="cg028" class="clip cg" data-start="35.4" data-duration="1.12" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg028-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg028-r0w0" class="w lt" style="">side</span><span id="cg028-r0w1" class="w lt" style="margin-left:0.24em;">by</span><span id="cg028-r0w2" class="w lt" style="margin-left:0.24em;">side</span><span id="cg028-r0w3" class="w lt" style="margin-left:0.24em;">with</span><span id="cg028-r0w4" class="w lt" style="margin-left:0.24em;">his</span><span id="cg028-r0w5" class="w lt" style="margin-left:0.24em;">mentor</span></div></div>
+    <div id="cg029" class="clip cg" data-start="36.52" data-duration="1.04" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg029-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg029-r0w0" class="w lt" style="">Sandy</span><span id="cg029-r0w1" class="w lt" style="margin-left:0.24em;">Weill</span></div></div>
+    <div id="cg030" class="clip cg" data-start="37.56" data-duration="1.36" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg030-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg030-r0w0" class="w lt" style="">for</span></div><div class="row swap" id="cg030-r1" style="font-size:240px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;--pos:left:0;"><span class="w spacer" style="opacity:0">10</span><span id="cg030-r1v0" class="w lt big swapv">1</span><span id="cg030-r1v1" class="w lt big swapv">2</span><span id="cg030-r1v2" class="w lt big swapv">3</span><span id="cg030-r1v3" class="w lt big swapv">4</span><span id="cg030-r1v4" class="w lt big swapv">5</span><span id="cg030-r1v5" class="w lt big swapv">6</span><span id="cg030-r1v6" class="w lt big swapv">7</span><span id="cg030-r1v7" class="w lt big swapv">8</span><span id="cg030-r1v8" class="w lt big swapv">9</span><span id="cg030-r1v9" class="w lt big swapv">10</span><span id="cg030-r1v10" class="w lt big swapv">11</span><span id="cg030-r1v11" class="w lt big swapv">12</span><span id="cg030-r1v12" class="w lt big swapv">13</span><span id="cg030-r1v13" class="w lt big swapv">14</span><span id="cg030-r1v14" class="w lt big swapv">15</span><span id="cg030-r1v15" class="w lt big swapv">16</span></div><div class="row" id="cg030-r2" style="font-size:64px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-top:0.02em;"><span id="cg030-r2w0" class="w lt" style="">years</span></div></div>
+    <div id="cg031" class="clip cg" data-start="38.82" data-duration="0.787" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row bars" style="font-size:78px;font-weight:700;letter-spacing:-0.02em"><span class="bw" style=""><i class="bb" id="cg031w0b"></i><b class="bt" id="cg031w0t">But</b></span><span class="bw" style="margin-left:0.26em;"><i class="bb" id="cg031w1b"></i><b class="bt" id="cg031w1t">then</b></span><i class="sweep" id="cg031sw"></i></div></div>
+    <div id="cg032" class="clip cg" data-start="39.54" data-duration="1.187" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row bars" style="font-size:78px;font-weight:700;letter-spacing:-0.02em"><span class="bw" style=""><i class="bb" id="cg032w0b"></i><b class="bt" id="cg032w0t">at</b></span><span class="bw" style="margin-left:0.26em;"><i class="bb" id="cg032w1b"></i><b class="bt" id="cg032w1t">42</b></span><i class="sweep" id="cg032sw"></i></div></div>
+    <div id="cg033" class="clip cg" data-start="40.66" data-duration="0.5" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row bars" style="font-size:78px;font-weight:700;letter-spacing:-0.02em"><span class="bw" style=""><i class="bb" id="cg033w0b"></i><b class="bt" id="cg033w0t">he</b></span><span class="bw" style="margin-left:0.26em;"><i class="bb" id="cg033w1b"></i><b class="bt" id="cg033w1t">was</b></span><i class="sweep" id="cg033sw"></i></div></div>
+    <div id="cg034" class="clip cg" data-start="41.16" data-duration="0.88" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg034-r0" style="font-size:230px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg034-r0w0" class="w lt big" style="">fired</span></div></div>
+    <div id="cg035" class="clip cg" data-start="42.04" data-duration="2.16" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:300px;width:1800px;align-items:flex-start;"><div class="row swap" id="cg035-r0" style="font-size:260px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;--pos:left:0;"><span class="w spacer" style="opacity:0">10</span><span id="cg035-r0v0" class="w lt big swapv">1</span><span id="cg035-r0v1" class="w lt big swapv">2</span><span id="cg035-r0v2" class="w lt big swapv">3</span><span id="cg035-r0v3" class="w lt big swapv">4</span><span id="cg035-r0v4" class="w lt big swapv">5</span><span id="cg035-r0v5" class="w lt big swapv">6</span><span id="cg035-r0v6" class="w lt big swapv">7</span><span id="cg035-r0v7" class="w lt big swapv">8</span><span id="cg035-r0v8" class="w lt big swapv">9</span><span id="cg035-r0v9" class="w lt big swapv">10</span><span id="cg035-r0v10" class="w lt big swapv">11</span><span id="cg035-r0v11" class="w lt big swapv">12</span><span id="cg035-r0v12" class="w lt big swapv">13</span><span id="cg035-r0v13" class="w lt big swapv">14</span><span id="cg035-r0v14" class="w lt big swapv">15</span><span id="cg035-r0v15" class="w lt big swapv">16</span><span id="cg035-r0v16" class="w lt big swapv">17</span><span id="cg035-r0v17" class="w lt big swapv">18</span></div><div class="row" id="cg035-r1" style="font-size:64px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-top:0.02em;"><span id="cg035-r1w0" class="w lt" style="">months</span></div><div class="row" id="cg035-r2" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg035-r2w0" class="w lt" style="">of</span><span id="cg035-r2w1" class="w lt" style="margin-left:0.24em;">no</span><span id="cg035-r2w2" class="w lt" style="margin-left:0.24em;">job</span></div></div>
+    <div id="cg036" class="clip cg" data-start="44.2" data-duration="0.64" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg036-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg036-r0w0" class="w lt" style="">He</span><span id="cg036-r0w1" class="w lt" style="margin-left:0.24em;">took</span><span id="cg036-r0w2" class="w lt" style="margin-left:0.24em;">up</span></div></div>
+    <div id="cg037" class="clip cg" data-start="44.84" data-duration="0.56" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:20px;left:1250px;width:1800px;align-items:flex-start;"><div class="row" id="cg037-r0" style="font-size:170px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg037-r0w0" class="w dk big" style="">boxing</span></div></div>
+    <div id="cg038" class="clip cg" data-start="45.4" data-duration="1.28" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg038-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg038-r0w0" class="w lt" style="">read</span><span id="cg038-r0w1" class="w lt" style="margin-left:0.24em;">biographies</span></div></div>
+    <div id="cg039" class="clip cg" data-start="46.68" data-duration="1.12" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg039-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg039-r0w0" class="w lt" style="">even</span><span id="cg039-r0w1" class="w lt" style="margin-left:0.24em;">met</span></div><div class="row" id="cg039-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg039-r1w0" class="w lt big" style="">Bezos</span></div></div>
+    <div id="cg040" class="clip cg" data-start="47.8" data-duration="1.36" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg040-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg040-r0w0" class="w lt" style="">for</span><span id="cg040-r0w1" class="w lt" style="margin-left:0.24em;">a</span><span id="cg040-r0w2" class="w lt" style="margin-left:0.24em;">job</span><span id="cg040-r0w3" class="w lt" style="margin-left:0.24em;">at</span></div><div class="row" id="cg040-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg040-r1w0" class="w lt big" style="">Amazon</span></div></div>
+    <div id="cg041" class="clip cg" data-start="49.16" data-duration="1.52" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg041-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg041-r0w0" class="w lt" style="">But</span><span id="cg041-r0w1" class="w lt" style="margin-left:0.24em;">it</span><span id="cg041-r0w2" class="w lt" style="margin-left:0.24em;">was</span><span id="cg041-r0w3" class="w lt" style="margin-left:0.24em;">all</span><span id="cg041-r0w4" class="w lt" style="margin-left:0.24em;">a</span><span id="cg041-r0w5" class="w lt" style="margin-left:0.24em;">premise</span><span id="cg041-r0w6" class="w lt" style="margin-left:0.24em;">for</span></div></div>
+    <div id="cg042" class="clip cg" data-start="50.647" data-duration="0.493" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:20px;left:0;width:1920px;align-items:center;"><div class="typedrow"><div id="cg042tw" class="tw" style="font-size:300px;width:1644px"><span id="cg042c0" class="ch">t</span><span id="cg042c1" class="ch">h</span><span id="cg042c2" class="ch">e</span><span id="cg042c3" class="ch">&nbsp;</span><span id="cg042c4" class="ch">g</span><span id="cg042c5" class="ch">r</span><span id="cg042c6" class="ch">e</span><span id="cg042c7" class="ch">a</span><span id="cg042c8" class="ch">t</span><span id="cg042c9" class="ch">e</span><span id="cg042c10" class="ch">s</span><span id="cg042c11" class="ch">t</span></div></div></div>
+    <div id="cg043" class="clip cg" data-start="51.72" data-duration="0.72" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:365px;left:0;width:1920px;align-items:center;"><div class="row" id="cg043-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg043-r0w0" class="w lt" style="">in</span><span id="cg043-r0w1" class="w lt" style="margin-left:0.24em;">the</span><span id="cg043-r0w2" class="w lt" style="margin-left:0.24em;">history</span><span id="cg043-r0w3" class="w lt" style="margin-left:0.24em;">of</span></div></div>
+    <div id="cg044" class="clip cg" data-start="52.44" data-duration="1.04" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg044-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg044-r0w0" class="w lt" style="">Wall</span><span id="cg044-r0w1" class="w lt" style="margin-left:0.24em;">Street</span></div></div>
+    <div id="cg045" class="clip cg" data-start="53.447" data-duration="0.913" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:60px;left:0;width:1920px;align-items:center;"><div id="cg045pre" class="tpre" style="font-size:64px">In</div><div class="typedrow"><div id="cg045tw" class="tw" style="font-size:700px;width:1572px"><span id="cg045c0" class="ch">2</span><span id="cg045c1" class="ch">0</span><span id="cg045c2" class="ch">0</span><span id="cg045c3" class="ch">0</span></div></div></div>
+    <div id="cg046" class="clip cg" data-start="54.36" data-duration="0.64" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg046-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg046-r0w0" class="w lt" style="">he</span><span id="cg046-r0w1" class="w lt" style="margin-left:0.24em;">takes</span><span id="cg046-r0w2" class="w lt" style="margin-left:0.24em;">over</span></div></div>
+    <div id="cg047" class="clip cg" data-start="55" data-duration="0.8" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg047-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg047-r0w0" class="w lt" style="">a</span></div><div class="row" id="cg047-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg047-r1w0" class="w lt big" style="">broken</span></div><div class="row" id="cg047-r2" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-top:0.02em;"><span id="cg047-r2w0" class="w lt" style="">bank</span></div></div>
+    <div id="cg048" class="clip cg" data-start="55.8" data-duration="0.88" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg048-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg048-r0w0" class="w lt" style="">in</span><span id="cg048-r0w1" class="w lt" style="margin-left:0.24em;">Chicago</span></div></div>
+    <div id="cg049" class="clip cg" data-start="56.68" data-duration="1.04" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg049-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg049-r0w0" class="w lt" style="">cuts</span><span id="cg049-r0w1" class="w lt" style="margin-left:0.24em;">the</span></div><div class="row cutw" id="cg049-r1" style="font-size:190px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span class="w spacer" style="opacity:0">dividend</span><span id="cg049-r1top" class="w lt big half top">dividend</span><span id="cg049-r1bot" class="w lt big half bot">dividend</span><i id="cg049-r1line" class="cutline"></i></div></div>
+    <div id="cg050" class="clip cg" data-start="57.72" data-duration="0.88" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg050-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg050-r0w0" class="w lt" style="">cleaned</span><span id="cg050-r0w1" class="w lt" style="margin-left:0.24em;">it</span><span id="cg050-r0w2" class="w lt" style="margin-left:0.24em;">up</span></div></div>
+    <div id="cg051" class="clip cg" data-start="58.6" data-duration="1.6" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:170px;width:1800px;align-items:flex-start;"><div class="row" id="cg051-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg051-r0w0" class="w lt" style="">and</span><span id="cg051-r0w1" class="w lt" style="margin-left:0.24em;">put</span></div><div class="row swap" id="cg051-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;--pos:left:0;"><span class="w spacer" style="opacity:0">$60,000,000</span><span id="cg051-r1v0" class="w lt big swapv">$60</span><span id="cg051-r1v1" class="w lt big swapv">$60,000</span><span id="cg051-r1v2" class="w lt big swapv">$60,000,000</span></div></div>
+    <div id="cg052" class="clip cg" data-start="60.2" data-duration="0.88" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg052-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg052-r0w0" class="w lt" style="">of</span><span id="cg052-r0w1" class="w lt" style="margin-left:0.24em;">his</span><span id="cg052-r0w2" class="w lt" style="margin-left:0.24em;">own</span><span id="cg052-r0w3" class="w lt" style="margin-left:0.24em;">money</span></div></div>
+    <div id="cg053" class="clip cg" data-start="61.08" data-duration="1.04" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg053-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg053-r0w0" class="w lt" style="">into</span><span id="cg053-r0w1" class="w lt" style="margin-left:0.24em;">the</span><span id="cg053-r0w2" class="w lt" style="margin-left:0.24em;">stock</span></div></div>
+    <div id="cg054" class="clip cg" data-start="62.12" data-duration="1.68" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:170px;width:1800px;align-items:flex-start;"><div class="row" id="cg054-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg054-r0w0" class="w lt" style="">turned</span><span id="cg054-r0w1" class="w lt" style="margin-left:0.24em;">a</span></div><div class="row swap" id="cg054-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;--pos:left:0;"><span class="w spacer" style="opacity:0">$500,000,000</span><span id="cg054-r1v0" class="w lt big swapv">$500</span><span id="cg054-r1v1" class="w lt big swapv">$500,000</span><span id="cg054-r1v2" class="w lt big swapv">$500,000,000</span></div></div>
+    <div id="cg055" class="clip cg" data-start="63.8" data-duration="0.48" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:380px;left:0;width:1920px;align-items:center;"><div class="row" id="cg055-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg055-r0w0" class="w lt" style="">loss</span></div></div>
+    <div id="cg056" class="clip cg" data-start="64.28" data-duration="0.8" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:340px;left:0;width:1920px;align-items:center;"><div class="row" id="cg056-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg056-r0w0" class="w lt" style="">into</span></div><div class="row" id="cg056-r1" style="font-size:118px;font-weight:800;letter-spacing:-0.02em;line-height:1.0;"><span id="cg056-r1w0" class="w lt" style="">billions</span></div></div>
+    <div id="cg057" class="clip cg" data-start="65.08" data-duration="0.96" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg057-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg057-r0w0" class="w lt" style="">in</span></div><div class="row" id="cg057-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg057-r1w0" class="w lt big" style="">profit</span></div></div>
+    <div id="cg058" class="clip cg" data-start="66.04" data-duration="1.2" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg058-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg058-r0w0" class="w lt" style="">That</span><span id="cg058-r0w1" class="w lt" style="margin-left:0.24em;">bank</span><span id="cg058-r0w2" class="w lt" style="margin-left:0.24em;">got</span><span id="cg058-r0w3" class="w lt" style="margin-left:0.24em;">acquired</span></div></div>
+    <div id="cg059" class="clip cg" data-start="67.24" data-duration="1.04" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg059-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg059-r0w0" class="w lt" style="">by</span></div><div class="row" id="cg059-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg059-r1w0" class="w lt big" style="">JPMorgan</span></div></div>
+    <div id="cg060" class="clip cg" data-start="68.28" data-duration="1.29" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg060-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg060-r0w0" class="w lt" style="">in</span></div><div class="row" id="cg060-r1" style="font-size:230px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg060-r1w0" class="w lt big" style="">2004</span></div></div>
+    <div id="cg061" class="clip cg" data-start="69.57" data-duration="0.56" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg061-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg061-r0w0" class="w lt" style="">Then</span></div></div>
+    <div id="cg062" class="clip cg" data-start="70.13" data-duration="0.8" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:20px;left:0;width:1920px;align-items:center;"><div class="row swap" id="cg062-r0" style="font-size:240px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;--pos:left:0;"><span class="w spacer" style="opacity:0">2004</span><span id="cg062-r0v0" class="w lt big chrome swapv">2004</span><span id="cg062-r0v1" class="w lt big chrome swapv">2005</span><span id="cg062-r0v2" class="w lt big chrome swapv">2006</span><span id="cg062-r0v3" class="w lt big chrome swapv">2007</span><span id="cg062-r0v4" class="w lt big chrome swapv">2008</span></div></div>
+    <div id="cg063" class="clip cg" data-start="70.93" data-duration="1.2" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg063-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg063-r0w0" class="w lt" style="">financial</span></div><div class="row" id="cg063-r1" style="font-size:210px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg063-r1w0" class="w lt big" style="">crisis</span></div><div class="row" id="cg063-r2" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-top:0.02em;"><span id="cg063-r2w0" class="w lt" style="">hit</span></div></div>
+    <div id="cg064" class="clip cg" data-start="72.13" data-duration="1.36" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:390px;left:0;width:1920px;align-items:center;"><div class="row" id="cg064-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg064-r0w0" class="w dk" style="">and</span><span id="cg064-r0w1" class="w dk" style="margin-left:0.24em;">when</span><span id="cg064-r0w2" class="w dk" style="margin-left:0.24em;">every</span><span id="cg064-r0w3" class="w dk" style="margin-left:0.24em;">other</span><span id="cg064-r0w4" class="w dk" style="margin-left:0.24em;">bank</span><span id="cg064-r0w5" class="w dk" style="margin-left:0.24em;">was</span></div></div>
+    <div id="cg065" class="clip cg" data-start="73.49" data-duration="0.64" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg065-r0" style="font-size:220px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg065-r0w0" class="w lt big" style="">dying</span></div></div>
+    <div id="cg066" class="clip cg" data-start="74.13" data-duration="1.6" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg066-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg066-r0w0" class="w lt" style="">he</span><span id="cg066-r0w1" class="w lt" style="margin-left:0.24em;">was</span><span id="cg066-r0w2" class="w lt" style="margin-left:0.24em;">the</span><span id="cg066-r0w3" class="w lt" style="margin-left:0.24em;">only</span><span id="cg066-r0w4" class="w lt" style="margin-left:0.24em;">one</span></div><div class="row" id="cg066-r1" style="font-size:200px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg066-r1w0" class="w lt big" style="">standing</span></div></div>
+    <div id="cg067" class="clip cg" data-start="75.73" data-duration="0.72" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg067-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg067-r0w0" class="w lt" style="">with</span><span id="cg067-r0w1" class="w lt" style="margin-left:0.24em;">enough</span><span id="cg067-r0w2" class="w lt" style="margin-left:0.24em;">money</span></div></div>
+    <div id="cg068" class="clip cg" data-start="76.45" data-duration="1.04" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg068-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg068-r0w0" class="w lt" style="">to</span><span id="cg068-r0w1" class="w lt" style="margin-left:0.24em;">buy</span><span id="cg068-r0w2" class="w lt" style="margin-left:0.24em;">the</span><span id="cg068-r0w3" class="w lt" style="margin-left:0.24em;">ones</span><span id="cg068-r0w4" class="w lt" style="margin-left:0.24em;">that</span></div></div>
+    <div id="cg069" class="clip cg" data-start="77.49" data-duration="0.64" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg069-r0" style="font-size:230px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg069-r0w0" class="w lt big" style="">fell</span></div></div>
+    <div id="cg070" class="clip cg" data-start="78.13" data-duration="2" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg070-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;margin-bottom:-0.06em;"><span id="cg070-r0w0" class="w lt" style="">That&#x27;s</span></div><div class="row" id="cg070-r1" style="font-size:190px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg070-r1w0" class="w lt big" style="">JPMorgan</span></div><div class="row" id="cg070-r2" style="font-size:190px;font-weight:800;letter-spacing:-0.045em;line-height:0.88;"><span id="cg070-r2w0" class="w lt big" style="">&amp;</span><span id="cg070-r2w1" class="w lt big" style="margin-left:0.24em;">Chase</span></div></div>
+    <div id="cg071" class="clip cg" data-start="80.13" data-duration="0.96" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg071-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg071-r0w0" class="w lt" style="">the</span><span id="cg071-r0w1" class="w lt" style="margin-left:0.24em;">name</span><span id="cg071-r0w2" class="w lt" style="margin-left:0.24em;">that</span><span id="cg071-r0w3" class="w lt" style="margin-left:0.24em;">moves</span></div></div>
+    <div id="cg072" class="clip cg" data-start="81.09" data-duration="1.36" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:340px;left:150px;width:1800px;align-items:flex-start;"><div class="row swap" id="cg072-r0" style="font-size:118px;font-weight:800;letter-spacing:-0.02em;line-height:1.0;--pos:left:0;"><span class="w spacer" style="opacity:0">$10,000,000,000,000</span><span id="cg072-r0v0" class="w lt swapv">$10</span><span id="cg072-r0v1" class="w lt swapv">$10,000,000</span><span id="cg072-r0v2" class="w lt swapv">$10,000,000,000</span><span id="cg072-r0v3" class="w lt swapv">$10,000,000,000,000</span></div></div>
+    <div id="cg073" class="clip cg" data-start="82.45" data-duration="0.96" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:0px;left:0;width:1920px;align-items:center;"><div class="row" id="cg073-r0" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1.0;"><span id="cg073-r0w0" class="w lt" style="">every</span><span id="cg073-r0w1" class="w lt" style="margin-left:0.24em;">single</span><span id="cg073-r0w2" class="w lt" style="margin-left:0.24em;">day</span></div></div>
+    <div id="cg074" class="clip cg" data-start="83.377" data-duration="0.923" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap style="top:20px;left:0;width:1920px;align-items:center;"><div class="typedrow"><div id="cg074tw" class="tw" style="font-size:330px;width:861px"><span id="cg074c0" class="ch">t</span><span id="cg074c1" class="ch">o</span><span id="cg074c2" class="ch">d</span><span id="cg074c3" class="ch">a</span><span id="cg074c4" class="ch">y</span></div></div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.to({}, { duration: 87 }, 0);
+        tl.set("#cg000l0w0b", { opacity: 0.6 }, -0.09);
+    tl.set("#cg000l0w0b", { opacity: 0.42 }, 0.01);
+    tl.set("#cg000l0w0t", { opacity: 0.35 }, 0.01);
+    tl.set("#cg000l0w0b", { opacity: 0.22 }, 0.043);
+    tl.set("#cg000l0w0t", { opacity: 0.7 }, 0.043);
+    tl.set("#cg000l0w0b", { opacity: 0 }, 0.077);
+    tl.set("#cg000l0w0t", { opacity: 1 }, 0.077);
+    tl.set("#cg000l0w1b", { opacity: 0.6 }, 0.07);
+    tl.set("#cg000l0w1b", { opacity: 0.42 }, 0.17);
+    tl.set("#cg000l0w1t", { opacity: 0.35 }, 0.17);
+    tl.set("#cg000l0w1b", { opacity: 0.22 }, 0.203);
+    tl.set("#cg000l0w1t", { opacity: 0.7 }, 0.203);
+    tl.set("#cg000l0w1b", { opacity: 0 }, 0.237);
+    tl.set("#cg000l0w1t", { opacity: 1 }, 0.237);
+    tl.set("#cg000l0w2b", { opacity: 0.6 }, 0.47);
+    tl.set("#cg000l0w2b", { opacity: 0.42 }, 0.57);
+    tl.set("#cg000l0w2t", { opacity: 0.35 }, 0.57);
+    tl.set("#cg000l0w2b", { opacity: 0.22 }, 0.603);
+    tl.set("#cg000l0w2t", { opacity: 0.7 }, 0.603);
+    tl.set("#cg000l0w2b", { opacity: 0 }, 0.637);
+    tl.set("#cg000l0w2t", { opacity: 1 }, 0.637);
+    tl.set("#cg000l0w3b", { opacity: 0.6 }, 0.63);
+    tl.set("#cg000l0w3b", { opacity: 0.42 }, 0.73);
+    tl.set("#cg000l0w3t", { opacity: 0.35 }, 0.73);
+    tl.set("#cg000l0w3b", { opacity: 0.22 }, 0.763);
+    tl.set("#cg000l0w3t", { opacity: 0.7 }, 0.763);
+    tl.set("#cg000l0w3b", { opacity: 0 }, 0.797);
+    tl.set("#cg000l0w3t", { opacity: 1 }, 0.797);
+    tl.set("#cg000l0w4b", { opacity: 0.6 }, 0.71);
+    tl.set("#cg000l0w4b", { opacity: 0.42 }, 0.81);
+    tl.set("#cg000l0w4t", { opacity: 0.35 }, 0.81);
+    tl.set("#cg000l0w4b", { opacity: 0.22 }, 0.843);
+    tl.set("#cg000l0w4t", { opacity: 0.7 }, 0.843);
+    tl.set("#cg000l0w4b", { opacity: 0 }, 0.877);
+    tl.set("#cg000l0w4t", { opacity: 1 }, 0.877);
+    tl.set("#cg000l1w0b", { opacity: 0.6 }, 0.87);
+    tl.set("#cg000l1w0b", { opacity: 0.42 }, 0.97);
+    tl.set("#cg000l1w0t", { opacity: 0.35 }, 0.97);
+    tl.set("#cg000l1w0b", { opacity: 0.22 }, 1.003);
+    tl.set("#cg000l1w0t", { opacity: 0.7 }, 1.003);
+    tl.set("#cg000l1w0b", { opacity: 0 }, 1.037);
+    tl.set("#cg000l1w0t", { opacity: 1 }, 1.037);
+    tl.set("#cg000l1w1b", { opacity: 0.6 }, 1.27);
+    tl.set("#cg000l1w1b", { opacity: 0.42 }, 1.37);
+    tl.set("#cg000l1w1t", { opacity: 0.35 }, 1.37);
+    tl.set("#cg000l1w1b", { opacity: 0.22 }, 1.403);
+    tl.set("#cg000l1w1t", { opacity: 0.7 }, 1.403);
+    tl.set("#cg000l1w1b", { opacity: 0 }, 1.437);
+    tl.set("#cg000l1w1t", { opacity: 1 }, 1.437);
+    tl.set("#cg000l1w2b", { opacity: 0.6 }, 1.43);
+    tl.set("#cg000l1w2b", { opacity: 0.42 }, 1.53);
+    tl.set("#cg000l1w2t", { opacity: 0.35 }, 1.53);
+    tl.set("#cg000l1w2b", { opacity: 0.22 }, 1.563);
+    tl.set("#cg000l1w2t", { opacity: 0.7 }, 1.563);
+    tl.set("#cg000l1w2b", { opacity: 0 }, 1.597);
+    tl.set("#cg000l1w2t", { opacity: 1 }, 1.597);
+    tl.set("#cg000l1w3b", { opacity: 0.6 }, 1.83);
+    tl.set("#cg000l1w3b", { opacity: 0.42 }, 1.93);
+    tl.set("#cg000l1w3t", { opacity: 0.35 }, 1.93);
+    tl.set("#cg000l1w3b", { opacity: 0.22 }, 1.963);
+    tl.set("#cg000l1w3t", { opacity: 0.7 }, 1.963);
+    tl.set("#cg000l1w3b", { opacity: 0 }, 1.997);
+    tl.set("#cg000l1w3t", { opacity: 1 }, 1.997);
+    tl.set("#cg001-r0w0", { opacity: 1 }, 2.65);
+    tl.set("#cg001-r0w1", { opacity: 1 }, 2.89);
+    tl.set("#cg001-r1w0", { opacity: 1 }, 3.29);
+    tl.set("#cg002-r0w0", { opacity: 1 }, 3.93);
+    tl.set("#cg002-r0w1", { opacity: 1 }, 4.09);
+    tl.set("#cg002-r0w2", { opacity: 1 }, 4.41);
+    tl.set("#cg002-r1w0", { opacity: 1 }, 4.49);
+    tl.set("#cg002-r1w1", { opacity: 1 }, 4.81);
+    tl.set("#cg003w0b", { opacity: 1 }, 5.11);
+    tl.set("#cg003w0b", { opacity: 0 }, 5.21);
+    tl.set("#cg003w0t", { opacity: 1 }, 5.21);
+    tl.set("#cg003w1b", { opacity: 1 }, 5.19);
+    tl.set("#cg003w1b", { opacity: 0 }, 5.29);
+    tl.set("#cg003w1t", { opacity: 1 }, 5.29);
+    tl.fromTo("#cg003sw", { scaleX: 0 }, { scaleX: 1, duration: 0.1, ease: "steps(3)" }, 5.877);
+    tl.set("#cg003w0t", { opacity: 0 }, 5.977);
+    tl.set("#cg003w1t", { opacity: 0 }, 5.977);
+    tl.set("#cg004-r0w0", { opacity: 1 }, 6.01);
+    tl.set("#cg004-r0w1", { opacity: 1 }, 6.25);
+    tl.set("#cg004-r0w2", { opacity: 1 }, 6.49);
+    tl.set("#cg004-r1w0", { opacity: 1 }, 6.57);
+    tl.set("#cg004-r1w1", { opacity: 1 }, 6.89);
+    tl.set("#cg004-r2w0", { opacity: 1 }, 7.21);
+    tl.set("#cg005-r0w0", { opacity: 1 }, 7.93);
+    tl.set("#cg005-r0w1", { opacity: 1 }, 8.09);
+    tl.set("#cg005-r0w2", { opacity: 1 }, 8.25);
+    tl.set("#cg005-r0w3", { opacity: 1 }, 8.33);
+    tl.set("#cg005-r1w0", { opacity: 1 }, 8.49);
+    tl.set("#cg006-r0w0", { opacity: 1 }, 9.08);
+    tl.set("#cg006-r1w0", { opacity: 1 }, 9.4);
+    tl.set("#cg006-r1w1", { opacity: 1 }, 9.64);
+    tl.set("#cg006-r1w2", { opacity: 1 }, 9.8);
+    tl.set("#cg006-r2w0", { opacity: 1 }, 10.04);
+    tl.set("#cg007-r0w0", { opacity: 1 }, 10.76);
+    tl.set("#cg007-r0w1", { opacity: 1 }, 11);
+    tl.set("#cg007-r0w2", { opacity: 1 }, 11.16);
+    tl.set("#cg008-r0w0", { opacity: 1 }, 11.64);
+    tl.set("#cg008-r0w1", { opacity: 1 }, 11.88);
+    tl.set("#cg009-r0w0", { opacity: 1 }, 12.28);
+    tl.set("#cg009-r0w1", { opacity: 1 }, 12.6);
+    tl.set("#cg010-r0w0", { opacity: 1 }, 13.08);
+    tl.set("#cg010-r1w0", { opacity: 1 }, 13.32);
+    tl.set("#cg010-r2w0", { opacity: 1 }, 13.88);
+    tl.set("#cg010-r2w1", { opacity: 1 }, 14.04);
+    tl.set("#cg010-r2w2", { opacity: 1 }, 14.44);
+    tl.set("#cg011-r0w0", { opacity: 1 }, 15.08);
+    tl.set("#cg011-r0w1", { opacity: 1 }, 15.24);
+    tl.set("#cg011-r0w2", { opacity: 1 }, 15.48);
+    tl.set("#cg011-r0w3", { opacity: 1 }, 15.64);
+    tl.set("#cg012-r0w0", { opacity: 1 }, 15.8);
+    tl.set("#cg013-r0w0", { opacity: 1 }, 16.2);
+    tl.set("#cg013-r1w0", { opacity: 1 }, 16.36);
+    tl.set("#cg014-r0w0", { opacity: 1 }, 17.24);
+    tl.set("#cg014-r0w1", { opacity: 1 }, 17.4);
+    tl.set("#cg014-r0w2", { opacity: 1 }, 17.64);
+    tl.set("#cg014-r0w3", { opacity: 1 }, 17.96);
+    tl.set("#cg015-r0w0", { opacity: 1 }, 18.6);
+    tl.set("#cg015-r0w1", { opacity: 1 }, 18.84);
+    tl.set("#cg015-r1w0", { opacity: 1 }, 19.08);
+    tl.set("#cg016-r0w0", { opacity: 1 }, 19.56);
+    tl.set("#cg016-r0w1", { opacity: 1 }, 19.8);
+    tl.set("#cg016-r0w2", { opacity: 1 }, 19.96);
+    tl.set("#cg016-r1w0", { opacity: 1 }, 20.36);
+    tl.set("#cg017-r0w0", { opacity: 1 }, 21.16);
+    tl.set("#cg017-r0w1", { opacity: 1 }, 21.48);
+    tl.set("#cg017-r0w2", { opacity: 1 }, 21.72);
+    tl.set("#cg017-r0w3", { opacity: 1 }, 21.8);
+    tl.set("#cg018-r0w0", { opacity: 1 }, 22.04);
+    tl.set("#cg018-r0w1", { opacity: 1 }, 22.12);
+    tl.set("#cg018-r0w2", { opacity: 1 }, 22.6);
+    tl.set("#cg018-r0w3", { opacity: 1 }, 22.76);
+    tl.set("#cg019-r0w0", { opacity: 1 }, 23.4);
+    tl.set("#cg019-r0w1", { opacity: 1 }, 23.8);
+    tl.set("#cg020-r0w0", { opacity: 1 }, 24.2);
+    tl.set("#cg020-r0w1", { opacity: 1 }, 24.44);
+    tl.set("#cg020-r0w2", { opacity: 1 }, 24.6);
+    tl.set("#cg020-r1w0", { opacity: 1 }, 24.76);
+    tl.set("#cg020-r1w1", { opacity: 1 }, 25.16);
+    tl.set("#cg021-r0w0", { opacity: 1 }, 27.72);
+    tl.set("#cg021-r1w0", { opacity: 1 }, 27.88);
+    tl.set("#cg021-r1w1", { opacity: 1 }, 28.28);
+    tl.set("#cg022-r0w0", { opacity: 1 }, 28.52);
+    tl.set("#cg022-r0w1", { opacity: 1 }, 28.6);
+    tl.set("#cg022-r0w2", { opacity: 1 }, 28.92);
+    tl.set("#cg023-r0w0", { opacity: 1 }, 29.4);
+    tl.set("#cg023-r0w1", { opacity: 1 }, 29.56);
+    tl.set("#cg023-r0w2", { opacity: 1 }, 29.88);
+    tl.set("#cg023-r0w3", { opacity: 1 }, 30.2);
+    tl.set("#cg024-r0w0", { opacity: 1 }, 30.52);
+    tl.set("#cg024-r0w1", { opacity: 1 }, 30.76);
+    tl.set("#cg024-r0w2", { opacity: 1 }, 31);
+    tl.set("#cg024-r0w3", { opacity: 1 }, 31.16);
+    tl.set("#cg025-r0w0", { opacity: 1 }, 31.48);
+    tl.set("#cg025-r0w1", { opacity: 1 }, 31.64);
+    tl.set("#cg025-r0w2", { opacity: 1 }, 31.88);
+    tl.set("#cg025-r1w0", { opacity: 1 }, 31.96);
+    tl.set("#cg025-r2w0", { opacity: 1 }, 32.36);
+    tl.set("#cg025-r2w1", { opacity: 1 }, 32.84);
+    tl.set("#cg026-r0w0", { opacity: 1 }, 33.24);
+    tl.set("#cg026-r0w1", { opacity: 1 }, 33.4);
+    tl.set("#cg026-r0w2", { opacity: 1 }, 33.56);
+    tl.set("#cg027-r0w0", { opacity: 1 }, 34.12);
+    tl.set("#cg027-r0w1", { opacity: 1 }, 34.28);
+    tl.set("#cg027-r1w0", { opacity: 1 }, 34.6);
+    tl.set("#cg028-r0w0", { opacity: 1 }, 35.4);
+    tl.set("#cg028-r0w1", { opacity: 1 }, 35.64);
+    tl.set("#cg028-r0w2", { opacity: 1 }, 35.8);
+    tl.set("#cg028-r0w3", { opacity: 1 }, 35.96);
+    tl.set("#cg028-r0w4", { opacity: 1 }, 36.12);
+    tl.set("#cg028-r0w5", { opacity: 1 }, 36.2);
+    tl.set("#cg029-r0w0", { opacity: 1 }, 36.52);
+    tl.set("#cg029-r0w1", { opacity: 1 }, 36.92);
+    tl.set("#cg030-r0w0", { opacity: 1 }, 37.56);
+    tl.set("#cg030-r1v0", { opacity: 1 }, 37.72);
+    tl.set("#cg030-r1v0", { opacity: 0 }, 37.74);
+    tl.set("#cg030-r1v1", { opacity: 1 }, 37.74);
+    tl.set("#cg030-r1v1", { opacity: 0 }, 37.76);
+    tl.set("#cg030-r1v2", { opacity: 1 }, 37.76);
+    tl.set("#cg030-r1v2", { opacity: 0 }, 37.78);
+    tl.set("#cg030-r1v3", { opacity: 1 }, 37.78);
+    tl.set("#cg030-r1v3", { opacity: 0 }, 37.8);
+    tl.set("#cg030-r1v4", { opacity: 1 }, 37.8);
+    tl.set("#cg030-r1v4", { opacity: 0 }, 37.82);
+    tl.set("#cg030-r1v5", { opacity: 1 }, 37.82);
+    tl.set("#cg030-r1v5", { opacity: 0 }, 37.84);
+    tl.set("#cg030-r1v6", { opacity: 1 }, 37.84);
+    tl.set("#cg030-r1v6", { opacity: 0 }, 37.86);
+    tl.set("#cg030-r1v7", { opacity: 1 }, 37.86);
+    tl.set("#cg030-r1v7", { opacity: 0 }, 37.88);
+    tl.set("#cg030-r1v8", { opacity: 1 }, 37.88);
+    tl.set("#cg030-r1v8", { opacity: 0 }, 37.9);
+    tl.set("#cg030-r1v9", { opacity: 1 }, 37.9);
+    tl.set("#cg030-r1v9", { opacity: 0 }, 37.92);
+    tl.set("#cg030-r1v10", { opacity: 1 }, 37.92);
+    tl.set("#cg030-r1v10", { opacity: 0 }, 37.94);
+    tl.set("#cg030-r1v11", { opacity: 1 }, 37.94);
+    tl.set("#cg030-r1v11", { opacity: 0 }, 37.96);
+    tl.set("#cg030-r1v12", { opacity: 1 }, 37.96);
+    tl.set("#cg030-r1v12", { opacity: 0 }, 37.98);
+    tl.set("#cg030-r1v13", { opacity: 1 }, 37.98);
+    tl.set("#cg030-r1v13", { opacity: 0 }, 38);
+    tl.set("#cg030-r1v14", { opacity: 1 }, 38);
+    tl.set("#cg030-r1v14", { opacity: 0 }, 38.02);
+    tl.set("#cg030-r1v15", { opacity: 1 }, 38.02);
+    tl.set("#cg030-r2w0", { opacity: 1 }, 38.28);
+    tl.set("#cg031w0b", { opacity: 1 }, 38.82);
+    tl.set("#cg031w0b", { opacity: 0 }, 38.92);
+    tl.set("#cg031w0t", { opacity: 1 }, 38.92);
+    tl.set("#cg031w1b", { opacity: 1 }, 39.06);
+    tl.set("#cg031w1b", { opacity: 0 }, 39.16);
+    tl.set("#cg031w1t", { opacity: 1 }, 39.16);
+    tl.fromTo("#cg031sw", { scaleX: 0 }, { scaleX: 1, duration: 0.1, ease: "steps(3)" }, 39.473);
+    tl.set("#cg031w0t", { opacity: 0 }, 39.573);
+    tl.set("#cg031w1t", { opacity: 0 }, 39.573);
+    tl.set("#cg032w0b", { opacity: 1 }, 39.54);
+    tl.set("#cg032w0b", { opacity: 0 }, 39.64);
+    tl.set("#cg032w0t", { opacity: 1 }, 39.64);
+    tl.set("#cg032w1b", { opacity: 1 }, 39.7);
+    tl.set("#cg032w1b", { opacity: 0 }, 39.8);
+    tl.set("#cg032w1t", { opacity: 1 }, 39.8);
+    tl.fromTo("#cg032sw", { scaleX: 0 }, { scaleX: 1, duration: 0.1, ease: "steps(3)" }, 40.593);
+    tl.set("#cg032w0t", { opacity: 0 }, 40.693);
+    tl.set("#cg032w1t", { opacity: 0 }, 40.693);
+    tl.set("#cg033w0b", { opacity: 1 }, 40.66);
+    tl.set("#cg033w0b", { opacity: 0 }, 40.76);
+    tl.set("#cg033w0t", { opacity: 1 }, 40.76);
+    tl.set("#cg033w1b", { opacity: 1 }, 40.9);
+    tl.set("#cg033w1b", { opacity: 0 }, 41);
+    tl.set("#cg033w1t", { opacity: 1 }, 41);
+    tl.fromTo("#cg033sw", { scaleX: 0 }, { scaleX: 1, duration: 0.1, ease: "steps(3)" }, 41.027);
+    tl.set("#cg033w0t", { opacity: 0 }, 41.127);
+    tl.set("#cg033w1t", { opacity: 0 }, 41.127);
+    tl.set("#cg034-r0w0", { opacity: 1 }, 41.16);
+    tl.set("#cg035-r0v0", { opacity: 1 }, 42.04);
+    tl.set("#cg035-r0v0", { opacity: 0 }, 42.088);
+    tl.set("#cg035-r0v1", { opacity: 1 }, 42.088);
+    tl.set("#cg035-r0v1", { opacity: 0 }, 42.137);
+    tl.set("#cg035-r0v2", { opacity: 1 }, 42.137);
+    tl.set("#cg035-r0v2", { opacity: 0 }, 42.185);
+    tl.set("#cg035-r0v3", { opacity: 1 }, 42.185);
+    tl.set("#cg035-r0v3", { opacity: 0 }, 42.233);
+    tl.set("#cg035-r0v4", { opacity: 1 }, 42.233);
+    tl.set("#cg035-r0v4", { opacity: 0 }, 42.282);
+    tl.set("#cg035-r0v5", { opacity: 1 }, 42.282);
+    tl.set("#cg035-r0v5", { opacity: 0 }, 42.33);
+    tl.set("#cg035-r0v6", { opacity: 1 }, 42.33);
+    tl.set("#cg035-r0v6", { opacity: 0 }, 42.378);
+    tl.set("#cg035-r0v7", { opacity: 1 }, 42.378);
+    tl.set("#cg035-r0v7", { opacity: 0 }, 42.427);
+    tl.set("#cg035-r0v8", { opacity: 1 }, 42.427);
+    tl.set("#cg035-r0v8", { opacity: 0 }, 42.475);
+    tl.set("#cg035-r0v9", { opacity: 1 }, 42.475);
+    tl.set("#cg035-r0v9", { opacity: 0 }, 42.524);
+    tl.set("#cg035-r0v10", { opacity: 1 }, 42.524);
+    tl.set("#cg035-r0v10", { opacity: 0 }, 42.572);
+    tl.set("#cg035-r0v11", { opacity: 1 }, 42.572);
+    tl.set("#cg035-r0v11", { opacity: 0 }, 42.62);
+    tl.set("#cg035-r0v12", { opacity: 1 }, 42.62);
+    tl.set("#cg035-r0v12", { opacity: 0 }, 42.669);
+    tl.set("#cg035-r0v13", { opacity: 1 }, 42.669);
+    tl.set("#cg035-r0v13", { opacity: 0 }, 42.717);
+    tl.set("#cg035-r0v14", { opacity: 1 }, 42.717);
+    tl.set("#cg035-r0v14", { opacity: 0 }, 42.765);
+    tl.set("#cg035-r0v15", { opacity: 1 }, 42.765);
+    tl.set("#cg035-r0v15", { opacity: 0 }, 42.814);
+    tl.set("#cg035-r0v16", { opacity: 1 }, 42.814);
+    tl.set("#cg035-r0v16", { opacity: 0 }, 42.862);
+    tl.set("#cg035-r0v17", { opacity: 1 }, 42.862);
+    tl.set("#cg035-r1w0", { opacity: 1 }, 42.6);
+    tl.set("#cg035-r2w0", { opacity: 1 }, 43);
+    tl.set("#cg035-r2w1", { opacity: 1 }, 43.24);
+    tl.set("#cg035-r2w2", { opacity: 1 }, 43.56);
+    tl.set("#cg036-r0w0", { opacity: 1 }, 44.2);
+    tl.set("#cg036-r0w1", { opacity: 1 }, 44.36);
+    tl.set("#cg036-r0w2", { opacity: 1 }, 44.6);
+    tl.set("#cg037-r0w0", { opacity: 1 }, 44.84);
+    tl.set("#cg038-r0w0", { opacity: 1 }, 45.4);
+    tl.set("#cg038-r0w1", { opacity: 1 }, 45.72);
+    tl.set("#cg039-r0w0", { opacity: 1 }, 46.68);
+    tl.set("#cg039-r0w1", { opacity: 1 }, 46.84);
+    tl.set("#cg039-r1w0", { opacity: 1 }, 47.08);
+    tl.set("#cg040-r0w0", { opacity: 1 }, 47.8);
+    tl.set("#cg040-r0w1", { opacity: 1 }, 47.88);
+    tl.set("#cg040-r0w2", { opacity: 1 }, 48.04);
+    tl.set("#cg040-r0w3", { opacity: 1 }, 48.2);
+    tl.set("#cg040-r1w0", { opacity: 1 }, 48.36);
+    tl.set("#cg041-r0w0", { opacity: 1 }, 49.16);
+    tl.set("#cg041-r0w1", { opacity: 1 }, 49.4);
+    tl.set("#cg041-r0w2", { opacity: 1 }, 49.48);
+    tl.set("#cg041-r0w3", { opacity: 1 }, 49.64);
+    tl.set("#cg041-r0w4", { opacity: 1 }, 49.88);
+    tl.set("#cg041-r0w5", { opacity: 1 }, 50.04);
+    tl.set("#cg041-r0w6", { opacity: 1 }, 50.52);
+    tl.set("#cg042c0", { opacity: 1 }, 50.68);
+    tl.set("#cg042c0", { color: "#a9a9a9" }, 50.713);
+    tl.set("#cg042c0", { color: "#f4f2ee" }, 50.747);
+    tl.set("#cg042c1", { opacity: 1 }, 50.713);
+    tl.set("#cg042c1", { color: "#a9a9a9" }, 50.746);
+    tl.set("#cg042c1", { color: "#f4f2ee" }, 50.78);
+    tl.set("#cg042c2", { opacity: 1 }, 50.747);
+    tl.set("#cg042c2", { color: "#a9a9a9" }, 50.78);
+    tl.set("#cg042c2", { color: "#f4f2ee" }, 50.814);
+    tl.set("#cg042c4", { opacity: 1 }, 50.84);
+    tl.set("#cg042c4", { color: "#a9a9a9" }, 50.873);
+    tl.set("#cg042c4", { color: "#f4f2ee" }, 50.907);
+    tl.set("#cg042c5", { opacity: 1 }, 50.873);
+    tl.set("#cg042c5", { color: "#a9a9a9" }, 50.906);
+    tl.set("#cg042c5", { color: "#f4f2ee" }, 50.94);
+    tl.set("#cg042c6", { opacity: 1 }, 50.907);
+    tl.set("#cg042c6", { color: "#a9a9a9" }, 50.94);
+    tl.set("#cg042c6", { color: "#f4f2ee" }, 50.974);
+    tl.set("#cg042c7", { opacity: 1 }, 50.94);
+    tl.set("#cg042c7", { color: "#a9a9a9" }, 50.973);
+    tl.set("#cg042c7", { color: "#f4f2ee" }, 51.007);
+    tl.set("#cg042c8", { opacity: 1 }, 50.973);
+    tl.set("#cg042c8", { color: "#a9a9a9" }, 51.006);
+    tl.set("#cg042c8", { color: "#f4f2ee" }, 51.04);
+    tl.set("#cg042c9", { opacity: 1 }, 51.007);
+    tl.set("#cg042c9", { color: "#a9a9a9" }, 51.04);
+    tl.set("#cg042c9", { color: "#f4f2ee" }, 51.074);
+    tl.set("#cg042c10", { opacity: 1 }, 51.04);
+    tl.set("#cg042c10", { color: "#a9a9a9" }, 51.073);
+    tl.set("#cg042c10", { color: "#f4f2ee" }, 51.107);
+    tl.set("#cg042c11", { opacity: 1 }, 51.073);
+    tl.set("#cg042c11", { color: "#a9a9a9" }, 51.106);
+    tl.set("#cg042c11", { color: "#f4f2ee" }, 51.14);
+    tl.set("#cg042tw", { x: 418 }, 50.68);
+    tl.set("#cg042tw", { x: 295 }, 50.973);
+    tl.set("#cg042tw", { x: 137 }, 51.007);
+    tl.set("#cg042tw", { x: -7 }, 51.04);
+    tl.set("#cg042tw", { x: -111 }, 51.073);
+    tl.set("#cg043-r0w0", { opacity: 1 }, 51.72);
+    tl.set("#cg043-r0w1", { opacity: 1 }, 51.88);
+    tl.set("#cg043-r0w2", { opacity: 1 }, 52.04);
+    tl.set("#cg043-r0w3", { opacity: 1 }, 52.28);
+    tl.set("#cg044-r0w0", { opacity: 1 }, 52.44);
+    tl.set("#cg044-r0w1", { opacity: 1 }, 52.84);
+    tl.set("#cg045c0", { opacity: 1 }, 53.72);
+    tl.set("#cg045c0", { color: "#a9a9a9" }, 53.753);
+    tl.set("#cg045c0", { color: "#f4f2ee" }, 53.787);
+    tl.set("#cg045c1", { opacity: 1 }, 53.82);
+    tl.set("#cg045c1", { color: "#a9a9a9" }, 53.853);
+    tl.set("#cg045c1", { color: "#f4f2ee" }, 53.887);
+    tl.set("#cg045c2", { opacity: 1 }, 53.92);
+    tl.set("#cg045c2", { color: "#a9a9a9" }, 53.953);
+    tl.set("#cg045c2", { color: "#f4f2ee" }, 53.987);
+    tl.set("#cg045c3", { opacity: 1 }, 54.02);
+    tl.set("#cg045c3", { color: "#a9a9a9" }, 54.053);
+    tl.set("#cg045c3", { color: "#f4f2ee" }, 54.087);
+    tl.set("#cg045tw", { x: 575 }, 53.72);
+    tl.set("#cg045tw", { x: 383 }, 53.82);
+    tl.set("#cg045tw", { x: 192 }, 53.92);
+    tl.set("#cg045tw", { x: 0 }, 54.02);
+    tl.set("#cg045pre", { opacity: 1 }, 53.48);
+    tl.set("#cg045pre", { y: -434, scale: 1.7 }, 53.72);
+    tl.set("#cg046-r0w0", { opacity: 1 }, 54.36);
+    tl.set("#cg046-r0w1", { opacity: 1 }, 54.52);
+    tl.set("#cg046-r0w2", { opacity: 1 }, 54.84);
+    tl.set("#cg047-r0w0", { opacity: 1 }, 55);
+    tl.set("#cg047-r1w0", { opacity: 1 }, 55.16);
+    tl.set("#cg047-r2w0", { opacity: 1 }, 55.48);
+    tl.set("#cg048-r0w0", { opacity: 1 }, 55.8);
+    tl.set("#cg048-r0w1", { opacity: 1 }, 55.96);
+    tl.set("#cg049-r0w0", { opacity: 1 }, 56.68);
+    tl.set("#cg049-r0w1", { opacity: 1 }, 57);
+    tl.set("#cg049-r1top", { opacity: 1 }, 57.08);
+    tl.set("#cg049-r1bot", { opacity: 1 }, 57.08);
+    tl.to("#cg049-r1top", { x: -46, y: -6, duration: 0.14, ease: "power3.out" }, 57.38);
+    tl.to("#cg049-r1bot", { x: 46, y: 6, duration: 0.14, ease: "power3.out" }, 57.38);
+    tl.set("#cg049-r1line", { opacity: 1 }, 57.38);
+    tl.set("#cg049-r1line", { opacity: 0 }, 57.447);
+    tl.set("#cg050-r0w0", { opacity: 1 }, 57.72);
+    tl.set("#cg050-r0w1", { opacity: 1 }, 58.2);
+    tl.set("#cg050-r0w2", { opacity: 1 }, 58.28);
+    tl.set("#cg051-r0w0", { opacity: 1 }, 58.6);
+    tl.set("#cg051-r0w1", { opacity: 1 }, 58.76);
+    tl.set("#cg051-r1v0", { opacity: 1 }, 59.08);
+    tl.set("#cg051-r1v0", { opacity: 0 }, 59.48);
+    tl.set("#cg051-r1v1", { opacity: 1 }, 59.48);
+    tl.set("#cg051-r1v1", { opacity: 0 }, 59.613);
+    tl.set("#cg051-r1v2", { opacity: 1 }, 59.613);
+    tl.set("#cg052-r0w0", { opacity: 1 }, 60.2);
+    tl.set("#cg052-r0w1", { opacity: 1 }, 60.36);
+    tl.set("#cg052-r0w2", { opacity: 1 }, 60.52);
+    tl.set("#cg052-r0w3", { opacity: 1 }, 60.76);
+    tl.set("#cg053-r0w0", { opacity: 1 }, 61.08);
+    tl.set("#cg053-r0w1", { opacity: 1 }, 61.32);
+    tl.set("#cg053-r0w2", { opacity: 1 }, 61.48);
+    tl.set("#cg054-r0w0", { opacity: 1 }, 62.12);
+    tl.set("#cg054-r0w1", { opacity: 1 }, 62.52);
+    tl.set("#cg054-r1v0", { opacity: 1 }, 62.68);
+    tl.set("#cg054-r1v0", { opacity: 0 }, 63.24);
+    tl.set("#cg054-r1v1", { opacity: 1 }, 63.24);
+    tl.set("#cg054-r1v1", { opacity: 0 }, 63.373);
+    tl.set("#cg054-r1v2", { opacity: 1 }, 63.373);
+    tl.set("#cg055-r0w0", { opacity: 1 }, 63.8);
+    tl.set("#cg056-r0w0", { opacity: 1 }, 64.28);
+    tl.set("#cg056-r1w0", { opacity: 1 }, 64.52);
+    tl.set("#cg057-r0w0", { opacity: 1 }, 65.08);
+    tl.set("#cg057-r1w0", { opacity: 1 }, 65.32);
+    tl.set("#cg058-r0w0", { opacity: 1 }, 66.04);
+    tl.set("#cg058-r0w1", { opacity: 1 }, 66.28);
+    tl.set("#cg058-r0w2", { opacity: 1 }, 66.6);
+    tl.set("#cg058-r0w3", { opacity: 1 }, 66.84);
+    tl.set("#cg059-r0w0", { opacity: 1 }, 67.24);
+    tl.set("#cg059-r1w0", { opacity: 1 }, 67.32);
+    tl.set("#cg060-r0w0", { opacity: 1 }, 68.28);
+    tl.set("#cg060-r1w0", { opacity: 1 }, 68.44);
+    tl.set("#cg061-r0w0", { opacity: 1 }, 69.57);
+    tl.set("#cg062-r0v0", { opacity: 1 }, 70.13);
+    tl.set("#cg062-r0v0", { opacity: 0 }, 70.197);
+    tl.set("#cg062-r0v1", { opacity: 1 }, 70.197);
+    tl.set("#cg062-r0v1", { opacity: 0 }, 70.263);
+    tl.set("#cg062-r0v2", { opacity: 1 }, 70.263);
+    tl.set("#cg062-r0v2", { opacity: 0 }, 70.33);
+    tl.set("#cg062-r0v3", { opacity: 1 }, 70.33);
+    tl.set("#cg062-r0v3", { opacity: 0 }, 70.397);
+    tl.set("#cg062-r0v4", { opacity: 1 }, 70.397);
+    tl.set("#cg063-r0w0", { opacity: 1 }, 70.93);
+    tl.set("#cg063-r1w0", { opacity: 1 }, 71.33);
+    tl.set("#cg063-r2w0", { opacity: 1 }, 71.73);
+    tl.set("#cg064-r0w0", { opacity: 1 }, 72.13);
+    tl.set("#cg064-r0w1", { opacity: 1 }, 72.37);
+    tl.set("#cg064-r0w2", { opacity: 1 }, 72.61);
+    tl.set("#cg064-r0w3", { opacity: 1 }, 72.85);
+    tl.set("#cg064-r0w4", { opacity: 1 }, 73.01);
+    tl.set("#cg064-r0w5", { opacity: 1 }, 73.33);
+    tl.set("#cg065-r0w0", { opacity: 1 }, 73.49);
+    tl.set("#cg066-r0w0", { opacity: 1 }, 74.13);
+    tl.set("#cg066-r0w1", { opacity: 1 }, 74.37);
+    tl.set("#cg066-r0w2", { opacity: 1 }, 74.53);
+    tl.set("#cg066-r0w3", { opacity: 1 }, 74.69);
+    tl.set("#cg066-r0w4", { opacity: 1 }, 74.93);
+    tl.set("#cg066-r1w0", { opacity: 1 }, 75.25);
+    tl.set("#cg067-r0w0", { opacity: 1 }, 75.73);
+    tl.set("#cg067-r0w1", { opacity: 1 }, 75.89);
+    tl.set("#cg067-r0w2", { opacity: 1 }, 76.21);
+    tl.set("#cg068-r0w0", { opacity: 1 }, 76.45);
+    tl.set("#cg068-r0w1", { opacity: 1 }, 76.61);
+    tl.set("#cg068-r0w2", { opacity: 1 }, 76.85);
+    tl.set("#cg068-r0w3", { opacity: 1 }, 77.01);
+    tl.set("#cg068-r0w4", { opacity: 1 }, 77.33);
+    tl.set("#cg069-r0w0", { opacity: 1 }, 77.49);
+    tl.set("#cg070-r0w0", { opacity: 1 }, 78.13);
+    tl.set("#cg070-r1w0", { opacity: 1 }, 78.45);
+    tl.set("#cg070-r2w0", { opacity: 1 }, 79.41);
+    tl.set("#cg070-r2w1", { opacity: 1 }, 79.57);
+    tl.set("#cg071-r0w0", { opacity: 1 }, 80.13);
+    tl.set("#cg071-r0w1", { opacity: 1 }, 80.29);
+    tl.set("#cg071-r0w2", { opacity: 1 }, 80.53);
+    tl.set("#cg071-r0w3", { opacity: 1 }, 80.69);
+    tl.set("#cg072-r0v0", { opacity: 1 }, 81.09);
+    tl.set("#cg072-r0v0", { opacity: 0 }, 81.41);
+    tl.set("#cg072-r0v1", { opacity: 1 }, 81.41);
+    tl.set("#cg072-r0v1", { opacity: 0 }, 81.51);
+    tl.set("#cg072-r0v2", { opacity: 1 }, 81.51);
+    tl.set("#cg072-r0v2", { opacity: 0 }, 81.61);
+    tl.set("#cg072-r0v3", { opacity: 1 }, 81.61);
+    tl.set("#cg073-r0w0", { opacity: 1 }, 82.45);
+    tl.set("#cg073-r0w1", { opacity: 1 }, 82.77);
+    tl.set("#cg073-r0w2", { opacity: 1 }, 83.09);
+    tl.set("#cg074c0", { opacity: 1 }, 83.41);
+    tl.set("#cg074c0", { color: "#a9a9a9" }, 83.443);
+    tl.set("#cg074c0", { color: "#f4f2ee" }, 83.477);
+    tl.set("#cg074c1", { opacity: 1 }, 83.477);
+    tl.set("#cg074c1", { color: "#a9a9a9" }, 83.51);
+    tl.set("#cg074c1", { color: "#f4f2ee" }, 83.544);
+    tl.set("#cg074c2", { opacity: 1 }, 83.543);
+    tl.set("#cg074c2", { color: "#a9a9a9" }, 83.576);
+    tl.set("#cg074c2", { color: "#f4f2ee" }, 83.61);
+    tl.set("#cg074c3", { opacity: 1 }, 83.61);
+    tl.set("#cg074c3", { color: "#a9a9a9" }, 83.643);
+    tl.set("#cg074c3", { color: "#f4f2ee" }, 83.677);
+    tl.set("#cg074c4", { opacity: 1 }, 83.677);
+    tl.set("#cg074c4", { color: "#a9a9a9" }, 83.71);
+    tl.set("#cg074c4", { color: "#f4f2ee" }, 83.744);
+    tl.set("#cg074tw", { x: 353 }, 83.41);
+    tl.set("#cg074tw", { x: 263 }, 83.477);
+    tl.set("#cg074tw", { x: 171 }, 83.543);
+    tl.set("#cg074tw", { x: 0 }, 83.677);
+    window.__timelines["captions"] = tl;
+  </script>
+</template>

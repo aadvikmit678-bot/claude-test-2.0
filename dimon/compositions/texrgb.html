@@ -1,0 +1,16 @@
+<template>
+  <style>
+  #root { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  #root .tex { position: absolute; left: -115px; top: -65px; width: 2150px; height: 1210px; object-fit: cover; }
+  </style>
+  <div id="root" data-composition-id="texrgb" data-width="1920" data-height="1080">
+    <div id="texrgb-box" class="clip" data-start="0" data-duration="87" data-track-index="1" data-layout-ignore
+      style="position:absolute;left:0;top:0;width:1920px;height:1080px"><img id="tx-rgb" class="tex" src="assets/tex/tx_rgb.jpg" alt="" style="opacity:0.10" /></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.to({}, { duration: 87 }, 0);
+    
+    window.__timelines["texrgb"] = tl;
+  </script>
+</template>

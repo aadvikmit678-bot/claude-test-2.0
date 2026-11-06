@@ -16,3 +16,11 @@ pattinson-v5/assets/audio/
 pattinson-v5/renders/
 __pycache__/
 *.pyc
+
+# Jamie Dimon edit: raw Drive downloads and derived media stay local
+dimon-src/
+dimon/assets/clips/
+dimon/assets/img/
+dimon/assets/audio/
+dimon/renders/
+dimon/assets/tex/
