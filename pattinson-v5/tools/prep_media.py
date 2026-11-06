@@ -154,7 +154,17 @@ CLIP_SPECS = {
     "c_kimmel_card": ("KIM", 211.65, 0.85, 1280, 720, 0.5, 0.45, 1.0, None),
     # "run": the fast stretch of the user's clip (afterburner, speedometer, Batman driving, chase POV); a slight
     # zoom drops the small watermark at the bottom of the chase shots
-    "c_run2": ("RUNUSER", 1.05, 1.0, 1920, 1080, 0.5, 0.44, 1.1, None),
+    "c_run2": ("RUNUSER", 1.05, 2.56, 1920, 1080, 0.5, 0.44, 1.1, None),  # v5 notes 7: 1 s longer on screen (same 1.56x)
+    # ---- v5 notes (this session): the payoff without the overused shots ----
+    "c_box_tw": ("TWNEW", 82.30, 1.40, 600, 600, 0.56, 0.45, 1.0, None),      # "one box": the biology-class close-up
+    "h_twn_left": ("TWNEW", 204.10, 2.90, 960, 1080, 0.5, 0.5, 1.0, None),   # "post-Twilight reinvention": Edward, forest
+    # v5 notes 3: his own face in six films for the right half of "reinvention" (face montage, native 1:1 half crops)
+    "h_r_gt": ("FACE", 8.95, 1.00, 960, 1080, 0.5, 0.5, 1.0, None),      # Good Time
+    "h_r_lh": ("FACE", 13.70, 1.00, 960, 1080, 0.5, 0.5, 1.0, None),     # The Lighthouse
+    "h_r_tn": ("FACE", 11.92, 1.00, 960, 1080, 0.5, 0.5, 1.0, None),     # Tenet
+    "h_r_sc": ("FACE", 3.65, 1.00, 960, 1080, 0.5, 0.5, 1.0, None),      # Dune: Part Three (Scytale)
+    "h_r_hn": ("FACE", 5.15, 1.00, 960, 1080, 0.5, 0.5, 1.0, None),      # Primetime
+    "h_r_dr": ("FACE", 15.95, 1.00, 960, 1080, 0.5, 0.5, 1.0, None),     # The Drama
     # ---- v5 segment 2 (10.85-23.41): "To some people ... the vampire kid." ----
     "c_twn_hall": ("TWNEW", 24.30, 0.95, 1920, 1080, 0.5, 0.5, 1.0, None),     # he'll always be: Edward turns
     "c_twn_warm": ("TWNEW", 96.80, 1.25, 1920, 1080, 0.5, 0.5, 1.0, None),     # Edward Cullen.: warm close-up
@@ -170,14 +180,14 @@ CLIP_SPECS = {
     # "He spent the last 15 years": his roles for the split-box bands (McConaughey reference)
     "c_k15_king": ("MON", 16.95, 0.50, 1920, 1080, 0.5, 0.5, 1.0, None),     # The King
     "c_k15_barb": ("MON", 22.62, 0.60, 1920, 1080, 0.5, 0.5, 1.0, None),     # Waiting for the Barbarians
-    "c_k15_tenet": ("FACE", 11.95, 0.40, 1920, 1080, 0.5, 0.5, 1.0, None),   # Tenet
+    "c_k15_tenet": ("FACE", 11.82, 0.62, 1920, 1080, 0.5, 0.5, 1.0, None),   # Tenet (long enough for its slot)
     "c_k15_drama": ("FACE", 16.00, 0.40, 1920, 1080, 0.5, 0.5, 1.0, None),   # The Drama (the merged picture)
     "c_k15_mk17h": ("MON", 38.00, 0.45, 1920, 1080, 0.5, 0.5, 1.0, None),    # Mickey 17, the hallway
     # "the world sees him": the user's two clips for the left and right panels (the centre stays)
     "p_frame_l": ("FRAME", 0.50, 0.55, 640, 1080, 0.5, 0.40, 1.0, None),
     "p_world_r": ("WORLD", 3.20, 0.55, 640, 1080, 0.5, 0.45, 1.0, None),
     # ---- v5 segment 4 (37.68-43.52): "he was quietly working with the best directors alive, until one day he became Batman"
-    "c_quiet": ("MON", 14.30, 0.85, 1920, 1080, 0.5, 0.42, 1.0, None),        # he was quietly: The Lighthouse, by the lamp
+    "c_quiet": ("MON", 14.16, 0.82, 1920, 1080, 0.5, 0.42, 1.0, None),        # he was quietly: The Lighthouse, by the lamp (ends before the Batman shot that follows in the montage)
     "c_nolan_imax": ("NOLAN", 27.80, 1.90, 1920, 1080, 0.5, 0.5, 1.0, None),  # the whole directors line: Nolan at the IMAX camera
     # ---- v5 segment 5 (43.52-51.44): "He doesn't play characters, he becomes them. He picks roles that scare the shit out
     # of others, the ones everyone else runs from." -- the user's makeup-test clip, shot by shot (cuts at 4.21 / 8.43 /
@@ -451,6 +461,72 @@ def copy_sfx():
         shutil.copy(f"{SFXSRC}/CREDITS.md", f"{AUD}/sfx/CREDITS.md")
 
 
+def _window_light(W=1920, H=1080, base=(122, 117, 114), beam=(238, 228, 223), seed=11):
+    """Paper lit by a window (the user's Hemant Taneja reference at 0:13): a broad soft-edged diagonal band of daylight
+    from the upper left to the lower right through the centre, warm grey shadow either side, a faint window-frame
+    shadow across the band, a gentle vignette and stretched paper fibres."""
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    x0, y0, x1, y1 = 330.0, 120.0, 1760.0, 1060.0          # the beam's axis
+    dx, dy = x1 - x0, y1 - y0
+    L = (dx * dx + dy * dy) ** 0.5
+    nx, ny = -dy / L, dx / L
+    d = (xx - x0) * nx + (yy - y0) * ny                     # signed distance from the axis
+    along = ((xx - x0) * dx + (yy - y0) * dy) / L           # position along the axis
+    half, soft = 360.0, 230.0
+    t = np.clip((half + soft - np.abs(d)) / soft, 0, 1)
+    t = t * t * (3 - 2 * t)                                 # smoothstep edge
+    t *= 0.78 + 0.22 * np.clip(along / L, 0, 1)             # the light gets stronger toward the lower right
+    # a window-frame shadow crossing the band, and a fainter second one
+    for c, w, k in ((0.47, 46.0, 0.16), (0.73, 30.0, 0.09)):
+        bar = np.exp(-((along - c * L) / w) ** 2)
+        t *= 1 - k * bar
+    base, beam = np.array(base, np.float32), np.array(beam, np.float32)
+    img = base[None, None, :] * (1 - t[..., None]) + beam[None, None, :] * t[..., None]
+    vx, vy = (xx - W / 2) / (W / 2), (yy - H / 2) / (H / 2)
+    vig = 1 - 0.16 * np.clip((vx * vx + vy * vy - 0.25) / 1.75, 0, 1)
+    img *= vig[..., None]
+    rng = np.random.default_rng(seed)
+    fib = rng.normal(0, 1, (H, W)).astype(np.float32)
+    k9 = np.ones(9, np.float32) / 9
+    fib = np.apply_along_axis(lambda row: np.convolve(row, k9, mode="same"), 1, fib)
+    img += fib[..., None] * 2.6 * (np.array(base).mean() / 120.0)
+    return np.clip(img, 0, 255).astype(np.uint8)
+
+
+def _write_rgb(img, out):
+    H, W, _ = img.shape
+    raw = f"{WORK}/tex_tmp.rgb"
+    img.tofile(raw)
+    run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
+         "-s", f"{W}x{H}", "-i", raw, out])
+    os.remove(raw)
+
+
+def make_paper_light():
+    """v5 notes: the paper beats get window light instead of a plain sheet (paper_light.png); the black beds get the
+    same light, very dim (black_light.png), so they are not flat black."""
+    _write_rgb(_window_light(), f"{TEX}/paper_light.png")
+    _write_rgb(_window_light(base=(5, 6, 8), beam=(34, 33, 35), seed=12), f"{TEX}/black_light.png")
+
+
+def make_sting_beggars_cut(cut_at=2.00, cut_src=3.10):
+    """v5 notes: the cold open without the pause -- the Venice line up to cut_at, then straight into the Odyssey line
+    from cut_src (where the source cuts to The Odyssey), 15 ms crossfade, then the same levelling as make_audio()."""
+    src = f"{WORK}/sep/out/htdemucs/start/vocals.wav"
+    dur = round(5.55 - (cut_src - cut_at), 3)
+    fo = 0.18
+    run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-i", src, "-filter_complex",
+         f"[0]atrim=0:{cut_at + 0.0075},asetpts=N/SR/TB[a];[0]atrim={cut_src - 0.0075}:5.55,asetpts=N/SR/TB[b];"
+         f"[a][b]acrossfade=d=0.015:c1=tri:c2=tri,atrim=0:{dur},highpass=f=70,afade=t=in:d=0.02,"
+         f"afade=t=out:st={dur - fo}:d={fo},loudnorm=I=-17:TP=-1.5:LRA=11",
+         "-ar", "48000", "-ac", "2", f"{AUD}/sting-beggars-cut.wav"])
+
+
+def make_vamp_sil():
+    """White silhouette of the vampire-kid plate's cut-out (the Hemant Taneja silhouette flash)."""
+    make_silhouette(f"{IMG}/f_twn_vamp-cut.png", f"{IMG}/f_twn_vamp-sil.png")
+
+
 if __name__ == "__main__":
     only = set(sys.argv[1:])
     def want(k):
@@ -484,3 +560,9 @@ if __name__ == "__main__":
         make_vo2(); print("vo2")
     if want("sfx") or want("soft_glitch"):
         make_soft_glitch(); print("soft glitch")
+    if want("paper_light"):
+        make_paper_light(); print("paper light")
+    if want("sting_cut"):
+        make_sting_beggars_cut(); print("sting cut")
+    if want("vamp_sil"):
+        make_vamp_sil(); print("vamp sil")
