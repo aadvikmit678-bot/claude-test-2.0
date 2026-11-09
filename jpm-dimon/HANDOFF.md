@@ -29,12 +29,12 @@ This is a 93.2-second motion-graphics documentary short about Jamie Dimon and JP
 | v5, film 0–31.7 s (the user's "jpm-dimon-v5-0-31-share") | `jpm-dimon/renders/jpm-dimon-v5-0-31-share.mp4`. In the Drive folder its id is `1lMc957Cg69_7NMju71amKNro3LdIChDO`. | 1920×1080, 30 fps, H.264 with AAC sound, 31.70 s. Downloaded from the Drive folder into this checkout on 9 Nov. A Drive title search did not find it; listing the folder does. How it differs from the original render is not recorded. |
 | v5 original render, 0–31.7 s | `jpm-dimon/renders/jpm-dimon-v5-0-31.mp4` | Made by the old session. `renders/` is not in git, so it is not in this checkout. |
 | v4 render, 0–31.7 s | `jpm-dimon/renders/jpm-dimon-v4-0-31.mp4` | The same: not in this checkout. It ends on "…the United States government." |
-| The whole film, 0–93.2 s | — | No full-length render of any version is recorded in the files. When this was written (about 17:30 on 9 Nov), this session was rendering the whole v5 film with `npx hyperframes@0.9.2 render -o renders/jpm-dimon-v5-full.mp4` (started 17:00). Its result is not recorded here. |
+| The whole film, 0–93.2 s | `jpm-dimon/renders/jpm-dimon-v5-full.mp4` (master, 250.6 MB) and `jpm-dimon/renders/jpm-dimon-v5-full-share.mp4` (123 MB, re-encoded at the share file's 10 Mbps) | Rendered on 9 Nov with `npx hyperframes@0.9.2 render` from the unchanged v5 project and the media rebuilt by `tools/rebuild/` (54 min, 2,796 frames). The old session never made a full-length render of any version that the files record. **Checked against the user's v5 share render:** `hyperframes diff` over 0–31.7 s gives mean SSIM 0.977 (p05 0.963), all 47 cuts matched, sound 0 ms off. The residue is grain, scanlines and the share file's lighter encode, not different pictures. `renders/` is not in git. |
 
 ### Project, branch and old sessions
 - **Project:** `jpm-dimon/`, a HyperFrames project. `jpm-dimon/meta.json` records it as created 2026-11-05T19:22:16Z.
 - **Branch:** `claude/jpm-dimon-edit`, also on GitHub as `origin/claude/jpm-dimon-edit`. This session works on it.
-  - Its head, `008d820`, is v5 (`292806f`, Fri 6 Nov 19:54) plus three commits from 9 Nov (`fb7351b`, `dce1c64`, `008d820`) that only update the HyperFrames skills. Nothing in `jpm-dimon/` has changed since v5.
+  - On 9 Nov it gained commits on top of v5 (`292806f`, Fri 6 Nov 19:54) that do not touch the edit: `fb7351b`, `dce1c64` and `008d820` update the HyperFrames skills; `ff85051` adds `jpm-dimon/tools/rebuild/` (the media rebuild kit, §7.3); later commits add this file. `index.html`, `compositions/`, `tools/build*.py`, the prep scripts and the notes files are exactly as v5 left them.
   - Earlier on 9 Nov the branch was merged into `claude/fervent-bohr-532e8t` as `2eadf4b` ("Merge the Jamie Dimon v5 edit (claude/jpm-dimon-edit) to continue it here", 16:24). The session then moved onto `claude/jpm-dimon-edit` itself and copied the three skill commits onto it.
   - Every round's commit is listed in §4.
 - **Old sessions** (from the `Claude-Session` lines in the commits):
@@ -46,9 +46,9 @@ This is a 93.2-second motion-graphics documentary short about Jamie Dimon and JP
 | File | What it holds | Current? |
 |---|---|---|
 | `jpm-dimon/REVIEW.md` | The v5 review: the user's notes on v4 one by one, what v5 did about each, the checks and the open items. Rewritten every round. | Yes, for 0–31.7 s |
-| `jpm-dimon/REFERENCES.md` | Frame-by-frame breakdowns of the reference reels (§5). Written in v4; v5 added two passes. | Yes |
-| `jpm-dimon/SPEC.md` | The goal, what each reference gives, look, motion, the banned list and the QA frames | In part. It was last changed in v2 (`a9e958c`) and still describes v2 in places: Satoshi, sliding caption lines, "No music has been supplied yet", textures at 40 % / 28 %, the v2 build steps and the v2 open (§6.4). |
-| `git show 1ca18f3:jpm-dimon/REVIEW.md` | The v3 review | The latest record for 31.7–93.2 s, with v4's type and v5's lighter textures applied on top |
+| `jpm-dimon/REFERENCES.md` | Frame-by-frame breakdowns of the reference reels (§5). Written in v4; v5 added two passes. | Yes for the two v5 passes, except the S03 and S06 effects they list that were never built (§8.3). The first half ("Lifted into v4", "Your assets used in v4") describes v4 and is superseded where v5 changed a beat (§6.4): the five S02 cards and the S01 glow pop-up, BIGGER's echoes "just above and below", "JPMORGAN CHASE" in capitals, the Wolf "slowed to 0.72×", S06 with no B-roll, the globe "at 0.5 opacity" (v5: 0.45). |
+| `jpm-dimon/SPEC.md` | The goal, what each reference gives, look, motion, the banned list and the QA frames | In part. It was last changed in v2 (`a9e958c`) and still describes v2 in places: Satoshi, sliding caption lines, "No music has been supplied yet", textures at 40 % / 28 %, the v2 build steps, the v2 open, its list of what each reference gives and its camera rule (1.00 → 1.025) (§6.4). |
+| `git show 1ca18f3:jpm-dimon/REVIEW.md` | The v3 review | The latest record for 31.7–93.2 s, with v4's type and v5's lighter textures applied on top. For s07, s08, s10, s12, s15, s17 and s20 it at most lists their set pieces as "Kept from v2"; they were last described in `git show a9e958c:jpm-dimon/REVIEW.md` (neither review mentions s20). |
 | `dimon/reference/FINK_REEL_REFERENCE.md`, `fink_words.json`, `frames/` | The Larry Fink reel breakdown, its word timings and its frames (`18142fc`) | Yes (§5.1) |
 | `jpm-dimon/HANDOFF.md` | This file | — |
 
@@ -62,7 +62,8 @@ Any older version of a notes file: `git show <commit>:jpm-dimon/REVIEW.md` (or `
 - In this container, when this was written:
   - `dimon-src/` holds the Drive download (its layout is in §7.1).
   - `jpm-dimon/assets/` holds `clips2/` (122 files), `img2/` (135), `tex/` (4) and `audio/` (5). They were made again in this session on 9 Nov between 16:30 and 17:00 (file times). `clips/` and `img/`, the v1 media, are empty.
-  - `dimon-work/` holds `cut/` (3 photo cut-outs) and `music/` (the Bloomberg open split into voice and music). `tx/` and `vo/` (the transcripts and the audio they are matched to) are not here, so `build5.py` cannot run yet (§7, §8).
+  - `dimon-work/` holds `cut/` (3 photo cut-outs), `music/` (the Bloomberg open split into voice and music), `tx/` and `vo/` (the transcripts and the audio they are matched to) and `cv4/` (OpenCV 4 for `faces.py`). With them, `build5.py` runs and regenerates `index.html`, all compositions and `tools/media_v5.json` byte for byte (checked on 9 Nov).
+- **To make all of this again on a fresh session:** `bash jpm-dimon/tools/rebuild/rebuild_media.sh` (about 4 GB of Drive downloads, about 30 min). It downloads the Drive folder by file id, makes the links the scripts read, puts the verified transcripts in `dimon-work/`, runs the prep scripts in order, makes the two by-hand files (the S06 matte and `paper_light.png`) and checks the result. Run on 9 Nov with everything present, every file it re-made was byte-identical to the ones in the full render.
 
 ### The Drive folder
 "Jamie Dimon": https://drive.google.com/drive/folders/1nC7mwKB1Baj2aL5CQehlxG5ztOkuh7WJ (id `1nC7mwKB1Baj2aL5CQehlxG5ztOkuh7WJ`). It holds the source footage, the reference reels, the user's own assets and the share render. What each file is and where the film uses it: §5.9 and §5.10. The AMD reel and the Pattinson film are not in it.
@@ -134,17 +135,17 @@ Subfolders:
 **How to read the tables below**
 - Picture cuts land 0.05 s before the word they illustrate (`LEAD`, `CUT(t) = t − 0.05`).
 - Word onsets come from the generated compositions, so they are the times the edit actually uses. `build5.py` takes them from Parakeet transcripts snapped to the waveform. Those transcripts (`dimon-work/tx/`) are not in the repo, so a word that no animation keys on has no recorded onset; it is marked "onset not recorded".
-- Asset ids are `KEY_<source s×100>_<length s×100>[v][_x<crop>]`. For example, `HOW_32320_56` is CNBC source 323.20 s, 0.56 s long. The full naming rule is in §7.3.
+- Asset ids are `KEY_<source s×100>_<length s×100>[v][_x<crop>]`. The length includes 0.25 s of padding: `HOW_32320_56` is CNBC source 323.20 s, a 0.56 s file of which 0.31 s is on screen (0.630–0.940). The crop numbers are truncated, not rounded, so some ids do not spell the real crop: `GAME_8150_70_x56_53_114` is cut with xyz (0.57, 0.53, 1.15) and `BANK_120_57_x55_57_120` with (0.55, 0.58, 1.2). Read the `xyz` in `build5.py`. The full naming rule is in §7.3.
 - What a shot shows comes from the build-script comments and the `tools/prep_media.py` labels. Shots marked † were not described in the files; each was checked with one frame grab from the Drive source in `dimon-src/_drive` (read-only).
 - Grade names (`doc`, `bw`, `crt`, `night`, `hcrt` and the rest) are explained in §7.5.
 
-**Source keys** (`V` in `tools/prep2.py`; labels from `tools/prep_media.py`). File specs and what each source is used for: §5.10.
+**Source keys** (`V` in `tools/prep2.py`). The labels for GAME, BANK, MPB, HOW, UNT, STO, CRASH, FIRED, P02, P06, P07, P10 and P11 are the comments on `V` in `tools/prep_media.py` (REVIEW v2 calls MPB "the career documentary"). `prep_media.py` has no entry for CHAIR, SPEAK, MONT, BONUS, MONEY or P01 and no comment on WOLF, so those labels come from elsewhere: MONT, BONUS and MONEY from v4's comment on `V` in `prep2.py`; CHAIR's "Stanford" from the `build5.py` comment on its moment at 1265.2 s; "his talking video" from `build5.py`; WOLF's "the dollar-bill shot" from a `prep5.py` comment; P01's "chess hand" from the `build5.py` S13 comment. File specs and what each source is used for: §5.10.
 
 | Key | Drive file | Label in the files |
 |---|---|---|
 | GAME | name of the game.mp4 | Bloomberg Originals: the news open + B-roll |
 | BANK | we bank the countries, we bank the world bank.mp4 | Bloomberg (Emily Chang) Dimon interview + archival |
-| MPB | Jamie Dimon - The Most Powerful Banker in America Full Documentary.mp4 | career documentary |
+| MPB | Jamie Dimon - The Most Powerful Banker in America Full Documentary.mp4 | "Most Powerful Banker in America" documentary |
 | HOW | How JP Morgan Chase Became The Largest Bank In The US.mp4 | CNBC |
 | UNT | The Untold Career Story of Jamie Dimon (CEO of JPMorgan).mp4 | archival inserts |
 | STO | Stories from 2008's Great Recession … .mp4 | 60 Minutes 2008 stories |
@@ -155,7 +156,7 @@ Subfolders:
 | FIRED | fiered him push scene punch one. that takes soul out.mp4 | the user's "fired" push scene (Doctor Strange) |
 | MONT | jp morgan montage.mp4 | the user's montage (4:3, burned subtitles, cropped above them) |
 | BONUS / MONEY | over a bonus.mp4 / money asset.mp4 | the user's assets |
-| P01–P11 | `_pin/pNN_…` (Pinterest clips; their Drive location is not recorded) | P01 chess hand · P02 man in a burning room · P06 helicopter lifting pallets of money off the Fed · P07 money counting machine · P10 falling money · P11 chess: the king stands, the rest fall |
+| P01–P11 | `_pin/pNN_…` (Pinterest clips; git does not record which Drive files they are, but in this container `_pin/` links into `money_pinterest videos/`, §7.1) | P01 chess hand · P02 man in a burning room · P06 helicopter lifting pallets of money off the Fed · P07 money counting machine · P10 falling money · P11 chess: the king stands, the rest fall |
 
 ### 3.1 Scenes at a glance
 
@@ -167,12 +168,12 @@ Subfolders:
 | s04 | 15.065–20.855 | VO: "a guy who got fired in 1998 by his own mentor over a bonus and a family grudge," | Paper page with 3 young-Dimon squares; 1990→1998 roller over the Citigroup launch; 8 Weill faces; 2×2 money grid; "over a bonus" cartoon; Weill with his daughter (reframe) | Black Helvetica words + FIRED; roller; small serif "by his own mentor"; "over a" / "bonus" / "and a family" / "grudge" | was-fired (Jan Koum) reel; Dario roller; Dario "every AI tech bro"; Fink 2×2 | v5 (roller, grid, cartoon, grudge from v4) |
 | s05 | 20.855–23.600 | VO: "now runs the biggest bank in the world." | Ribbon at 270 Park, on stage, tower from below, JPMORGAN CHASE & CO. on the glass, London, Manhattan from above; white flash out | "now runs the / biggest bank"; "in the / world" | Fink pace | v3 picture, v4 type, v5 textures |
 | s06 | 23.600–34.850 | Dimon (Bloomberg interview): "We bank some of these companies in 30 countries. We bank countries. We bank the World Bank, the IMF, we bank the United States government. You have to be big. You can't do those things and be small." | Interview close-up, matted over the globe ghost, alternating with B-roll; then the wide two-shot, towers, the two-shot shrinking into a window | Left-aligned we-bank lockups with hugging quote marks; "You have to be / big"; "You can't do those things / and be small" | "We bank countries" reel; Fink Rogan screen; Fink window zoom-out | v5 to 31.550; v3/v4 after |
-| s07 | 34.850–38.430 | VO: "Meet Jamie Dimon, the golden boy of Wall Street," | Name card on paper; young Dimon laughing (gold); young Dimon and Weill (gold); WALL ST. sign (B&W) | "Meet" + decoding "Jamie Dimon"; gold serif "golden boy"; "of / Wall Street" | Fink name card | v3 |
-| s08 | 38.430–42.845 | VO: "the guy everyone said was next in line to run the biggest financial company in the world." | Citigroup-launch press flashes; press around him; the 1998 NYT clipping with red marker sweeps | "the guy everyone"; "said was / next in line"; "to run the biggest financial company / in the world" | AMD red marker sweep | v3 |
+| s07 | 34.850–38.430 | VO: "Meet Jamie Dimon, the golden boy of Wall Street," | Name card on paper; young Dimon laughing (gold); young Dimon and Weill (gold); WALL ST. sign (B&W) | "Meet" + decoding "Jamie Dimon"; gold serif "golden boy"; "of / Wall Street" | Fink name card | v2 |
+| s08 | 38.430–42.845 | VO: "the guy everyone said was next in line to run the biggest financial company in the world." | Citigroup-launch press flashes; press around him; the 1998 NYT clipping with red marker sweeps | "the guy everyone"; "said was / next in line"; "to run the biggest financial company / in the world" | AMD red marker sweep | v2 |
 | s09 | 42.845–47.760 | VO: "He built Citigroup side by side with his mentor Sandy Weill for 16 years." | Commercial Credit; Smith Barney; Citigroup launch; split screen Dimon / Weill; Weill (warm); 1982→1998 roller with 7 cards | "He built / Citigroup"; "side by side with his mentor"; name "Sandy Weill"; "16 years" | Dario roller with floating cards | v3 |
-| s10 | 47.760–50.810 | VO: "But then, at 42, he was fired." | Bar write-on; B&W portrait with punch-in; bar write-on; the palm-strike push scene, letterboxed | Bars "But then", "he was"; "at / 42"; "fired" | Fink bar write-on and punch-in | v3 |
+| s10 | 47.760–50.810 | VO: "But then, at 42, he was fired." | Bar write-on; B&W portrait with punch-in; bar write-on; the palm-strike push scene, letterboxed | Bars "But then", "he was"; "at / 42"; "fired" | Fink bar write-on and punch-in | v2 |
 | s11 | 50.810–53.020 | VO: "18 months of no job." | Flip calendar NOV 1998 → MAR 2000 | "18 months / of no job" | Fink flip calendar | v3 |
-| s12 | 53.020–57.760 | VO: "He took up boxing, read biographies, even met Bezos for a job at Amazon." | Stanford talk; boxing-gloves strobe; reading room; book covers; Bezos; Bezos cut-out with "Amazon" behind | "He took up / boxing"; "read / biographies"; "even met / Bezos"; "for a job at" | Fink style strobe; Hemant word behind a cut-out | v3 |
+| s12 | 53.020–57.760 | VO: "He took up boxing, read biographies, even met Bezos for a job at Amazon." | Stanford talk; boxing-gloves strobe; reading room; book covers; Bezos; Bezos cut-out with "Amazon" behind | "He took up / boxing"; "read / biographies"; "even met / Bezos"; "for a job at" | Fink style strobe; Hemant word behind a cut-out | v2 (plus the `74e6c6b` Bezos fix) |
 | s13 | 57.760–62.080 | VO: "But it was all a premise for the greatest comeback in the history of Wall Street." | Dimon thinking; chess hand on paper; on stage, arm raised; COMEBACK echo; he walks back in; 24-tile archival wall | "premise" black on paper; "in the history of / Wall Street" | Dario SUDDENLY (v2 echo); Dario "the lead" wall | v3 |
 | s14 | 62.080–65.320 | VO: "In 2000, he takes over a broken bank in Chicago," | Typed "In 2000"; Dimon at Bank One; broken bank (glitch); Chicago from the air; Chase Tower Chicago | Typed giant words; "he takes over a / broken bank"; "in / Chicago" | Fink typed giant words | v3 |
 | s15 | 65.320–67.140 | VO: "cuts the dividend, cleaned it up," | Diagonal slice; dirty copy wiped clean | "cuts the / dividend"; "cleaned it / up" | none named | v2 |
@@ -183,7 +184,7 @@ Subfolders:
 | s20 | 80.190–82.040 | VO: "and when every other bank was dying," | 10-picture flash montage of the failures; trader, head in hands | "and when every other bank was / dying" | Fink pace, negative flashes | v2 |
 | s21 | 82.040–83.495 | VO: "he was the only one standing" | Chess king stands (vertical panel); "Last Man Standing" book + flash | "he was the / only one"; "standing" | none named | v3 |
 | s22 | 83.495–86.110 | VO: "with enough money to buy the ones that fell." | Fed cash pallets; "Fire Sale"; Bear Stearns; Washington Mutual; cards drop off the paper | "with enough / money"; "to buy the ones"; "that / fell" on paper | Fink logos falling | v3 |
-| s23 | 86.110–93.200 | VO: "That's JP Morgan and Chase, the name that moves $10 trillion every single day today." | Stone sign; glass door; blue signs; wordmark sweep; NYSE board; screens; screen wall + counter; counting machine; Chase building; floor; typed "Today"; Dimon close-up; fade | "That's / JP Morgan"; counter $10 → $10,000,000,000,000; "every single / day"; "Today" | Fink chunk counter and typed words | v3 |
+| s23 | 86.110–93.200 | VO: "That's JP Morgan and Chase, the name that moves $10 trillion every single day today." | Stone sign; glass door; blue signs; wordmark sweep; NYSE board; screens; screen wall + counter; counting machine; Chase building; floor; typed "Today"; Dimon close-up; fade | "That's / JP Morgan"; counter $10 → $10,000,000,000,000; "every single day" (one line); "Today" | Fink chunk counter and typed words | v3 |
 | captions | 0–93.200 (66 groups) | | | Pattinson engine (§3.3) | Pattinson edit | v4 engine, v5 blinks |
 | grain | 0–93.200 | | Registry grain overlay | | Pattinson film (REVIEW.md) | v5 |
 | textures | each scene, full length | | `ht_grunge.jpg` overlay 0.10 + `ht_paper.jpg` soft-light 0.04 (s02 and s06: 0.05 / 0) | | the user's halftone prints | v5 |
@@ -202,7 +203,7 @@ Subfolders:
 | 2.460–3.000 | — | `GAME_32960_79` the vault door | ↑ |
 | 3.000–3.450 | is 3.05 · being 3.16 | `GAME_7020_70` towers from below | "is being" (2.983–3.450) |
 | 3.450–4.030 | big 3.50 | `GAME_600_83` towers from below†, seen only through "BIG" (Inter 800, 1000 px knock-out, multiply). No push; 2-frame negative at 3.450. | (the word is the matte) |
-| 4.030–4.480 | and 4.08 · no 4.28 | `GAME_8150_70_x56_53_114` Wall Street at rush hour | "and no one is", y 900, on a dark scrim 0.45 (4.013–5.060) |
+| 4.030–4.480 | and 4.08 · no 4.28 | `GAME_8150_70_x56_53_114` Wall Street at rush hour, cropped at xyz (0.57, 0.53, 1.15). Reframed in v4 so that a dark building column at its left edge no longer reads as a black bar (REVIEW v4); keep the crop. | "and no one is", y 900, on a dark scrim 0.45 (4.013–5.060) |
 | 4.480–5.060 | one 4.60 · is 4.76 | `GAME_840_83` the reporter on camera, in lip-sync. White corner squares 4.960 (top-left, 2 frames) and 5.027 (bottom-right, 1 frame). | |
 | 5.060–6.160 | bigger 5.11; held silence 5.70–6.20 | BIGGER on #020202, in three steps. 5.060: glitch frame with the word smeared through a pale band. 5.093: crisp black word in a glowing white bar. From 5.126: the white word with glow (Instrument Serif 340, blur 8 → 0 by 5.227). Rows of three blurred "BIGGER" (520 px; top row 30 % white, bottom 24 %) rush in (expo.out 0.85 s) and creep on, top row left, bottom row right. Faint side copies drift outward. No small copy. Hard cut at 6.160. | Dario SUDDENLY |
 | 6.160–7.230 | on 6.21 · Wall 6.29 · Street 6.50 · than 6.78 | `GAME_342_132` the street sign, push 1.00 → 1.04 | "on" (serif 112) + "Wall Street" (serif 340), landing in place (6.143–6.730); "than" (Inter 84, 6.713–7.230) |
@@ -214,7 +215,7 @@ Subfolders:
 
 | Time | Spoken | Picture | Text / graphics |
 |---|---|---|---|
-| 9.050–10.700 | This 9.085 · is 9.45 · the 9.61 · most 9.77 · influential 10.01 | Dimon's talking video (`SPEAK_1265_190_x59_40_114`, dim) under its freeze (`spk_f.jpg`, dark) and silhouette (`spk_sil.png`). The silhouette is grey and see-through (0.86) from 9.050 to 9.730 and opaque cream from 9.763. (`build5.py` passes `grey_until=9.55`, but it is tested against each silhouette segment's start, so the segment that starts at 9.477 stays grey until 9.730.) Live picture shows through at 9.150–9.217, 9.410–9.477, 9.730–9.763, 10.000–10.067, 10.280–10.313 and 10.520–10.620. Live strip across him at 9.400 (1 frame). White glitch blocks at 9.433, 9.467, 9.500 and 10.010. | "This is the" (Instrument Serif 80) + "most" (180), left at x 114; "influential" (180), right-aligned to x 1820, one baseline (y 330). 10.500–10.567: a cream band through "influential", the word dark and offset inside it, while the white word blinks out. |
+| 9.050–10.700 | This 9.085 · is 9.45 · the 9.61 · most 9.77 · influential 10.01 | Dimon's talking video (`SPEAK_1265_190_x59_40_114`, dim) under its freeze (`spk_f.jpg`, dark) and silhouette (`spk_sil.png`). The silhouette is grey and see-through (0.86) from 9.050 to 9.730 and opaque cream from 9.763. (`build5.py` passes `grey_until=9.55`, but it is tested against each silhouette segment's start, so the segment that starts at 9.477 stays grey until 9.730.) Live picture shows through at 9.150–9.217, 9.410–9.477, 9.730–9.763, 10.000–10.067, 10.280–10.313 and 10.520–10.620. Live strip across him at 9.400 (1 frame). White glitch blocks at 9.433, 9.467, 9.500 and 10.010. | "This is the" (Instrument Serif 80) + "most" (180), left at x 114; "influential" (180), right-aligned to x 1820, one baseline (y ≈ 380; the lockup is centred on y 330). 10.500–10.567: a cream band through "influential", the word dark and offset inside it, while the white word blinks out. |
 | 10.700–10.767 | — | Blazing white silhouette, 2 frames (Hemant 21.375) | |
 | 10.767–12.365 | man 10.73 · in 10.97 · America 11.13 · right 11.61 · now 11.85 | The same take (`SPEAK_1437_185_x59_40_114`) as a heavily defocused backdrop (hbg, 1.34 → 1.37), with Dimon matted on top (cut + halo, hcrt CRT lines). Cards from the user's montage land one frame after a soft glowing box: `cd_fortune` top-left 10.86, `cd_congress` bottom-right 11.00, `cd_whitehouse` top-right 11.20, `cd_press` bottom-left 11.40. Red boxes swap in `cd_cash` 11.63 and `cd_park` 11.697. The presidential seal fades in behind his head at 11.13 (to 0.62). Push on his face 1.00 → 1.08, 10.97–11.61. White band sweeps in from the left, 12.265–12.365. | "man in" (Inter 600 60) + "America" (serif 126), y 650 (10.663–11.560); "right" + "now" (serif 126) (11.543–12.265) |
 
@@ -436,12 +437,12 @@ Captions in s06:
   - Spoken: $10 88.62 · trillion 89.065.
 - **89.990:** `P07_200_48`, the counting machine. every 90.04.
 - **90.215:** `BANK_74460_57`, a CHASE building on a street†. single 90.265.
-- **90.535:** `GAME_12890_57`, the floor at work. day 90.585. Caption "every single / day", y 860.
+- **90.535:** `GAME_12890_57`, the floor at work. day 90.585. Caption "every single day" (one line), y 860.
 - **90.855–91.815:** typed "Today" (Inter 800 420) on black from 90.905. today 90.905; the VO ends 91.575.
 - **91.815–93.200:** `BANK_103140_164`, Dimon in close-up against a red-and-white background† (v1 called this `m_end`). Push to 1.08, 2-frame negative at 91.815, fade to black 92.450–93.070.
 
 ### 3.3 Layers over the whole film
-- **captions.html:** 66 groups (`cg000`–`cg065`), one font family per line, each word in its final place (no slide since v4). The Pattinson caption engine has four word types: sans words (Inter 84 / 62 / 160) glow in; serif line words land after a white flicker box; hero, name and gold words (serif 236 / 250 / 300) burst in blown out and settle crisp with a halo; "paper" words ("premise", "that fell") are black on paper. Frame by frame: §7.5.
+- **captions.html:** 66 groups (`cg000`–`cg065`), each word in its final place (no slide since v4). Most lines keep one font family, but six mix Inter Tight and Instrument Serif: "man in America" and "right now" (s02), "in 30 countries" (s06), "in the world" (s08), "crisis hit" (s19) and "every single day" (s23). The Pattinson caption engine has four word types: sans words (Inter 84 / 62 / 160) glow in; serif line words land after a white flicker box; hero, name and gold words (serif 236 / 250 / 300) burst in blown out and settle crisp with a halo; "paper" words ("premise", "that fell") are black on paper. Frame by frame: §7.5.
 - **grain.html:** the registry `grain-overlay` noise at 6 %, overlay blend, re-positioned 12 times a second, 0–93.2.
 - **Per-scene textures:** grunge overlay 0.10 + paper soft-light 0.04 (s02 and s06: 0.05 / 0). Black grounds carry grunge in screen at 0.05.
 
@@ -472,7 +473,7 @@ In `index.html`. Every clip is at volume 1; the voices are on track 10 and the m
 | 20.855–23.600 | s05 | **Carried:** v3 code unchanged ("now runs the biggest bank in the world": no change). Only fonts (v4) and lighter textures (v5) differ. |
 | 23.600–31.550 | s06, part 1 | **v5:** B-roll interleaved, the ghost moving and pulling focus, quote marks per group. The base interview, the matte and the we-bank captions are v4's. |
 | 31.550–34.850 | s06 tail ("You have to be big…") | **Carried:** v3 picture; v4 made "big" Inter 800 200. Untouched in v5 (an open item in the v4 review, §8.2). |
-| 34.850–93.200 | s07–s23 | **Carried:** v3's edit (commit `1ca18f3`); the S07–S23 code is identical in build4.py and build5.py. v4 changed only type (Satoshi and italics → Inter Tight + Instrument Serif, no slide). v5 changed only the global look: textures 0.40 / 0.28 → 0.10 / 0.04, ground texture 0.10 → 0.05, grade grain 0.12 → 0.07, plus the grain overlay. s15, s17 and s20 have not changed since v2. **The v4 and v5 renders stop at 31.7 s**, so no render of 31.7–93.2 is recorded since v3. |
+| 34.850–93.200 | s07–s23 | **Carried:** v3's edit (commit `1ca18f3`); the S07–S23 code is identical in build4.py and build5.py. v4 changed type (Satoshi and italics → Inter Tight + Instrument Serif, no slide) and removed the box-shadow from the s13 "premise" chess-hand panel (the same untimed-wrapper bug as the S01 "square"; REVIEW v4). v5 changed only the global look: textures 0.40 / 0.28 → 0.10 / 0.04, ground texture 0.10 → 0.05, grade grain 0.12 → 0.07, plus the grain overlay. s07, s08, s10, s12, s15, s17 and s20 have not changed since v2, apart from v4's type and v5's textures: v3 did not touch their scene files (s12 also has the `74e6c6b` fix). **The v4 and v5 renders stop at 31.7 s**, so no render of 31.7–93.2 is recorded since v3. |
 
 The notes behind each round, word for word, are in §4.
 
@@ -489,7 +490,7 @@ The film was built in rounds on `claude/jpm-dimon-edit`. Each round rewrote REVI
 | v2 | `a9e958c` | Fri 6 Nov 00:01 | `tools/build2.py`, `tools/prep2.py` (`media_v2.json`) | `SPEC.md`, `REVIEW.md` rewritten | none named |
 | v2 fixes | `74e6c6b` | Fri 6 Nov 00:16 | `tools/build2.py` | none | none |
 | v3 | `1ca18f3` | Fri 6 Nov 04:46 | `build3.py`, `make_music.py`, `check_shots.py` (`media_v3.json`) | `REVIEW.md` rewritten | none named |
-| v4 | `127f4c1` | Fri 6 Nov 17:49 | `build4.py`, `prep4.py` (`media_v4.json`) | `REVIEW.md` rewritten, `REFERENCES.md` (new) | `renders/jpm-dimon-v4-0-31.mp4`, 0–31.7 s |
+| v4 | `127f4c1` | Fri 6 Nov 17:49 | `build4.py`, `prep4.py` (`media_v4.json`); changed: `make_music.py` (the open re-cut) and `prep2.py` (the MONT, BONUS, MONEY and WOLF2 keys) | `REVIEW.md` rewritten, `REFERENCES.md` (new) | `renders/jpm-dimon-v4-0-31.mp4`, 0–31.7 s |
 | v5 | `292806f` | Fri 6 Nov 19:54 | `build5.py`, `prep5.py`, `faces.py` (`media_v5.json`) | `REVIEW.md` rewritten, `REFERENCES.md` extended | `renders/jpm-dimon-v5-0-31.mp4`, 0–31.7 s |
 
 ### Reference pass: `18142fc` "Jamie Dimon edit: frame-by-frame reference from the Larry Fink reel" (Thu 5 Nov 19:21)
@@ -503,10 +504,10 @@ The film was built in rounds on `claude/jpm-dimon-edit`. Each round rewrote REVI
 - `dimon/reference/FINK_REEL_REFERENCE.md` (347 lines at this commit); `dimon/reference/fink_words.json`, with word timings as `[start, end, word]`; `dimon/reference/frames/`, 27 contact sheets and beat frames.
 - These are in `dimon/`, not `jpm-dimon/`, and no jpm-dimon file cites them by path.
 - The local video copy, `pattinson-work/refs/fink.mp4`, was never committed.
-- The `dimon/` build later added a §11, "What makes it read as animation" (`0b01d42`). That section is in the current checkout.
+- The `dimon/` build later added a §11, "What makes it read as animation (learned the hard way on Dimon v1)" (`0b01d42`). That section is only on `origin/claude/stoic-mccarthy-hijqav`, not in this checkout; read it with `git show 0b01d42:dimon/reference/FINK_REEL_REFERENCE.md` (367 lines). The checked-out copy is the `18142fc` version (§1–§10, 347 lines).
 
 **What it records** (measurements in §5.1).
-- **Story:** 9 beats: a hook backed by an outside voice, the name reveal, a paradox, rise, fall, comeback, crisis irony, a payoff in numbers, and a kicker.
+- **Story:** 8 numbered beats plus an end sting: a contradiction hook backed by an outside voice, then the name reveal (together, beat 1), a paradox, rise, fall, comeback, crisis irony, a payoff in numbers, and a kicker. Its §10 splits the hook and the name reveal into a 9-beat template for Dimon.
 - **Pace:** 233 cuts in 85 s, median shot 0.45 s, "a new picture on almost every 1–3 words". The camera is almost static (scale change 1.00–1.02).
 - **Type:** one bold grotesque, mapped to Inter Tight 700/800 ("No serif anywhere in this reference"); centred line captions of about 56 px that hard-cut on word by word; the bar write-on, hero lockups and chunk counters; giant typed words that go from grey to white; a name decode with a giant outline echo; a quote panel with a ghost portrait and globe.
 - **Transitions:** a negative flash about every 3–4 s (the signature cut), white and grey flashes, a ray burst, a particle dissolve, HUD wireframes, a style strobe, a window zoom-out (100 % to 59 % in 0.55 s), a 2×2 grid and a logo sting.
@@ -523,7 +524,9 @@ The film was built in rounds on `claude/jpm-dimon-edit`. Each round rewrote REVI
 - **Instructions in the user's own Drive file names:**
   - "wolf of wall street clip to be used when he says wolf of wall street";
   - "fiered him push scene punch one. that takes soul out" (`prep_media.py` calls it "the user's "fired" push scene (Doctor Strange)");
-  - "Stories from 2008's Great Recession  (a lot of material on stock market bank clips wwall street traders persons)".
+  - "Stories from 2008's Great Recession  (a lot of material on stock market bank clips wwall street traders persons)";
+  - in the Pinterest folder, "money can be used in difference effect in bg less opacity. bklend" (P10; `prep_media.py`: "falling money (the user's bg blend clip)"). Not followed as written in v5: P10 is darkened under the counter in S16 and in screen blend at 0.55 in S23, never in a difference blend (§5.9);
+  - in the Pinterest folder, "2008 8 crash for first kind chess part." (P01, first keyed in `prep2.py`, v2). What it asks for is not recorded (§8.6). The film uses the clip for "premise" (S13); v2 and v3 also used it on "game".
 
 **What was built.** A 93.2 s narrated short, 1920×1080 at 30 fps, in 8 scenes. Cuts are timed to the voice, using Parakeet word times. The goal (SPEC): "the viewer ends on "$10 trillion every single day" feeling Dimon's comeback was inevitable: fired, exiled, back on top."
 - **The open:** the Bloomberg news line, cut to "The name of the game in American financial capitalism, is being big and no one is bigger on Wall Street than JPMorgan Chase." (source 1.12–2.68 s plus 5.05–12.53 s).
@@ -580,7 +583,7 @@ The film was built in rounds on `claude/jpm-dimon-edit`. Each round rewrote REVI
   - The open keeps only the reporter's voice stem.
   - Levels: voice −16 LUFS, music bed −30 LUFS.
 - **Cleaner cutting:** no more blurred-fill strips around vertical clips; `tools/check_shots.py` checks that every clip stays inside one source shot, and 13 clips were fixed.
-- **More literal footage:** the 270 Park podium, his office, the ribbon cutting, the hard hats, JPMORGAN CHASE & CO. on the glass, and Manhattan from straight above.
+- **More literal footage:** the 270 Park podium, his office, the ribbon cutting, the hard hats, JPMORGAN CHASE & CO. on the glass, Manhattan from straight above, and on "than / JP / Morgan" "the blue CHASE signs, the stone lettering, the etched glass door" (REVIEW v3).
 - **More photographs:** an 18-portrait seal ring; "30 Countries" as his real meetings flipping, then a 12-card wall; the World Bank logo on a card; the Bank One / Chase Tower, and his hundreds.
 - **New set pieces:** a flip calendar from NOV 1998 to MAR 2000 for "18 months"; the BANK ONE and J.P.Morgan cards merging into JPMORGAN CHASE & CO.; the fallen banks dropping off the page; new cards for the 2004 year roller.
 - **Kept:** v2's other set pieces and the Pattinson caption engine.
@@ -602,31 +605,32 @@ The film was built in rounds on `claude/jpm-dimon-edit`. Each round rewrote REVI
   - "in 1998": "fine with Citigroup behind".
   - "mentor": "a montage, no zooming photo".
   - "bigger": "bigger word, echoes much closer, the word simply there".
+  - S02, one full sentence (the `sp_freeze_pop` docstring, line 1297): "An interview plays, you pause that picture, and then the picture comes up at the centre with that glow". The docstring names no speaker, but the sentence is addressed to the editor and REVIEW v4 answers it ("Freeze: the interview plays, pauses, and he comes forward with a white glow"), so it reads as the user's S02 note, word for word. v5 replaced that beat with the Hemant stage.
 - **The Wolf lockup** (REFERENCES v4): "OF WALL STREET" "in big bold white caps (not yellow, per your note)". `build5.py` keeps it as "(user: not yellow)".
 - **S05** ("now runs the biggest bank in the world"): "Unchanged, as asked."
 - **S06** ("We bank…"):
   - The interview is the base for the user's lines ("Lines: exactly yours"), captioned as in the we-bank reel.
   - The Fink reel's Rogan screen, "from your screenshot", with the user's globe picture behind Dimon.
   - Dimon is matted out of the interview. REFERENCES v4: "at your note he is matted out of the interview frame by frame (the local matting model) and sits on his own layer above the picture. It only touches the curtain behind him, never him."
-- **Also answered in REVIEW v4:** drop "especially American financial capitalism" from the open, and hold "bigger"; remove v3's "square" (a shadow on an untimed wrapper); put captions beside the subject; use real video only in S03, and use the user's new assets.
+- **Also answered in REVIEW v4:** drop "especially American financial capitalism" from the open, and hold "bigger"; remove v3's "square" (a shadow on an untimed wrapper) and the same shadow on the s13 "premise" card; reframe the "and no" crowd shot ("a dark building column at its left edge had read as a black bar"; `build5.py` keeps that crop, but its comment no longer gives the reason, §3.2); put captions beside the subject; use real video only in S03, and use the user's new assets. Whether the user raised the crowd shot is not recorded.
 - **Assets the user added to the Drive folder that afternoon** (Drive creation times, 16:25–17:23): `jp morgan montage.mp4`, `bill ackman metro medi ref.mp4`, `was fired part ref.mp4`, `wolf of wwall street vid.mp4`, `over a bonus.mp4`, `money asset.mp4`, `we bank countries part.mp4`, `J P Morgan The Man Who Bought America   Full Documentary.mp4`, `jamie ghost image.webp`.
 
 **What changed (0–31.7 s only).** After 31.7 s the film is "v3's edit with v4's fonts and no slide".
-- **The open, re-cut:** "The name of the game in American capitalism, is being big, and no one is bigger [0.5 s held] on Wall Street than JPMorgan Chase."
+- **The open, re-cut** (in `tools/make_music.py`, which v4 changed: src 1.12–4.05 + 6.85–9.62 + 0.5 s silence + 9.62–12.30): "The name of the game in American capitalism, is being big, and no one is bigger [0.5 s held] on Wall Street than JPMorgan Chase."
   - The reporter's soft "than" had ended up in the music stem; it was taken back.
   - Word times were re-measured on the new track (in v3 the first words came about 0.5 s early).
-- **Type, across the whole film:** only Inter Tight (in the Helvetica role) and Instrument Serif regular with glow; no Satoshi and no italics; one font family per line; words land in their final place, and lines no longer slide.
+- **Type:** across the whole film, only Inter Tight (in the Helvetica role) and Instrument Serif regular with glow; no Satoshi and no italics; words land in their final place, and lines no longer slide. One font family per line applied to 0–31 s only, with exceptions (REVIEW v4: "the Helvetica-over-serif stack is gone from 0–31 s, except where the we-bank reel itself mixes them ("in 30 countries", "We bank / Countries")"). The committed v5 film has six lines that mix the two: s02's "man in America" and "right now" (v5, copying Hemant's "small sans words plus one big serif word"), s06's "in 30 countries" (the we-bank exception), and, after 31.7 s, "in the world" (s08), "crisis hit" (s19) and "every single day" (s23).
 - **S01:**
   - The NYSE trading floor on "game", and "in American capitalism" as one serif lockup.
   - BIG simply there, with the negative flash.
   - "bigger" as Dario's SUDDENLY: 340 px with glow, close echoes, corner squares, one glitch frame and a tiny copy.
   - "on Wall Street" lands word by word in big serif.
-  - JPMORGAN CHASE is typed like Dario's DISAPPEAR over the J.P.Morgan flag and tower.
+  - JPMORGAN CHASE is typed like Dario's DISAPPEAR over the J.P.Morgan flag and tower: "over JPMorgan pictures only (the J.P.Morgan flag, the JPMorgan tower). There is no Chase sign." (REVIEW v4). This replaced v3's blue CHASE signs on "than / JP / Morgan"; `build4.py` and `build5.py` both still say "over JPMorgan pictures only".
   - Dimon pops up "from the centre" as the Pattinson glow cut-out.
 - **S02:** Hemant Taneja's opening: a grey-then-cream glowing silhouette with live frames flashing through, "This is the most" on the left and "influential" on the right. The interview freezes and he comes forward with a glow. The presidential seal rises behind his head, and five photo cards land, each after a white box.
 - **S03:** real video only: the podium, Stanford, and him walking in (from the user's montage). The Ackman lockup "OF WALL STREET", with a motion blur on each word, over the user's Wolf dollar-bill shot (slowed to 0.72× by the player). Face boxes and a purple inverted exit frame.
 - **S04:** the was-fired reference's paper page with three young-Dimon photos; Sandy Weill wide on "by his own", then a three-shot montage for "mentor"; a faster four-square with the user's money asset; the user's "over a bonus" cartoon, with its watermark cropped; the grudge photo pans until his daughter is in it.
-- **S06 (23.6–31.6 s):** one continuous interview take, captioned in the user's chunks. The globe picture sits in a difference blend at 0.5 opacity on the right, with quote marks. Dimon is matted above it.
+- **S06 (23.6–31.6 s):** one continuous interview take (REVIEW v4: "it is 1080p, not 4K"), captioned in the user's chunks. The globe picture sits in a difference blend at 0.5 opacity on the right, with quote marks. Dimon is matted above it.
 - **New `REFERENCES.md`:** frame-by-frame breakdowns of each reference, from dense contact sheets and Parakeet transcripts: Hemant (0–1.7 s, 22–25.5 s); Dario (SUDDENLY 16.6–17.6 s, DISAPPEAR 36.6–37.4 s); Ackman (4.3–7.0 s); the "was fired" reel, a Jan Koum / WhatsApp reel (0–1.9 s); the we-bank reel; and Fink at 4–5 s. Plus a table of the user's assets and where each is used.
 
 **Rendered:** `renders/jpm-dimon-v4-0-31.mp4`, 0–31.7 s, ending on "…the United States government."
@@ -650,7 +654,7 @@ The film was built in rounds on `claude/jpm-dimon-edit`. Each round rewrote REVI
 | "most influential man in America": a video of him, mask glow, pops up, photos at his sides like Hemant; subtle zoom on his face on "in America"; fonts misaligned | Hemant's opening: a see-through grey silhouette, the live strip, white bars, the band through "influential", and two text sizes on one baseline. Then Hemant's 22–25 s layout on Dimon's talking video: a defocused copy of his own shot behind him, and borderless cards landing behind him after soft white boxes (red boxes swap two). A slow push on his face from "in America", the seal behind his head, and a white sweep out. |
 | Textures too heavy; use CRT lines and noise, lighter | Across the whole film, the grunge and paper overlays drop from 0.40 / 0.28 to 0.10 / 0.04 (0.05 / 0 on the interview scenes). Noise comes from the registry grain overlay at 6 % (`compositions/grain.html`), "as in the Pattinson film". CRT lines come from the grades, "a bit lighter than Hemant's". |
 | "He's basically the CEO of Wall Street": Pattinson-style smooth transitions, and the move from "CEO" to "of Wall Street" | "the" (Stanford) arrives still moving. "CEO" eases back into a window with photo cards popping out behind it. An inverted frame, then the Wolf arrives moving. The words blur in place, a punch-in, then a purple frame and a white frame. (REFERENCES.md and the `build5.py` header also list Ackman's block glitch into the Wolf; the committed `s03.html` does not have it, §8.3.) |
-| The Wolf shot looked cut | One continuous shot, slowed to 0.77× by motion interpolation (`wolf_slow.mp4`). In v4 the player did the slowing, which repeated frames unevenly and read as a jump at 14.37. |
+| The Wolf shot looked cut | One continuous shot, "cut after the house frame" (REVIEW v5): it starts at source 12.40 s of the landscape copy (`prep5.py`), so keep that in-point if the Wolf is retimed. It is slowed to 0.77× by motion interpolation (`wolf_slow.mp4`). In v4 the player did the slowing, which repeated frames unevenly and read as a jump at 14.37. |
 | The fired photos cut his face; wrong pictures | Three 1990s documentary photos of young Dimon, cropped square on his face by face detection. The black-and-white portrait is the hero. The page pushes in 1.3× after FIRED. |
 | "By his own mentor" like Dario's "every AI tech bro" | Eight photos of Sandy Weill, each aligned so his face sits within 15 px of the same point, with zoom-blurred edges. A new photo every 2–3 frames, behind four fixed white lines, with the words building at nose height. Then the four-square comes in dark for one frame. |
 | "and a family" / "grudge" at the bottom | Both centred. |
@@ -693,7 +697,7 @@ This section draws on `jpm-dimon/REFERENCES.md` (v5, `292806f`) and its v4 versi
 ### Where the breakdowns are kept
 - **`jpm-dimon/REFERENCES.md`:** breakdowns of Hemant, Dario, Ackman, "was fired", "we bank" and Fink at 4–5 s, then "Frame-by-frame pass (v5)" and "Second frame-by-frame pass (v5)"; the second pass also measures our own Pattinson film. The file was first written in v4, and v5 added the two passes.
 - **Larry Fink reel:** `git show 18142fc:dimon/reference/FINK_REEL_REFERENCE.md` (347 lines, shot by shot), `dimon/reference/fink_words.json` (word timings) and `dimon/reference/frames/` (27 contact sheets and stills). It was written for the separate `dimon/` build, and both builds use it. That build later added a §11, "What makes it read as animation", on `claude/stoic-mccarthy-hijqav` (`0b01d42`).
-- **What each reference gives, as one list:** "References and what each gives" in `jpm-dimon/SPEC.md` (written in v2, `a9e958c`, unchanged since).
+- **What each reference gives, as one list:** the Quick map below and the "Reference imitated" column of §3.1. SPEC.md's "References and what each gives" (written in v2, `a9e958c`, unchanged since) is the v2 list and out of date (§6.4).
 - **The code for each device:** `jpm-dimon/tools/build5.py`, in functions named after the reference (named in each section below); `tools/faces.py` for face alignment; `tools/prep5.py` for mattes, halos and smooth slow motion; `tools/prep4.py` for the ghost picture.
 
 ### How they were watched
@@ -704,7 +708,7 @@ This section draws on `jpm-dimon/REFERENCES.md` (v5, `292806f`) and its v4 versi
 ### Caveats
 - **Only Fink's material is in git.** Only the Fink frames and word timings were committed. The contact sheets and transcripts behind the other breakdowns were not; re-extract them from the Drive files.
 - **The measurements only cover 0–31.7 s.** The v4 and v5 passes measured beats in film 0–31.7 s, the part those rounds rebuilt. The set pieces after 31.7 s date from v2/v3, and apart from the Fink document no measurements were written down for them.
-- **Two frame-rate labels are wrong.** REFERENCES.md heads the first Dario pass "24 fps" and the Fink pass "25 fps". The files are 25 fps and 30 fps. Use the times in seconds.
+- **Four frame-rate labels are wrong.** In REFERENCES.md's first v5 pass, titled "every frame at each reference's own rate", both Dario headings say "24 fps" (the file is 25 fps), the Fink heading says "25 fps" (the file is 30 fps), and the "Hemant, 21.8–25.6 s" heading says "12 fps" (the file is 23.976 fps). Use the times in seconds.
 - **The references are for style only.** SPEC.md bans "The Larry Fink clip itself (it is a style reference only)". The v1 review records "the Larry Fink clip (the user said it is for someone else)".
 - **Only Fink has an original link.** The Fink reel is Instagram reel `Dewt0XXoHtk`. For every other reference the Drive copy is the only source.
 - **The user's general notes on following the references** ("edit it exactly like the reference", and the rest) are in §4; the standing rules are in §6.
@@ -765,7 +769,7 @@ This section draws on `jpm-dimon/REFERENCES.md` (v5, `292806f`) and its v4 versi
   - Purple face-detection boxes labelled "person" on The Wolf of Wall Street.
 - **Sound:** a continuous dark, bass-heavy music bed (about −22 dB between sentences) plus SFX hits.
 - **The "Rogan screen" (ref 3.80–7.77):** the user sent a screenshot of this moment. A podcast host sits on one side; a dim black-and-white ghost of Fink holding a glowing globe sits on the other, with big quote marks around a stacked caption.
-  - First v5 pass, sampled at 25 fps:
+  - First v5 pass:
     - 3.72: an inverted frame; 3.76: a white frame.
     - 3.80: the screen appears, with the quote marks there from the first frame.
     - 4.00–4.08: small white glitch boxes by the top quote mark.
@@ -850,7 +854,7 @@ This section draws on `jpm-dimon/REFERENCES.md` (v5, `292806f`) and its v4 versi
 - **S01 7.23–8.50, "JPMorgan Chase" as DISAPPEAR** (`sp_type_word`):
   - Instrument Serif 420 px, squeezed to 0.70 of its width (about 84 % of the frame).
   - Letters land at 7.28 and 7.42 (J, P), then every 0.062 s from 7.61 ("Morgan") and every 0.066 s from 7.97 ("Chase"). Each newest letter blooms, going blur 9 → 3 → 0 px over 2 frames.
-  - The picture is the J.P.Morgan flag, cutting mid-word at 7.92 to the JPMorgan tower at dusk. Both come from the user's montage, in smooth slow motion.
+  - The picture is the J.P.Morgan flag, cutting mid-word at 7.92 to the JPMorgan tower at dusk. Both come from the user's montage, in smooth slow motion. JPMorgan pictures only, with no Chase sign (v4, replacing v3's CHASE signs).
   - Tile exit: at 8.43 light-blue tiles invert parts of the word; at 8.47 tinted blocks cover the frame and the word is gone. The tower holds until Dimon slides up at 8.60.
 - **S04 17.02–18.41, "by his own mentor" as "every AI tech bro"** (`sp_dario_faces`, `faces.dario`):
   - Eight photos of Sandy Weill: two from the user's `sandie weil images`, five frames from the Most Powerful Banker documentary (772, 861, 441, 714, 889 s) and one portrait from the image pack.
@@ -899,7 +903,7 @@ This section draws on `jpm-dimon/REFERENCES.md` (v5, `292806f`) and its v4 versi
   - It is grey and see-through (0.86) until 9.730 and opaque from 9.763 (the code's `grey_until=9.55`; see §3.2).
   - Live frames at 9.15 (2 frames), 9.41 (2), 9.73 (1), 10.00 (2), 10.28 (1) and 10.52 (3).
   - The live strip at 9.40; white blocks at 9.43, 9.47, 9.50 and 10.01.
-  - "This is the **most**" sits left (80 / 180 px serif) and "**influential**" right (180 px), on one baseline (y 330).
+  - "This is the **most**" sits left (80 / 180 px serif) and "**influential**" right (180 px), on one baseline (y ≈ 380; the lockup is centred on y 330).
   - 10.50: the band through "influential" (2 frames), with the word dark and offset inside it while the white word blinks out.
 - **10.70–10.77:** the blazing silhouette, for two frames (`sp_sil_flash`).
 - **10.77–12.37, the stage** (`sp_hemant_stage`):
@@ -1014,20 +1018,20 @@ The Pattinson film was itself styled on two other references, which the Dimon no
   - 13.16–13.72: "CEO" (walking in with his security detail, from the user's montage) eases back into a window, to 0.64 in 0.42 s (power4.out).
   - Four photo cards pop out behind it at 13.32, 13.38, 13.44 and 13.50. Each follows a 2-frame soft white box and grows in 2-frame steps (0.62 → 0.86 → 1.0).
   - 13.69: an inverted frame. 13.72: the Wolf arrives moving the same way.
-- **Captions everywhere** (the "Pattinson engine", §7.5): the glow values are copied from `pattinson-v5/tools/build_v5.py`. Black words on lit paper appear in S13 ("premise") and S22 ("the ones that fell"). v2's sliding lines were removed in v4.
+- **Captions everywhere** (the "Pattinson engine", §7.5): the glow values are copied from `pattinson-v5/tools/build_v5.py`. Black words on lit paper appear in S13 ("premise") and S22 ("that fell"). v2's sliding lines were removed in v4.
 - **Noise:** the registry grain overlay at 6 % ("as in the Pattinson film"), jittered 12 times a second.
 
 ### 5.9 The user's own assets
 
 | Drive file | What it is | Where (v5) |
 |---|---|---|
-| `jp morgan montage.mp4` | The user's montage. 1280×960 (4:3) with burned-in subtitles at the bottom, 30 fps, 28.5 s; the shots are cut from a 16:9 band above the subtitles. | S01 the J.P.Morgan flag (source 12.42–13.00) and the tower at dusk (11.80–12.40); S02 photo cards (stills at 25.55, 26.05, 16.55, 28.05, 11.65, 18.85); S03 "CEO" walking in (16.95–17.43) |
+| `jp morgan montage.mp4` | The user's montage. 1280×960 (4:3) with burned-in subtitles at the bottom, 30 fps, 28.5 s; the shots are cut from a 16:9 band above the subtitles. | S01 the J.P.Morgan flag (source 12.42–12.96, stretched to 0.705 s by `slowmo()`) and the tower at dusk (11.80–12.35, stretched to 1.13 s); S02 photo cards (stills at 25.55, 26.05, 16.55, 28.05, 11.65, 18.85); S03 "CEO" walking in (16.95–17.43) |
 | `wolf of wwall street vid.mp4` | The user's Wolf cut, 720×900, 30 fps, 24.6 s | Picks the dollar-bill shot; the landscape copy is used instead, for width |
 | `wolf of wall street clip to be used when he says wolf of wall street.mp4` | The Wolf of Wall Street, 960×720, 23.976 fps, 52.7 s | S03 13.72–15.07 (`wolf_slow.mp4`) |
 | `over a bonus.mp4` | Daffy Duck fanning cash, 736×416, 30 fps, 27.8 s | S04 18.74–19.62 (from source 5.90; watermark cropped) |
 | `money asset.mp4` | Money clip, 736×414, 24 fps, 8.0 s | S04 four-square, top-right cell (18.47–18.74) |
 | `jamie ghost image.webp` | Black-and-white Dimon holding a glowing globe, 1536×1024 | The S06 ghost in this session. `tools/prep4.py` reads the first image in `dimon-src/_globe/` and draws a stand-in globe if the folder is empty. Which picture the old session used is not recorded (§8.6). |
-| `fiered him push scene punch one. that takes soul out.mp4` | Doctor Strange palm strike, 640×268, 4:14 | S10 "fired" 49.84–50.81 (source from 96.35, 1.4× speed, letterboxed to 1920×804, white flash and negatives) |
+| `fiered him push scene punch one. that takes soul out.mp4` | Doctor Strange palm strike, 640×268, 4:14 | S10 "fired" 49.84–50.81 (source from 96.93 s, i.e. 96.35 + 0.58 (`STRIKE_MS`), so that source 97.0 lands on "fired"; 1.4× speed, letterboxed to 1920×804, white flash and negatives) |
 | `money/pinterest videos/` (17 files) | The user's Pinterest clips and stills | Details below this table |
 | `halftone textures/` | The user's halftone scans | Every scene: Halftone Grunge as an overlay, Halftone 6 as paper. v5 strengths are 0.10 / 0.04 (0.05 / 0 on the interview scenes); Halftone 1 is on the data page |
 | `sandie weil images/` | Photos of Sandy Weill, plus `Jamie_Dimon_Image_Pack_More.zip` | Two of them are among the eight S04 Weill faces (`dimon-src/_weill/weill_0.jpg`, `weill_1.jpg`). Which two the old session used is not recorded in git; this session links `images.jpg` and `images (1).jpg`. |
@@ -1041,14 +1045,14 @@ How v5 uses `money/pinterest videos/`:
 - **Pallets of cash lifted off the Fed** (P06): S22.
 - **The chess king left standing** (P11): S21.
 - **The presidential seal PNG:** S02.
-- **Three Dimon pictures:** photo cards.
+- **Dimon pictures:** only one of the three is on screen: `jamie image.jpg` (`pin_mic`), a photo card in S03 at 13.50. `jamie black and white image.jpg` (`pin_bw`) and `jamie dimon pic.jpg` (`pin_green`) are registered but not on screen in v5: they only feed the uncalled seal ring, and `prep4.py` uses the black-and-white one for its stand-in globe when `_globe/` is empty.
 
 ### 5.10 Drive source footage (documentaries, interviews)
 
 | Drive file | Local alias (key) | Specs | What it is | Used for in v5 |
 |---|---|---|---|---|
 | `name of the game.mp4` | `_direct/name_of_the_game.mp4` (GAME) | 1920×1080, 23.976 fps, 9:26 | Bloomberg Originals: the news open and B-roll | See notes below the table |
-| `we bank the countries, we bank the world bank.mp4` | `_direct/we_bank.mp4` (BANK) | 1920×1080, 23.976 fps, 22:31 | Bloomberg interview (Emily Chang) plus archival | S06 Dimon's own words (audio source 272.5–285.0; picture 273.05–281.0, matted) and its B-roll; NYSE board and screens (S01, S23); side by side (S09); the last shot (S23) |
+| `we bank the countries, we bank the world bank.mp4` | `_direct/we_bank.mp4` (BANK) | 1920×1080, 23.976 fps, 22:31 | Bloomberg interview (Emily Chang) plus archival (REVIEW v4: "it is 1080p, not 4K") | S06 Dimon's own words (audio source 272.5–285.0; picture 273.05–281.0, matted) and its B-roll; NYSE board and screens (S01, S23); side by side (S09); the last shot (S23) |
 | `Jamie Dimon - The Most Powerful Banker in America   Full Documentary.mp4` | `_direct/most_powerful_banker_doc.mp4` (MPB) | 1920×1080, 24 fps, 34:31 | Documentary | See notes below the table |
 | `The Untold Career Story of Jamie Dimon (CEO of JPMorgan).mp4` | `_direct/untold_career_story.mp4` (UNT) | 1920×1080, 30 fps, 20:24 | Documentary, used only for archival inserts (its "year (age)" label is cropped out) | The black-and-white young Dimon (S04 hero photo, S10 "at 42"); "Fire Sale" (S22); a 2004 card |
 | `How JP Morgan Chase Became The Largest Bank In The US.mp4` | `_direct/how_jpm_became_largest.mp4` (HOW) | 1920×1080, 25 fps, 19:02 | CNBC | Wall St sign, 1920s (S01, S07); NYSE floor on "game" (S01); the Fox "JP Morgan buys Bank One" report (S18); hourglass and 2008 floor (S19); WaMu (S22); wall tiles (S13); screen wall (S23) |
@@ -1091,9 +1095,9 @@ How v5 uses `money/pinterest videos/`:
 | 16:9, 1920×1080, 30 fps (switched from vertical) | v1 | In force |
 | Dimon's own words for "We bank…", using exactly the user's lines | v1 build; v4: "Lines: exactly yours" | In force |
 | Motion graphics, not "a slow zoom and text in front" | v1 verdict; SPEC v2 | In force |
-| Real, literal footage and more photographs; real video where it exists | v3: "better footage, more photos"; v4: S03 in real video only | In force |
+| Real, literal footage and more photographs; real video only in S03 (v4) | v3: "better footage, more photos"; v4: S03 in real video only (S04 still uses photos in v5, changed at the note "The fired photos cut his face; wrong pictures") | In force |
 | Copy the references exactly, frame by frame, at the moments the user names | v3: "edit it exactly like the reference"; v4–v5 working method | In force. Each beat's reference is in the "Reference imitated" column of §3.1; the measurements are in §5. |
-| Type: Inter Tight plus Instrument Serif regular with glow; no italics, no Satoshi; words land in place; captions beside the subject; two consistent sizes per lockup; names in mixed case, not capitals; the Wolf lockup in white, "not yellow" | v4–v5 | In force |
+| Type: Inter Tight plus Instrument Serif regular with glow; no italics, no Satoshi; words land in place; captions beside the subject; two consistent sizes per lockup; "JPMorgan Chase" spelt properly, not in capitals (v5 note on S01; the S07 name card still has a capitalised outline, "JAMIE DIMON"); the Wolf lockup in white, "not yellow" | v4–v5 | In force |
 | Light textures: CRT lines and noise, lighter than the references | v5 | In force; replaces the heavy halftone of v1–v4 |
 | The Larry Fink clip is a style reference, not footage | v1: "for someone else"; v2: "a style reference only" | In force |
 | Use the user's own assets wherever given: the Wolf dollar-bill shot, the "over a bonus" cartoon, the money asset, the JP Morgan montage, the globe picture, the Sandy Weill photos | v4–v5 | In force |
@@ -1104,7 +1108,7 @@ How v5 uses `money/pinterest videos/`:
 - **Ink and accent:** warm white #FBF8EC. Red #E5381B is reserved for the NYT marker and the data page (v1 calls it "AMD reference red").
 - **Cuts:** hard cuts on the spoken word (−0.05 s), with negative flashes (1–2 frames) on cuts that change world.
 - **White flash:** on "fired", "hit", "standing" and the boxing punch.
-- **Cameras:** one slow push per shot (SPEC: 1.00 → 1.025; the v5 code pushes to between 1.02 and 1.04), or a hard punch-in (a one-frame set, never eased).
+- **Cameras:** one slow push per shot, or a hard punch-in (a one-frame set, never eased). SPEC says 1.00 → 1.025; in the v5 code the push is set per shot with `push=` (the montage default is 1.025). Of the 101 pushes in the compositions, 72 end at 1.02–1.04, 18 at 1.05 and 9 at 1.06–1.08 (FIRED and the last shot reach 1.08); one pulls back 1.15 → 1.00 (the towers on "big"), the S02 backdrop goes 1.34 → 1.37, and some shots have no push.
 - **Caption motion:** the sans, serif-line and hero word entrances in §7.5. SPEC's line slide is superseded (§6.4).
 - **QA frames:** §7.4.
 
@@ -1125,11 +1129,11 @@ Where the user's later notes conflict with this list, the notes won. Two example
 - The comment on `sp_slide_pop` records the user asking for Dimon's matted video to slide up from the bottom in S01.
 - The notes on v4 asked for "Pattinson-style smooth transitions" in S03, which is where `pan_arrive` comes from.
 
-Other house rules set by the previous sessions and recorded in SPEC.md and REVIEW.md (not attributed to the user):
-- no glowing orbs, mesh gradients, logo in a corner, or three cards in a row;
-- no made-up headlines;
-- every clip stays inside one source shot (`tools/check_shots.py`);
-- no styles on untimed wrappers.
+Other house rules set by the previous sessions (not attributed to the user), with where each is recorded:
+- no glowing orbs, mesh gradients, logo in a corner, or three cards in a row: only in the v1 SPEC's BANNED line (`git show 2bb2905:jpm-dimon/SPEC.md`); the current SPEC.md (v2) dropped them;
+- no made-up headlines ("any fabricated headline (only real headlines from the footage)"): also only in the v1 SPEC;
+- every clip stays inside one source shot: REVIEW v3 and `tools/check_shots.py`;
+- no styles on untimed wrappers: the `build4.py` / `build5.py` header ("No visual styles on untimed wrappers") and REVIEW v4 (v3's "square").
 
 ### 6.4 Superseded notes and decisions
 
@@ -1137,6 +1141,7 @@ Other house rules set by the previous sessions and recorded in SPEC.md and REVIE
 |---|---|---|---|
 | Satoshi plus Instrument Serif Italic captions with a motion-blur entrance ("the Dimon-reel system") | v1 | The Pattinson caption engine: glow, flicker box, lines that re-centre as words arrive | v2 |
 | The Pattinson engine: Satoshi, sliding lines, sans-over-serif stacks (SPEC.md still describes it) | v2–v3 | Inter Tight plus Instrument Serif only, words landing in place | v4 |
+| Dario's glitch frames on the second word of a name (SPEC.md: "Instrument Serif 250 for names (with the Dario glitch frames)") | v2–v3 | Removed: `build4.py` and `build5.py` no longer have them; no review records the change | v4 |
 | A slow push on every shot; stills held 2–3 s | v1 | Motion-graphics set pieces, a new picture every 1–3 words | v2 |
 | No music ("none supplied yet"; SPEC.md still says "No music has been supplied yet") | v1–v2 | The Bloomberg open's cue under the whole film | v3 |
 | Open: "…in American financial capitalism, is being big…" (SPEC.md: 0.00–8.81) | v1–v3 | "…in American capitalism, is being big … bigger [held] on Wall Street than JPMorgan Chase", 0–8.88 s | v4 |
@@ -1145,7 +1150,7 @@ Other house rules set by the previous sessions and recorded in SPEC.md and REVIE
 | BIG as a word mask with a dive through the letter | v2–v3 | BIG "simply there" | v4 |
 | The Fink seal ring and the seal punch-in for "the most influential man" | v2–v3 | Hemant's opening (v4), then Hemant's opening and stage on his talking video (v5) | v4–v5 |
 | "in American capitalism" as one serif lockup | v4 | "in American" small above "capitalism" big | v5 |
-| "bigger" with one giant echo (v2–v3), then 340 px with close echoes and a tiny copy (v4) | v2–v4 | Dario's SUDDENLY frame for frame: darker, moving echo rows, no small copy | v5 |
+| "bigger" as a 150 px word between two giant blurred echoes, one above and one below (v2–v3), then 340 px with close echoes and a tiny copy (v4) | v2–v4 | Dario's SUDDENLY frame for frame: darker, moving echo rows, no small copy | v5 |
 | JPMORGAN CHASE typed in capitals | v4 | "JPMorgan Chase", condensed | v5 |
 | Dimon popping up as a glow cut-out | v4 | His matted talking video sliding up from the bottom, no zoom | v5 |
 | S02: an interview freeze, then photo cards | v4 | Hemant's 22–25 s layout on Dimon's talking video | v5 |
@@ -1156,9 +1161,9 @@ Other house rules set by the previous sessions and recorded in SPEC.md and REVIE
 | "and a family" / "grudge" at the bottom | v4 | Centred | v5 |
 | "We bank countries" as photo cards (v2), then a photo wall (v3) | v2–v3 | The interview as the base (v4), then interview and B-roll alternating with a moving ghost picture (v5) | v4–v5 |
 | Heavy halftone textures (grunge 40–42 %, paper 28–30 %; SPEC.md: 40 % / 28 %), documentary-grade grain 0.12, black grounds' texture at 10 % | v1–v4 | 0.10 / 0.04 (0.05 / 0 on the interview scenes), grade grain 0.07, black grounds at 5 %, plus the 6 % grain layer | v5 |
-| The v3 "square" | v3 | Removed | v4 |
+| The v3 "square" (a shadow on an untimed wrapper), and the same box-shadow on the s13 "premise" chess-hand panel | v3 | Removed | v4 |
 
-The rest of SPEC.md (the goal, the references and what each gives, the colours and the motion rules other than the line slide) still describes the film.
+What still holds in SPEC.md: the goal, the output spec, the colours (with the red reserved for two beats), the cut, negative-flash and white-flash rules, the sans and hero word entrances, and the banned list. Its "References and what each gives" is the v2 list: it still lists devices v4 and v5 removed (the seal ring with glint and rays, the "this man" punch-in, BIG's dive, the v2 SUDDENLY echo for "BIGGER", the sliding lines, the name glitch frames) and none of the references added since (Ackman, "was fired", the we-bank reel, Hemant's opening and stage, DISAPPEAR, "every AI tech bro", the Fink Rogan screen, the Pattinson window and arrive moves). Its camera rule (1.00 → 1.025) and its 2-frame flicker box differ from the code (§6.2, §7.5). The current list is the §5 Quick map and the "Reference imitated" column of §3.1.
 
 ---
 
@@ -1177,7 +1182,7 @@ This describes the code as of v5 (`292806f`).
 | Path | What it is | In git? |
 |---|---|---|
 | `jpm-dimon/tools/build5.py` | The edit. Writes `tools/media_v5.json`, `index.html` and `compositions/*.html`. | yes |
-| `jpm-dimon/tools/media_v5.json` | List of every clip and still the edit uses (113 clips, 111 stills). Generated; do not edit it by hand. | yes |
+| `jpm-dimon/tools/media_v5.json` | List of every clip and still `build5.py` registers (113 clips, 111 stills); 110 clips and 71 stills are on screen. `ST()` registers stills where they are defined, used or not (unused: `ring0`–`ring11`, `gov_*`, `lead_*`, `ld0`–`ld2` and `ld4`–`ld9`, `dp2`–`dp5`, `pin_bw`, `pin_green`, `cut_dimon06`, `lg_citi`, `lg_chase`, `lg_wb`). The unused clips are the three books from the module-level `BOOKS` (`MPB_61600_75`, `MPB_149600_75`, `MPB_127300_75`); S12 cuts them again at other lengths. Generated; do not edit it by hand. | yes |
 | `jpm-dimon/tools/prep_media.py`, `prep2.py`, `prep4.py`, `prep5.py`, `faces.py`, `make_music.py`, `check_shots.py` | Media preparation and checks (§7.3). | yes |
 | `jpm-dimon/tools/base_grade.json` | The neutral colour-grade settings every grade starts from. `gradings.json` is left over from v1. | yes |
 | `jpm-dimon/index.html`, `compositions/s01.html` to `s23.html`, `captions.html`, `grain.html` | Generated output. | yes |
@@ -1191,13 +1196,13 @@ This describes the code as of v5 (`292806f`).
 | `/home/user/claude-test-2.0/dimon-src/` | The raw Drive download. | no |
 | `/home/user/claude-test-2.0/dimon-work/` | Working files: `tx/` and `vo/` (transcripts and the WAV files their word times are matched to), `cut/` (photo cut-outs), `music/` (the voice and music separated from the Bloomberg open). | no |
 | `/home/user/claude-test-2.0/pattinson-v5/tools/build_v5.py` | The user's Pattinson film. v5's text-glow values were taken from it. | yes |
-| `/home/user/claude-test-2.0/dimon/reference/FINK_REEL_REFERENCE.md` | Frame-by-frame breakdown of the Larry Fink reel (`18142fc`). The rest of `dimon/` was an earlier separate build of the same film and is not used here. | yes |
+| `/home/user/claude-test-2.0/dimon/reference/FINK_REEL_REFERENCE.md` | Frame-by-frame breakdown of the Larry Fink reel (`18142fc`, §1–§10). In this checkout `dimon/` holds only `reference/` (29 tracked files). The earlier separate build of the same film, and the §11 it added to this file, are only on `origin/claude/stoic-mccarthy-hijqav` (`36daffd`, `0b01d42`, `18bf89d`); that build is not used here. | yes |
 
 **How `dimon-src` is laid out.** The scripts use short file names, not the Drive's names.
 - **Short-name folders:** `_direct/` (for example `name_of_the_game.mp4`, `we_bank.mp4`, `most_powerful_banker_doc.mp4`); `_pin/p01` to `p11` (the "money_pinterest videos"); `_bonus/` and `_money/`; `_globe/` (the user's globe picture); `_weill/` (Sandy Weill photos).
 - **Folders and files under their own names:** `Jamie_Dimon_Image_Pack/`, `money_pinterest videos/`, `halftone textures/` and `jamie dimon audi.mp3` (the narration).
 - **Where each short name points:** the table of short names is `V` in `tools/prep2.py`, and the comments on `V` in `prep_media.py` say what each source is.
-- **The links themselves** are not in git. In this container they are symbolic links into `dimon-src/_drive/`, which holds the Drive files under their Drive names.
+- **The links themselves** are not in git. In this container they are symbolic links. `_direct/`, `_bonus/`, `_money/`, `_globe/` and `jamie dimon audi.mp3` link into `dimon-src/_drive/`, which holds the Drive files under their Drive names. `_pin/` links into `dimon-src/money_pinterest videos/` (each `pNN_…` name is made from part of the target's file name), and `_weill/` into `dimon-src/sandie weil images/`.
 
 **Paths are fixed.** Every script hard-codes `ROOT = "/home/user/claude-test-2.0"`.
 
@@ -1280,7 +1285,8 @@ The build's only randomness has a fixed seed, so the same inputs give the same o
 
 **How clips and stills are registered.**
 - **Clips:** `CL(key, t, dur, frame, size, xyz, matte)` registers a clip: source `key`, start `t` and length `dur`, with 0.25 s added at the end.
-  - The clip's name spells out its settings: `KEY_<t×100>_<dur×100>[v][_frame][_x<cx>_<cy>_<zoom>]`. For example, `BANK_27305_820_x63_50_135` is `we_bank.mp4` from 273.05 s, 8.20 s long, cropped around the point (0.63, 0.50) at 1.35× zoom.
+  - The clip's name spells out its settings: `KEY_<t×100>_<dur×100>[v][_frame][_x<cx>_<cy>_<zoom>]`, where `dur` includes the 0.25 s. For example, `BANK_27305_820_x63_50_135` is `we_bank.mp4` from 273.05 s, an 8.20 s file for 7.95 s on screen, cropped around the point (0.63, 0.50) at 1.35× zoom.
+  - The crop numbers in the name are truncated (`int(v * 100)`), so some are one off: `GAME_8150_70_x56_53_114` is really (0.57, 0.53, 1.15), and the SPEAK clips' `x59_40_114` is (0.592, 0.40, 1.15). Read the `xyz` in `build5.py`, not the name.
   - So changing a shot's start, length or crop gives it a new file name, and the next `prep2.py` run cuts that new file.
   - `frame` picks a named crop that removes channel logos, the YouTuber's label or the montage's burned-in subtitles (`BBG`, `CNBC`, `UNTF`, `SIXTY`, `MONT`, `FULL`).
   - `xyz` sets a custom crop.
@@ -1294,40 +1300,49 @@ The build's only randomness has a fixed seed, so the same inputs give the same o
 
 | Script | Makes | Notes |
 |---|---|---|
-| `build5.py --specs` | `tools/media_v5.json` | Needs `dimon-work/tx` and `dimon-work/vo`, because it loads them as soon as it starts. |
+| `build5.py --specs` | `tools/media_v5.json` | Needs `dimon-work/tx`, `dimon-work/vo` and `brotli`. It loads the transcripts as soon as it starts, and the scene code measures text with fontTools (which needs `brotli` for the `.woff2` fonts) before `--specs` exits. |
 | `prep2.py --spec=media_v5.json [--force] [id …]` | Clips in `assets/clips2/<id>.mp4` (H.264, 30 fps, no sound, cropped to the registered size: 1920×1080, or 608×1080 for vertical sources). Stills in `assets/img2/`. Cut-outs in `dimon-work/cut/*.png`, made with `npx hyperframes@0.9.2 remove-background`. | Its default list is still `media_v4.json`, so always pass `--spec=media_v5.json`. It makes only missing files; any ids you name on the command line are remade. |
 | `prep4.py [--force]` | `img2/globe_ghost.jpg`: the first image in `dimon-src/_globe/`, in black and white, cropped to 1220×1080. If the folder is empty it draws a stand-in. Also the v4 freeze frames `stage_*` and `intv_*`, which v5 does not use. | |
 | `prep5.py` | Cut-outs of clips flagged `matte` (`<id>_cut.webm` from `remove-background --quality best`, plus a `<id>_halo.webm` glow). The S02 silhouette images (`img2/spk_f.jpg`, `spk_cut.png`, `spk_sil.png`, `spk_halo.png`). Smooth slow-motion clips (`wolf_slow`, `ceo_slow`, `flag_slow`, `tower_slow`). Sandy Weill's faces (`img2/wf0.jpg` to `wf7.jpg`, from `faces.dario`). Square photos of young Dimon (`img2/yd5_1.jpg` to `yd5_3.jpg`, from `faces.square`). | The file name `media_v5.json` is written into the script. It has no `--force`: anything that already exists is skipped. It loads `faces.py`. |
-| `faces.py` | Face-finding functions used by `prep5.py`. Also a command: `sheet` (a contact sheet showing the detected faces, for choosing photos), `square` and `align`. | Needs OpenCV 4, because it uses `cv2.CascadeClassifier`. It looks for OpenCV in the folder named by `$CV4_DIR`; the default is a scratchpad folder from the old session, which no longer exists. |
+| `faces.py` | Face-finding functions used by `prep5.py`. Also a command: `sheet` (a contact sheet showing the detected faces, for choosing photos), `square` and `align`. | Needs OpenCV 4, because it uses `cv2.CascadeClassifier`, and it builds its detectors as soon as it is imported, so without OpenCV 4 all of `prep5.py` fails. It looks for OpenCV in the folder named by `$CV4_DIR`; the default is a scratchpad folder from the old session, which no longer exists. `tools/rebuild/rebuild_media.sh` installs it into `dimon-work/cv4` and sets `CV4_DIR` (§8.4). |
 | `make_music.py` | `audio/news_voice.wav` (the reporter alone, re-cut, at −16 LUFS) and `audio/music_bed.wav` (at −30 LUFS). The separated voice and music go in `dimon-work/music/`. | Uses Demucs to separate voice from music, and needs `torch`, `torchaudio`, `demucs` and `soundfile`. It answers the v3 note about the Bloomberg music. The music is cut to end exactly at 93.2 s. |
 | `prep_media.py [id …]` | The textures `tex/ht_grunge.jpg`, `ht_paper.jpg` and `ht_warm.jpg` (the user's halftone scans, filtered into neutral overlay maps). Also `audio/vo.wav` (the narration), `audio/dimon_quote.wav` (`we_bank.mp4` from 272.5 s) and `audio/news_open.wav` (not used in v5). | This is the v1 script. Run with no ids, it also re-cuts all the v1 clips into `assets/clips` and downloads Satoshi. For v5, run it only with `ht_grunge ht_paper ht_warm audio`. |
 | `check_shots.py media_v5.json` | A report | Lists clips that cross a cut in their source video; such a clip would flash one frame of the wrong shot. Its default list is `media_v3.json`. |
 
-**Rebuilding everything from scratch, in order.** The order is the one REVIEW.md gives. The `prep_media.py` step dates from v1 but is still the only one that makes the textures and the narration and quote audio.
+**Rebuilding everything from scratch, in order.** The order is the one REVIEW.md gives. The `prep_media.py` step dates from v1 but is still the only one that makes the textures and the narration and quote audio. On a fresh checkout the commands fail unless step 0 is done first, and they leave two files missing (the last step).
+
+Step 0, by hand (no script does any of it):
+1. Download the Drive folder: the top-level files into `dimon-src/_drive/`, and `Jamie_Dimon_Image_Pack/`, `money_pinterest videos/`, `halftone textures/` and `sandie weil images/` into `dimon-src/` (§7.1).
+2. Make the short-name links that `V` in `prep2.py` expects (`_direct/`, `_pin/`, `_bonus/`, `_money/`, and `jamie dimon audi.mp3` at the top of `dimon-src/`), using §3's table of keys and Drive files.
+3. Put `jamie ghost image.webp` in `_globe/` (if the folder is empty, `prep4.py` silently draws a stand-in globe) and two Sandy Weill photos in `_weill/` as `weill_0.jpg` and `weill_1.jpg` (this session used `images.jpg` and `images (1).jpg`).
+4. Make `dimon-work/tx/` and `dimon-work/vo/` again ("Files no script makes", below).
+5. Install `brotli` and OpenCV 4 (§8.4).
 
 ```bash
 cd /home/user/claude-test-2.0/jpm-dimon
 python3 -I tools/build5.py --specs
 python3 -I tools/prep2.py --spec=media_v5.json
 python3 -I tools/prep4.py
-python3 tools/prep5.py                         # set CV4_DIR=<folder with OpenCV 4> if the installed cv2 has no CascadeClassifier
+CV4_DIR=/path/to/opencv4 python3 tools/prep5.py   # a folder with OpenCV 4; all of prep5.py needs it, as it imports faces.py (§8.4)
 python3 -I tools/make_music.py
 python3 -I tools/prep_media.py ht_grunge ht_paper ht_warm audio
 python3 -I tools/check_shots.py media_v5.json
 python3 -I tools/build5.py
 ```
 
+Last step, by hand: make the S06 cut-out with `npx --yes hyperframes@0.9.2 remove-background assets/clips2/BANK_27305_820_x63_50_135.mp4 -o assets/clips2/BANK_27305_820_x63_50_135_cut.webm --quality best` (the call `prep5.py`'s `matte()` makes; or add `matte=True` at line 1937 before running `prep5.py`), and supply `assets/tex/paper_light.png`, which no script makes (both below).
+
 **What has to be installed:** Python 3 with fontTools plus `brotli` (needed to read the `.woff2` fonts); numpy and Pillow; OpenCV 4 with its Haar face detector; torch, torchaudio, demucs and soundfile; ffmpeg and ffprobe with `libx264`, `libvpx-vp9` and `minterpolate`; Node, for `npx hyperframes@0.9.2`.
 
-**Files no script makes.** The old session made these by hand, and the commands it used are not recorded.
+**Files no script makes.** The old session made these by hand, and the commands it used are not recorded. Since 9 Nov, `tools/rebuild/rebuild_media.sh` supplies all three, as below and in §8.4.
 - **The transcripts and their audio.** `dimon-work/tx/pk_vo/transcript.json` and `dimon-work/tx/pk_bank/transcript.json` are Parakeet word lists: JSON arrays of `{text, start, end}`. `dimon-work/tx/bank_quote.wav` and `dimon-work/vo/vo16k.wav` are 16-bit PCM WAV files.
-  - `build5.py` cannot run at all, not even `--specs`, without them. They are not in this container.
-  - The pinned CLI has `transcribe --engine parakeet`, but whether the old session used it is not recorded.
+  - `build5.py` cannot run at all, not even `--specs`, without them. The kit makes the two WAVs with ffmpeg and copies the two transcripts from `tools/rebuild/clock/`. With them, `build5.py` reproduces the committed v5 files byte for byte (checked 9 Nov).
+  - The pinned CLI has `transcribe --engine parakeet`, but whether the old session used it is not recorded. The kit's transcripts were made with it (parakeet-tdt-0.6b-v3) and passed the byte-for-byte check above.
   - If a new transcript splits the words differently, every hard-coded word number shifts. Print the word list and check the fixed points before trusting a build: word 55 must be "Meet", word 101 "fired" and word 223 "today".
   - The code always puts "You" back at position 25 of the quote, so a transcript that already includes it would show it twice.
   - The best check is to rebuild before changing anything: `git diff --stat` should then show no changes.
-- **The S06 cut-out of Dimon.** `assets/clips2/BANK_27305_820_x63_50_135_cut.webm` is Dimon cut out of the interview, so the globe picture sits behind him. The edit uses it, but the clip is not flagged `matte`, so `prep5.py` skips it. Either add `matte=True` to the `IV_CID = CL(...)` call (line 1937), or run the same `remove-background` command by hand. (In this container the file exists; it was made at 16:59 on 9 Nov.)
-- **The paper texture.** `assets/tex/paper_light.png` is the window-lit paper used in S04, S07, S13, S18 and S22; REFERENCES.md says S04 uses "your paper and window light". How the original was made is not recorded. (In this container the file exists; it was made at 16:46 on 9 Nov.)
+- **The S06 cut-out of Dimon.** `assets/clips2/BANK_27305_820_x63_50_135_cut.webm` is Dimon cut out of the interview, so the globe picture sits behind him. The edit uses it, but the clip is not flagged `matte`, so `prep5.py` skips it. Either add `matte=True` to the `IV_CID = CL(...)` call (line 1937), or run the same `remove-background` command by hand, as the kit's step 8 does (with the CLI's default quality; v4's flag is not recorded). The 9 Nov rebuild made it this way, and S06 then matched the share render at 23.6–31.7 s.
+- **The paper texture.** `assets/tex/paper_light.png` is the window-lit paper used in S04, S07, S13, S18 and S22; REFERENCES.md says S04 uses "your paper and window light". It is the Pattinson v5 edit's window-light paper (`make_paper_light()` on `claude/pattinson-v5-notes5`). `tools/rebuild/paper_light.py` is the same generator and reproduces that committed file byte for byte.
 
 ### 7.4 Checking, looking at frames, and rendering
 
@@ -1378,7 +1393,7 @@ python3 -I tools/build5.py
 - **Grain:** `grain.html` is written by `write_aux()` from the grain component. It is that component's noise at 6 % in overlay mode over the whole film (z 150). Every 1/12 s it jumps between ten positions using GSAP `tl.set`, which can be scrubbed to any frame, in place of the component's CSS animation.
 - **CRT lines:** they come from the grades' scanlines, not from a separate layer.
 
-**Type.** Since v4 there are two families only: Inter Tight (in the role of Helvetica) and Instrument Serif Regular with a glow. No italics and no Satoshi. One family per line. Lines do not slide; each word lands where it ends up. The section comment in `build5.py` that says lines slide is out of date.
+**Type.** Since v4 there are two families only: Inter Tight (in the role of Helvetica) and Instrument Serif Regular with a glow. No italics and no Satoshi. Mostly one family per line: REVIEW v4 set that rule for 0–31 s only, with exceptions, and the code does not enforce it (the `build5.py` header's "A caption line keeps one family" overstates it). Six lines mix the two families: "man in America", "right now", "in 30 countries", "in the world", "crisis hit" and "every single day" (§3.3). Lines do not slide; each word lands where it ends up. The section comment in `build5.py` that says lines slide is out of date.
 
 Styles are set in `STY`. You use them by code in `cap()`, and `@N` overrides the size (for example `sh@180`).
 
@@ -1401,7 +1416,7 @@ Styles are set in `STY`. You use them by code in `cap()`, and `@N` overrides the
 
 **How caption groups behave:**
 - A group appears 2 frames before its first word.
-- It leaves at `end=`, or 2 frames before the next group. If the gap to the next group is long, it leaves at most 1 s after its last word.
+- It leaves at `end=` when one is given. Otherwise it stays until 2 frames before the next group's first word, unless that would keep it up more than 1.4 s after its own last word; then it leaves 1 s after that word.
 - Exits are a cut (the default), `blur` (0.18 s) or `fade` (0.12 s).
 - `scrim=` puts a soft dark patch behind the group, and `blinks=` hides it for a few frames.
 - Commas and full stops are removed from caption words, except in "$10", "$60" and "$500".
@@ -1411,8 +1426,8 @@ Styles are set in `STY`. You use them by code in `cap()`, and `@N` overrides the
 **Cuts, flashes and camera moves.**
 - **Cuts:** they land 0.05 s before the word (`CUT`). One frame is `F1` = 1/30 s.
 - **Flashes:** `neg()` gives one or two negative frames on cuts that change place or time; `flash()` is a white flash, and `whiteframe()` is one solid white frame; `blk()` draws the glitch boxes from the references; `streak()` is a bright horizontal streak.
-- **Camera moves:** each shot gets one steady push-in, from 1.00 to between 1.02 and 1.04; `punch()` is a hard punch-in set on a single frame, never eased; `pan_arrive()` makes a shot arrive still moving and settle in 0.34 s.
-- **Slow motion:** never use `rate=`. REVIEW v5: "v4 had the player slow it, which repeated frames unevenly and read as a jump at 14.37." Make a smooth slow-motion file with `slowmo()` in `prep5.py` and play it with `s.vfile()`.
+- **Camera moves:** a shot gets at most one steady push (`ease: "none"`), set per shot with `push=`: most go from 1.00 to 1.02–1.04 (the montage default is 1.025), some to 1.05–1.08, one pulls back 1.15 → 1.00, and some shots have none (`push=None`); the counts are in §6.2. `punch()` is a hard punch-in set on a single frame, never eased; `pan_arrive()` makes a shot arrive still moving and settle in 0.34 s.
+- **Slow motion:** a recommendation, not a rule the code follows. Prefer a smooth slow-motion file made with `slowmo()` in `prep5.py` and played with `s.vfile()`, as v5 does for the Wolf, the CEO walk, the flag and the tower, and do not add new `rate=` slow-downs. REVIEW v5: "v4 had the player slow it, which repeated frames unevenly and read as a jump at 14.37." v5 still has two player-rate shots: s01's opening Lower Manhattan shot (`GAME_0_82`) slowed to 0.9× (`{"rate": 0.9}`, line 1779), a candidate for `slowmo()`, and the S10 palm strike (`FIRED_9693_161`) sped up to 1.4× (`rate=1.4`, line 2056).
 
 ### 7.6 To change X, edit Y
 
@@ -1421,7 +1436,8 @@ Styles are set in `STY`. You use them by code in `cap()`, and `@N` overrides the
 | Swap a shot | In the scene's block, change the shot entry `(film_t0, KEY, src_t, {opts})` or the call `s.v(KEY, src_t, t0, t1, ...)`. `KEY` is a source from `V` in `prep2.py`, and `src_t` is the number of seconds into that source. For framing use `xyz=(cx, cy, zoom)` or `frame=`; for colour use `grade=`. To use a new source file, put it in `dimon-src`, give it a key in `V` in `prep2.py`, and add it to `VERT` or `FRAME_OF` in `build5.py` if it is vertical or has a channel logo. | A |
 | Swap a photo | Edit its `ST(...)` entry or the list it is in (lines 157–224, and `CARD` at line 1758). Some photos are made by prep scripts: the Weill faces from `WEILL` in `prep5.py` (source file or `KEY@seconds`, face width), the young-Dimon squares from `YOUNG` in `prep5.py`, cut-outs from `CUT_SRC` in `prep2.py`, and the globe from the image in `dimon-src/_globe/`. `faces.py sheet` helps you choose. A photo whose settings change but whose name stays the same is not remade: rename it, delete the old file, or name it on the `prep2.py` command line. | A (plus `prep4.py` or `prep5.py` if they make it) |
 | Move a cut, or make a shot longer or shorter | Change the shot's `t0` and `t1` in its scene block. They are tied to words (`CUT(VT(i))`), so add or subtract seconds, or point at a different word. The clip's name changes with its length, so the clip must be cut again. | A |
-| Retime a caption word | In its `cap()` call, replace `W_(i, "s")` with a fixed tuple such as `("word", 12.34, "s")`, or point it at a different word. The open's word times are in the `NEWS` table (line 106). To move a whole block of voice, change `VO1_AT`, the 35.25 anchor in `VO2_OFF`, or `QUOTE_AT`: the sound and the picture move together. If the film's total length (`DUR`, 93.2 s) changes, the music bed in `make_music.py` must be re-cut. | B |
+| Retime a caption word | In its `cap()` call, replace `W_(i, "s")` with a fixed tuple such as `("word", 12.34, "s")`, or point it at a different word. The open's word times are in the `NEWS` table (line 106). | B |
+| Move a whole block of voice | Change `VO1_AT` (line 99, narration part 1), the 35.25 anchor in `VO2_OFF` (line 101, narration part 2) or `QUOTE_AT` (line 102, Dimon's quote). The audio and everything keyed to words (`VT`, `QT`, `CUT`: most cuts and the word-keyed captions) move with them, but many v4/v5 beats are typed-in film seconds that stay put, so picture and sound drift apart unless you shift these by hand: S01 `POP0 = 8.60` (line 1763; the slide-up runs from it to `VO1_AT`); S02 `OPEN_END = 10.70`, the live frames 9.15–10.52 and `grey_until=9.55`, the blocks at 9.433, 9.467, 9.50 and 10.01, the band and the blink at 10.50, and the cards at 10.86, 11.00, 11.20 and 11.40 (lines 1814–1846); S03 12.83 and the cards at 13.32–13.50 (lines 1852–1860); S04 `BON = 18.74` and 19.62 (lines 1898–1905); S06's end, its last shot's end and S07's start at 34.85, and the caption end 34.80 (lines 1930, 1994–2003). Recompute the `dimon` clip's 11.25 s duration in `write_root()` (line 2337). S01's other times (7.92, 8.50, `JPMC_T`) follow the news voice, which these anchors do not move. A shot that runs between a time that moves and a time that does not changes length, so it gets a new clip id and needs a new file: the S02 live clip and both matted SPEAK clips, S05's last shot, S06's last shot and S23's last shot among them. Check `git diff tools/media_v5.json` for new ids. A `prep5.py` slow-motion file whose shot changes length (`tower_slow.mp4` ends at `VO1_AT`) must be deleted and made again, because `prep5.py` skips files that exist. If the film's total length (`DUR`, 93.2 s) changes, the music bed in `make_music.py` must be re-cut. | A, plus `prep5.py` for the SPEAK mattes |
 | Change which words appear together | The `cap()` groups: each line is a list of words, and each `cap()` call is a separate group. | B |
 | Change how a caption looks or where it sits | For one group: `cap(..., x=, y=, align=, exit=, scrim=, end=, lh=)`. For one word: its style code. For everything: `STY`, `INK`, the glow settings (`GLOW_*`, `SERIF_*`, `GOLD_REST`) and the entrances in `build_captions()`. For the big words in effects: the `sp_*` call's settings (for example `size=`, or the letter times in `JPMC_T`) or the function itself. | B |
 | Texture, grain or scanline strength | Per scene: `Scene(..., tex=(grunge, paper))`; the default `(0.10, 0.04)` is set in `Scene.__init__`. Grain: `opacity: 0.06` in `write_aux()`. Grain, scanlines and vignette inside the grades: `DOC_D`, `DOC_E`, `HCRT` and the `GR` entries. Black backgrounds: the `.bktex` opacity in `Scene.write()`. Different texture images: `TEXTURES` in `prep_media.py`. | B (and `prep_media.py` for new images) |
@@ -1450,7 +1466,7 @@ Styles are set in `STY`. You use them by code in `cap()`, and `@N` overrides the
 
 ### 8.2 Still unanswered from earlier rounds
 - **"You have to be big…" (31.7–34.85 s).** REVIEW v4: "it still follows your lines". Dropping it would shorten the film by about 3 s, and the music bed, timed to end on the last frame, would need re-cutting. v5 does not mention it, so the answer is unknown. The stretch is untouched since v4 (v3 picture; v4 made "big" Inter 800 200).
-- **31.7–93.2 s (s07–s23).** No notes on this part are recorded after v3's general notes. It is still v3's cut, in v4's type with v5's lighter textures, and no render of it is recorded since v3. s15, s17 and s20 have not changed since v2.
+- **31.7–93.2 s (s07–s23).** No notes on this part are recorded after v3's general notes. It is still v3's cut, in v4's type with v5's lighter textures, and no render of it is recorded since v3. s07, s08, s10, s12, s15, s17 and s20 have not changed since v2, apart from v4's type and v5's textures (REVIEW v3 at most lists their set pieces as "Kept from v2"; they were last described in `git show a9e958c:jpm-dimon/REVIEW.md`, and neither review mentions s20).
 
 ### 8.3 Where the committed film differs from the notes
 Nothing was changed; these are differences found while mapping the film.
@@ -1458,30 +1474,34 @@ Nothing was changed; these are differences found while mapping the film.
 - **S03 has no block glitch into the Wolf.** REFERENCES.md (v5: "the block glitch in") and the `build5.py` header ("a block glitch into the Wolf") list Ackman's block glitch. The committed S03 enters the Wolf with an inverted frame (13.687) and an arrival in motion; its only blocks are the four soft white boxes before the photo cards and the purple inverted frame at 14.998.
 - **The caption "Chase" never appears.** Group `cg063` ("and / Chase") runs 87.078–87.255, but "Chase" is spoken at 87.305, after the group has ended, where the JPMorganChase wordmark sweep starts (87.255).
 - **The two Hemant passes disagree.** The first pass gives the second red box at 24.88 and the exit at 25.05 (the frame defocuses). The second pass gives 24.92 and 25.08 (a white band). v5 follows the second pass.
-- **SPEC.md is still the v2 spec** in its build steps, open, music, type and textures (§6.4).
+- **SPEC.md is still the v2 spec** in its build steps, open, music, type, textures, reference list and camera rule (§6.4).
 
-### 8.4 What stops a rebuild today
-- **`build5.py` cannot run** without `dimon-work/tx/` and `dimon-work/vo/` (the transcripts and their audio). They are not in this container, and no script makes them (§7.3).
-- **`faces.py`** points at an OpenCV folder in the old session's scratchpad; set `CV4_DIR`.
-- **The S06 matte** (`BANK_27305_820_x63_50_135_cut.webm`) is made by no committed script: `build4.py`'s comment points to `prep4.py`, which has no such step, and `prep5.py` only mattes clips flagged `matte` (the two SPEAK clips). Make it with the same `npx hyperframes@0.9.2 remove-background` step. It exists in this container.
-- **`assets/tex/paper_light.png`:** how the original was made is not recorded. It exists in this container.
-- **Local folder links that are not recorded in git:** which two of `sandie weil images` are `_weill/weill_0.jpg` and `weill_1.jpg` (this session links `images.jpg` and `images (1).jpg`); `_globe/`, which needs `jamie ghost image.webp` (this session links it); `_wolf2/wolf_first_part.mp4` (prep2's WOLF2 key, unused in v5).
+### 8.4 What a rebuild needs (all handled by `tools/rebuild/rebuild_media.sh` since 9 Nov)
+The old session left these out of git; the kit supplies each one.
+- **`dimon-work/tx/` and `dimon-work/vo/`** (the transcripts and their audio), without which `build5.py` cannot run. The kit makes the two 16 kHz WAVs with ffmpeg (output seeking for the interview: input seeking moves "Bank," by 80 ms) and copies the verified Parakeet transcripts from `tools/rebuild/clock/` (md5 `7f0a1a9e…` and `f4d962f8…`). Re-running Parakeet is not needed, and on another machine it might not give identical word times.
+- **`brotli`:** fontTools needs it to read the `.woff2` fonts, and `build5.py` measures text while it loads, so without it even `build5.py --specs` fails. The kit installs it.
+- **OpenCV 4 for `faces.py`:** OpenCV 5 has no `cv2.CascadeClassifier`, and `prep5.py` imports `faces.py` at the top. The kit installs opencv-python-headless 4.14.0.94 into `dimon-work/cv4` and passes it as `CV4_DIR`.
+- **The S06 matte** (`BANK_27305_820_x63_50_135_cut.webm`) is made by no committed script (v4 ran `npx hyperframes@0.9.2 remove-background` by hand). The kit's step 8 runs the same call; its quality flag in v4 is unknown (the kit uses the CLI default).
+- **`assets/tex/paper_light.png`** comes from the Pattinson v5 edit (`make_paper_light()` in `pattinson-v5/tools/prep_media.py` on `claude/pattinson-v5-notes5`, committed there as blob `e38093a8`). The kit's `paper_light.py` is the same generator and reproduces that file byte for byte (md5 `63a1d9e9949ef55d94a8598a73c4c33a`).
+- **Local folder links** (`tools/rebuild/links.tsv`): `_weill/weill_1.jpg` = `sandie weil images/images (1).jpg` and `_weill/weill_0.jpg` = `images.jpg`. Both were matched against the v5 share render: wf0 at film 17.015 s and wf3 at 17.282 s, and all eight wf slots at r = 0.97–0.99. `_globe/` = `jamie ghost image.webp`, which the render supports over the drawn stand-in. `_wolf2/wolf_first_part.mp4` (prep2's WOLF2 key) is unused in v5 and not linked.
 
 ### 8.5 Coded but unused; never built
-- **Still in `build5.py` but not called:** the Fink seal ring, the seal punch-in, the mortgages collage, the photo-card drop and the logo drop.
+- **Still in `build5.py` but not called** (seven functions): `sp_mask_word` (v2's BIG word mask with the dive through the letter), `sp_seal_ring` (the Fink seal ring), `sp_seal_portrait` (the seal punch-in), `sp_face_boxes` (S03 now builds its face boxes inline), `sp_cards` (photo cards landing one after another on a dark ground), `sp_drop` (the logo drop) and `sp_flip_collage` (the mortgages collage).
 - **Never built:** the animated AI image-to-video portrait (an open item in the Fink document) and the donut charts around the eye.
 
 ### 8.6 Not recorded in the files (unknown)
 - **v1–v3 reviews:** how the user saw these versions; no render is named for them.
-- **Note wording:** the user's exact words for the v1, v2, v4 and v5 notes. Only the paraphrases and fragments quoted in §4 survive.
+- **Note wording:** the user's exact words for the v1, v2, v4 and v5 notes. Only the paraphrases and fragments quoted in §4 survive, plus one v4 sentence word for word: the S02 note quoted in `build4.py`'s `sp_freeze_pop` docstring ("An interview plays, you pause that picture, and then the picture comes up at the centre with that glow"), which names no speaker but reads as the user's (§4 v4).
+- **4K:** REVIEW v4 says the interview "is 1080p, not 4K"; whether the user asked for 4K is not recorded.
+- **The P01 file name:** what the user's Pinterest file name "2008 8 crash for first kind chess part." asks for (§4 v1) is not recorded, including whether it was meant for the 2008 crash beat.
 - **Where some references came from:** the AMD reel, "the Dimon reference reel" behind v1's captions, and the Dario and Hemant reels before their Drive copies appeared on 6 Nov at 18:20. v1's lockups ("30 / Countries", "We bank / IMF") resemble the we-bank reel described in `REFERENCES.md`, but that reel's Drive copy (`we bank countries part.mp4`) only arrived on 6 Nov.
-- **The globe picture:** the files do not name the file behind "your globe picture"; `prep4.py` reads it from `dimon-src/_globe/`. The likely candidate is `jamie ghost image.webp`, added to Drive at 17:23 before v4, and this session uses it, but the files do not confirm it.
-- **Full-length render:** whether the old session ever made a full 0–93.2 s render of v4 or v5.
-- **The share render:** how `jpm-dimon-v5-0-31-share.mp4` differs from the original `jpm-dimon-v5-0-31.mp4`.
+- **The globe picture:** the old files do not name the file behind "your globe picture" (`prep4.py` reads it from `dimon-src/_globe/`). `jamie ghost image.webp` (added to Drive at 17:23 on 6 Nov, before v4) is the one the share render supports, and the rebuild uses it.
+- **Full-length render:** whether the old session ever made a full 0–93.2 s render of v4 or v5. This session made the first recorded one on 9 Nov (§2).
+- **The share render:** how `jpm-dimon-v5-0-31-share.mp4` differs from the original `jpm-dimon-v5-0-31.mp4`. It is a 10.4 Mbps encode, lighter than a default HyperFrames render.
 
 ### 8.7 Next steps
-1. **Watch what exists.** `jpm-dimon/renders/jpm-dimon-v5-0-31-share.mp4` (0–31.7 s), and `jpm-dimon/renders/jpm-dimon-v5-full.mp4` if the render running in this session finished.
+1. **Watch what exists.** `jpm-dimon/renders/jpm-dimon-v5-0-31-share.mp4` (the old session's 0–31.7 s) and `jpm-dimon/renders/jpm-dimon-v5-full-share.mp4` (the whole film, rendered 9 Nov). On a fresh session, run `tools/rebuild/rebuild_media.sh` first (§2).
 2. **Answer the open questions** in 8.1 and 8.2: where the "was fired" reference belongs, whether to keep "You have to be big…", whether the soft Weill close-ups need other photos, and notes on 31.7–93.2 s, which has had none since v3.
 3. **Decide on the differences in 8.3:** whether the missing S03 and S06 effects should be added, and whether the "Chase" caption should show.
-4. **Before the first change,** make `dimon-work/tx/` and `dimon-work/vo/` again (§7.3), run `build5.py`, and confirm that `git diff --stat` shows no changes.
+4. **Before the first change** on a fresh session, run `bash jpm-dimon/tools/rebuild/rebuild_media.sh`. It ends by running `build5.py` and confirming that `git diff` shows no changes to the composition (§8.4).
 5. **For each note,** edit `build5.py` as in §7.6, rebuild, run `check --samples=5 --no-contrast`, snapshot the changed moments (side by side with the reference where there is one), and render the changed stretch. Record the note and its result in `REVIEW.md` and any new measurements in `REFERENCES.md`.
