@@ -1,0 +1,224 @@
+[
+  {
+    "id": "w0",
+    "text": "We",
+    "start": 0.64,
+    "end": 0.8
+  },
+  {
+    "id": "w1",
+    "text": "bank",
+    "start": 0.8,
+    "end": 1.28
+  },
+  {
+    "id": "w2",
+    "text": "some",
+    "start": 1.28,
+    "end": 1.44
+  },
+  {
+    "id": "w3",
+    "text": "of",
+    "start": 1.44,
+    "end": 1.52
+  },
+  {
+    "id": "w4",
+    "text": "these",
+    "start": 1.52,
+    "end": 1.68
+  },
+  {
+    "id": "w5",
+    "text": "companies",
+    "start": 1.68,
+    "end": 1.92
+  },
+  {
+    "id": "w6",
+    "text": "in",
+    "start": 2.08,
+    "end": 2.24
+  },
+  {
+    "id": "w7",
+    "text": "30",
+    "start": 2.24,
+    "end": 2.64
+  },
+  {
+    "id": "w8",
+    "text": "countries.",
+    "start": 2.64,
+    "end": 3.36
+  },
+  {
+    "id": "w9",
+    "text": "We",
+    "start": 3.36,
+    "end": 3.52
+  },
+  {
+    "id": "w10",
+    "text": "bank",
+    "start": 3.52,
+    "end": 3.92
+  },
+  {
+    "id": "w11",
+    "text": "countries.",
+    "start": 3.92,
+    "end": 4.56
+  },
+  {
+    "id": "w12",
+    "text": "We",
+    "start": 4.56,
+    "end": 4.72
+  },
+  {
+    "id": "w13",
+    "text": "bank",
+    "start": 4.72,
+    "end": 5.12
+  },
+  {
+    "id": "w14",
+    "text": "the",
+    "start": 5.12,
+    "end": 5.2
+  },
+  {
+    "id": "w15",
+    "text": "World",
+    "start": 5.2,
+    "end": 5.44
+  },
+  {
+    "id": "w16",
+    "text": "Bank,",
+    "start": 5.44,
+    "end": 5.84
+  },
+  {
+    "id": "w17",
+    "text": "the",
+    "start": 5.84,
+    "end": 6
+  },
+  {
+    "id": "w18",
+    "text": "IMF,",
+    "start": 6,
+    "end": 6.56
+  },
+  {
+    "id": "w19",
+    "text": "we",
+    "start": 6.72,
+    "end": 6.88
+  },
+  {
+    "id": "w20",
+    "text": "bank",
+    "start": 6.88,
+    "end": 7.2
+  },
+  {
+    "id": "w21",
+    "text": "the",
+    "start": 7.2,
+    "end": 7.28
+  },
+  {
+    "id": "w22",
+    "text": "United",
+    "start": 7.28,
+    "end": 7.6
+  },
+  {
+    "id": "w23",
+    "text": "States",
+    "start": 7.6,
+    "end": 7.92
+  },
+  {
+    "id": "w24",
+    "text": "government.",
+    "start": 7.92,
+    "end": 8.56
+  },
+  {
+    "id": "w25",
+    "text": "have",
+    "start": 8.76,
+    "end": 8.92
+  },
+  {
+    "id": "w26",
+    "text": "to",
+    "start": 8.92,
+    "end": 9
+  },
+  {
+    "id": "w27",
+    "text": "be",
+    "start": 9,
+    "end": 9.16
+  },
+  {
+    "id": "w28",
+    "text": "big.",
+    "start": 9.16,
+    "end": 9.64
+  },
+  {
+    "id": "w29",
+    "text": "You",
+    "start": 9.84,
+    "end": 10
+  },
+  {
+    "id": "w30",
+    "text": "can't",
+    "start": 10,
+    "end": 10.4
+  },
+  {
+    "id": "w31",
+    "text": "do",
+    "start": 10.4,
+    "end": 10.56
+  },
+  {
+    "id": "w32",
+    "text": "those",
+    "start": 10.56,
+    "end": 10.8
+  },
+  {
+    "id": "w33",
+    "text": "things",
+    "start": 10.8,
+    "end": 11.04
+  },
+  {
+    "id": "w34",
+    "text": "and",
+    "start": 11.12,
+    "end": 11.28
+  },
+  {
+    "id": "w35",
+    "text": "be",
+    "start": 11.28,
+    "end": 11.44
+  },
+  {
+    "id": "w36",
+    "text": "small.",
+    "start": 11.44,
+    "end": 11.92
+  }
+]

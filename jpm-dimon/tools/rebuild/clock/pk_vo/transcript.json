@@ -1,0 +1,1346 @@
+[
+  {
+    "id": "w0",
+    "text": "This",
+    "start": 0,
+    "end": 0.32
+  },
+  {
+    "id": "w1",
+    "text": "is",
+    "start": 0.4,
+    "end": 0.56
+  },
+  {
+    "id": "w2",
+    "text": "the",
+    "start": 0.56,
+    "end": 0.72
+  },
+  {
+    "id": "w3",
+    "text": "most",
+    "start": 0.72,
+    "end": 0.96
+  },
+  {
+    "id": "w4",
+    "text": "influential",
+    "start": 0.96,
+    "end": 1.68
+  },
+  {
+    "id": "w5",
+    "text": "man",
+    "start": 1.68,
+    "end": 1.92
+  },
+  {
+    "id": "w6",
+    "text": "in",
+    "start": 1.92,
+    "end": 2.08
+  },
+  {
+    "id": "w7",
+    "text": "America",
+    "start": 2.08,
+    "end": 2.48
+  },
+  {
+    "id": "w8",
+    "text": "right",
+    "start": 2.56,
+    "end": 2.8
+  },
+  {
+    "id": "w9",
+    "text": "now.",
+    "start": 2.8,
+    "end": 3.2
+  },
+  {
+    "id": "w10",
+    "text": "He's",
+    "start": 3.2,
+    "end": 3.52
+  },
+  {
+    "id": "w11",
+    "text": "basically",
+    "start": 3.52,
+    "end": 4
+  },
+  {
+    "id": "w12",
+    "text": "the",
+    "start": 4,
+    "end": 4.16
+  },
+  {
+    "id": "w13",
+    "text": "CEO",
+    "start": 4.16,
+    "end": 4.72
+  },
+  {
+    "id": "w14",
+    "text": "of",
+    "start": 4.72,
+    "end": 4.88
+  },
+  {
+    "id": "w15",
+    "text": "Wall",
+    "start": 4.88,
+    "end": 5.2
+  },
+  {
+    "id": "w16",
+    "text": "Street.",
+    "start": 5.28,
+    "end": 5.92
+  },
+  {
+    "id": "w17",
+    "text": "A",
+    "start": 5.92,
+    "end": 6.08
+  },
+  {
+    "id": "w18",
+    "text": "guy",
+    "start": 6.08,
+    "end": 6.32
+  },
+  {
+    "id": "w19",
+    "text": "who",
+    "start": 6.32,
+    "end": 6.48
+  },
+  {
+    "id": "w20",
+    "text": "got",
+    "start": 6.48,
+    "end": 6.64
+  },
+  {
+    "id": "w21",
+    "text": "fired",
+    "start": 6.64,
+    "end": 7.04
+  },
+  {
+    "id": "w22",
+    "text": "in",
+    "start": 7.04,
+    "end": 7.2
+  },
+  {
+    "id": "w23",
+    "text": "1998",
+    "start": 7.2,
+    "end": 8.08
+  },
+  {
+    "id": "w24",
+    "text": "by",
+    "start": 8.08,
+    "end": 8.24
+  },
+  {
+    "id": "w25",
+    "text": "his",
+    "start": 8.24,
+    "end": 8.4
+  },
+  {
+    "id": "w26",
+    "text": "own",
+    "start": 8.4,
+    "end": 8.72
+  },
+  {
+    "id": "w27",
+    "text": "mentor",
+    "start": 8.72,
+    "end": 9.36
+  },
+  {
+    "id": "w28",
+    "text": "over",
+    "start": 9.36,
+    "end": 9.6
+  },
+  {
+    "id": "w29",
+    "text": "a",
+    "start": 9.6,
+    "end": 9.76
+  },
+  {
+    "id": "w30",
+    "text": "bonus",
+    "start": 9.76,
+    "end": 10.24
+  },
+  {
+    "id": "w31",
+    "text": "and",
+    "start": 10.24,
+    "end": 10.48
+  },
+  {
+    "id": "w32",
+    "text": "a",
+    "start": 10.48,
+    "end": 10.64
+  },
+  {
+    "id": "w33",
+    "text": "family",
+    "start": 10.64,
+    "end": 11.04
+  },
+  {
+    "id": "w34",
+    "text": "grudge,",
+    "start": 11.04,
+    "end": 11.84
+  },
+  {
+    "id": "w35",
+    "text": "now",
+    "start": 11.84,
+    "end": 12.08
+  },
+  {
+    "id": "w36",
+    "text": "runs",
+    "start": 12.16,
+    "end": 12.4
+  },
+  {
+    "id": "w37",
+    "text": "the",
+    "start": 12.4,
+    "end": 12.56
+  },
+  {
+    "id": "w38",
+    "text": "biggest",
+    "start": 12.56,
+    "end": 12.96
+  },
+  {
+    "id": "w39",
+    "text": "bank",
+    "start": 12.96,
+    "end": 13.36
+  },
+  {
+    "id": "w40",
+    "text": "in",
+    "start": 13.36,
+    "end": 13.52
+  },
+  {
+    "id": "w41",
+    "text": "the",
+    "start": 13.52,
+    "end": 13.68
+  },
+  {
+    "id": "w42",
+    "text": "world.",
+    "start": 13.68,
+    "end": 14.24
+  },
+  {
+    "id": "w43",
+    "text": "We",
+    "start": 14.24,
+    "end": 14.48
+  },
+  {
+    "id": "w44",
+    "text": "bank",
+    "start": 14.48,
+    "end": 14.88
+  },
+  {
+    "id": "w45",
+    "text": "countries,",
+    "start": 14.88,
+    "end": 15.52
+  },
+  {
+    "id": "w46",
+    "text": "we",
+    "start": 15.52,
+    "end": 15.68
+  },
+  {
+    "id": "w47",
+    "text": "bank",
+    "start": 15.68,
+    "end": 15.92
+  },
+  {
+    "id": "w48",
+    "text": "World",
+    "start": 16.08,
+    "end": 16.4
+  },
+  {
+    "id": "w49",
+    "text": "Bank,",
+    "start": 16.4,
+    "end": 16.8
+  },
+  {
+    "id": "w50",
+    "text": "and",
+    "start": 16.8,
+    "end": 16.96
+  },
+  {
+    "id": "w51",
+    "text": "even",
+    "start": 16.96,
+    "end": 17.2
+  },
+  {
+    "id": "w52",
+    "text": "the",
+    "start": 17.2,
+    "end": 17.36
+  },
+  {
+    "id": "w53",
+    "text": "US",
+    "start": 17.36,
+    "end": 17.76
+  },
+  {
+    "id": "w54",
+    "text": "government.",
+    "start": 17.76,
+    "end": 18.48
+  },
+  {
+    "id": "w55",
+    "text": "Meet",
+    "start": 18.48,
+    "end": 18.88
+  },
+  {
+    "id": "w56",
+    "text": "Jamie",
+    "start": 18.88,
+    "end": 19.44
+  },
+  {
+    "id": "w57",
+    "text": "Diamond,",
+    "start": 19.44,
+    "end": 20.16
+  },
+  {
+    "id": "w58",
+    "text": "the",
+    "start": 20.16,
+    "end": 20.32
+  },
+  {
+    "id": "w59",
+    "text": "golden",
+    "start": 20.32,
+    "end": 20.72
+  },
+  {
+    "id": "w60",
+    "text": "boy",
+    "start": 20.72,
+    "end": 20.96
+  },
+  {
+    "id": "w61",
+    "text": "of",
+    "start": 20.96,
+    "end": 21.04
+  },
+  {
+    "id": "w62",
+    "text": "Wall",
+    "start": 21.04,
+    "end": 21.36
+  },
+  {
+    "id": "w63",
+    "text": "Street,",
+    "start": 21.36,
+    "end": 21.84
+  },
+  {
+    "id": "w64",
+    "text": "the",
+    "start": 21.84,
+    "end": 21.92
+  },
+  {
+    "id": "w65",
+    "text": "guy",
+    "start": 21.92,
+    "end": 22.24
+  },
+  {
+    "id": "w66",
+    "text": "everyone",
+    "start": 22.24,
+    "end": 22.64
+  },
+  {
+    "id": "w67",
+    "text": "said",
+    "start": 22.64,
+    "end": 22.88
+  },
+  {
+    "id": "w68",
+    "text": "was",
+    "start": 22.88,
+    "end": 23.12
+  },
+  {
+    "id": "w69",
+    "text": "next",
+    "start": 23.12,
+    "end": 23.36
+  },
+  {
+    "id": "w70",
+    "text": "in",
+    "start": 23.36,
+    "end": 23.52
+  },
+  {
+    "id": "w71",
+    "text": "line",
+    "start": 23.52,
+    "end": 23.76
+  },
+  {
+    "id": "w72",
+    "text": "to",
+    "start": 23.76,
+    "end": 23.92
+  },
+  {
+    "id": "w73",
+    "text": "run",
+    "start": 23.92,
+    "end": 24.16
+  },
+  {
+    "id": "w74",
+    "text": "the",
+    "start": 24.16,
+    "end": 24.24
+  },
+  {
+    "id": "w75",
+    "text": "biggest",
+    "start": 24.24,
+    "end": 24.64
+  },
+  {
+    "id": "w76",
+    "text": "financial",
+    "start": 24.64,
+    "end": 25.12
+  },
+  {
+    "id": "w77",
+    "text": "company",
+    "start": 25.12,
+    "end": 25.44
+  },
+  {
+    "id": "w78",
+    "text": "in",
+    "start": 25.44,
+    "end": 25.6
+  },
+  {
+    "id": "w79",
+    "text": "the",
+    "start": 25.6,
+    "end": 25.76
+  },
+  {
+    "id": "w80",
+    "text": "world.",
+    "start": 25.76,
+    "end": 26.32
+  },
+  {
+    "id": "w81",
+    "text": "He",
+    "start": 26.32,
+    "end": 26.48
+  },
+  {
+    "id": "w82",
+    "text": "built",
+    "start": 26.48,
+    "end": 26.8
+  },
+  {
+    "id": "w83",
+    "text": "Citigroup",
+    "start": 26.8,
+    "end": 27.6
+  },
+  {
+    "id": "w84",
+    "text": "side",
+    "start": 27.6,
+    "end": 27.84
+  },
+  {
+    "id": "w85",
+    "text": "by",
+    "start": 27.84,
+    "end": 28
+  },
+  {
+    "id": "w86",
+    "text": "side",
+    "start": 28,
+    "end": 28.24
+  },
+  {
+    "id": "w87",
+    "text": "with",
+    "start": 28.24,
+    "end": 28.32
+  },
+  {
+    "id": "w88",
+    "text": "his",
+    "start": 28.32,
+    "end": 28.4
+  },
+  {
+    "id": "w89",
+    "text": "mentor",
+    "start": 28.4,
+    "end": 28.72
+  },
+  {
+    "id": "w90",
+    "text": "Sandy",
+    "start": 28.8,
+    "end": 29.2
+  },
+  {
+    "id": "w91",
+    "text": "Weil",
+    "start": 29.2,
+    "end": 29.76
+  },
+  {
+    "id": "w92",
+    "text": "for",
+    "start": 29.84,
+    "end": 30
+  },
+  {
+    "id": "w93",
+    "text": "16",
+    "start": 30,
+    "end": 30.48
+  },
+  {
+    "id": "w94",
+    "text": "years.",
+    "start": 30.48,
+    "end": 31.12
+  },
+  {
+    "id": "w95",
+    "text": "But",
+    "start": 31.12,
+    "end": 31.36
+  },
+  {
+    "id": "w96",
+    "text": "then,",
+    "start": 31.36,
+    "end": 31.76
+  },
+  {
+    "id": "w97",
+    "text": "at",
+    "start": 31.76,
+    "end": 31.92
+  },
+  {
+    "id": "w98",
+    "text": "42,",
+    "start": 31.92,
+    "end": 32.88
+  },
+  {
+    "id": "w99",
+    "text": "he",
+    "start": 32.88,
+    "end": 33.04
+  },
+  {
+    "id": "w100",
+    "text": "was",
+    "start": 33.04,
+    "end": 33.28
+  },
+  {
+    "id": "w101",
+    "text": "fired.",
+    "start": 33.28,
+    "end": 34.16
+  },
+  {
+    "id": "w102",
+    "text": "18",
+    "start": 34.16,
+    "end": 34.8
+  },
+  {
+    "id": "w103",
+    "text": "months",
+    "start": 34.8,
+    "end": 35.12
+  },
+  {
+    "id": "w104",
+    "text": "of",
+    "start": 35.12,
+    "end": 35.36
+  },
+  {
+    "id": "w105",
+    "text": "no",
+    "start": 35.36,
+    "end": 35.6
+  },
+  {
+    "id": "w106",
+    "text": "job.",
+    "start": 35.6,
+    "end": 36.32
+  },
+  {
+    "id": "w107",
+    "text": "He",
+    "start": 36.32,
+    "end": 36.48
+  },
+  {
+    "id": "w108",
+    "text": "took",
+    "start": 36.48,
+    "end": 36.72
+  },
+  {
+    "id": "w109",
+    "text": "up",
+    "start": 36.72,
+    "end": 36.88
+  },
+  {
+    "id": "w110",
+    "text": "boxing,",
+    "start": 36.88,
+    "end": 37.52
+  },
+  {
+    "id": "w111",
+    "text": "read",
+    "start": 37.52,
+    "end": 37.84
+  },
+  {
+    "id": "w112",
+    "text": "biographies,",
+    "start": 37.84,
+    "end": 38.8
+  },
+  {
+    "id": "w113",
+    "text": "even",
+    "start": 38.8,
+    "end": 38.96
+  },
+  {
+    "id": "w114",
+    "text": "met",
+    "start": 38.96,
+    "end": 39.2
+  },
+  {
+    "id": "w115",
+    "text": "Bezos",
+    "start": 39.2,
+    "end": 39.92
+  },
+  {
+    "id": "w116",
+    "text": "for",
+    "start": 39.92,
+    "end": 40
+  },
+  {
+    "id": "w117",
+    "text": "a",
+    "start": 40,
+    "end": 40.08
+  },
+  {
+    "id": "w118",
+    "text": "job",
+    "start": 40.08,
+    "end": 40.24
+  },
+  {
+    "id": "w119",
+    "text": "at",
+    "start": 40.24,
+    "end": 40.4
+  },
+  {
+    "id": "w120",
+    "text": "Amazon.",
+    "start": 40.4,
+    "end": 41.12
+  },
+  {
+    "id": "w121",
+    "text": "But",
+    "start": 41.12,
+    "end": 41.28
+  },
+  {
+    "id": "w122",
+    "text": "it",
+    "start": 41.28,
+    "end": 41.44
+  },
+  {
+    "id": "w123",
+    "text": "was",
+    "start": 41.44,
+    "end": 41.6
+  },
+  {
+    "id": "w124",
+    "text": "all",
+    "start": 41.6,
+    "end": 41.76
+  },
+  {
+    "id": "w125",
+    "text": "a",
+    "start": 41.76,
+    "end": 41.92
+  },
+  {
+    "id": "w126",
+    "text": "premise",
+    "start": 41.92,
+    "end": 42.4
+  },
+  {
+    "id": "w127",
+    "text": "for",
+    "start": 42.4,
+    "end": 42.56
+  },
+  {
+    "id": "w128",
+    "text": "the",
+    "start": 42.56,
+    "end": 42.72
+  },
+  {
+    "id": "w129",
+    "text": "greatest",
+    "start": 42.72,
+    "end": 43.04
+  },
+  {
+    "id": "w130",
+    "text": "comeback",
+    "start": 43.04,
+    "end": 43.6
+  },
+  {
+    "id": "w131",
+    "text": "in",
+    "start": 43.6,
+    "end": 43.76
+  },
+  {
+    "id": "w132",
+    "text": "the",
+    "start": 43.76,
+    "end": 43.84
+  },
+  {
+    "id": "w133",
+    "text": "history",
+    "start": 43.84,
+    "end": 44.16
+  },
+  {
+    "id": "w134",
+    "text": "of",
+    "start": 44.16,
+    "end": 44.32
+  },
+  {
+    "id": "w135",
+    "text": "Wall",
+    "start": 44.32,
+    "end": 44.8
+  },
+  {
+    "id": "w136",
+    "text": "Street.",
+    "start": 44.8,
+    "end": 45.36
+  },
+  {
+    "id": "w137",
+    "text": "In",
+    "start": 45.36,
+    "end": 45.6
+  },
+  {
+    "id": "w138",
+    "text": "2000,",
+    "start": 45.6,
+    "end": 46.4
+  },
+  {
+    "id": "w139",
+    "text": "he",
+    "start": 46.4,
+    "end": 46.56
+  },
+  {
+    "id": "w140",
+    "text": "takes",
+    "start": 46.56,
+    "end": 46.8
+  },
+  {
+    "id": "w141",
+    "text": "over",
+    "start": 46.8,
+    "end": 46.96
+  },
+  {
+    "id": "w142",
+    "text": "a",
+    "start": 46.96,
+    "end": 47.12
+  },
+  {
+    "id": "w143",
+    "text": "broken",
+    "start": 47.12,
+    "end": 47.52
+  },
+  {
+    "id": "w144",
+    "text": "bank",
+    "start": 47.52,
+    "end": 47.76
+  },
+  {
+    "id": "w145",
+    "text": "in",
+    "start": 47.76,
+    "end": 47.92
+  },
+  {
+    "id": "w146",
+    "text": "Chicago,",
+    "start": 47.92,
+    "end": 48.64
+  },
+  {
+    "id": "w147",
+    "text": "cuts",
+    "start": 48.64,
+    "end": 48.96
+  },
+  {
+    "id": "w148",
+    "text": "the",
+    "start": 48.96,
+    "end": 49.04
+  },
+  {
+    "id": "w149",
+    "text": "dividend,",
+    "start": 49.04,
+    "end": 49.68
+  },
+  {
+    "id": "w150",
+    "text": "cleaned",
+    "start": 49.68,
+    "end": 50.16
+  },
+  {
+    "id": "w151",
+    "text": "it",
+    "start": 50.16,
+    "end": 50.24
+  },
+  {
+    "id": "w152",
+    "text": "up,",
+    "start": 50.24,
+    "end": 50.56
+  },
+  {
+    "id": "w153",
+    "text": "and",
+    "start": 50.56,
+    "end": 50.72
+  },
+  {
+    "id": "w154",
+    "text": "puts",
+    "start": 50.72,
+    "end": 51.04
+  },
+  {
+    "id": "w155",
+    "text": "$60",
+    "start": 51.04,
+    "end": 51.44
+  },
+  {
+    "id": "w156",
+    "text": "million",
+    "start": 51.44,
+    "end": 51.84
+  },
+  {
+    "id": "w157",
+    "text": "of",
+    "start": 52.16,
+    "end": 52.32
+  },
+  {
+    "id": "w158",
+    "text": "his",
+    "start": 52.32,
+    "end": 52.48
+  },
+  {
+    "id": "w159",
+    "text": "own",
+    "start": 52.48,
+    "end": 52.72
+  },
+  {
+    "id": "w160",
+    "text": "money",
+    "start": 52.72,
+    "end": 53.04
+  },
+  {
+    "id": "w161",
+    "text": "into",
+    "start": 53.04,
+    "end": 53.28
+  },
+  {
+    "id": "w162",
+    "text": "the",
+    "start": 53.28,
+    "end": 53.36
+  },
+  {
+    "id": "w163",
+    "text": "stock.",
+    "start": 53.36,
+    "end": 54
+  },
+  {
+    "id": "w164",
+    "text": "Turn",
+    "start": 54,
+    "end": 54.32
+  },
+  {
+    "id": "w165",
+    "text": "a",
+    "start": 54.32,
+    "end": 54.48
+  },
+  {
+    "id": "w166",
+    "text": "$500",
+    "start": 54.48,
+    "end": 55.04
+  },
+  {
+    "id": "w167",
+    "text": "million",
+    "start": 55.04,
+    "end": 55.36
+  },
+  {
+    "id": "w168",
+    "text": "loss",
+    "start": 55.6,
+    "end": 56
+  },
+  {
+    "id": "w169",
+    "text": "into",
+    "start": 56,
+    "end": 56.32
+  },
+  {
+    "id": "w170",
+    "text": "billions",
+    "start": 56.32,
+    "end": 56.88
+  },
+  {
+    "id": "w171",
+    "text": "in",
+    "start": 56.88,
+    "end": 57.04
+  },
+  {
+    "id": "w172",
+    "text": "profit.",
+    "start": 57.04,
+    "end": 57.68
+  },
+  {
+    "id": "w173",
+    "text": "That",
+    "start": 57.85,
+    "end": 58.09
+  },
+  {
+    "id": "w174",
+    "text": "bank",
+    "start": 58.09,
+    "end": 58.33
+  },
+  {
+    "id": "w175",
+    "text": "got",
+    "start": 58.33,
+    "end": 58.49
+  },
+  {
+    "id": "w176",
+    "text": "acquired",
+    "start": 58.49,
+    "end": 58.89
+  },
+  {
+    "id": "w177",
+    "text": "by",
+    "start": 58.89,
+    "end": 59.05
+  },
+  {
+    "id": "w178",
+    "text": "JP",
+    "start": 59.05,
+    "end": 59.37
+  },
+  {
+    "id": "w179",
+    "text": "Morgan",
+    "start": 59.45,
+    "end": 59.77
+  },
+  {
+    "id": "w180",
+    "text": "in",
+    "start": 59.93,
+    "end": 60.01
+  },
+  {
+    "id": "w181",
+    "text": "2004.",
+    "start": 60.01,
+    "end": 61.05
+  },
+  {
+    "id": "w182",
+    "text": "Then,",
+    "start": 61.05,
+    "end": 61.61
+  },
+  {
+    "id": "w183",
+    "text": "2008",
+    "start": 61.61,
+    "end": 62.17
+  },
+  {
+    "id": "w184",
+    "text": "financial",
+    "start": 62.41,
+    "end": 62.65
+  },
+  {
+    "id": "w185",
+    "text": "crisis",
+    "start": 62.81,
+    "end": 63.21
+  },
+  {
+    "id": "w186",
+    "text": "hit,",
+    "start": 63.21,
+    "end": 63.61
+  },
+  {
+    "id": "w187",
+    "text": "and",
+    "start": 63.61,
+    "end": 63.77
+  },
+  {
+    "id": "w188",
+    "text": "when",
+    "start": 63.77,
+    "end": 64.01
+  },
+  {
+    "id": "w189",
+    "text": "every",
+    "start": 64.01,
+    "end": 64.25
+  },
+  {
+    "id": "w190",
+    "text": "other",
+    "start": 64.25,
+    "end": 64.41
+  },
+  {
+    "id": "w191",
+    "text": "bank",
+    "start": 64.41,
+    "end": 64.73
+  },
+  {
+    "id": "w192",
+    "text": "was",
+    "start": 64.73,
+    "end": 64.89
+  },
+  {
+    "id": "w193",
+    "text": "dying,",
+    "start": 64.89,
+    "end": 65.53
+  },
+  {
+    "id": "w194",
+    "text": "he",
+    "start": 65.53,
+    "end": 65.69
+  },
+  {
+    "id": "w195",
+    "text": "was",
+    "start": 65.69,
+    "end": 65.85
+  },
+  {
+    "id": "w196",
+    "text": "the",
+    "start": 65.85,
+    "end": 66.01
+  },
+  {
+    "id": "w197",
+    "text": "only",
+    "start": 66.01,
+    "end": 66.25
+  },
+  {
+    "id": "w198",
+    "text": "one",
+    "start": 66.25,
+    "end": 66.57
+  },
+  {
+    "id": "w199",
+    "text": "standing",
+    "start": 66.57,
+    "end": 66.97
+  },
+  {
+    "id": "w200",
+    "text": "with",
+    "start": 66.97,
+    "end": 67.21
+  },
+  {
+    "id": "w201",
+    "text": "enough",
+    "start": 67.21,
+    "end": 67.45
+  },
+  {
+    "id": "w202",
+    "text": "money",
+    "start": 67.45,
+    "end": 67.77
+  },
+  {
+    "id": "w203",
+    "text": "to",
+    "start": 67.77,
+    "end": 67.93
+  },
+  {
+    "id": "w204",
+    "text": "buy",
+    "start": 67.93,
+    "end": 68.17
+  },
+  {
+    "id": "w205",
+    "text": "the",
+    "start": 68.17,
+    "end": 68.33
+  },
+  {
+    "id": "w206",
+    "text": "ones",
+    "start": 68.33,
+    "end": 68.57
+  },
+  {
+    "id": "w207",
+    "text": "that",
+    "start": 68.57,
+    "end": 68.73
+  },
+  {
+    "id": "w208",
+    "text": "fell.",
+    "start": 68.73,
+    "end": 69.37
+  },
+  {
+    "id": "w209",
+    "text": "That's",
+    "start": 69.37,
+    "end": 69.69
+  },
+  {
+    "id": "w210",
+    "text": "JP",
+    "start": 69.69,
+    "end": 70.09
+  },
+  {
+    "id": "w211",
+    "text": "Morgan",
+    "start": 70.17,
+    "end": 70.57
+  },
+  {
+    "id": "w212",
+    "text": "and",
+    "start": 70.57,
+    "end": 70.73
+  },
+  {
+    "id": "w213",
+    "text": "Chase,",
+    "start": 70.73,
+    "end": 71.29
+  },
+  {
+    "id": "w214",
+    "text": "the",
+    "start": 71.29,
+    "end": 71.37
+  },
+  {
+    "id": "w215",
+    "text": "name",
+    "start": 71.37,
+    "end": 71.61
+  },
+  {
+    "id": "w216",
+    "text": "that",
+    "start": 71.61,
+    "end": 71.77
+  },
+  {
+    "id": "w217",
+    "text": "moves",
+    "start": 71.77,
+    "end": 72.17
+  },
+  {
+    "id": "w218",
+    "text": "$10",
+    "start": 72.17,
+    "end": 72.49
+  },
+  {
+    "id": "w219",
+    "text": "trillion",
+    "start": 72.49,
+    "end": 72.97
+  },
+  {
+    "id": "w220",
+    "text": "every",
+    "start": 73.45,
+    "end": 73.69
+  },
+  {
+    "id": "w221",
+    "text": "single",
+    "start": 73.69,
+    "end": 74.01
+  },
+  {
+    "id": "w222",
+    "text": "day",
+    "start": 74.01,
+    "end": 74.33
+  },
+  {
+    "id": "w223",
+    "text": "today.",
+    "start": 74.33,
+    "end": 74.89
+  }
+]
