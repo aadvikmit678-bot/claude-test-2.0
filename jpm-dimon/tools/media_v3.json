@@ -1,0 +1,2080 @@
+{
+ "clips": {
+  "MPB_61600_75": {
+   "key": "MPB",
+   "t": 616.0,
+   "dur": 0.75,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_149600_75": {
+   "key": "MPB",
+   "t": 1496.0,
+   "dur": 0.75,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_127300_75": {
+   "key": "MPB",
+   "t": 1273.0,
+   "dur": 0.75,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_0_64": {
+   "key": "GAME",
+   "t": 0.0,
+   "dur": 0.64,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_32320_81": {
+   "key": "HOW",
+   "t": 323.2,
+   "dur": 0.81,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P01_620_65v": {
+   "key": "P01",
+   "t": 6.2,
+   "dur": 0.65,
+   "frame": "FULL",
+   "size": [
+    608,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_75060_76": {
+   "key": "BANK",
+   "t": 750.6,
+   "dur": 0.76,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_76050_72": {
+   "key": "BANK",
+   "t": 760.5,
+   "dur": 0.72,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P07_100_70": {
+   "key": "P07",
+   "t": 1.0,
+   "dur": 0.7,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_32960_86": {
+   "key": "GAME",
+   "t": 329.6,
+   "dur": 0.86,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_7020_73": {
+   "key": "GAME",
+   "t": 70.2,
+   "dur": 0.73,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_600_81": {
+   "key": "GAME",
+   "t": 6.0,
+   "dur": 0.81,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_8150_71": {
+   "key": "GAME",
+   "t": 81.5,
+   "dur": 0.71,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_840_83": {
+   "key": "GAME",
+   "t": 8.4,
+   "dur": 0.83,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_30900_41": {
+   "key": "HOW",
+   "t": 309.0,
+   "dur": 0.41,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_8260_105": {
+   "key": "GAME",
+   "t": 82.6,
+   "dur": 1.05,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_20260_55": {
+   "key": "GAME",
+   "t": 202.6,
+   "dur": 0.55,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_10810_67": {
+   "key": "GAME",
+   "t": 108.1,
+   "dur": 0.67,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_10960_65": {
+   "key": "GAME",
+   "t": 109.6,
+   "dur": 0.65,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_52205_112": {
+   "key": "GAME",
+   "t": 522.05,
+   "dur": 1.12,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_1960_105_x45_56_120": {
+   "key": "BANK",
+   "t": 19.6,
+   "dur": 1.05,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": [
+    0.45,
+    0.56,
+    1.2
+   ]
+  },
+  "GAME_6140_40": {
+   "key": "GAME",
+   "t": 61.4,
+   "dur": 0.4,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "CHAIR_126520_49": {
+   "key": "CHAIR",
+   "t": 1265.2,
+   "dur": 0.49,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_4920_49": {
+   "key": "HOW",
+   "t": 49.2,
+   "dur": 0.49,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_4060_41": {
+   "key": "BANK",
+   "t": 40.6,
+   "dur": 0.41,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_19320_81": {
+   "key": "GAME",
+   "t": 193.2,
+   "dur": 0.81,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_12160_41": {
+   "key": "GAME",
+   "t": 121.6,
+   "dur": 0.41,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "WOLF_125_143": {
+   "key": "WOLF",
+   "t": 1.25,
+   "dur": 1.43,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "UNT_54350_83": {
+   "key": "UNT",
+   "t": 543.5,
+   "dur": 0.83,
+   "frame": "UNTF",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_106760_35": {
+   "key": "MPB",
+   "t": 1067.6,
+   "dur": 0.35,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_107100_71": {
+   "key": "MPB",
+   "t": 1071.0,
+   "dur": 0.71,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_85000_107": {
+   "key": "MPB",
+   "t": 850.0,
+   "dur": 1.07,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_44760_95": {
+   "key": "BANK",
+   "t": 447.6,
+   "dur": 0.95,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_43820_94": {
+   "key": "MPB",
+   "t": 438.2,
+   "dur": 0.94,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P07_120_108": {
+   "key": "P07",
+   "t": 1.2,
+   "dur": 1.08,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P10_220_95": {
+   "key": "P10",
+   "t": 2.2,
+   "dur": 0.95,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_178400_82": {
+   "key": "MPB",
+   "t": 1784.0,
+   "dur": 0.82,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_78150_68": {
+   "key": "HOW",
+   "t": 781.5,
+   "dur": 0.68,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "UNT_61860_105_x45_41_170": {
+   "key": "UNT",
+   "t": 618.6,
+   "dur": 1.05,
+   "frame": "UNTF",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": [
+    0.45,
+    0.415,
+    1.7
+   ]
+  },
+  "MPB_105400_107": {
+   "key": "MPB",
+   "t": 1054.0,
+   "dur": 1.07,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_9360_55": {
+   "key": "GAME",
+   "t": 93.6,
+   "dur": 0.55,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_9920_68": {
+   "key": "GAME",
+   "t": 99.2,
+   "dur": 0.68,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_11420_63": {
+   "key": "GAME",
+   "t": 114.2,
+   "dur": 0.63,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_10820_63": {
+   "key": "GAME",
+   "t": 108.2,
+   "dur": 0.63,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_120_57_x55_57_120": {
+   "key": "BANK",
+   "t": 1.2,
+   "dur": 0.57,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": [
+    0.55,
+    0.58,
+    1.2
+   ]
+  },
+  "GAME_8020_117": {
+   "key": "GAME",
+   "t": 80.2,
+   "dur": 1.17,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_27305_133": {
+   "key": "BANK",
+   "t": 273.05,
+   "dur": 1.33,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_31560_43": {
+   "key": "GAME",
+   "t": 315.6,
+   "dur": 0.43,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_20760_43": {
+   "key": "BANK",
+   "t": 207.6,
+   "dur": 0.43,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_51420_41": {
+   "key": "GAME",
+   "t": 514.2,
+   "dur": 0.41,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_27590_200": {
+   "key": "BANK",
+   "t": 275.895,
+   "dur": 2.0,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_27824_134": {
+   "key": "BANK",
+   "t": 278.245,
+   "dur": 1.34,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_18360_100": {
+   "key": "GAME",
+   "t": 183.6,
+   "dur": 1.0,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_28100_86": {
+   "key": "BANK",
+   "t": 281.0,
+   "dur": 0.86,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_7060_97": {
+   "key": "GAME",
+   "t": 70.6,
+   "dur": 0.97,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_28232_223": {
+   "key": "BANK",
+   "t": 282.325,
+   "dur": 2.23,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_29480_73_x68_45_150": {
+   "key": "MPB",
+   "t": 294.8,
+   "dur": 0.73,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": [
+    0.68,
+    0.45,
+    1.5
+   ]
+  },
+  "MPB_35620_49": {
+   "key": "MPB",
+   "t": 356.2,
+   "dur": 0.49,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_32360_120": {
+   "key": "HOW",
+   "t": 323.6,
+   "dur": 1.2,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_85060_59": {
+   "key": "MPB",
+   "t": 850.6,
+   "dur": 0.59,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_3460_65": {
+   "key": "BANK",
+   "t": 34.6,
+   "dur": 0.65,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_73460_58": {
+   "key": "MPB",
+   "t": 734.6,
+   "dur": 0.58,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_101860_41": {
+   "key": "MPB",
+   "t": 1018.6,
+   "dur": 0.41,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_84040_105": {
+   "key": "MPB",
+   "t": 840.4,
+   "dur": 1.05,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_45580_145": {
+   "key": "BANK",
+   "t": 455.8,
+   "dur": 1.45,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_43860_105": {
+   "key": "MPB",
+   "t": 438.6,
+   "dur": 1.05,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_86040_108": {
+   "key": "MPB",
+   "t": 860.4,
+   "dur": 1.08,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "UNT_54380_133": {
+   "key": "UNT",
+   "t": 543.8,
+   "dur": 1.33,
+   "frame": "UNTF",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "FIRED_9693_161": {
+   "key": "FIRED",
+   "t": 96.93,
+   "dur": 1.61,
+   "frame": "FULL",
+   "size": [
+    1920,
+    804
+   ],
+   "frame_xyz": null
+  },
+  "CHAIR_287500_67": {
+   "key": "CHAIR",
+   "t": 2875.0,
+   "dur": 0.67,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_118000_38": {
+   "key": "MPB",
+   "t": 1180.0,
+   "dur": 0.38,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_61600_35": {
+   "key": "MPB",
+   "t": 616.0,
+   "dur": 0.35,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_149600_35": {
+   "key": "MPB",
+   "t": 1496.0,
+   "dur": 0.35,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_127300_133": {
+   "key": "MPB",
+   "t": 1273.0,
+   "dur": 1.33,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_25660_114": {
+   "key": "GAME",
+   "t": 256.6,
+   "dur": 1.14,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_3660_94": {
+   "key": "BANK",
+   "t": 36.6,
+   "dur": 0.94,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P01_640_70v": {
+   "key": "P01",
+   "t": 6.4,
+   "dur": 0.7,
+   "frame": "FULL",
+   "size": [
+    608,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_6140_92": {
+   "key": "GAME",
+   "t": 61.4,
+   "dur": 0.92,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_146840_51": {
+   "key": "MPB",
+   "t": 1468.4,
+   "dur": 0.51,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_144620_99": {
+   "key": "MPB",
+   "t": 1446.2,
+   "dur": 0.99,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_119220_89": {
+   "key": "MPB",
+   "t": 1192.2,
+   "dur": 0.89,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_124800_41": {
+   "key": "MPB",
+   "t": 1248.0,
+   "dur": 0.41,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_119223_40": {
+   "key": "MPB",
+   "t": 1192.23,
+   "dur": 0.4,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_119255_32": {
+   "key": "MPB",
+   "t": 1192.55,
+   "dur": 0.32,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_144600_134": {
+   "key": "MPB",
+   "t": 1446.0,
+   "dur": 1.34,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_132300_98": {
+   "key": "MPB",
+   "t": 1323.0,
+   "dur": 0.98,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P10_150_180": {
+   "key": "P10",
+   "t": 1.5,
+   "dur": 1.8,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_102320_57": {
+   "key": "HOW",
+   "t": 1023.2,
+   "dur": 0.57,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_75790_109": {
+   "key": "BANK",
+   "t": 757.9,
+   "dur": 1.09,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_69700_117": {
+   "key": "HOW",
+   "t": 697.0,
+   "dur": 1.17,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_69260_151": {
+   "key": "HOW",
+   "t": 692.6,
+   "dur": 1.51,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_69800_82_x36_27_300": {
+   "key": "HOW",
+   "t": 698.0,
+   "dur": 0.82,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": [
+    0.36,
+    0.27,
+    3.0
+   ]
+  },
+  "HOW_79300_89": {
+   "key": "HOW",
+   "t": 793.0,
+   "dur": 0.89,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "CRASH_7250_69": {
+   "key": "CRASH",
+   "t": 72.5,
+   "dur": 0.69,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "STO_143860_67": {
+   "key": "STO",
+   "t": 1438.6,
+   "dur": 0.67,
+   "frame": "SIXTY",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P02_120_70": {
+   "key": "P02",
+   "t": 1.2,
+   "dur": 0.7,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_189120_37": {
+   "key": "MPB",
+   "t": 1891.2,
+   "dur": 0.37,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_101060_37": {
+   "key": "HOW",
+   "t": 1010.6,
+   "dur": 0.37,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_40960_37": {
+   "key": "GAME",
+   "t": 409.6,
+   "dur": 0.37,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "STO_34620_37": {
+   "key": "STO",
+   "t": 346.2,
+   "dur": 0.37,
+   "frame": "SIXTY",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "STO_3040_37": {
+   "key": "STO",
+   "t": 30.4,
+   "dur": 0.37,
+   "frame": "SIXTY",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "STO_172300_37": {
+   "key": "STO",
+   "t": 1723.0,
+   "dur": 0.37,
+   "frame": "SIXTY",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "STO_229460_88": {
+   "key": "STO",
+   "t": 2294.6,
+   "dur": 0.88,
+   "frame": "SIXTY",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P11_90_130v_x50_50_100": {
+   "key": "P11",
+   "t": 0.9,
+   "dur": 1.3,
+   "frame": "FULL",
+   "size": [
+    800,
+    1080
+   ],
+   "frame_xyz": [
+    0.5,
+    0.5,
+    1.0
+   ]
+  },
+  "MPB_191660_65": {
+   "key": "MPB",
+   "t": 1916.6,
+   "dur": 0.65,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P06_100_105": {
+   "key": "P06",
+   "t": 1.0,
+   "dur": 1.05,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "UNT_115760_65": {
+   "key": "UNT",
+   "t": 1157.6,
+   "dur": 0.65,
+   "frame": "UNTF",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_189040_41": {
+   "key": "MPB",
+   "t": 1890.4,
+   "dur": 0.41,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_101080_50": {
+   "key": "HOW",
+   "t": 1010.8,
+   "dur": 0.5,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "MPB_151760_83": {
+   "key": "MPB",
+   "t": 1517.6,
+   "dur": 0.83,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_20280_41": {
+   "key": "GAME",
+   "t": 202.8,
+   "dur": 0.41,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_75080_54": {
+   "key": "BANK",
+   "t": 750.8,
+   "dur": 0.54,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_75660_68": {
+   "key": "BANK",
+   "t": 756.6,
+   "dur": 0.68,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_75600_167": {
+   "key": "BANK",
+   "t": 756.0,
+   "dur": 1.67,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_76100_164": {
+   "key": "BANK",
+   "t": 761.0,
+   "dur": 1.64,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_102400_160": {
+   "key": "HOW",
+   "t": 1024.0,
+   "dur": 1.6,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_75960_157": {
+   "key": "BANK",
+   "t": 759.6,
+   "dur": 1.57,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_102650_167": {
+   "key": "HOW",
+   "t": 1026.5,
+   "dur": 1.67,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_76360_164": {
+   "key": "BANK",
+   "t": 763.6,
+   "dur": 1.64,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "CRASH_16000_160": {
+   "key": "CRASH",
+   "t": 160.0,
+   "dur": 1.6,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "HOW_102260_157": {
+   "key": "HOW",
+   "t": 1022.6,
+   "dur": 1.57,
+   "frame": "CNBC",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_75790_167": {
+   "key": "BANK",
+   "t": 757.9,
+   "dur": 1.67,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P10_320_167": {
+   "key": "P10",
+   "t": 3.2,
+   "dur": 1.67,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "P07_200_48": {
+   "key": "P07",
+   "t": 2.0,
+   "dur": 0.48,
+   "frame": "FULL",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_74460_57": {
+   "key": "BANK",
+   "t": 744.6,
+   "dur": 0.57,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "GAME_12890_57": {
+   "key": "GAME",
+   "t": 128.9,
+   "dur": 0.57,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  },
+  "BANK_103140_164": {
+   "key": "BANK",
+   "t": 1031.4,
+   "dur": 1.64,
+   "frame": "BBG",
+   "size": [
+    1920,
+    1080
+   ],
+   "frame_xyz": null
+  }
+ },
+ "stills": {
+  "cut_dimon06": {
+   "path": "/home/user/claude-test-2.0/dimon-work/cut/dimon06.png",
+   "ext": "png",
+   "edge": 1600
+  },
+  "cut_dimon09": {
+   "path": "/home/user/claude-test-2.0/dimon-work/cut/dimon09.png",
+   "ext": "png",
+   "edge": 1600,
+   "crop": [
+    0.08,
+    0,
+    0.92,
+    1
+   ]
+  },
+  "cut_bezos03": {
+   "path": "/home/user/claude-test-2.0/dimon-work/cut/bezos03.png",
+   "ext": "png",
+   "edge": 1500
+  },
+  "seal": {
+   "path": "money_pinterest videos/Seal_of_the_President_of_the_United_States.png",
+   "ext": "png",
+   "edge": 1400
+  },
+  "nyt_1093": {
+   "key": "MPB",
+   "t": 1093.0,
+   "frame": "FULL"
+  },
+  "gloves": {
+   "path": "Jamie_Dimon_Image_Pack/10_Supporting_Illustrative/01_ILLUSTRATIVE_boxing_gloves_generic.jpg",
+   "edge": 1920
+  },
+  "worldbank": {
+   "path": "Jamie_Dimon_Image_Pack/08_World_Bank/02_World_Bank_building_Washington.jpg",
+   "edge": 1920
+  },
+  "gov_capitol": {
+   "path": "Jamie_Dimon_Image_Pack/07_US_Government_America/01_US_Capitol_west_front.jpg",
+   "edge": 900
+  },
+  "gov_whitehouse": {
+   "path": "Jamie_Dimon_Image_Pack/07_US_Government_America/02_White_House_north_facade.jpg",
+   "edge": 900
+  },
+  "gov_treasury": {
+   "path": "Jamie_Dimon_Image_Pack/07_US_Government_America/04_US_Treasury_Building.jpg",
+   "edge": 900
+  },
+  "gov_fed": {
+   "path": "Jamie_Dimon_Image_Pack/07_US_Government_America/06_Federal_Reserve_Eccles_Building.jpg",
+   "edge": 900
+  },
+  "gov_treasury2": {
+   "path": "Jamie_Dimon_Image_Pack/07_US_Government_America/05_US_Treasury_Gallatin_statue.jpg",
+   "edge": 900
+  },
+  "gov_fed1937": {
+   "path": "Jamie_Dimon_Image_Pack/07_US_Government_America/07_Federal_Reserve_Eccles_1937_archival.jpg",
+   "edge": 900
+  },
+  "lead_reeves": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/07_Jamie_Dimon_meets_Rachel_Reeves_01.jpg",
+   "edge": 1000
+  },
+  "lead_macri": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/10_Jamie_Dimon_with_Mauricio_Macri.jpg",
+   "edge": 1000
+  },
+  "lead_japan": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/12_Jamie_Dimon_Japan_PM_courtesy_call_02.jpg",
+   "edge": 1000
+  },
+  "logo_lehman": {
+   "path": "Jamie_Dimon_Image_Pack/09_2008_Crisis/07_Lehman_Brothers_logo_svg.svg",
+   "ext": "svg"
+  },
+  "logo_wamu": {
+   "path": "Jamie_Dimon_Image_Pack/09_2008_Crisis/09_WaMu_logo_svg.svg",
+   "ext": "svg"
+  },
+  "logo_jpmc": {
+   "path": "Jamie_Dimon_Image_Pack/05_JPMorgan_Chase/04_JPMorganChase_logo_2024_svg.svg",
+   "ext": "svg"
+  },
+  "cr_lehman_boxes": {
+   "path": "Jamie_Dimon_Image_Pack/09_2008_Crisis/02_Lehman_Brothers_employees_boxes_2008.jpg",
+   "edge": 1200
+  },
+  "cr_bear_sign": {
+   "path": "Jamie_Dimon_Image_Pack/09_2008_Crisis/05_Bear_Stearns_signage.jpg",
+   "edge": 1200
+  },
+  "cr_wamu": {
+   "path": "Jamie_Dimon_Image_Pack/09_2008_Crisis/06_WaMu_Center_Seattle_1201_Third.jpg",
+   "edge": 1200
+  },
+  "cr_lehman_ts": {
+   "path": "Jamie_Dimon_Image_Pack/09_2008_Crisis/03_Lehman_Brothers_Times_Square.jpg",
+   "edge": 1200
+  },
+  "cr_lehman_nyc": {
+   "path": "Jamie_Dimon_Image_Pack/09_2008_Crisis/01_Lehman_Brothers_NYC_Sept_15_2008.jpg",
+   "edge": 1200
+  },
+  "ring0": {
+   "key": "BANK",
+   "t": 36.5,
+   "frame": "BBG"
+  },
+  "ring1": {
+   "key": "BANK",
+   "t": 70.0,
+   "frame": "BBG"
+  },
+  "ring2": {
+   "key": "BANK",
+   "t": 76.0,
+   "frame": "BBG"
+  },
+  "ring3": {
+   "key": "GAME",
+   "t": 64.4,
+   "frame": "BBG"
+  },
+  "ring4": {
+   "key": "CHAIR",
+   "t": 1265.0,
+   "frame": "FULL"
+  },
+  "ring5": {
+   "key": "SPEAK",
+   "t": 20.0,
+   "frame": "FULL"
+  },
+  "ring6": {
+   "key": "MPB",
+   "t": 1299.0,
+   "frame": "FULL"
+  },
+  "ring7": {
+   "key": "HOW",
+   "t": 51.5,
+   "frame": "CNBC"
+  },
+  "ring8": {
+   "key": "BANK",
+   "t": 1032.0,
+   "frame": "BBG"
+  },
+  "ring9": {
+   "key": "GAME",
+   "t": 124.8,
+   "frame": "BBG"
+  },
+  "ring10": {
+   "key": "CHAIR",
+   "t": 2210.0,
+   "frame": "FULL"
+  },
+  "ring11": {
+   "key": "BANK",
+   "t": 53.0,
+   "frame": "BBG"
+  },
+  "wall0": {
+   "key": "HOW",
+   "t": 300.5,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall1": {
+   "key": "HOW",
+   "t": 303.0,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall2": {
+   "key": "HOW",
+   "t": 306.5,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall3": {
+   "key": "HOW",
+   "t": 309.0,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall4": {
+   "key": "HOW",
+   "t": 312.5,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall5": {
+   "key": "HOW",
+   "t": 318.0,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall6": {
+   "key": "HOW",
+   "t": 323.5,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall7": {
+   "key": "HOW",
+   "t": 327.5,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall8": {
+   "key": "HOW",
+   "t": 332.0,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall9": {
+   "key": "HOW",
+   "t": 43.5,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall10": {
+   "key": "HOW",
+   "t": 789.6,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall11": {
+   "key": "MPB",
+   "t": 783.5,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall12": {
+   "key": "MPB",
+   "t": 786.0,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall13": {
+   "key": "MPB",
+   "t": 790.0,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall14": {
+   "key": "MPB",
+   "t": 799.5,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall15": {
+   "key": "MPB",
+   "t": 1490.5,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall16": {
+   "key": "MPB",
+   "t": 1507.0,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall17": {
+   "key": "MPB",
+   "t": 1512.5,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall18": {
+   "key": "MPB",
+   "t": 830.5,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall19": {
+   "key": "STO",
+   "t": 346.0,
+   "frame": "SIXTY",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall20": {
+   "key": "STO",
+   "t": 349.5,
+   "frame": "SIXTY",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall21": {
+   "key": "BANK",
+   "t": 225.5,
+   "frame": "BBG",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall22": {
+   "key": "GAME",
+   "t": 81.5,
+   "frame": "BBG",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "wall23": {
+   "key": "MPB",
+   "t": 1526.0,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c16_0": {
+   "key": "MPB",
+   "t": 718.0,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c16_1": {
+   "key": "BANK",
+   "t": 440.0,
+   "frame": "BBG",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c16_2": {
+   "key": "BANK",
+   "t": 448.5,
+   "frame": "BBG",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c16_3": {
+   "key": "BANK",
+   "t": 456.0,
+   "frame": "BBG",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c16_4": {
+   "key": "UNT",
+   "t": 558.0,
+   "frame": "UNTF",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c16_5": {
+   "key": "UNT",
+   "t": 1017.5,
+   "frame": "UNTF",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c16_6": {
+   "key": "MPB",
+   "t": 841.5,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c08_0": {
+   "key": "MPB",
+   "t": 1891.0,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c08_1": {
+   "key": "STO",
+   "t": 1439.5,
+   "frame": "SIXTY",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c08_2": {
+   "key": "BANK",
+   "t": 492.0,
+   "frame": "BBG",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c08_3": {
+   "key": "GAME",
+   "t": 409.5,
+   "frame": "BBG",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c08_4": {
+   "key": "STO",
+   "t": 30.0,
+   "frame": "SIXTY",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c08_5": {
+   "key": "MPB",
+   "t": 1885.0,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "dp0": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/01_Jamie_Dimon_CEO_JPMorgan_Healthcare_2013.jpg",
+   "edge": 1400
+  },
+  "dp1": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/03_Jamie_Dimon_portrait_crop_Davos_2016.jpg",
+   "edge": 1400
+  },
+  "dp2": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/06_Jamie_Dimon_Global_Financial_Context_crop.jpg",
+   "edge": 1400
+  },
+  "dp3": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/09_Jamie_Dimon_Rachel_Reeves_portrait_crop.jpg",
+   "edge": 1400
+  },
+  "dp4": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/05_Jamie_Dimon_Global_Financial_Context.jpg",
+   "edge": 1400
+  },
+  "dp5": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/16_Jamie_Dimon_with_Mark_Hoffman_CNBC.jpg",
+   "edge": 1400
+  },
+  "pin_bw": {
+   "path": "money_pinterest videos/jamie black and white image.jpg",
+   "edge": 900
+  },
+  "pin_green": {
+   "path": "money_pinterest videos/jamie dimon pic.jpg",
+   "edge": 900
+  },
+  "pin_mic": {
+   "path": "money_pinterest videos/jamie image.jpg",
+   "edge": 900
+  },
+  "ld0": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/07_Jamie_Dimon_meets_Rachel_Reeves_01.jpg",
+   "edge": 1100
+  },
+  "ld1": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/11_Jamie_Dimon_Japan_PM_courtesy_call_01.jpg",
+   "edge": 1100
+  },
+  "ld2": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/10_Jamie_Dimon_with_Mauricio_Macri.jpg",
+   "edge": 1100
+  },
+  "ld3": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/02_Jamie_Dimon_WEF_Davos_Becky_Quick_2016.jpg",
+   "edge": 1100
+  },
+  "ld4": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/12_Jamie_Dimon_Japan_PM_courtesy_call_02.jpg",
+   "edge": 1100
+  },
+  "ld5": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/08_Jamie_Dimon_meets_Rachel_Reeves_02.jpg",
+   "edge": 1100
+  },
+  "ld6": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/15_Jamie_Dimon_WEF_with_Gary_Cohn_panel.jpg",
+   "edge": 1100
+  },
+  "ld7": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/13_Jamie_Dimon_Japan_PM_courtesy_call_03.jpg",
+   "edge": 1100
+  },
+  "ld8": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/04_Jamie_Dimon_with_Bill_McDermott_Becky_Quick.jpg",
+   "edge": 1100
+  },
+  "ld9": {
+   "path": "Jamie_Dimon_Image_Pack/01_Jamie_Dimon/14_Jamie_Dimon_Army_Navy_game_event.jpg",
+   "edge": 1100
+  },
+  "lg_citi": {
+   "path": "Jamie_Dimon_Image_Pack/04_Citigroup/09_Citi_logo_March_2023_svg.svg",
+   "ext": "svg"
+  },
+  "lg_bankone": {
+   "path": "Jamie_Dimon_Image_Pack/06_Bank_One_Chicago/05_Bank_One_logo_svg.svg",
+   "ext": "svg"
+  },
+  "lg_jpm": {
+   "path": "Jamie_Dimon_Image_Pack/05_JPMorgan_Chase/07_JPMorgan_logo_svg.svg",
+   "ext": "svg"
+  },
+  "lg_jpmc08": {
+   "path": "Jamie_Dimon_Image_Pack/05_JPMorgan_Chase/05_JPMorgan_Chase_logo_2008_svg.svg",
+   "ext": "svg"
+  },
+  "lg_chase": {
+   "path": "Jamie_Dimon_Image_Pack/05_JPMorgan_Chase/06_Chase_logo_2007_svg.svg",
+   "ext": "svg"
+  },
+  "lg_wb": {
+   "path": "Jamie_Dimon_Image_Pack/08_World_Bank/04_World_Bank_logo_svg.svg",
+   "ext": "svg"
+  },
+  "bill100": {
+   "path": "Jamie_Dimon_Image_Pack/10_Supporting_Illustrative/06_ILLUSTRATIVE_US_100_note_classic.jpg",
+   "edge": 1920
+  },
+  "chi_tower": {
+   "path": "Jamie_Dimon_Image_Pack/06_Bank_One_Chicago/02_Chase_Tower_Chicago_looking_NE.jpg",
+   "edge": 1920
+  },
+  "c04_0": {
+   "key": "HOW",
+   "t": 656.8,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c04_1": {
+   "key": "UNT",
+   "t": 1055.8,
+   "frame": "UNTF",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c04_2": {
+   "key": "HOW",
+   "t": 697.2,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c04_3": {
+   "key": "MPB",
+   "t": 1560.0,
+   "frame": "FULL",
+   "size": [
+    640,
+    360
+   ]
+  },
+  "c04_4": {
+   "key": "HOW",
+   "t": 692.8,
+   "frame": "CNBC",
+   "size": [
+    640,
+    360
+   ]
+  }
+ }
+}
