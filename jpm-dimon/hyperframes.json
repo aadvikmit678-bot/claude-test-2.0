@@ -15,6 +15,26 @@
       "name": "grain-overlay",
       "type": "hyperframes:component",
       "target": "compositions/components/grain-overlay.html"
+    },
+    {
+      "name": "editorial-flash-overlay",
+      "type": "hyperframes:block",
+      "target": "compositions/editorial-flash-overlay.html"
+    },
+    {
+      "name": "organic-light-leak-overlay",
+      "type": "hyperframes:block",
+      "target": "compositions/organic-light-leak-overlay.html"
+    },
+    {
+      "name": "whip-pan-cut",
+      "type": "hyperframes:component",
+      "target": "compositions/components/whip-pan-cut.html"
+    },
+    {
+      "name": "marker-highlight",
+      "type": "hyperframes:component",
+      "target": "compositions/components/marker-highlight.html"
     }
   ]
 }
