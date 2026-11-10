@@ -3453,7 +3453,6 @@ kc(s, [(A(111), "MPB", 616.0, None), (round(A(112) + 0.36, 3), "BR2", 10.83, Non
        (round(A(112) + 0.67, 3), "MPB", 1496.0, None)], A(113), push=(1.0, 1.07))            # (the user's new B-roll); the House of Morgan
 kc(s, [(A(113), "UNT", 836.0, (0.5, 0.5, UNT_ZOOM))], A(115))
 s.img(BEZ_LAUGH, A(115), A(116), grade="", push=(1.03, 1.11), pos="50% 12%")
-blk(s, A(115), 2, (560, 60, 800, 420), "#CACACA", blend="difference", z=s.nz() + 650)   # Heath's negative rectangle
 kc(s, [(A(116), "UNT", 840.6, (0.5, 0.5, UNT_ZOOM))], A(121))
 dz([107, 108, 109], [(110, "boxing")], end=A(111))
 dz([111], [(112, "biographies")], end=A(113))
@@ -3470,7 +3469,7 @@ hwhite(s, A(130))
 kstrips(s, A(131), A(137), [("HOW", 96.5), ("HOW", 32.0), ("HOW", 144.5), ("HOW", 306.0), ("HOW", 140.5), ("HOW", 168.5),
                              ("HOW", 136.5)], under=("UNT", 865.55, (0.5, 0.5, UNT_ZOOM)))
 dz([121, 122, 123, 124, 125], [(126, "premise")], end=A(127))
-dz([127, 128], [(129, "greatest")], end=A(130))
+dz([127, 128], [(129, "greatest")], end=A(130), linger=0)
 dz([], [(130, "comeback")], end=A(131), size=270, kind="dhl", linger=0)
 cap([[W_(k, "dn@112") for k in (131, 132, 133, 134, 135, 136)]], y=540, scrim=0.42, end=round(A(137) - 0.3, 3),
     exit="order")
@@ -3507,8 +3506,11 @@ dz([161, 162], [(163, "stock")], end=A(164))
 # ---- S17  "Turn a $500 million loss into billions in profit."  the traders; the falling line; then the floor
 #      cheering, the screens, and him with his thumb up (user: "change this B-roll for billions of profit")
 s = Scene("s17", A(164), A(173), tex=(0.06, 0.0))
-kc(s, [(A(164), "UNT", 944.0, (0.5, 0.38, 1.6)), (A(168), "BM", 8.22, None), (A(169), "WOLFE", 6.83, None),
-       (round(A(169) + 0.3, 3), "BR2", 14.6, None), (A(171), "GAME", 99.2, None)], A(173))
+B17 = round(A(169) + 0.3, 3)
+kc(s, [(A(164), "UNT", 944.0, (0.5, 0.38, 1.6)), (A(168), "BM", 8.22, None), (A(169), "WOLFE", 6.83, None)], B17)
+s.v("BR2", 14.58, B17, A(171), rate=0.6, grade="doc", push=(1.0, 1.035))   # the source shot is 0.36 s long (14.56-14.92,
+#   then another firm's sign), so it plays at 0.6x
+kc(s, [(A(171), "GAME", 99.2, None)], A(173))
 #   into: cash thrown off the yacht (the user's Wolf of Wall Street edit); billions: the line climbing (their new
 #   B-roll); in profit: him with his thumb up at the new headquarters
 kdiff(s, A(168), 1)
@@ -3523,7 +3525,7 @@ kc(s, [(A(173), "UNT", 1045.0, (0.5, 0.5, 1.6)), (A(177), "MONT", 12.42, None), 
        (A(180), "HOW", 692.3, None)], A(182))
 hwhite(s, A(180))
 dz([173, 174, 175], [(176, "acquired")], end=A(177))
-dz([177], [(178, "JP"), (179, "Morgan")], end=A(180), y=840)
+dz([177], [(178, "JP"), (179, "Morgan")], end=A(180), y=840, linger=0)
 dz([180], [(181, "2004")], end=A(182), kind="dg", size=250)
 
 # ---- S19  "Then, 2008 financial crisis hit,"  the user's crisis footage: the exchange's sign, the board at -605, a
@@ -3566,7 +3568,7 @@ s.J(f'tl.fromTo("#{camF}", {{ y: -70, scale: 1.1 }}, {{ y: 0, scale: 1.04, durat
 kdiff(s, F22, 2)
 dz([200, 201], [(202, "money")], end=A(203))
 dz([203], [(204, "buy")], end=A(205))
-dz([205, 206, 207], [(208, "fell")], end=A(209), size=250)
+dz([205, 206, 207], [(208, "fell")], end=A(209), size=250, linger=0)
 
 # ---- S23  "That's JP Morgan and Chase, the name that moves $10 trillion every single day today."  the ending montage
 #      (user: "make a good edit montage at the end when the JP Morgan building was showing"): no panels, no grid, no
@@ -3726,6 +3728,9 @@ def trim_to_preview():
 
 if __name__ == "__main__":
     trim_to_preview()
+    if os.environ.get("DIMON_ONLY"):   # v12: a patch build: only these scenes (at their true times), for re-rendering a
+        _keep = os.environ["DIMON_ONLY"].split(",")   # short stretch with `render --start/--end` (the whole film's plan is
+        SCENES[:] = [sc for sc in SCENES if sc.sid in _keep]   # over the renderer's 2 GB cap) and splicing it in
     MEDIA["cyber"] = CYBER
     json.dump(MEDIA, open(f"{PRJ}/tools/media_v12.json", "w"), indent=1)
     if "--specs" in sys.argv:

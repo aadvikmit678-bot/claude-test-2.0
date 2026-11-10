@@ -2,6 +2,8 @@
 
 `tools/build12.py` (from build11) writes `tools/media_v12.json`. The film is 85.16 s at 60 fps. The cleaned tower film is `dimon-src/_v12/jphoriz_clean.mp4` (prep2 key `JPH2`).
 
+Rebuild: `python3 -I -X utf8 tools/build12.py --specs`, `python3 -I tools/prep2.py --spec=media_v12.json`, `python3 -I -X utf8 tools/build12.py`, then `npx --yes hyperframes@0.9.2 render --fps 60 --workers 2`. To re-render a short stretch, build with `DIMON_ONLY=<scene ids>` and use `render --start/--end`; `REVIEW.md` says how the patches were spliced in.
+
 ## The user's notes on the v11 render (11 Nov)
 
 | Note | What v12 does |

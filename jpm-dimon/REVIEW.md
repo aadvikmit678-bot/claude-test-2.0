@@ -1,4 +1,47 @@
-# Jamie Dimon / JPMorgan Chase: review (v6, the first 30 s)
+# Jamie Dimon / JPMorgan Chase: review (v12, the whole film)
+
+v12 is built by `tools/build12.py`. Its media come from `tools/prep2.py --spec=media_v12.json` (clips) and `tools/prep10.py` (the Meet scene's stills), on top of the earlier rounds' media. `notes/v10`, `notes/v11` and `notes/v12` say what each round changed and why.
+
+**Rendered:** `renders/jpm-dimon-v12.mp4`: 85.17 s, 1920x1080, 60 fps, 5,110 frames. `renders/jpm-dimon-v12-preview720.mp4` is a 720p, 30 fps preview.
+
+**Sound:** voices only (the news open, the narration, Dimon's quote); no music and no effects. Integrated loudness -16.8 LUFS, true peak -1.5 dBTP.
+
+## How it was rendered
+1. The whole film in one pass (44.6 min, 2 workers).
+2. The render was read end to end at 5 frames a second. Three defects were found and fixed in the builder (below).
+3. Only the affected stretches were rendered again, from patch builds (`DIMON_ONLY=s12,s13` and so on) with `render --start/--end`: 47.5-51.8 s, 64.6-68.6 s and 77.9-78.3 s. The whole film's plan is over the renderer's 2 GB cap for `--start/--end`; a two-scene build is not.
+4. The patches were spliced into the full render with ffmpeg (video re-encoded once at CRF 15, audio copied). The joins were checked frame against frame: the patch and the full render differ by about 1/255 at each edge.
+
+## Checked
+- **`check` at 25 times across the film:** ok, 0 errors. Lint has 0 errors and 25 warnings (timeline density and file size notices). The layout warnings are the shots' push-ins overflowing their clip boxes, by design.
+- **The rendered file:** four contact sheets at 5 fps covering all 85 s, plus the patched moments and the six joins frame by frame.
+- **Clips:** every new clip was checked for a hidden cut inside its used span. The user's two fast montages (`BR2`, `FINF`) were mapped shot by shot by exact seeking.
+
+## Found in the render and fixed
+| Found | Fix |
+|---|---|
+| Under "billions" the climbing-line chart ran into another firm's sign for 0.2 s. The chart shot in the user's B-roll montage is only 0.36 s long. | The chart plays at 0.6x, so the 0.54 s beat stays inside it. |
+| "greatest", "JP Morgan" and "fell" held 3 frames into a white flash frame, where their scrim showed as a dark oval. | Those three end on the cut. |
+| A negative rectangle crossed Bezos's face for 4 frames as he came in. | Removed; his face is clean from the first frame. |
+
+## The narration's pauses
+Three silences are cut out of the voice track, each inside the silence (below -55 dB):
+- after "right now.": 0.26 s of 0.40 s;
+- after "Street.": 0.40 s of 0.55 s;
+- after "grudge,": 0.28 s of 0.37 s.
+
+The later narration still has its sentence gaps of 0.3-0.57 s (after "fired", "job", "Amazon", "Wall Street", "profit", "2004", "fell"). They were not asked about and are untouched.
+
+## Open
+- **Bezos:** he is the film's one still photo, shown once with his whole face. The Drive has no footage of him.
+- **Higgsfield:** the user offered one generated scene. The connected account is on the free plan with 0 credits and the request was refused. The prompt for the scene ("He took up boxing", a heavy bag) is in `notes/v12/notes.md`.
+- **Pinboard words:** all three cards carry their words in the middle in the serif glow. The alternative the user mentioned first was "He built Citigroup" in black at the right of the first card.
+- **The 1998 counter:** for about 4 frames its white digits cross the pale FIRED page while the page dissolves under it.
+- **The tower film:** its burned-in captions were removed with a blur patch at the centre of the frame. Our own words sit over the patch in every shot that uses it.
+
+---
+
+## The v6 review (the first 30 s, an earlier round)
 
 v6 is built by `tools/build6.py`, which is v5's builder plus your v6 notes. Its media come from:
 - `tools/prep2.py --spec=media_v6.json`: clips and stills.
