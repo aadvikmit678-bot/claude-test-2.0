@@ -2,6 +2,14 @@
 
 Written on Mon 9 Nov 2026 for two readers: the user, who made this film with a Claude session whose account has since expired, and the next Claude session that continues the edit. It gathers what that session left behind (the notes files and commit history in git, the build scripts and the committed film) and checks it against the user's Drive folder. Nothing in git was changed to write it.
 
+> **Update, Tue 10 Nov 2026: v6.**
+> - **What changed:** v6 applies the user's notes on the first 28.8 s and cuts "You have to be big…". The film is now 87.117 s, and everything from "Meet Jamie Dimon" on plays 6.083 s earlier but is otherwise v5.
+> - **Builder:** `jpm-dimon/tools/build6.py`, with media spec `tools/media_v6.json`. The extra media come from `tools/prep6.py`: the fired photos, the cyber portrait and its B-roll plate, and the grudge slide. The S06 interview matte is made with `remove-background`.
+> - **Notes:** `REVIEW.md` lists each v6 note and what v6 did; v5's review is kept below it.
+> - **Rebuild:** the kit now also downloads v6's sources (steps 3b, 10 and 11).
+> - **Sound:** v6 renders have no music (`MUSIC = False`).
+> - **Rest of this file:** §3 onwards still describes v5. For any film time from 28.8 s on, subtract 6.083 s.
+
 **How to read it**
 - Paths are relative to the repository root, `/home/user/claude-test-2.0/`, unless they start with `/`.
 - Times of day are UTC, taken from `git log` and from Drive.
@@ -45,7 +53,7 @@ This is a 93.2-second motion-graphics documentary short about Jamie Dimon and JP
 
 | File | What it holds | Current? |
 |---|---|---|
-| `jpm-dimon/REVIEW.md` | The v5 review: the user's notes on v4 one by one, what v5 did about each, the checks and the open items. Rewritten every round. | Yes, for 0–31.7 s |
+| `jpm-dimon/REVIEW.md` | The v6 review (10 Nov) on top, then the v5 review: the user's notes on v4 one by one, what v5 did about each, the checks and the open items. Rewritten every round. | Yes, for 0–31.7 s |
 | `jpm-dimon/REFERENCES.md` | Frame-by-frame breakdowns of the reference reels (§5). Written in v4; v5 added two passes. | Yes for the two v5 passes, except the S03 and S06 effects they list that were never built (§8.3). The first half ("Lifted into v4", "Your assets used in v4") describes v4 and is superseded where v5 changed a beat (§6.4): the five S02 cards and the S01 glow pop-up, BIGGER's echoes "just above and below", "JPMORGAN CHASE" in capitals, the Wolf "slowed to 0.72×", S06 with no B-roll, the globe "at 0.5 opacity" (v5: 0.45). |
 | `jpm-dimon/SPEC.md` | The goal, what each reference gives, look, motion, the banned list and the QA frames | In part. It was last changed in v2 (`a9e958c`) and still describes v2 in places: Satoshi, sliding caption lines, "No music has been supplied yet", textures at 40 % / 28 %, the v2 build steps, the v2 open, its list of what each reference gives and its camera rule (1.00 → 1.025) (§6.4). |
 | `git show 1ca18f3:jpm-dimon/REVIEW.md` | The v3 review | The latest record for 31.7–93.2 s, with v4's type and v5's lighter textures applied on top. For s07, s08, s10, s12, s15, s17 and s20 it at most lists their set pieces as "Kept from v2"; they were last described in `git show a9e958c:jpm-dimon/REVIEW.md` (neither review mentions s20). |
@@ -492,6 +500,7 @@ The film was built in rounds on `claude/jpm-dimon-edit`. Each round rewrote REVI
 | v3 | `1ca18f3` | Fri 6 Nov 04:46 | `build3.py`, `make_music.py`, `check_shots.py` (`media_v3.json`) | `REVIEW.md` rewritten | none named |
 | v4 | `127f4c1` | Fri 6 Nov 17:49 | `build4.py`, `prep4.py` (`media_v4.json`); changed: `make_music.py` (the open re-cut) and `prep2.py` (the MONT, BONUS, MONEY and WOLF2 keys) | `REVIEW.md` rewritten, `REFERENCES.md` (new) | `renders/jpm-dimon-v4-0-31.mp4`, 0–31.7 s |
 | v5 | `292806f` | Fri 6 Nov 19:54 | `build5.py`, `prep5.py`, `faces.py` (`media_v5.json`) | `REVIEW.md` rewritten, `REFERENCES.md` extended | `renders/jpm-dimon-v5-0-31.mp4`, 0–31.7 s |
+| v6 | `3b7140a` → the 10 Nov commits | Tue 10 Nov | `build6.py`, `prep6.py` (`media_v6.json`); `tools/rebuild/` extended | `REVIEW.md` rewritten (v5's kept below it) | none yet: 0–30 s after the user's review |
 
 ### Reference pass: `18142fc` "Jamie Dimon edit: frame-by-frame reference from the Larry Fink reel" (Thu 5 Nov 19:21)
 

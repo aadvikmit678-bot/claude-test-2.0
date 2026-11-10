@@ -323,6 +323,74 @@ def cy_user(img_dir):
     Image.fromarray(np.dstack([crop.astype(np.uint8), alpha]), "RGBA").save(band, optimize=True)
 
 
+
+# v6 note 6: "and a family grudge" -- the opening of the reel the user sent (instagram De__bppBwhC). Sandy and Joan Weill
+# cut out of the image pack's Met Opera photo (the staff member behind them and two slivers erased by hand), at film size,
+# four horizontal motion-blur steps for the slide-in, a white edge glow, and the Citigroup Center background in colour,
+# black-and-white and soft black-and-white. build6's sp_grudge_slide places them.
+GRUDGE_SRC = f"{SRC}/Jamie_Dimon_Image_Pack/02_Sandy_Weill/01_Sanford_Weill_Metropolitan_Opera_2009_with_Joan.jpg"
+GRUDGE_BG = f"{SRC}/new_dimon_images/01_Citigroup_Center_Lew_Rudin_Way.jpg"
+GRUDGE_ERASE = [  # in the cut-out's own pixels
+    [(790, 230), (1188, 230), (1188, 560), (1150, 650), (1060, 705), (960, 735), (860, 760), (790, 760)],
+    [(1040, 540), (1200, 540), (1222, 600), (1238, 660), (1236, 715), (1205, 752), (1040, 752)],
+    [(1176, 250), (1199, 250), (1199, 545), (1176, 545)],
+    [(1148, 742), (1186, 742), (1186, 778), (1148, 778)]]
+
+
+def grudge(img_dir):
+    work = f"{ROOT}/dimon-work/grudge"
+    os.makedirs(work, exist_ok=True)
+    raw = f"{work}/couple_raw.png"
+    if not os.path.exists(raw):
+        run(["npx", "--yes", "hyperframes@0.9.2", "remove-background", GRUDGE_SRC, "-o", raw, "--json"])
+    cut = Image.open(raw).convert("RGBA")
+    m = Image.new("L", cut.size, 0)
+    for poly in GRUDGE_ERASE:
+        ImageDraw.Draw(m).polygon(poly, fill=255)
+    a = np.asarray(cut.getchannel("A")).copy()
+    a[np.asarray(m) > 0] = 0
+    cut.putalpha(Image.fromarray(a))
+    c = cut.resize((1500, round(1500 * cut.height / cut.width)), Image.LANCZOS)
+    c.save(f"{img_dir}/gr_couple.png", optimize=True)
+    arr = np.asarray(c).astype(np.float32)
+
+    def hblur(x, n):  # a horizontal box blur n px wide
+        p = np.pad(x, ((0, 0), (n, n), (0, 0)), mode="constant")
+        cs = np.cumsum(p, axis=1)
+        out = (cs[:, n:, :] - cs[:, :-n, :]) / n
+        off = (out.shape[1] - x.shape[1]) // 2
+        return out[:, off:off + x.shape[1], :]
+
+    prem = arr.copy()
+    prem[..., :3] *= prem[..., 3:4] / 255.0                              # premultiplied, for clean edges
+    for i, n in enumerate((140, 80, 40, 16)):
+        b = hblur(prem, n)
+        al = np.clip(b[..., 3:4], 1e-3, 255)
+        rgb = np.clip(b[..., :3] * 255.0 / al, 0, 255)
+        Image.fromarray(np.dstack([rgb, b[..., 3:4]]).astype(np.uint8), "RGBA").save(f"{img_dir}/gr_couple_mb{i}.png",
+                                                                                    optimize=True)
+    al = Image.fromarray(np.asarray(c)[..., 3])
+    near = np.asarray(al.filter(ImageFilter.MaxFilter(7)).filter(ImageFilter.GaussianBlur(4)), np.float32) / 255
+    wide = np.asarray(al.filter(ImageFilter.GaussianBlur(14)), np.float32) / 255
+    ha = np.clip(np.maximum(near * 0.95, wide * 0.55), 0, 1)
+    halo = np.zeros(ha.shape + (4,), np.uint8)
+    halo[..., :3] = 255
+    halo[..., 3] = (ha * 255).astype(np.uint8)
+    Image.fromarray(halo, "RGBA").save(f"{img_dir}/gr_couple_halo.png", optimize=True)
+    bg = Image.open(GRUDGE_BG).convert("RGB")
+    w, h = bg.size
+    if w / h > 16 / 9:
+        nw = round(h * 16 / 9)
+        bg = bg.crop(((w - nw) // 2, 0, (w - nw) // 2 + nw, h))
+    else:
+        nh = round(w * 9 / 16)
+        bg = bg.crop((0, (h - nh) // 2, w, (h - nh) // 2 + nh))
+    bg = ImageEnhance.Color(bg.resize((1920, 1080), Image.LANCZOS)).enhance(1.15)
+    bg.save(f"{img_dir}/gr_bg_col.jpg", quality=92)
+    bw = ImageEnhance.Contrast(ImageEnhance.Color(bg).enhance(0.0)).enhance(1.25)
+    bw.save(f"{img_dir}/gr_bg_bw.jpg", quality=92)
+    bw.filter(ImageFilter.GaussianBlur(5)).save(f"{img_dir}/gr_bg_bw_soft.jpg", quality=92)
+
 if __name__ == "__main__":
     young6()
     print("done", flush=True)
@@ -335,3 +403,8 @@ if __name__ == "__main__":
     if not (os.path.exists(f"{prep2.CLIPS}/cy_broll_ovl.mp4") and os.path.exists(stamp) and open(stamp).read() == want):
         cy_broll(SPEC6["cyber"], f"{prep2.CLIPS}/cy_broll.mp4")
         open(stamp, "w").write(want)
+
+    # v6 note 6: the grudge slide's cut-out and backgrounds
+    if not all(os.path.exists(f"{prep2.IMG}/{f}") for f in ("gr_couple.png", "gr_couple_mb3.png", "gr_couple_halo.png",
+                                                           "gr_bg_bw_soft.jpg")):
+        grudge(prep2.IMG)

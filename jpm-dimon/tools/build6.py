@@ -1,17 +1,29 @@
 #!/usr/bin/env python3
-"""v6 -- Jamie Dimon / JPMorgan Chase (1920x1080, 30 fps, 93.2 s): the v6 notes on 0-20.86 s; from 20.86 s exactly v5.
+"""v6 -- Jamie Dimon / JPMorgan Chase (1920x1080, 30 fps, 87.117 s): the user's v6 notes on 0-28.77 s; from "Meet
+Jamie Dimon" on exactly v5, SHIFT (6.083 s) earlier.
 
-v6 over v5 (0-20.86 s only; s05-s23, grain and the caption groups from 20.86 s are byte-identical to v5):
-- "JPMorgan Chase" is one continuous type-on at Dario's DISAPPEAR rate (a letter every 2 frames, the newest letter
+v6 over v5:
+- S01: "JPMorgan Chase" is one continuous type-on at Dario's DISAPPEAR rate (a letter every 2 frames, the newest letter
   flaring for one frame with a haze), from the reporter's "JP"; it holds 9 frames and leaves through Dario's inverted
-  sky-blue tiles (frames 253-254); S2_0 = 8.50 is the next picture's first frame (until S02's cyber portrait takes it,
-  the tower holds 8.50-8.60 and v5's slide-up of Dimon follows).
+  sky-blue tiles (frames 253-254); S2_0 = 8.50 is S02's first frame.
+- S02: "This is the most influential man in America right now" is the user's Glitchy JPMorgan Chase Cyber Portrait:
+  Dimon cut out of it and pulling back from 1.75x on Karp's ease (tau 0.48 s), a B-roll plate rolling fast behind and
+  through him at low opacity (tools/prep6.py cy_broll renders CYBER), Hemant's side cards with their flashes, the seal;
+  the captions plain and centred (no pop-up, no continuous flash).
 - S03: the Stanford shot is a straight cut (no slide, no pan); the CEO window and the Wolf arrival are as v5.
-- S04: "a guy who got FIRED" flips through nine photos of young Dimon (tools/prep6.py), two frames each, youngest
-  first, each popping in slightly and settling back while the card and its corner dots grow smoothly, then the B&W
-  hero lands on "fired" (sp_fired_flip; v5 had three photos and three size jumps). FIRED and the push are as v5.
-- S04: "by his own mentor" is a centred Instrument Serif caption (the film's serif animation) over Sandy Weill's faces.
-- FR(n): frame-exact times; caption groups from 20.86 s keep their v5 ids.
+- S04: "a guy who got FIRED" flips through nine photos of young Dimon (prep6 young6), two frames each, while the card
+  grows smoothly, then the B&W hero lands on "fired"; "by his own mentor" is ONE horizontal line at the bottom in
+  Dario's serif glow over the Sandy Weill faces; "over a bonus" is the user's cartoon; "and a family grudge" is the
+  opening of the reel the user sent (sp_grudge_slide: the Weills slide in from the left under a 3x3 grid, the
+  background goes colour, white, black-and-white; prep6 grudge makes its pictures).
+- S05: "the biggest bank" in the big serif glow, like "capitalism".
+- S06: the quote runs from "We bank countries" to "...the United States government." ("some of these companies in 30
+  countries" and "You have to be big ..." are cut): on the interview the text stays on the right; on each B-roll beat
+  the words are centred in the serif glow: countries (London), World Bank (its building), the IMF (the user's money
+  animation), back on him, then the United States government in one line along the lawn of an ungraded, completely
+  clear Capitol that pulls back from its dome.
+- No music bed (MUSIC = False) and no sound effects in these renders: the voices only.
+- FR(n)/FT(t): frame-exact times.
 
 v5 -- v4 checked frame by frame against every reference.
 
@@ -42,6 +54,8 @@ v4 over v3:
 
 Run:  cd jpm-dimon && python3 -I -X utf8 tools/build6.py --specs                  (writes tools/media_v6.json only)
       python3 -I tools/prep2.py --spec=media_v6.json && CV4_DIR=/home/user/claude-test-2.0/dimon-work/cv4 python3 -I tools/prep6.py
+      npx --yes hyperframes@0.9.2 remove-background assets/clips2/BANK_27585_413_x63_50_135.mp4 \
+          -o assets/clips2/BANK_27585_413_x63_50_135_cut.webm --json                    (S06: him matted over the globe)
       CV4_DIR=/home/user/claude-test-2.0/dimon-work/cv4 python3 -I -X utf8 tools/build6.py   (index.html, compositions/)
 """
 import array, json, math, os, random, sys, wave
@@ -53,7 +67,7 @@ COMP = f"{PRJ}/compositions"
 TX = f"{ROOT}/dimon-work/tx"
 F1 = 1 / 30
 LEAD = 0.05
-DUR = 93.20
+DUR = 93.20   # v5's length; v6 cuts "You have to be big ..." and takes SHIFT off it (below)
 
 
 def r3(x):
@@ -113,8 +127,15 @@ VOW = snap(load(f"{TX}/pk_vo/transcript.json"), envelope(f"{ROOT}/dimon-work/vo/
 
 VO1_AT, VO1_IN, VO1_OUT = 9.05, 0.00, 14.10
 VO2_IN, VO2_OUT = 18.40, 75.00
-VO2_OFF = round(35.25 - VOW[55]["start"], 3)
-QUOTE_AT, QUOTE_SRC0 = 23.60, 273.05
+# v6 (user): the quote starts straight at "We bank countries" (wav 3.345, "We" at 3.445) and ends on "...the United
+# States government." (spoken to wav 8.26; cut at 8.512, before "You" at 8.65): "some of these companies in 30
+# countries" and "You have to be big ..." are gone, so "Meet Jamie Dimon" follows "government" and everything from
+# there on comes SHIFT earlier (v5: S07 at 34.85, "Meet" at 35.25, the film 93.20 s).
+QUOTE_AT, QUOTE_SRC0 = 23.60, 275.845
+QUOTE_END = round(863 / 30, 3)                          # 28.767, on a frame
+SHIFT = round(34.85 - QUOTE_END, 3)
+VO2_OFF = round(35.25 - SHIFT - VOW[55]["start"], 3)
+DUR = round(DUR - SHIFT, 3)
 QUOTE_OFF = round(QUOTE_AT - (QUOTE_SRC0 - 272.5), 3)
 # the re-cut open (tools/make_music.py): Parakeet's word order (dimon-work/tx/pk_news4), starts read off the new
 # voice track's envelope (10 ms frames); 5.70-6.20 is the held silence after "bigger"
@@ -184,6 +205,7 @@ SEAL = ST("seal", path="money_pinterest videos/Seal_of_the_President_of_the_Unit
 NYT = ST("nyt_1093", key="MPB", t=1093.0, frame="FULL")
 BOX_GLOVES = ST("gloves", path=f"{P_IMG}/10_Supporting_Illustrative/01_ILLUSTRATIVE_boxing_gloves_generic.jpg", edge=1920)
 WB_BLDG = ST("worldbank", path=f"{P_IMG}/08_World_Bank/02_World_Bank_building_Washington.jpg", edge=1920)
+CAPITOL_HD = ST("capitol_hd", path=f"{P_IMG}/07_US_Government_America/01_US_Capitol_west_front.jpg", edge=1920)
 GOV = [ST("gov_capitol", path=f"{P_IMG}/07_US_Government_America/01_US_Capitol_west_front.jpg", edge=900),
        ST("gov_whitehouse", path=f"{P_IMG}/07_US_Government_America/02_White_House_north_facade.jpg", edge=900),
        ST("gov_treasury", path=f"{P_IMG}/07_US_Government_America/04_US_Treasury_Building.jpg", edge=900),
@@ -785,7 +807,8 @@ def sp_roller(sc, t0, t1, years, land_at, cards, label=None, label_at=None, grou
         sc.black(t0, t1, color="rgba(4,6,8,0.62)", tex=True)
     else:
         sc.black(t0, t1, color=ground)
-    rnd = random.Random(len(years) * 31 + int(t0 * 10))
+    # seeded by v5's time (v6 moved every scene after the quote SHIFT earlier; the cards keep v5's drift)
+    rnd = random.Random(len(years) * 31 + int(round(t0 + (SHIFT if t0 >= QUOTE_END else 0), 3) * 10))
     slots = [(210, 170, 0.95), (1450, 150, 0.85), (300, 760, 0.8), (1530, 720, 1.0), (760, 100, 0.6), (1180, 860, 0.7),
              (60, 460, 0.55), (1760, 430, 0.6)]
     for k, src in enumerate(cards[:len(slots)]):
@@ -1748,6 +1771,68 @@ CY_E = [1.00, 0.50, 0.45, 0.45, 1.00, 1.00, 0.56, 0.45, 0.45, 0.64,
 CY_OVL = [(2, 4, 0.15), (6, 4, 0.25), (10, 4, 0.32), (18, 4, 0.25), (25, 3, 0.22), (33, 5, 0.28), (41, 4, 0.18)]
 CY_WHITE = [(4, 0.72), (5, 0.88)]                       # Karp 0.75-0.79: the one white flash
 
+
+def sp_grudge_slide(sc, t0, t1):
+    """v6 (user): "and a family grudge" as the opening of the Jamie Dimon reel the user sent (instagram De__bppBwhC,
+    0-1.0 s, every frame at 29.75 fps): a colour photo (Citigroup Center) under a 3x3 grid of thin dark lines, its cells
+    dimmed and revealed one by one with soft white rectangles flashing in single cells; the cut-out (Sandy and Joan
+    Weill) slides in from the left with heavy horizontal motion blur on an ease-out, settled by frame 11; frame 16 the
+    background loses colour, 17-18 it burns to white, 19-20 it comes back black-and-white and soft, from 21 sharp; the
+    couple stays in colour with a thin white edge glow; everything pushes in slowly."""
+    F = lambda f: FT(t0 + f / 30)
+    js = []
+    bgc, bgw, bgs = sc.uid("grc"), sc.uid("grw"), sc.uid("grs")
+    for bid, src, a, b in ((bgc, "gr_bg_col.jpg", t0, F(17)), (bgs, "gr_bg_bw_soft.jpg", F(19), F(21)),
+                           (bgw, "gr_bg_bw.jpg", F(16), t1)):
+        sc.raw(f'<img id="{bid}" class="clip" src="assets/img2/{src}" alt="" {sc.timed(a, b)} data-track-index="2" '
+               f'style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;transform-origin:50% 45%;'
+               f'z-index:{10 if bid == bgc else 11 if bid == bgw else 12}" />')
+    js += [f'tl.fromTo("#{bgc}, #{bgw}, #{bgs}", {{ scale: 1.0 }}, {{ scale: 1.05, duration: {r3(t1 - t0)}, ease: "none", '
+           f'immediateRender: false }}, {sc.at(t0)});',
+           f'tl.set("#{bgw}", {{ opacity: 0.5 }}, {sc.at(F(16))});', f'tl.set("#{bgw}", {{ opacity: 1 }}, {sc.at(F(17))});']
+    # the 3x3 cells: dimmed at first, revealed one by one; soft white rectangles flash in single cells
+    reveal = {(2, 0): 3, (2, 1): 6, (1, 0): 7, (2, 2): 8, (1, 1): 9, (1, 2): 10, (0, 0): 11, (0, 1): 12, (0, 2): 13}
+    for (c, r), f in reveal.items():
+        d = sc.uid("grd")
+        sc.raw(f'<div id="{d}" class="clip solid" {sc.timed(t0, F(f))} data-track-index="3" data-layout-ignore '
+               f'style="left:{640 * c}px;top:{360 * r}px;width:640px;height:360px;background:#05070a;opacity:0.58;z-index:20"></div>')
+    for (c, r), f, n, op in (((2, 0), 2, 1, 0.55), ((2, 1), 4, 2, 0.82), ((2, 2), 6, 1, 0.78), ((0, 1), 11, 2, 0.5),
+                             ((1, 1), 14, 1, 0.45)):
+        sc.raw(f'<div id="{sc.uid("grf")}" class="clip solid" {sc.timed(F(f), F(f + n))} data-track-index="3" data-layout-ignore '
+               f'style="left:{640 * c}px;top:{360 * r}px;width:640px;height:360px;background:#f4f4f2;opacity:{op};'
+               f'box-shadow:0 0 30px rgba(255,255,255,0.35);z-index:21"></div>')
+    blk(sc, F(15), 1, (640, 360, 640, 360), "#05070a", opacity=0.45, z=21)
+    grid = "".join(f'<div style="position:absolute;left:{x}px;top:0;width:2px;height:1080px;background:rgba(8,8,10,0.55)"></div>'
+                   for x in (639, 1279)) + "".join(
+                   f'<div style="position:absolute;left:0;top:{y}px;width:1920px;height:2px;background:rgba(8,8,10,0.55)"></div>'
+                   for y in (359, 719))
+    sc.raw(f'<div id="{sc.uid("grg")}" class="clip grp" {sc.timed(t0, t1)} data-track-index="3" data-layout-ignore '
+           f'style="z-index:22">{grid}</div>')
+    # the burn to white, under the couple (the reel's subject stays visible over it)
+    for f, op in ((16, 0.22), (17, 0.86), (18, 0.72)):
+        sc.raw(f'<div id="{sc.uid("grb")}" class="clip solid" {sc.timed(F(f), F(f + 1))} data-track-index="3" data-layout-ignore '
+               f'style="background:#fbfbf8;opacity:{op};z-index:23"></div>')
+    # the couple: slides in from the left on an ease-out (11 frames), motion-blur steps fading, then sharp, glow edge
+    cp = sc.uid("cpl")
+    W, Hh, X, Y = 1500, 1124, 210, 40
+    steps = [("gr_couple_mb0.png", 0, 3), ("gr_couple_mb1.png", 3, 5), ("gr_couple_mb2.png", 5, 8), ("gr_couple_mb3.png", 8, 11),
+             ("gr_couple_mb3.png", 19, 21)]
+    imgs = "".join(f'<img id="{cp}-m{i}" class="clip" src="assets/img2/{src}" alt="" {sc.timed(F(a), F(b))} data-track-index="4" '
+                   f'style="position:absolute;left:0;top:0;width:{W}px;height:{Hh}px" />' for i, (src, a, b) in enumerate(steps))
+    sharp = [(t0 if False else F(11), F(19)), (F(21), t1)]
+    imgs += "".join(f'<img id="{cp}-s{i}" class="clip" src="assets/img2/gr_couple.png" alt="" {sc.timed(a, b)} data-track-index="4" '
+                    f'style="position:absolute;left:0;top:0;width:{W}px;height:{Hh}px" />' for i, (a, b) in enumerate(sharp))
+    halo = (f'<img id="{cp}-h" class="clip" src="assets/img2/gr_couple_halo.png" alt="" {sc.timed(F(21), t1)} data-track-index="4" '
+            f'style="position:absolute;left:0;top:0;width:{W}px;height:{Hh}px;opacity:0.9" />')
+    sc.raw(f'<div id="{cp}" class="grp" data-layout-allow-overflow style="left:{X}px;top:{Y}px;width:{W}px;height:{Hh}px;'
+           f'z-index:30;transform-origin:50% 40%">{halo}{imgs}</div>')
+    js += [f'tl.fromTo("#{cp}", {{ x: -1350 }}, {{ x: 0, duration: {r3(11 / 30)}, ease: "expo.out", immediateRender: false }}, '
+           f'{sc.at(t0)});',
+           f'tl.fromTo("#{cp}", {{ scale: 1.0 }}, {{ scale: 1.035, duration: {r3(t1 - F(11))}, ease: "none", immediateRender: false }}, '
+           f'{sc.at(F(11))});']
+    sc.J("\n    ".join(js))
+
+MUSIC = False   # v6 (user): no background music or sound effects in these renders; set True to put the bed back
 KREF = 254 / 30   # the beat grid's k0 (film frame 254, measured against Karp): S02 itself starts on frame 255 = k1, right
                   # after the JPMorgan Chase word's two exit-tile frames (253-254), with Dario's fragments (DIS_T3)
 CY_ORIGIN = (965, 478)   # the centre of the band over his eyes in the user's picture (1920x1080): the zoom's fixed point
@@ -2164,19 +2249,17 @@ sp_roller(s, CUT(VT(23)), CUT(VT(24)), list(range(1990, 1999)), land_at=VT(23) +
           invert_digits=2)                                             # in 1998 (user: fine with Citigroup behind)
 sp_dario_faces(s, CUT(VT(24)), CUT(VT(28)), WEILL)                     # by his own mentor: Dario's faces, Sandy Weill
 BON = 18.74
+G0 = CUT(VT(31))                                                       # 19.24, "and": the grudge beat starts
 sp_grid4(s, CUT(VT(28)), BON, [("P07", 1.2), ("MONEY", 1.0), ("MPB", 1784.0), ("HOW", 781.5)], step=2)   # faster
 blk(s, CUT(VT(28)), 1, (0, 0, 1920, 1080), "#000000", opacity=0.7, z=1300)   # Dario 18.40: in dark for a frame
-s.v("BONUS", 5.90, BON, 19.62, grade="", push=(1.0, 1.03), xyz=(0.5, 0.46, 1.09))   # the user's cartoon
-camG, _ = s.v("MPB", 1056.6, 19.62, CUT(VT(35)), push=None)            # family grudge: his daughter comes into it
-s.J(f'tl.fromTo("#{camG}", {{ scale: 1.22, x: 170 }}, {{ scale: 1.05, x: -70, duration: {r3(CUT(VT(35)) - 19.62)}, '
-    f'ease: "power1.inOut", immediateRender: false }}, {s.at(19.62)});')
-s.neg(19.62, 1)
+s.v("BONUS", 5.90, BON, G0, grade="", push=(1.0, 1.03), xyz=(0.5, 0.46, 1.09))   # over a bonus: the user's cartoon
+sp_grudge_slide(s, G0, CUT(VT(35)))                                    # and a family grudge: the reel's opening (user)
 cap([[W_(24, "sh@160"), W_(25, "sh@160"), W_(26, "sh@160"), W_(27, "sh@160")]], y=880, scrim=0.45,
     end=CUT(VT(28)))   # by his own mentor: ONE line at the bottom, under the square, Dario's serif bloom-in (user, v6)
 cap([[W_(28, "s"), W_(29, "s")]], end=BON)
-cap([[W_(30, "sh@240")]], y=880, end=CUT(VT(31)))
-cap([[W_(31, "s"), W_(32, "s"), W_(33, "s")]], y=540, end=CUT(VT(34)))   # user: in the centre
-cap([[W_(34, "sh")]], y=540, end=CUT(VT(35)) - 0.02)
+cap([[W_(30, "sh@240")]], y=880, end=G0)
+cap([[W_(31, "s@64"), W_(32, "s@64"), W_(33, "s@64")], [W_(34, "sh@150")]], x=960, y=885, lh=1.0, scrim=0.42,
+    end=CUT(VT(35)) - 0.02)                                            # and a family / grudge: centred lockup
 
 # ---- S05  20.86-23.60  "now runs the biggest bank in the world."
 s = Scene("s05", CUT(VT(35)), QUOTE_AT)
@@ -2189,41 +2272,39 @@ montage(s, [
     (CUT(VT(42)), "GAME", 80.2),                       # world: Manhattan from straight above
 ], QUOTE_AT)
 s.flash(QUOTE_AT - 0.02, d=0.16, peak=0.85)
-cap([[W_(35, "s"), W_(36, "s"), W_(37, "s")], [W_(38, "b"), W_(39, "b")]], end=CUT(VT(40)))
+cap([[W_(35, "s"), W_(36, "s"), W_(37, "s")], [W_(38, "sh"), W_(39, "sh")]], end=CUT(VT(40)))   # v6: "biggest bank" in the big serif glow, like capitalism (user)
 cap([[W_(40, "s"), W_(41, "s")], [W_(42, "sh")]], end=QUOTE_AT - 0.05, exit="fade")
 
-# ---- S06  23.60-34.85  Dimon in his own words. User: the interview as the base for "We bank some of these companies
-#      in 30 countries. We bank countries, we bank the World Bank, the IMF, ... the United States government", cutting
-#      to B-roll and back (interview, B-roll, interview, B-roll ...); the captions as in the we-bank reel; the Fink
-#      reel's Rogan screen: his globe picture behind him (he is matted above it), low opacity, slowly moving and pulling
-#      focus; the quote marks close to the text.
-s = Scene("s06", QUOTE_AT, 34.85, tex=(0.05, 0.0))
-TWO = round(QUOTE_AT + (281.00 - QUOTE_SRC0), 3)
-SY = lambda t: 273.05 + (t - QUOTE_AT)
+# ---- S06  23.60-28.77  Dimon in his own words. v6 (user): straight from "We bank countries" to "...the United States
+#      government." On the interview the text stays on the right with the quote marks (the Fink reel's Rogan screen:
+#      his globe picture behind him, he is matted above it). On each B-roll beat the words are centred in Dario's serif
+#      glow: countries (London from the air), the World Bank (its building), the IMF (the user's money animation), back
+#      on him for "we bank the", then the United States government on a completely clear, ungraded Capitol that comes
+#      in on Karp's pull-back ease.
+s = Scene("s06", QUOTE_AT, QUOTE_END, tex=(0.05, 0.0))
+SY = lambda t: round(QUOTE_SRC0 + (t - QUOTE_AT), 3)
 IV = dict(xyz=(0.63, 0.5, 1.35), push=(1.0, 1.03))
-s.v("BANK", SY(QUOTE_AT), QUOTE_AT, TWO, **IV)                          # the interview (one continuous take)
-SEGS = [QUOTE_AT, CUT(QT(9)), CUT(QT(12)), CUT(QT(17))]                # back on the interview at these times
-sp_ghost(s, QUOTE_AT, TWO, GHOST, (800, 0, 1220, 1080), SEGS, opacity=0.45)
-IV_CID = CL("BANK", SY(QUOTE_AT), TWO - QUOTE_AT, xyz=IV["xyz"])
+IV_END = CUT(QT(22))                                                   # his last shot ends on "United"
+s.v("BANK", SY(QUOTE_AT), QUOTE_AT, IV_END, **IV)                       # the interview (one continuous take)
+SEGS = [QUOTE_AT, CUT(QT(12)), CUT(QT(19))]                            # back on the interview at these times
+sp_ghost(s, QUOTE_AT, IV_END, GHOST, (800, 0, 1220, 1080), SEGS, opacity=0.45)
+IV_CID = CL("BANK", SY(QUOTE_AT), round(IV_END - QUOTE_AT, 3), xyz=IV["xyz"])
 camM, vidM = s.uid("cam"), s.uid("v")
 s.raw(f'<div class="cam" id="{camM}" style="left:0px;top:0px;width:1920px;height:1080px;z-index:{s.nz()};'
       f'transform-origin:50% 50%"><video id="{vidM}" class="clip" src="assets/clips2/{IV_CID}_cut.webm" muted playsinline '
-      f'{s.timed(QUOTE_AT, TWO)} data-hf-media-start-basis="local" data-media-start="0"{gattr("doc")} data-track-index="2" '
+      f'{s.timed(QUOTE_AT, IV_END)} data-hf-media-start-basis="local" data-media-start="0"{gattr("doc")} data-track-index="2" '
       f'style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover"></video></div>',
-      [f'tl.fromTo("#{camM}", {{ scale: {IV["push"][0]} }}, {{ scale: {IV["push"][1]}, duration: {r3(TWO - QUOTE_AT)}, '
+      [f'tl.fromTo("#{camM}", {{ scale: {IV["push"][0]} }}, {{ scale: {IV["push"][1]}, duration: {r3(IV_END - QUOTE_AT)}, '
        f'ease: "none" }}, {s.at(QUOTE_AT)});'])
 QX = 1110
-G = [  # the caption groups (lines), as cap() gets them
-    [[Q_(0, "s"), Q_(1, "s")]],
-    [[Q_(2, "sm"), Q_(3, "sm"), Q_(4, "sm")], [Q_(5, "b@118")], [Q_(6, "sm"), Q_(7, "b@118"), Q_(8, "sh@150", "countries")]],
-    [[Q_(9, "s"), Q_(10, "s")], [Q_(11, "sh@200", "Countries")]],
-    [[Q_(12, "sm"), Q_(13, "sm"), Q_(14, "sm")], [Q_(15, "b@112"), Q_(16, "b@112")]],
-    [[Q_(17, "sm")], [Q_(18, "sh@230", "IMF")]],
-    [[Q_(19, "sm"), Q_(20, "sm"), Q_(21, "sm")], [Q_(22, "b@100"), Q_(23, "b@100")], [Q_(24, "sh@170")]],
+G = [  # on the interview: the text on the right, as v5 had it
+    [[Q_(9, "s"), Q_(10, "s")]],
+    [[Q_(12, "sm"), Q_(13, "sm"), Q_(14, "sm")]],
+    [[Q_(19, "sm"), Q_(20, "sm"), Q_(21, "sm")]],
 ]
-ENDS = [CUT(QT(2)), CUT(QT(9)), CUT(QT(12)), CUT(QT(17)), CUT(QT(19)), TWO]
-for g, e in zip(G, ENDS):
-    cap(g, x=QX, y=520, align="left", end=e, exit="blur")
+SPANS = [(QUOTE_AT, CUT(QT(11))), (CUT(QT(12)), CUT(QT(15))), (CUT(QT(19)), CUT(QT(22)))]
+for g, (a, b) in zip(G, SPANS):
+    cap(g, x=QX, y=520, align="left", end=b, exit="blur")
 
 
 def cap_box(lines, x=QX, y=520, lh=0.92, n=None):
@@ -2245,32 +2326,31 @@ def cap_box(lines, x=QX, y=520, lh=0.92, n=None):
 
 
 QSPANS = []
-for gi, (a, b), n in [(0, (QUOTE_AT, CUT(QT(2))), 1), (1, (CUT(QT(2)), CUT(QT(6))), 2), (2, (CUT(QT(9)), CUT(QT(11))), 1),
-                      (3, (CUT(QT(12)), CUT(QT(15))), 1), (4, (CUT(QT(17)), CUT(QT(19))), 2),
-                      (5, (CUT(QT(19)), CUT(QT(22))), 1)]:   # n: the lines up while the interview is on screen
-    top, bot, right = cap_box(G[gi], n=n)
+for g, (a, b) in zip(G, SPANS):
+    top, bot, right = cap_box(g)
     QSPANS.append((a, b, (QX - 78, top - 132), (right - 4, bot - 74)))
 sp_quotes(s, QSPANS)
-for a, b, key, t, xyz in [                                             # the B-roll, straight cuts
-        (CUT(QT(6)), CUT(QT(8)), "BANK", 52.62, (0.5, 0.42, 1.2)),     # in 30: the JPMorgan Global China Summit
-        (CUT(QT(8)), CUT(QT(9)), "BANK", 40.30, None),                 # countries: Davos, the World Economic Forum
-        (CUT(QT(11)), CUT(QT(12)), "BANK", 0.30, (0.55, 0.55, 1.15)),  # countries: London from the air
-        (CUT(QT(22)), CUT(QT(24)), "BANK", 77.45, None),               # United States: with Obama
-        (CUT(QT(24)), TWO, "BANK", 28.35, None)]:                      # government: testifying to Congress
-    s.v(key, t, a, b, push=(1.0, 1.04), xyz=xyz, z=s.nz() + 1000)
-s.img(WB_BLDG, CUT(QT(15)), CUT(QT(17)), push=(1.0, 1.05), z=s.nz() + 1000)   # World Bank: its building
-s.v("BANK", 281.0, TWO, CUT(QT(29)), push=(1.0, 1.02))
-s.v("GAME", 70.6, CUT(QT(29)), CUT(QT(30)), push=(1.15, 1.0))                # big: the towers
-cam, _ = s.v("BANK", SY(CUT(QT(30))), CUT(QT(30)), 34.85, push=None, origin="50% 50%")
-sp_window(s, cam, CUT(QT(37)), to=0.16, dur=0.38)
-cap([[Q_(25, "s"), Q_(26, "s"), Q_(27, "s"), Q_(28, "s")], [Q_(29, "b@200")]], end=CUT(QT(30)))
-cap([[Q_(30, "s"), Q_(31, "s"), Q_(32, "s"), Q_(33, "s"), Q_(34, "s")], [Q_(35, "s"), Q_(36, "s"), Q_(37, "sm")]], y=820,
-    end=34.80, exit="fade")
+BZ = s.nz() + 1000                                                     # the B-roll over him, straight cuts
+s.v("BANK", 0.30, CUT(QT(11)), CUT(QT(12)), push=(1.0, 1.04), xyz=(0.55, 0.55, 1.15), z=BZ)   # countries: London
+s.img(WB_BLDG, CUT(QT(15)), CUT(QT(17)), push=(1.0, 1.05), z=BZ)                             # World Bank: its building
+s.v("MONEY", 0.95, CUT(QT(17)), CUT(QT(19)), push=(1.0, 1.05), z=BZ)                         # the IMF: the money animation
+CAP_T0 = CUT(QT(22))                                                   # the United States government: the Capitol,
+CAP_D = round(QUOTE_END - CAP_T0, 3)                                   # ungraded, pulling back from its dome
+cam, _ = s.img(CAPITOL_HD, CAP_T0, QUOTE_END, grade="", push=None, origin="50% 24%", z=BZ)
+pk = round(CAP_D / 0.48, 4)
+s.J(f'tl.fromTo("#{cam}", {{ scale: 1.35 }}, {{ scale: {round(1 + 0.35 * math.exp(-CAP_D / 0.48), 4)}, '
+    f'duration: {r3(CAP_D)}, ease: (p) => (1 - Math.exp(-{pk} * p)) / (1 - Math.exp(-{pk})), immediateRender: false }}, '
+    f'{s.at(CAP_T0)});')
+cap([[Q_(11, "sh@240", "countries")]], end=CUT(QT(12)))                                     # centred, Dario's glow
+cap([[Q_(15, "sh@210", "World"), Q_(16, "sh@210", "Bank")]], end=CUT(QT(17)), scrim=0.42)
+cap([[Q_(17, "s@64", "the")], [Q_(18, "sh@250", "IMF")]], lh=1.0, end=CUT(QT(19)), scrim=0.62)   # the bills are bright
+cap([[Q_(22, "sh@150", "United"), Q_(23, "sh@150", "States"), Q_(24, "sh@150", "government")]], y=948,
+    end=QUOTE_END, scrim=0.6)   # one line along the lawn (as "by his own mentor"), so the building stays clear
 
-# ---- S07  34.85-38.43  "Meet Jamie Dimon, the golden boy of Wall Street,"  (the name card)
-s = Scene("s07", 34.85, CUT(VT(64)))
-s.whiteframe(34.85, 1)
-sp_name_card(s, 34.85 + F1, CUT(VT(58)), CUT_DIMON_SMILE, small_at=VT(55), name_at=VT(56))
+# ---- S07  28.77-32.35  "Meet Jamie Dimon, the golden boy of Wall Street,"  (the name card; v5: 34.85, now SHIFT earlier)
+s = Scene("s07", QUOTE_END, CUT(VT(64)))
+s.whiteframe(QUOTE_END, 1)
+sp_name_card(s, round(QUOTE_END + F1, 3), CUT(VT(58)), CUT_DIMON_SMILE, small_at=VT(55), name_at=VT(56))
 montage(s, [
     (CUT(VT(58)), "MPB", 294.8, {"grade": "gold", "xyz": (0.68, 0.45, 1.5)}),   # the golden: young Dimon laughing
     (CUT(VT(60)), "MPB", 356.2, {"grade": "gold"}),                             # boy
@@ -2602,9 +2682,9 @@ def write_root():
                  f'data-start="0" data-duration="{r3(DUR)}" data-track-index="4" data-width="1920" data-height="1080" '
                  f'style="z-index:150"></div>')
     auds = [("news", "news_voice.wav", 0.0, NEWS_DUR, 0.0, 0.0, 0.02),
-            ("music", "music_bed.wav", 0.0, DUR, 0.0, 0.0, 0.05),
+            *([("music", "music_bed.wav", 0.0, DUR, 0.0, 0.0, 0.05)] if MUSIC else []),
             ("vo-a", "vo.wav", VO1_AT, VO1_OUT - VO1_IN, VO1_IN, 0.0, 0.06),
-            ("dimon", "dimon_quote.wav", QUOTE_AT, 11.25, QUOTE_SRC0 - 272.5, 0.02, 0.06),
+            ("dimon", "dimon_quote.wav", QUOTE_AT, round(QUOTE_END - QUOTE_AT, 3), round(QUOTE_SRC0 - 272.5, 3), 0.02, 0.08),
             ("vo-b", "vo.wav", round(VO2_IN + VO2_OFF, 3), VO2_OUT - VO2_IN, VO2_IN, 0.0, 0.08)]
     a_html = []
     lane = {"music": 11}

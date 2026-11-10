@@ -235,10 +235,10 @@
    ],
    "frame_xyz": null
   },
-  "BONUS_590_113_x50_46_109": {
+  "BONUS_590_75_x50_46_109": {
    "key": "BONUS",
    "t": 5.9,
-   "dur": 1.13,
+   "dur": 0.75,
    "frame": "FULL",
    "size": [
     1920,
@@ -249,17 +249,6 @@
     0.46,
     1.09
    ]
-  },
-  "MPB_105660_148": {
-   "key": "MPB",
-   "t": 1056.6,
-   "dur": 1.48,
-   "frame": "FULL",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": null
   },
   "GAME_9360_55": {
    "key": "GAME",
@@ -331,10 +320,10 @@
    ],
    "frame_xyz": null
   },
-  "BANK_27305_820_x63_50_135": {
+  "BANK_27585_413_x63_50_135": {
    "key": "BANK",
-   "t": 273.05,
-   "dur": 8.2,
+   "t": 275.845,
+   "dur": 4.13,
    "frame": "BBG",
    "size": [
     1920,
@@ -345,32 +334,6 @@
     0.5,
     1.35
    ]
-  },
-  "BANK_5262_81_x50_42_120": {
-   "key": "BANK",
-   "t": 52.62,
-   "dur": 0.81,
-   "frame": "BBG",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": [
-    0.5,
-    0.42,
-    1.2
-   ]
-  },
-  "BANK_4030_105": {
-   "key": "BANK",
-   "t": 40.3,
-   "dur": 1.05,
-   "frame": "BBG",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": null
   },
   "BANK_30_111_x55_55_114": {
    "key": "BANK",
@@ -387,55 +350,11 @@
     1.15
    ]
   },
-  "BANK_7745_77": {
-   "key": "BANK",
-   "t": 77.45,
-   "dur": 0.77,
-   "frame": "BBG",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": null
-  },
-  "BANK_2835_100": {
-   "key": "BANK",
-   "t": 28.35,
-   "dur": 1.0,
-   "frame": "BBG",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": null
-  },
-  "BANK_28100_86": {
-   "key": "BANK",
-   "t": 281.0,
-   "dur": 0.86,
-   "frame": "BBG",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": null
-  },
-  "GAME_7060_97": {
-   "key": "GAME",
-   "t": 70.6,
-   "dur": 0.97,
-   "frame": "BBG",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": null
-  },
-  "BANK_28232_223": {
-   "key": "BANK",
-   "t": 282.325,
-   "dur": 2.23,
-   "frame": "BBG",
+  "MONEY_95_134": {
+   "key": "MONEY",
+   "t": 0.95,
+   "dur": 1.34,
+   "frame": "FULL",
    "size": [
     1920,
     1080
@@ -512,10 +431,10 @@
    ],
    "frame_xyz": null
   },
-  "MPB_101860_41": {
+  "MPB_101860_40": {
    "key": "MPB",
    "t": 1018.6,
-   "dur": 0.41,
+   "dur": 0.4,
    "frame": "FULL",
    "size": [
     1920,
@@ -556,10 +475,10 @@
    ],
    "frame_xyz": null
   },
-  "MPB_86040_108": {
+  "MPB_86040_109": {
    "key": "MPB",
    "t": 860.4,
-   "dur": 1.08,
+   "dur": 1.09,
    "frame": "FULL",
    "size": [
     1920,
@@ -699,10 +618,10 @@
    ],
    "frame_xyz": null
   },
-  "MPB_144620_99": {
+  "MPB_144620_98": {
    "key": "MPB",
    "t": 1446.2,
-   "dur": 0.99,
+   "dur": 0.98,
    "frame": "FULL",
    "size": [
     1920,
@@ -776,10 +695,10 @@
    ],
    "frame_xyz": null
   },
-  "P10_150_180": {
+  "P10_150_179": {
    "key": "P10",
    "t": 1.5,
-   "dur": 1.8,
+   "dur": 1.79,
    "frame": "FULL",
    "size": [
     1920,
@@ -798,10 +717,10 @@
    ],
    "frame_xyz": null
   },
-  "BANK_75790_109": {
+  "BANK_75790_110": {
    "key": "BANK",
    "t": 757.9,
-   "dur": 1.09,
+   "dur": 1.1,
    "frame": "BBG",
    "size": [
     1920,
@@ -809,10 +728,10 @@
    ],
    "frame_xyz": null
   },
-  "HOW_69700_117": {
+  "HOW_69700_116": {
    "key": "HOW",
    "t": 697.0,
-   "dur": 1.17,
+   "dur": 1.16,
    "frame": "CNBC",
    "size": [
     1920,
@@ -967,10 +886,10 @@
    ],
    "frame_xyz": null
   },
-  "P11_90_130v_x50_50_100": {
+  "P11_90_131v_x50_50_100": {
    "key": "P11",
    "t": 0.9,
-   "dur": 1.3,
+   "dur": 1.31,
    "frame": "FULL",
    "size": [
     800,
@@ -1285,6 +1204,10 @@
   },
   "worldbank": {
    "path": "Jamie_Dimon_Image_Pack/08_World_Bank/02_World_Bank_building_Washington.jpg",
+   "edge": 1920
+  },
+  "capitol_hd": {
+   "path": "Jamie_Dimon_Image_Pack/07_US_Government_America/01_US_Capitol_west_front.jpg",
    "edge": 1920
   },
   "gov_capitol": {

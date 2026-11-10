@@ -1,4 +1,55 @@
-# Jamie Dimon / JPMorgan Chase: review (v5, the first 30 s)
+# Jamie Dimon / JPMorgan Chase: review (v6, the first 30 s)
+
+v6 is built by `tools/build6.py`, which is v5's builder plus your v6 notes. Its media come from:
+- `tools/prep2.py --spec=media_v6.json`: clips and stills.
+- `tools/prep6.py`: the fired photos, your cyber portrait and its B-roll plate, and the grudge slide's cut-out and backgrounds.
+- The S06 interview matte, made with `remove-background`.
+- v5's media for everything else.
+
+`tools/rebuild/rebuild_media.sh` remakes all of it from the Drive folder.
+
+**Rendered:** not yet. The project is open for your review; the 0–30 s render waits for your OK.
+
+**Length:** 87.1 s (v5: 93.2 s). "You have to be big…" is cut, so everything from "Meet Jamie Dimon" on plays 6.083 s earlier and is otherwise exactly v5.
+
+**Sound:** voices only, with no music bed and no sound effects. That means the news open, the narration, and Dimon's quote.
+
+## Your v6 notes, one by one
+| Note | v6 |
+|---|---|
+| "JPMorgan Chase" comes in at once, like Dario's DISAPPEAR, centred, not by syllable | One continuous type-on at DISAPPEAR's rate, starting on the reporter's "JP": a letter every 2 frames, the newest letter flaring for one frame. It holds 9 frames, then leaves through Dario's inverted sky-blue tiles. |
+| "This is the most influential man in America right now": the Glitchy JPMorgan Chase Cyber Portrait | Your portrait, with Dimon cut out of it, pulling back from 1.75× at the Karp reel's zoom speed (exponential ease, tau 0.48 s). B-roll rolls fast behind him and through him at low opacity. Hemant's side cards keep their flashes, and the seal is there. The text is plain and aligned: no pop-up from the bottom and no continuous flash. |
+| The 12 s Stanford shot: a direct cut, no pan | A straight cut. "CEO of Wall Street" is unchanged. |
+| "A guy who got fired": many old photos, each zooming slightly, growing smoothly to the hero | Nine photos of young Dimon from your old-photos folder, youngest first, two frames each. Each pops in slightly and settles while the card grows smoothly. The black-and-white hero lands on "fired". |
+| "by his own mentor": big, horizontal, one line at the bottom, not in the square, serif glow like Dario | One line at the bottom over the Sandy Weill montage, in Instrument Serif with Dario's bloom-in. Each word arrives blown out on the voice, then settles crisp with a soft glow. |
+| "over a bonus and a family grudge": the opening of the reel you sent | "over a bonus" is your cartoon. "and a family grudge" is the reel's first second, frame for frame: Sandy and Joan Weill slide in from the left in 11 frames with motion blur, under a 3×3 grid whose cells light up one by one with white flashes. The background goes colour, then a white burn, then black-and-white, while the couple stays in colour with a thin white edge. |
+| "the biggest bank" in Instrument Serif glow, like "capitalism" | Big centred serif glow: "now runs the" small above, "biggest bank" in the hero serif. |
+| No background music or sound effects for these renders | The music bed is switched off (`MUSIC = False` in `build6.py`; one line puts it back). There were no other effects tracks. |
+| The monologue starts directly at "We bank countries" | The quote starts 0.1 s before "We": "some of these companies in 30 countries" is gone. |
+| Interview: the typography stays on the right. B-roll: centred serif glow, like Dario | On him: "We bank", "We bank the" and "we bank the" on the right with the quote marks, his globe picture behind him. On the B-roll, centred serif glow: "countries" over London from the air, "World Bank" centred on its building, "the IMF" over your money animation. |
+| "IMF" over the money B-roll, then back to the interview | The money animation runs under "the IMF", then cuts back to him for "we bank the". |
+| "the United States government": a completely clear B-roll, the building | The Capitol, ungraded and bright, with no overlay on the building. It "comes in" with the same pull-back as the cyber portrait (from 1.35× on its dome). "United States government" is one serif line along the lawn, like "by his own mentor", so nothing covers the building. |
+| Remove "You have to be big…"; go straight to "Meet Jamie Dimon" | Done. "government." is followed by a 0.56 s pause, then the white frame and the name card ("Meet" at 29.17 s). |
+
+## Measured
+- **`check` over 0–30 s (12 samples):** ok, 0 errors. Contrast passes on every S06 caption after two fixes: "IMF" got a stronger scrim over the bright bills, and the government line went to the lawn.
+- **`lint`:** 0 errors. The 32 warnings are the same density and size notices as v5, in the later scenes.
+- **Later scenes:** from "Meet Jamie Dimon" on, each scene's file matches v5 except for clip file names, which round their 0.25 s padding differently after the shift. The roller cards keep v5's drift because they are seeded by v5's times.
+- **Pauses in the voice track (measured, not listened to):**
+  - "…in the world." to "We bank": 0.6 s.
+  - Dimon's own pauses: 0.23 s and 0.35 s.
+  - "government." to "Meet": 0.56 s.
+
+## Open
+- **Fired photos:** they flip at 2 frames each, so each photo's small zoom barely shows. At 3 frames each the faces read better, and the flip takes 0.3 s longer.
+- **"Show Me MODS":** I took the mentor style to be the Dario serif glow this film already uses. Send a frame of the MODS caption if it should look different.
+- **Music:** the bed was cut for 93.2 s. The film is now 87.1 s, so the bed needs a re-cut when music comes back.
+- **Money animation:** the source is 736×414, so at full frame it is a little soft. The bills move, and the grain hides most of it.
+- **Government line:** it sits on the lawn rather than the middle of the frame. Centred, it would sit on the white building and cover it. Say if you want it in the middle anyway.
+
+---
+
+## The v5 review (previous round)
 
 v5 is built by `tools/build5.py`. Media comes from:
 - `tools/prep2.py --spec=media_v5.json`
@@ -12,7 +63,7 @@ v5 is built by `tools/build5.py`. Media comes from:
 
 **Checked:** each note below against the snapshots (about 110 frames across 0–31.7 s) and, where it applies, side by side with the reference.
 
-## Your notes on v4, one by one
+### Your notes on v4, one by one
 | Note | v5 |
 |---|---|
 | "in American" written small | Back as it was: "in American" above, "capitalism" in big serif below. |
@@ -29,7 +80,7 @@ v5 is built by `tools/build5.py`. Media comes from:
 | "now runs the biggest bank in the world": no change | Unchanged (only the lighter texture). |
 | "We bank": textures, quote marks closer, B-roll mixed in, the ghost behind him moving like Fink's | Interview, then B-roll, interview, B-roll (details below). |
 
-### BIGGER, frame for frame like Dario's SUDDENLY
+#### BIGGER, frame for frame like Dario's SUDDENLY
 - **Before the word:** a corner square, top left then bottom right, on the reporter shot.
 - **Two glitch frames:** first the smeared band, then the crisp black word in a glowing bar.
 - **Then:** the white word with its glow on near-black.
@@ -38,13 +89,13 @@ v5 is built by `tools/build5.py`. Media comes from:
   - Faint copies sit at the sides of the word and drift outward.
 - **Gone:** the small copy.
 
-### JPMorgan Chase, like Dario's DISAPPEAR
+#### JPMorgan Chase, like Dario's DISAPPEAR
 - **Spelling and size:** "JPMorgan Chase" spelled properly, 420 px condensed to 0.7 like Dario's type, about 84 % of the width.
 - **Typing:** in place from the left on the reporter's syllables; the newest letter flares.
 - **Footage:** the flag, cutting to the JPMorgan tower mid-word.
 - **Exit:** two tile-glitch frames (the word gone on the second), then the tower holds a moment.
 
-### "This is the most influential man in America right now", Hemant style
+#### "This is the most influential man in America right now", Hemant style
 - **Opening:**
   - The grey see-through silhouette turns cream.
   - Live frames flicker through, plus the live strip and the white bars.
@@ -58,7 +109,7 @@ v5 is built by `tools/build5.py`. Media comes from:
   - A slow push on his face from "in America" while everything else holds.
   - The seal sits behind his head; a white sweep takes it out.
 
-### "We bank", the Fink Rogan screen
+#### "We bank", the Fink Rogan screen
 - **Edit pattern:**
   - Interview ("We bank some of these companies").
   - "in 30 countries": the JPMorgan Global China Summit, then Davos on the World Economic Forum stage.
@@ -69,7 +120,7 @@ v5 is built by `tools/build5.py`. Media comes from:
 - **Ghost:** your globe picture behind him (he is matted above it), slowly zooming and drifting. It pulls focus from soft to sharp each time we come back to him.
 - **Quote marks:** they hug the words on screen.
 
-## Measured
+### Measured
 - **`check` (5 samples, contrast pass off):** ok, 0 errors.
 - **Remaining warnings:**
   - The typed letters of "Chase" and the roller years are flagged as brief; the whole word holds, and the years flick by design.
@@ -77,6 +128,6 @@ v5 is built by `tools/build5.py`. Media comes from:
   - Lint density warnings in later scenes, as in v4.
 - **Not heard:** the levels were measured, not listened to.
 
-## Open
+### Open
 - **"was fired" reference:** used for "a guy who got fired"; tell me if it was meant for "he was fired" at 48 s.
 - **Faces in "by his own mentor":** some of Weill's photos are small. To fill the frame without a seam they are scaled up, so the biggest close-ups are soft. They are on screen for 2–3 frames each.

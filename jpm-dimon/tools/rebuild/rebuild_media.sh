@@ -1,5 +1,5 @@
 #!/bin/bash
-# Rebuild every media file the Jamie Dimon v5 edit uses (assets/clips2, img2, audio, tex) from the user's Google
+# Rebuild every media file the Jamie Dimon edit (v5, then v6 on top) uses (assets/clips2, img2, audio, tex) from the user's Google
 # Drive folder "Jamie Dimon" (1nC7mwKB1Baj2aL5CQehlxG5ztOkuh7WJ, shared by link), so the project renders again.
 # Git keeps the edit (compositions, tools/build5.py, notes) but never the media: .gitignore keeps them local.
 #
@@ -10,6 +10,9 @@
 #
 # The repo must be at /home/user/claude-test-2.0 (every tool hard-codes that root). Needs about 4 GB of downloads,
 # ffmpeg with libx264 and libvpx-vp9, python3 + pip, node/npx. Takes about 30 min (Demucs is the slow step).
+#
+# v6 (10 Nov) adds the user's cyber portrait, the banking montage, the old photos and the new images to the downloads,
+# then step 10 makes v6's media (prep2 on media_v6.json, prep6, the new S06 matte) and step 11 checks build6.py.
 #
 # Run:  bash jpm-dimon/tools/rebuild/rebuild_media.sh
 # Then: cd jpm-dimon && npx --yes hyperframes@0.9.2 render -o renders/<name>.mp4
@@ -53,6 +56,10 @@ grep -v '^#' "$KIT/links.tsv" | while IFS=$'\t' read -r link target; do
   [ -e "$SRC/$link" ] || { echo "broken link: $link"; exit 1; }
 done
 
+say "3b. The old photos of young Dimon (v6 S04), unpacked from their zip"
+[ -s "$SRC/jamie-old-images/jamie-old-images/jamie-old-image-10.jpg" ] ||
+  unzip -oq "$SRC/_drive/jamie-old-images.zip" -d "$SRC/jamie-old-images"
+
 say "4. build5.py clock files: the narration and Dimon's answer at 16 kHz, plus the verified Parakeet word times"
 mkdir -p "$WORK/vo" "$WORK/tx/pk_vo" "$WORK/tx/pk_bank"
 ffmpeg -nostdin -loglevel error -y -i "$SRC/jamie dimon audi.mp3" -ar 16000 -ac 1 "$WORK/vo/vo16k.wav"
@@ -80,10 +87,16 @@ say "8. The S06 interview matte (v4 made it by hand with the same remove-backgro
 say "9. The music bed and the re-cut news voice (Demucs; about 10-15 min on 4 cores)"
 python3 -I tools/make_music.py
 
-say "10. Checks"
-python3 -I -X utf8 tools/build5.py >/dev/null
-git -C "$ROOT" diff --exit-code --stat -- jpm-dimon/index.html jpm-dimon/compositions jpm-dimon/tools/media_v5.json &&
-  echo "build5.py reproduces the committed v5 composition"
+say "10. v6 on top: its clips and stills, the fired photos, the cyber portrait and its B-roll plate, the grudge slide"
+python3 -I tools/prep2.py --spec=media_v6.json
+python3 -I tools/prep6.py
+[ -s assets/clips2/BANK_27585_413_x63_50_135_cut.webm ] ||
+  $HF remove-background assets/clips2/BANK_27585_413_x63_50_135.mp4 -o assets/clips2/BANK_27585_413_x63_50_135_cut.webm --json
+
+say "11. Checks (build5.py is v5's builder and still runs; the committed composition is v6's)"
+python3 -I -X utf8 tools/build6.py >/dev/null
+git -C "$ROOT" diff --exit-code --stat -- jpm-dimon/index.html jpm-dimon/compositions jpm-dimon/tools/media_v6.json &&
+  echo "build6.py reproduces the committed v6 composition"
 missing=0
 for p in $(grep -ohE 'assets/[A-Za-z0-9_./-]+[.](mp4|webm|jpg|png|wav|woff2)' index.html compositions/*.html | sort -u); do
   [ -s "$p" ] || { echo "MISSING $p"; missing=$((missing + 1)); }
