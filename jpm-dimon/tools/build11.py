@@ -357,6 +357,11 @@ SERIF_REST = ("0 0 14px rgba(255,255,255,0.62), 0 0 42px rgba(255,255,255,0.30),
               "0 3px 10px rgba(0,0,0,0.35)")
 SERIF_BLOOM = ("0 0 22px rgba(255,255,255,1), 0 0 60px rgba(255,255,255,0.95), 0 0 130px rgba(255,255,255,0.7), "
                "0 3px 10px rgba(0,0,0,0)")
+HERO_BLOWN = ("0 0 26px rgba(255,255,255,1), 0 0 70px rgba(255,255,255,1), 0 0 150px rgba(255,255,255,0.85), "
+              "0 0 240px rgba(255,255,255,0.5)")      # v11: Dario's "AI" / "Atomic" on its first frame
+HERO_HALO = ("0 0 16px rgba(255,255,255,0.80), 0 0 46px rgba(255,255,255,0.46), 0 0 110px rgba(255,255,255,0.24), "
+             "0 3px 10px rgba(0,0,0,0.40)")         # v11: the highlighted hero's halo, stronger than SERIF_REST
+D_SQ, F25 = 0.80, 0.04                              # v11: Dario's hero type is condensed; one frame of the reel
 SERIF_SOFT = ("0 0 18px rgba(255,255,255,0.85), 0 0 50px rgba(255,255,255,0.45), 0 0 100px rgba(255,255,255,0.18), "
               "0 3px 10px rgba(0,0,0,0.2)")
 GOLD_REST = ("0 0 14px rgba(255,214,140,0.75), 0 0 44px rgba(255,190,90,0.38), 0 0 100px rgba(255,170,60,0.16), "
@@ -1263,7 +1268,8 @@ def blk(sc, t, frames, box, color="#ffffff", blend="normal", opacity=1.0, z=None
     bid = sc.uid("blk")
     x, y, w, h = box
     extra = f"filter:blur({soft}px);box-shadow:0 0 {soft * 9}px {soft * 3}px {color};" if soft else ""
-    sc.raw(f'<div id="{bid}" class="clip solid" {sc.timed(t, t + frames * F1)} data-track-index="6" style="left:{x}px;'
+    sc.raw(f'<div id="{bid}" class="clip solid" {sc.timed(t, t + frames * F1)} data-track-index="6" data-layout-ignore '
+           f'style="left:{x}px;'
            f'top:{y}px;width:{w}px;height:{h}px;background:{color};opacity:{opacity};mix-blend-mode:{blend};{extra}'
            f'z-index:{z or sc.nz() + 700}"></div>')
     return bid
@@ -1360,7 +1366,7 @@ def sp_tiles(sc, t, boxes, tint=None, z=1990):
             blk(sc, t, 1, b, tint, blend="multiply", z=z + 1)
 
 
-def sp_type_word(sc, t0, t1, text, times, size=450, squeeze=0.70, base=672, track=-0.015, exit_at=None):
+def sp_type_word(sc, t0, t1, text, times, size=450, squeeze=0.70, base=672, track=-0.015, exit_at=None, z=None):
     """Dario's DISAPPEAR (36.64-37.64, every frame at 25 fps): the word typed at one steady rate into its final, centred
     layout from the left -- 9 letters in 13 frames in a (1,2,2) pattern, i.e. a 30 fps type-on at one letter every 2
     frames resampled to 25 fps -- the newest letter flaring for one frame (blown out, a haze lighting the picture ~300 px
@@ -1373,7 +1379,7 @@ def sp_type_word(sc, t0, t1, text, times, size=450, squeeze=0.70, base=672, trac
     total = textw(text, "Instrument Serif", 400, size, track=track)
     x0 = 960 - total / 2
     top = base - size * 0.84        # line-height 1: the baseline sits 0.84 em under the box top (ascent .99, descent .31)
-    wz = sc.nz() + 300
+    wz = z or (sc.nz() + 300)      # v11: z, to sit over a picture placed high (S06's B-roll)
     spans, js = [], []
     k = 0
     for i, ch in enumerate(text):
@@ -1632,6 +1638,29 @@ def sp_wolf_lockup11(sc, t1, words, y=560, size=165, color="#F4C542", exit_at=No
     return lid
 
 
+def sp_name_pop(sc, word, t, t1, size=250, y=540):
+    """v11 (user: "bonus coming with the Instrument Serif animation, like the word Dario Amodei comes in the Dario
+    video at the very start"): Dario's name entrance (the reel's 10.68-10.88 s, every frame at 25 fps): the word pops in
+    whole and crisp in its glow, condensed, with a white square in the top-left corner (one reel frame); a square in
+    the bottom-right corner (the next two); then for two frames the word's row is a negative band (the shot inverted,
+    the word black in it); then it holds in its glow."""
+    w = textw(word, "Instrument Serif", 400, size, track=-0.01) * D_SQ
+    x, z = 960 - w / 2, sc.nz() + 800
+    wid = sc.uid("nm")
+    sc.raw(f'<div id="{wid}" class="clip t" {sc.timed(t, t1)} data-track-index="5" data-layout-allow-overflow '
+           f'style="left:{x:.0f}px;top:{y - size * 0.56:.0f}px;font-family:\'Instrument Serif\';font-weight:400;'
+           f'font-size:{size}px;letter-spacing:-0.01em;color:{INK};text-shadow:{SERIF_REST};transform:scaleX({D_SQ});'
+           f'transform-origin:0 50%;z-index:{z}">{esc(word)}</div>')
+    for (a, b), (bx, by, bw, bh), blend in (((t, t + F25), (0, 0, 216, 104), "normal"),
+                                            ((t + F25, t + 3 * F25), (1712, 884, 208, 196), "normal"),
+                                            ((t + 3 * F25, t + 5 * F25), (150, round(y - size * 0.46), 1620, round(size * 0.86)),
+                                             "difference")):
+        sc.raw(f'<div id="{sc.uid("np")}" class="clip solid" {sc.timed(round(a, 3), round(b, 3))} data-track-index="6" '
+               f'data-layout-ignore style="left:{bx}px;top:{by}px;width:{bw}px;height:{bh}px;background:#FFFFFF;'
+               f'mix-blend-mode:{blend};z-index:{z + 10}"></div>')
+    return wid
+
+
 def sp_diff_line(sc, words, t1, y=540, size=150, wt=800, gap=0.24):
     """v11 (user: "by his own mentor ... in Helvetica bold at the center with a different difference effect"): one
     centred line of bold Helvetica drawn in difference (white, mix-blend-mode difference): every letter is the negative
@@ -1650,8 +1679,8 @@ def sp_diff_line(sc, words, t1, y=540, size=150, wt=800, gap=0.24):
         a = round(t + F1, 3)
         sc.raw(f'<div id="{wid}-h" class="clip t" {sc.timed(a, t1)} data-track-index="5" data-layout-allow-overflow '
                f'style="left:{x:.0f}px;top:{y - size * 0.52:.0f}px;font-family:\'Inter Tight\';font-weight:{wt};'
-               f'font-size:{size}px;letter-spacing:{trk}em;color:rgba(0,0,0,0);text-shadow:0 0 14px rgba(0,0,0,0.75), '
-               f'0 0 34px rgba(0,0,0,0.45);z-index:{sc.nz() + 790}">{esc(w)}</div>')   # the halo, then the word
+               f'font-size:{size}px;letter-spacing:{trk}em;color:#000000;opacity:0.62;filter:blur(13px);'
+               f'z-index:{sc.nz() + 790}" data-layout-ignore>{esc(w)}</div>')   # the halo (blurred dark letters), then the word
         sc.raw(f'<div id="{wid}" class="clip t" {sc.timed(a, t1)} data-track-index="5" data-layout-allow-overflow '
                f'style="left:{x:.0f}px;top:{y - size * 0.52:.0f}px;font-family:\'Inter Tight\';font-weight:{wt};'
                f'font-size:{size}px;letter-spacing:{trk}em;color:#FFFFFF;mix-blend-mode:difference;'
@@ -2040,6 +2069,15 @@ STY = {  # family, weight, size, kind.  A style may carry a size override: "sh@2
     "pb": ("Inter Tight", 800, 150, "paper"),
     "ps": ("Instrument Serif", 400, 250, "paper"),
     "pss": ("Instrument Serif", 400, 220, "ink"),  # v8: dark serif on the pinboard
+    # v11 (user: "wherever I say Instrument Serif glow ... this kind of animation and typography exactly as in the Dario
+    # video"), read frame by frame (25 fps): normal words ("He built the", "wants to save humanity": small, spread on
+    # one line, each in its final place; a glowing white square marks the word's place for 2 frames, then the word comes
+    # in stretched tall and settles in 2 frames; the words leave in the order they came); hero words ("AI", "Atomic
+    # Bomb": big, condensed, one frame blown out, then crisp in the glow); the highlighted hero (the "CEO": two frames
+    # black in a glowing white bar, as Dario's SUDDENLY, then blown out, then a strong halo that stays)
+    "dn": ("Instrument Serif", 400, 92, "dnorm"),
+    "dh": ("Instrument Serif", 400, 230, "dhero"),
+    "dhl": ("Instrument Serif", 400, 230, "dhl"),
 }
 CAPS = []
 SCOPE_END, V5_EARLY = 20.855, 16   # v6 edits 0-20.86 s only; v5 had 16 caption groups (cg000-cg015) before it
@@ -2125,8 +2163,10 @@ def build_captions():
                 if text not in ("$10", "$60", "$500"):
                     text = text.replace(",", "").replace(".", "")
                 tr = -0.03 if fam == "Inter Tight" else -0.01
-                ws.append((text, t, st, textw(text, fam, wt, size, track=tr)))
-            gaps = [sty(st)[2] * (0.24 if sty(st)[0] == "Inter Tight" else 0.2) for _, _, st, _ in ws]
+                sq = D_SQ if kind in ("dhero", "dhl") else 1.0
+                ws.append((text, t, st, textw(text, fam, wt, size, track=tr) * sq))
+            gaps = [sty(st)[2] * (0.24 if sty(st)[0] == "Inter Tight" else 0.42 if sty(st)[3] == "dnorm" else 0.2)
+                    for _, _, st, _ in ws]
             Wt = sum(w for *_, w in ws) + sum(gaps[1:])
             x = {"center": ax - Wt / 2, "left": ax, "right": ax - Wt}[align]
             spans = []
@@ -2140,14 +2180,22 @@ def build_captions():
                 sid = f"{gid}-w{li}{k}"
                 color = "#111" if kind in ("paper", "ink") else YELLOW if kind in ("heroy", "sansy") else INK
                 shadow = {"sans": GLOW_REST, "sansy": GOLD_REST, "serif": SERIF_REST, "hero": SERIF_REST,
-                          "heroy": GOLD_REST, "name": SERIF_REST,
+                          "heroy": GOLD_REST, "name": SERIF_REST, "dnorm": SERIF_REST, "dhero": SERIF_REST,
+                          "dhl": HERO_HALO,
                           "gold": GOLD_REST, "ink": "none",
                           "paper": "0 0 18px rgba(255,255,255,0.9), 0 0 44px rgba(255,255,255,0.5)"}[kind]
                 trk = "-0.03em" if fam == "Inter Tight" else "-0.01em"
                 top = base - size * 0.80
                 style = (f"left:{left:.0f}px;top:{top:.0f}px;font-family:'{fam}';font-weight:{wt};font-size:{size:.0f}px;"
                          f"letter-spacing:{trk};color:{color};")
-                if kind in ("serif", "hero", "heroy", "name", "gold"):
+                if kind in ("dnorm", "dhero", "dhl"):    # v11: Dario's words (the hero squeezed as one box)
+                    sq = "" if kind == "dnorm" else f"transform:scaleX({D_SQ});transform-origin:0 50%;"
+                    fl = ' style="top:0.06em;bottom:0.12em;left:-0.08em;right:-0.08em"' if kind == "dhl" else ""
+                    spans.append(f'<span id="{sid}" class="w" style="{style}{sq}"><span id="{sid}-f" class="fl"{fl}></span>'
+                                 f'<span id="{sid}-t" class="wt" style="opacity:0;transform-origin:50% 72%;'
+                                 f'text-shadow:{shadow}">{esc(text)}</span></span>')
+                    g.setdefault("sids", []).append(sid)
+                elif kind in ("serif", "hero", "heroy", "name", "gold"):
                     spans.append(f'<span id="{sid}" class="w" style="{style}"><span id="{sid}-f" class="fl"></span>'
                                  f'<span id="{sid}-t" class="wt" style="opacity:0;text-shadow:{shadow}">{esc(text)}</span></span>')
                 else:
@@ -2163,6 +2211,23 @@ def build_captions():
                 elif kind == "paper":
                     js.append(f'tl.fromTo("#{sid}", {{ opacity: 0, y: 44 }}, {{ opacity: 1, y: 0, duration: 0.28, ease: "steps(4)", '
                               f'immediateRender: false }}, {r3(a)});')
+                elif kind == "dnorm":    # the glowing square marks the place, the word comes in stretched tall
+                    b0 = max(t0, round(a - 2 * F25, 3))
+                    js += ([f'tl.set("#{sid}-f", {{ opacity: 1 }}, {r3(b0)});', f'tl.set("#{sid}-f", {{ opacity: 0 }}, {r3(a)});']
+                           if a - b0 > 0.02 else [])
+                    js += [f'tl.set("#{sid}-t", {{ opacity: 1, scaleY: 1.42, filter: "blur(1.5px)", textShadow: "{SERIF_BLOOM}" }}, {r3(a)});',
+                           f'tl.set("#{sid}-t", {{ scaleY: 1.12, filter: "blur(0px)", textShadow: "{SERIF_SOFT}" }}, {r3(a + F25)});',
+                           f'tl.set("#{sid}-t", {{ scaleY: 1, textShadow: "{SERIF_REST}" }}, {r3(a + 2 * F25)});']
+                elif kind == "dhero":    # one frame blown out, then crisp in the glow
+                    js += [f'tl.set("#{sid}-t", {{ opacity: 1, filter: "blur(7px)", textShadow: "{HERO_BLOWN}" }}, {r3(a)});',
+                           f'tl.set("#{sid}-t", {{ filter: "blur(1.5px)", textShadow: "{SERIF_SOFT}" }}, {r3(a + F25)});',
+                           f'tl.set("#{sid}-t", {{ filter: "blur(0px)", textShadow: "{SERIF_REST}" }}, {r3(a + 2 * F25)});']
+                elif kind == "dhl":      # highlighted: black in the glowing bar, then blown out, then a halo that stays
+                    js += [f'tl.set("#{sid}-f", {{ opacity: 1 }}, {r3(a)});',
+                           f'tl.set("#{sid}-t", {{ opacity: 1, color: "#0b0b0b", textShadow: "none" }}, {r3(a)});',
+                           f'tl.set("#{sid}-f", {{ opacity: 0 }}, {r3(a + 2 * F25)});',
+                           f'tl.set("#{sid}-t", {{ color: "{INK}", filter: "blur(7px)", textShadow: "{HERO_BLOWN}" }}, {r3(a + 2 * F25)});',
+                           f'tl.set("#{sid}-t", {{ filter: "blur(0px)", textShadow: "{HERO_HALO}" }}, {r3(a + 3 * F25)});']
                 elif kind == "serif":
                     b0 = max(t0, a - 4 * F1)
                     js += [f'tl.set("#{sid}-f", {{ opacity: 1, filter: "blur(3px)" }}, {r3(b0)});',
@@ -2195,6 +2260,10 @@ def build_captions():
             tb = r3(t1 - 2 * F1)
             js.append(f'tl.set("#{gid} .wt, #{gid} .ws", {{ opacity: 0 }}, {tb});')
             js.append(f'tl.set("#{gid} .{"fl" if g["exit"] == "bars" else "lbar"}", {{ opacity: 1, filter: "blur(0px)" }}, {tb});')
+        if g["exit"] == "order":
+            sids = g.get("sids", [])
+            for k, sid in enumerate(sids):
+                js.append(f'tl.set("#{sid}", {{ opacity: 0 }}, {r3(t1 - (len(sids) - 1 - k) * F25)});')
         if g["exit"] == "blur":
             js.append(f'tl.to("#{gid} .w", {{ opacity: 0, filter: "blur(10px)", duration: 0.18, ease: "power2.in" }}, {r3(t1 - 0.18)});')
         elif g["exit"] == "fade":
@@ -2308,9 +2377,15 @@ sp_cyber_user(s, [
 # plain, centred, aligned (user: "text can be normal ... adjusting size"): small sans over a big serif word, on fixed
 # baselines, like the "in American / capitalism" lockup; four groups as in v5 (the first split into its two lines)
 CAP_END1 = round(VT(5) - 2 * F1, 3)                                          # 10.663, when "man in" arrives
-cap([[W_(0, "s"), W_(1, "s"), W_(2, "s"), W_(3, "s")], [W_(4, "sh")]], scrim=0.42, end=CAP_END1)   # v8: centred (user)
-cap([[W_(5, "s"), W_(6, "s")], [W_(7, "sh")]], scrim=0.42)
-cap([[W_(8, "s")], [W_(9, "sh")]], scrim=0.42)
+# v11 (user: "I don't want the text to be in the center. I want it at the bottom, and all of it in Instrument Serif
+# glow ... no Helvetica above and serif down"): Dario's normal words and heroes along the bottom (title-safe), each
+# line replacing the last, the words leaving in the order they came: "This is the most" / INFLUENTIAL / "man in"
+# AMERICA / "right now"
+BOT_N, BOT_H = 930, 902
+cap([[W_(0, "dn"), W_(1, "dn"), W_(2, "dn"), W_(3, "dn")]], y=BOT_N, scrim=0.42, end=round(VT(4) - F25, 3), exit="order")
+cap([[W_(4, "dh@210")]], y=BOT_H, scrim=0.42, end=round(VT(5) - F25, 3), exit="order")
+cap([[W_(5, "dn"), W_(6, "dn"), W_(7, "dh@190")]], y=BOT_H, scrim=0.42, end=round(VT(8) - F25, 3), exit="order")
+cap([[W_(8, "dn"), W_(9, "dn")]], y=BOT_N, scrim=0.42, end=CUT(VT(10)), exit="order")
 
 # ---- S03  12.36-15.07  "He's basically the CEO of Wall Street,"  (real video only; Pattinson's transitions)
 s = Scene("s03", CUT(VT(10)), CUT(VT(17)))
@@ -2347,8 +2422,8 @@ blk(s, XF, 1, (0, 0, 1920, 1080), "#ffffff", blend="difference", z=1400)
 blk(s, XF, 1, (0, 0, 1920, 1080), "#6a1fd0", blend="multiply", opacity=0.62, z=1401)
 s.J(f'tl.set("#{WOLF_LOCK} .t", {{ color: "#F59BE0" }}, {s.at(XF)});')
 s.whiteframe(round(CUT(VT(17)) - F1, 3), 1)
-cap([[W_(10, "s"), W_(11, "s")]], end=RT(round(12.83 - TIGHT0, 3)), scrim=0.4)                     # v8: centred (user)
-cap([[W_(12, "s")], [W_(13, "sh")]], end=CUT(VT(14)), scrim=0.4)
+cap([[W_(10, "dn"), W_(11, "dn")]], end=RT(round(12.83 - TIGHT0, 3)), scrim=0.6, exit="order")   # v11: Dario's serif
+cap([[W_(12, "dn"), W_(13, "dhl", "CEO")]], end=CUT(VT(14)), scrim=0.45, exit="order")             # the CEO highlighted
 
 # ---- S04  15.07-20.86  "a guy who got fired in 1998 by his own mentor over a bonus and a family grudge,"
 s = Scene("s04", CUT(VT(17)), CUT(VT(35)))
@@ -2369,7 +2444,7 @@ GR_PREV = ST("gr_prev", key="BONUS", t=round(5.90 + (G0 - BON), 3), frame="FULL"
 sp_grudge_slide(s, G0, CUT(VT(35)))                                    # and a family grudge: the reel's opening (user)
 sp_diff_line(s, [(VOW[k]["text"], VT(k)) for k in (24, 25, 26, 27)], CUT(VT(28)))   # v11: bold, centred, difference
 cap([[W_(28, "s"), W_(29, "s")]], end=BON)
-cap([[W_(30, "sh@240")]], end=G0)                                       # v8: centred (user)
+sp_name_pop(s, "bonus", VT(30), G0)                                    # v11: Dario's name entrance (user)
 cap([[W_(31, "s"), W_(32, "s"), W_(33, "s"), W_(34, "sh@200", "Grudge")]], scrim=0.42,   # v8: one line, centred; v10: capital G (user)
     end=CUT(VT(35)) - 0.02)                                            # and a family / grudge: centred lockup
 
@@ -2476,7 +2551,7 @@ s.raw(f'<div id="{s.uid("usb")}" class="clip solid" {s.timed(round(CAP_T0, 3), C
       f'data-layout-ignore style="background:linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(4,8,16,0.50) 44%, '
       f'rgba(4,8,16,0.56) 56%, rgba(0,0,0,0) 70%);z-index:{BZ + 40}"></div>')
 sp_type_word(s, CAP_T0, CAP_T1, US_TXT, US_T, size=US_SIZE, squeeze=0.70, base=round(540 + 0.30 * US_SIZE),
-             exit_at=CAP_T1)
+             exit_at=CAP_T1, z=BZ + 60)
 
 # ---- S07  29.87-37.86  "Meet Jamie Dimon, the golden boy of Wall Street, the guy everyone said was next in line to run
 #      the biggest financial company in the world."

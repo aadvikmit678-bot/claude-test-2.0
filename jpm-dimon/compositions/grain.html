@@ -5,12 +5,12 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); mix-blend-mode: overlay; }
   </style>
   <div id="root" data-composition-id="grain" data-width="1920" data-height="1080">
-    <div id="grain-box" class="clip" data-start="0" data-duration="86.090" data-track-index="1" data-layout-ignore
+    <div id="grain-box" class="clip" data-start="0" data-duration="85.157" data-track-index="1" data-layout-ignore
       style="position:absolute;left:0;top:0;width:1920px;height:1080px"><div id="grain-tex"></div></div>
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
-    tl.to({}, { duration: 86.090 }, 0);
+    tl.to({}, { duration: 85.157 }, 0);
         tl.set("#grain-tex", { xPercent: -5, yPercent: -5 }, 0.000);
     tl.set("#grain-tex", { xPercent: -10, yPercent: 5 }, 0.083);
     tl.set("#grain-tex", { xPercent: 5, yPercent: -10 }, 0.166);
@@ -1037,18 +1037,6 @@
     tl.set("#grain-tex", { xPercent: -5, yPercent: 15 }, 84.909);
     tl.set("#grain-tex", { xPercent: -10, yPercent: 5 }, 84.992);
     tl.set("#grain-tex", { xPercent: 15, yPercent: 0 }, 85.075);
-    tl.set("#grain-tex", { xPercent: 0, yPercent: 10 }, 85.158);
-    tl.set("#grain-tex", { xPercent: -15, yPercent: 0 }, 85.241);
-    tl.set("#grain-tex", { xPercent: 10, yPercent: 5 }, 85.324);
-    tl.set("#grain-tex", { xPercent: 0, yPercent: 0 }, 85.407);
-    tl.set("#grain-tex", { xPercent: -5, yPercent: -5 }, 85.490);
-    tl.set("#grain-tex", { xPercent: -10, yPercent: 5 }, 85.573);
-    tl.set("#grain-tex", { xPercent: 5, yPercent: -10 }, 85.656);
-    tl.set("#grain-tex", { xPercent: -5, yPercent: 15 }, 85.739);
-    tl.set("#grain-tex", { xPercent: -10, yPercent: 5 }, 85.822);
-    tl.set("#grain-tex", { xPercent: 15, yPercent: 0 }, 85.905);
-    tl.set("#grain-tex", { xPercent: 0, yPercent: 10 }, 85.988);
-    tl.set("#grain-tex", { xPercent: -15, yPercent: 0 }, 86.071);
     window.__timelines["grain"] = tl;
   </script>
 </template>
