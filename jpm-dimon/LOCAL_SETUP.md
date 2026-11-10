@@ -1,5 +1,24 @@
 # Running jpm-dimon on a Windows PC
 
+**Update, 10 Nov 2026 (night): v9, 86.09 s at 60 fps (tag `jpm-dimon-v9`).** The builder is `tools/build9.py`, which writes `tools/media_v9.json`. v8 is unchanged: tag `jpm-dimon-v8`, built by `tools/build8.py`. `notes/v9/mix.md` lists what changed and which footage is kept out.
+
+**v9 sources:**
+- The portraits `h12`-`h17` in `../dimon-src/_heath/`, from the Drive folder "heath ledger part of edit". `tools/prep8.py` aligns them into `h9_a01` … `h9_a17` (the `ALIGN` list).
+- `../dimon-src/_drive9/`: two clips from the same folder.
+  - The money pan: `1ZoAeY5-kuokp-w6cUPTop7gCOAgIc5pP`, saved as `a_1ZoAeY5/clip_a.mp4`.
+  - The fast collage: `1kw8XDrJgmRlZqJhQ9rQym5Gq0q1TxWvp`, saved as `b_1kw8XDr/clip_b.mp4`.
+  - Sped up with the ffmpeg-skill: `python scripts/speedramp.py clip_a.mp4 --segment 0-56.48:4.0 -o x4/money_pile_4x.mp4` (`MPILE`) and `python scripts/speedramp.py clip_b.mp4 --segment 0-11.448:3.0 -o x3/trip_3x.mp4` (`TRIP`).
+
+**v9 steps:**
+1. `python -I tools/prep8.py fb` (face-box alignment of the Meet portraits).
+2. `python -I -X utf8 tools/build9.py --specs`
+3. `python -I tools/prep2.py --spec=media_v9.json`
+4. `python -I -X utf8 tools/build9.py`
+
+Set `DIMON_ROOT` to the folder that holds `dimon-src`, `dimon-work` and `jpm-dimon` for every step.
+
+---
+
 **Update, 10 Nov 2026 (evening): v8, the whole film, rendered at 60 fps.** The builder is now `tools/build8.py`, which writes `tools/media_v8.json`. Its parts:
 - **S07, "Meet Jamie Dimon…":** rebuilt on the Heath Ledger reel at its own 60 fps (`notes/v8/heath60.md`). This scene's timing uses 60 fps frames.
 - **S09 and S11-S23:** rebuilt in the Alex Karp reel's editing (`notes/v8/karp.md`), with the "cut cut" panels on the last line (`notes/v8/cutcut_panels.md`).

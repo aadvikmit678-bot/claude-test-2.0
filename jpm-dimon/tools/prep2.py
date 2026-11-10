@@ -37,6 +37,9 @@ V = {
     "JPHORIZ": "_drive/JP mogran building horizontal.mp4", "CUTCUT": "_drive/Edit style cut cut photos..mp4",
     "LASTFAST": "_drive/jp morgan edit use clips in the last fast paced.mp4", "JPD": "_drive/J P Morgan The Man Who Bought America   Full Documentary.mp4",
     "BM": "_drive/banking montage 1-2 sec clip can be used.mp4",
+    # v9: the user's two clips from the Drive folder "heath ledger part of edit" (10 Nov), sped up with the ffmpeg-skill's
+    # speedramp.py: the money pile at 4x (first 15 s of the source are dollars only) and the fast collage at 3x
+    "MPILE": "_drive9/x4/money_pile_4x.mp4", "TRIP": "_drive9/x3/trip_3x.mp4",
 }
 # logo-safe framings: (cx, cy, zoom) of the crop window, relative to the frame
 FRAMES = {"FULL": (0.5, 0.5, 1.0), "BBG": (0.47, 0.53, 1.07), "CNBC": (0.46, 0.54, 1.08), "UNTF": (0.45, 0.56, 1.12),
