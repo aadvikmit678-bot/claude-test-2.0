@@ -155,7 +155,7 @@ def matte(im, out_png):
     if not os.path.exists(out_png):
         tmp = tempfile.mktemp(suffix=".png")
         im.save(tmp)
-        prep2.run(["npx", "--yes", "hyperframes@0.9.2", "remove-background", tmp, "-o", out_png, "--json"])
+        prep2.run([("npx.cmd" if os.name == "nt" else "npx"), "--yes", "hyperframes@0.9.2", "remove-background", tmp, "-o", out_png, "--json"])
         os.remove(tmp)
     return Image.open(out_png).convert("RGBA")
 

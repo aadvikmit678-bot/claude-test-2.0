@@ -37,7 +37,7 @@ def freeze(name, key, t, frame):
 
 def cutout(name, frame_path):
     out = f"{IMG}/{name}_cut.png"
-    prep2.run(["npx", "--yes", "hyperframes@0.9.2", "remove-background", frame_path, "-o", out, "--json"])
+    prep2.run([("npx.cmd" if os.name == "nt" else "npx"), "--yes", "hyperframes@0.9.2", "remove-background", frame_path, "-o", out, "--json"])
     return out
 
 

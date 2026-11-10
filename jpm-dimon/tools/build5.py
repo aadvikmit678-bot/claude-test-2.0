@@ -32,7 +32,7 @@ Run:  python3 -I tools/build4.py --specs && python3 -I tools/prep2.py && python3
 import array, json, math, os, random, sys, wave
 from fontTools.ttLib import TTFont
 
-ROOT = "/home/user/claude-test-2.0"
+ROOT = os.environ.get("DIMON_ROOT", "/home/user/claude-test-2.0")  # local runs: set DIMON_ROOT to the repo root
 PRJ = f"{ROOT}/jpm-dimon"
 COMP = f"{PRJ}/compositions"
 TX = f"{ROOT}/dimon-work/tx"

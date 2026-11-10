@@ -9,7 +9,7 @@ Run:  python3 -I tools/build2.py --specs && python3 -I tools/prep2.py [--force] 
 import json, os, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 
-ROOT = "/home/user/claude-test-2.0"
+ROOT = os.environ.get("DIMON_ROOT", "/home/user/claude-test-2.0")  # local runs: set DIMON_ROOT to the repo root
 SRC = f"{ROOT}/dimon-src"
 PRJ = f"{ROOT}/jpm-dimon"
 CLIPS, IMG = f"{PRJ}/assets/clips2", f"{PRJ}/assets/img2"
@@ -93,7 +93,7 @@ def ensure_cutout(path):
     if os.path.exists(path) or name not in CUT_SRC:
         return
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    run(["npx", "--yes", "hyperframes@0.9.2", "remove-background", f"{SRC}/{CUT_SRC[name]}", "-o", path, "--json"])
+    run([("npx.cmd" if os.name == "nt" else "npx"), "--yes", "hyperframes@0.9.2", "remove-background", f"{SRC}/{CUT_SRC[name]}", "-o", path, "--json"])
 
 
 def make_still(sid, spec):

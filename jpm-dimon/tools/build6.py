@@ -61,7 +61,7 @@ Run:  cd jpm-dimon && python3 -I -X utf8 tools/build6.py --specs                
 import array, json, math, os, random, sys, wave
 from fontTools.ttLib import TTFont
 
-ROOT = "/home/user/claude-test-2.0"
+ROOT = os.environ.get("DIMON_ROOT", "/home/user/claude-test-2.0")  # local runs: set DIMON_ROOT to the repo root
 PRJ = f"{ROOT}/jpm-dimon"
 COMP = f"{PRJ}/compositions"
 TX = f"{ROOT}/dimon-work/tx"

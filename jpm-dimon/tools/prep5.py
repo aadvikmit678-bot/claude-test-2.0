@@ -48,7 +48,7 @@ def run(cmd):
 def matte(cid):
     src, cut, halo = f"{CLIPS}/{cid}.mp4", f"{CLIPS}/{cid}_cut.webm", f"{CLIPS}/{cid}_halo.webm"
     if not os.path.exists(cut):
-        run(["npx", "--yes", "hyperframes@0.9.2", "remove-background", src, "-o", cut, "--quality", "best", "--json"])
+        run([("npx.cmd" if os.name == "nt" else "npx"), "--yes", "hyperframes@0.9.2", "remove-background", src, "-o", cut, "--quality", "best", "--json"])
     if not os.path.exists(halo):
         dur = float(run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", cut]).stdout)
         run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-c:v", "libvpx-vp9", "-i", cut, "-f", "lavfi", "-i",

@@ -15,7 +15,7 @@ Needs: pip install torch torchaudio (CPU) demucs soundfile.   Run: python3 -I to
 """
 import json, os, re, subprocess
 
-ROOT = "/home/user/claude-test-2.0"
+ROOT = os.environ.get("DIMON_ROOT", "/home/user/claude-test-2.0")  # local runs: set DIMON_ROOT to the repo root
 PRJ = f"{ROOT}/jpm-dimon"
 WORK = f"{ROOT}/dimon-work/music"
 AUD = f"{PRJ}/assets/audio"
@@ -70,7 +70,7 @@ if __name__ == "__main__":
              "-ar", "44100", f"{WORK}/bbg_0_240.wav"])
         os.makedirs(stems, exist_ok=True)
         open(f"{WORK}/_sep.py", "w").write(SEP)
-        run(["python3", "-I", f"{WORK}/_sep.py", f"{WORK}/bbg_0_240.wav", stems])
+        run([__import__("sys").executable, "-I", f"{WORK}/_sep.py", f"{WORK}/bbg_0_240.wav", stems])
     # the reporter's voice alone, spliced like the picture
     # Demucs put the reporter's soft "than" (src 10.18-10.44, a steady 160 Hz voiced sound) in the music stem:
     # it is taken back from there.

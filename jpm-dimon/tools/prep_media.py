@@ -9,7 +9,7 @@ Run:  python3 -I tools/prep_media.py [id ...]   (no ids = everything)
 """
 import os, re, subprocess, sys
 
-ROOT = "/home/user/claude-test-2.0"
+ROOT = os.environ.get("DIMON_ROOT", "/home/user/claude-test-2.0")  # local runs: set DIMON_ROOT to the repo root
 SRC = f"{ROOT}/dimon-src"
 PRJ = f"{ROOT}/jpm-dimon"
 CLIPS, IMG, TEX, AUD = (f"{PRJ}/assets/{d}" for d in ("clips", "img", "tex", "audio"))

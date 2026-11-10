@@ -61,7 +61,7 @@ import json, subprocess, tempfile  # noqa: E402
 import numpy as np  # noqa: E402
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont  # noqa: E402
 
-ROOT = "/home/user/claude-test-2.0"
+ROOT = os.environ.get("DIMON_ROOT", "/home/user/claude-test-2.0")  # local runs: set DIMON_ROOT to the repo root
 SRC = f"{ROOT}/dimon-src"
 FONTS = f"{ROOT}/jpm-dimon/assets/fonts"
 W, H = 1920, 1080
@@ -304,7 +304,7 @@ def cy_user(img_dir):
     pic, cut, band = f"{img_dir}/cy_pic.jpg", f"{img_dir}/cy_cut.png", f"{img_dir}/cy_band.png"
     run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-i", f"{SRC}/{CY_PIC}", "-vf", "scale=1920:1080:flags=lanczos",
          "-q:v", "2", pic])
-    run(["npx", "--yes", "hyperframes@0.9.2", "remove-background", pic, "-o", cut, "--json"])
+    run([("npx.cmd" if os.name == "nt" else "npx"), "--yes", "hyperframes@0.9.2", "remove-background", pic, "-o", cut, "--json"])
     x0, y0, x1, y1 = CY_BAND_BOX
     crop = np.asarray(Image.open(pic).convert("RGB").crop((x0, y0, x1, y1))).astype(np.float32)
     hh, ww = crop.shape[:2]
@@ -342,7 +342,7 @@ def grudge(img_dir):
     os.makedirs(work, exist_ok=True)
     raw = f"{work}/couple_raw.png"
     if not os.path.exists(raw):
-        run(["npx", "--yes", "hyperframes@0.9.2", "remove-background", GRUDGE_SRC, "-o", raw, "--json"])
+        run([("npx.cmd" if os.name == "nt" else "npx"), "--yes", "hyperframes@0.9.2", "remove-background", GRUDGE_SRC, "-o", raw, "--json"])
     cut = Image.open(raw).convert("RGBA")
     m = Image.new("L", cut.size, 0)
     for poly in GRUDGE_ERASE:
