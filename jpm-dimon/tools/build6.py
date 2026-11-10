@@ -1675,6 +1675,169 @@ def sp_quotes(sc, spans, size=210):
                    f'text-shadow:0 0 24px rgba(255,255,255,0.35);z-index:{sc.nz() + 400}">{ch}</div>')
 
 
+import math as _math
+
+
+def FT(t):
+    """A frame-exact time floored to 3 decimals, so a boundary meant for frame n (n/30) never rounds up past it
+    (v5's r3(8.4667) = 8.467 made film frame 254 miss S02 and show S01's word again)."""
+    return _math.floor(t * 1000 + 1e-6) / 1000
+
+
+
+# The B-roll plate (tools/prep6.py cy_broll renders assets/clips2/cy_broll.mp4 from this; build6 writes it into
+# media_v6.json["cyber"]). k = frame index from S02's first frame (film frame 254 = 8.4667 s). Rows:
+#   main: [k0, frames, source, look, zoom_from, zoom_to, pan_px_per_frame]   (hard cuts, no gaps, no overlaps)
+#   sec:  [k0, frames, source, look, opacity, blend]                         (a faint second picture on top)
+# Sources: "KEY@t[#cx,cy,zoom]" video (MONT = jpm_montage, BM = the banking montage), "frame:KEY@t" one frame held,
+# "img:PATH[@cy]" a still (under dimon-src), "hud1:PATH" / "hud2:PATH" a still with the red HUD drawn on it.
+NI, GOV = "new_dimon_images", "Jamie_Dimon_Image_Pack/07_US_Government_America"
+CYBER = {
+    "frames": 117, "pad": 8,
+    "main": [
+        # Part A, Karp's montage rhythm (his 24 fps beats x 1.25), cuts on "This" k18, "is" k28, "the" k33, "most" k38
+        [0, 1, "MONT@24.10", "night", 1.00, 1.00, 0],                                    # 8.467 fragments frame
+        [1, 1, f"img:{NI}/06_Lincoln_Memorial_statue_2024.jpg", "night", 1.04, 1.04, 0],
+        [2, 4, "BM@0.10", "warm", 1.02, 1.05, 0],                                        # white flash on k4-5
+        [6, 4, f"hud1:{NI}/01_NYSE_August_2017_02.jpg", "navy", 1.06, 1.06, -12],      # red HUD (Karp 0.83)
+        [10, 4, "MONT@20.90", "white", 1.00, 1.02, 0],                                   # white pie chart (Karp 0.96)
+        [14, 4, f"img:{NI}/14_US_Treasury_2023.jpg", "cool", 1.03, 1.06, 0],
+        [18, 4, "MONT@27.10", "cool", 1.02, 1.04, 0],                                    # "This"
+        [22, 3, f"img:{NI}/03_NYSE_Wall_Street_1.jpg", "night", 1.04, 1.06, 8],
+        [25, 3, f"hud2:{GOV}/06_Federal_Reserve_Eccles_Building.jpg", "grey", 1.00, 1.02, 0],
+        [28, 5, f"img:{NI}/02_Capitol_west_front_from_Newseum.jpg", "night", 1.04, 1.07, 0],   # "is"
+        [33, 5, "MONT@18.55#0.25,0.45,2.0", "cool", 1.00, 1.03, 0],                      # "the": the world map
+        [38, 3, "MONT@14.20", "cool", 1.02, 1.04, 0],                                    # "most": JPMORGAN CHASE & CO.
+        [41, 4, "MONT@20.45", "cool", 1.02, 1.04, 0],                                    # the J.P.Morgan lobby
+        [45, 22, f"img:{NI}/02_270_Park_Avenue_under_construction_2024.jpg", "cool", 1.00, 1.06, 0],  # "influential"
+        # Part B, the Hemant stage: a new picture on each word, ~6 frames each, dimmed in the scene (bgdim 0.45)
+        [67, 7, f"img:{NI}/05_White_House_south_facade.jpg", "cool", 1.03, 1.08, 0],     # "man"
+        [74, 5, f"img:{NI}/02_NYSE_Wall_Street_facade.jpg@0.40", "cool", 1.04, 1.08, 0],  # "in"
+        [79, 7, f"img:{NI}/03_Capitol_west_front_PD.jpg", "warm", 1.03, 1.08, 0],        # "America"
+        [86, 7, f"img:{NI}/10_Reflecting_Pool_Washington_Monument.jpg", "cool", 1.03, 1.08, 0],
+        [93, 7, "MONT@23.05", "night", 1.02, 1.05, 0],                                   # "right": the ticker
+        [100, 7, "BM@2.85", "warm", 1.02, 1.05, 0],                                      # "now": J.P.Morgan at dusk
+        [107, 5, "MONT@14.70", "cool", 1.02, 1.04, 0],
+        [112, 5, "BM@4.30", "night", 1.02, 1.04, 0],
+    ],
+    "sec": [
+        [14, 8, "frame:BM@0.63", "cool", 0.30, "screen"],
+        [22, 3, f"img:{NI}/08_Federal_Hall_historic_1789.jpg", "bw", 0.22, "normal"],
+        [45, 11, "frame:MONT@21.60", "white", 0.12, "normal"],
+        [56, 11, f"img:{NI}/21_National_City_Bank_Wall_Street_1893.jpg", "bw", 0.16, "normal"],
+        [67, 12, f"img:{GOV}/07_Federal_Reserve_Eccles_1937_archival.jpg", "bw", 0.20, "normal"],
+        [79, 14, "frame:MONT@19.10", "bw", 0.18, "normal"],
+        [93, 14, "frame:BM@1.20", "bw", 0.22, "normal"],
+        [107, 10, f"img:{NI}/09_NYSE_panoramio.jpg", "bw", 0.20, "normal"],
+    ],
+    # Karp 1.46-1.79: a faint list scrolling up (his: Palantir's sectors; ours: JPMorgan's lines of business)
+    "list": ["Investment Banking.", "Commercial Banking.", "Asset Management.", "Wealth Management.",
+             "Consumer Banking.", "Payments.", "Markets.", "Private Bank.", "Securities Services.",
+             "Card Services.", "Home Lending.", "Auto Finance."],
+    "list_at": [25, 13], "list_speed": 110, "list_opacity": 0.22,
+}
+# Exposure of the whole picture (portrait included) per frame k0-k66, Karp's measured logo brightness resampled to
+# 30 fps, floor 0.45 (Karp dips to 0.18; raised so it breathes rather than strobes). Part B (k67+) stays at 1.
+CY_E = [1.00, 0.50, 0.45, 0.45, 1.00, 1.00, 0.56, 0.45, 0.45, 0.64,
+        0.80, 0.66, 0.87, 0.80, 0.50, 0.64, 0.91, 0.85, 1.00, 1.00,
+        0.76, 0.55, 0.45, 0.45, 0.45, 0.58, 1.00, 0.57, 0.80, 0.45,
+        0.45, 0.45, 0.45, 0.80, 0.57, 0.64, 0.45, 0.45, 0.85, 0.86,
+        1.00, 0.55, 0.45, 0.45, 0.48, 1.00, 1.00, 1.00, 0.80, 0.55,
+        0.45, 0.55, 0.70, 1.00, 0.90, 0.70, 0.55, 0.60, 0.75, 0.90,
+        1.00, 0.90, 0.70, 0.55, 0.60, 0.75, 0.90]
+CY_OVL = [(2, 4, 0.15), (6, 4, 0.25), (10, 4, 0.32), (18, 4, 0.25), (25, 3, 0.22), (33, 5, 0.28), (41, 4, 0.18)]
+CY_WHITE = [(4, 0.72), (5, 0.88)]                       # Karp 0.75-0.79: the one white flash
+
+KREF = 254 / 30   # the beat grid's k0 (film frame 254, measured against Karp): S02 itself starts on frame 255 = k1, right
+                  # after the JPMorgan Chase word's two exit-tile frames (253-254), with Dario's fragments (DIS_T3)
+CY_ORIGIN = (965, 478)   # the centre of the band over his eyes in the user's picture (1920x1080): the zoom's fixed point
+
+
+def sp_cyber_user(sc, cards, seal_at, push, part_b, hud=0.85):
+    """v6 note 2, the user's "Glitchy JPMorgan Chase Cyber Portrait" (their own picture, dimon-src/_cyber: Dimon with a
+    noisy band and the JPMorganChase wordmark over his eyes, red HUD lines, corner brackets, the JPM NYC tower inset, a
+    bar chart) as the centre of the Metro Media House Karp / Palantir opening (0.625-2.417 s of that reel, measured
+    every frame: spec_s02.md): Dimon cut out of the picture (cy_cut.png) with its band strip back over his eyes
+    (cy_band.png), pulling back from 1.75x on Karp's exponential ease-out (tau 0.48 s); behind him a B-roll plate that
+    cuts every 1-7 frames on the voice (cy_broll.mp4, from CYBER), ghosted through him on some beats; the rest of the
+    user's picture (its HUD lines, brackets, inset, chart) over the plate in screen blend, zooming with him; the frame
+    breathing in exposure (Part A), one white flash. Then (part_b, "man") the Hemant stage: the plate dims, photo cards
+    land at the sides after soft white / red boxes, the seal rises behind his head, a subtle push on "in America".
+    Entrance: Dario 37.60, the new picture comes through in fragments on the scene's first frame."""
+    t0, t1 = sc.start, sc.end
+    K = lambda k: FT(KREF + k / 30)                     # film time of beat k (k1 = the scene's first frame)
+    ox, oy = CY_ORIGIN
+    js = []
+    off = r3(t0 - KREF)                                  # the plate's frame k shows on beat k
+    sc.raw(f'<video id="{sc.uid("cyb")}" class="clip" src="assets/clips2/cy_broll.mp4" muted playsinline '
+           f'{sc.timed(t0, t1)} data-hf-media-start-basis="local" data-media-start="{off}"{gattr("doc")} data-track-index="2" '
+           f'style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;z-index:10"></video>')
+    bgd = sc.uid("bgdim")                                # Part B: the plate drops to 55 % so the cards read
+    sc.raw(f'<div id="{bgd}" class="clip solid" {sc.timed(K(part_b), t1)} data-track-index="1" data-layout-ignore '
+           f'style="background:#000;opacity:0.45;z-index:11"></div>')
+    sl = sc.uid("seal")
+    sc.raw(f'<img id="{sl}" class="clip" src="assets/img2/{SEAL}" alt="" {sc.timed(seal_at, t1)} data-track-index="3" '
+           f'style="position:absolute;left:480px;top:-100px;width:960px;height:960px;opacity:0;z-index:12" />',
+           [f'tl.fromTo("#{sl}", {{ opacity: 0, scale: 0.94 }}, {{ opacity: 0.62, scale: 1.0, duration: 0.24, '
+            f'ease: "power2.out", immediateRender: false }}, {sc.at(seal_at)});'])
+    for i, (src, cx, cy_, w, h, t, red, until) in enumerate(cards):
+        col = "rgba(232,40,32,0.95)" if red else "rgba(255,253,246,0.97)"
+        glow = "rgba(232,40,32,0.7)" if red else "rgba(255,255,255,0.85)"
+        sc.raw(f'<div id="{sc.uid("sbox")}" class="clip solid" {sc.timed(t - 2 * F1, t)} data-track-index="6" '
+               f'style="left:{cx - w // 2}px;top:{cy_ - h // 2}px;width:{w}px;height:{h}px;background:{col};'
+               f'filter:blur(6px);box-shadow:0 0 48px 18px {glow};z-index:{30 + i}"></div>')
+        sc.raw(f'<img id="{sc.uid("hc")}" class="clip" src="assets/img2/{src}" alt="" {sc.timed(t, until or t1)} '
+               f'data-track-index="3"{gattr("hcard")} style="position:absolute;left:{cx - w // 2}px;top:{cy_ - h // 2}px;'
+               f'width:{w}px;height:{h}px;object-fit:cover;z-index:{20 + i}" />')
+    hud_id = sc.uid("cyhud")                             # the user's whole picture: its HUD over the plate (screen)
+    sc.raw(f'<div id="{hud_id}" class="grp" data-layout-allow-overflow data-layout-ignore style="z-index:14;'
+           f'mix-blend-mode:screen;opacity:{hud};transform-origin:{ox}px {oy}px">'
+           f'<img id="{hud_id}-i" class="clip" src="assets/img2/cy_pic.jpg" alt="" {sc.timed(t0, t1)} data-track-index="4" '
+           f'style="position:absolute;left:0;top:0;width:1920px;height:1080px" /></div>')
+    rig = sc.uid("rig")                                  # Dimon cut out of it, the band strip back over his eyes
+    sc.raw(f'<div id="{rig}" class="grp" data-layout-allow-overflow style="z-index:40;transform-origin:{ox}px {oy}px">'
+           f'<img id="{rig}-p" class="clip" src="assets/img2/cy_cut.png" alt="" {sc.timed(t0, t1)} data-track-index="4" '
+           f'style="position:absolute;left:0;top:0;width:1920px;height:1080px" />'
+           f'<img id="{rig}-b" class="clip" src="assets/img2/cy_band.png" alt="" {sc.timed(t0, t1)} data-track-index="5" '
+           f'style="position:absolute;left:470px;top:345px;width:990px;height:265px" /></div>')
+    both = f"#{rig}, #{hud_id}"
+    pk = round((push[0] - t0) / 0.48, 4)
+    s_end = round(1 + 0.75 * _math.exp(-(push[0] - t0) / 0.48), 4)
+    js += [f'tl.fromTo("{both}", {{ scale: 1.75 }}, {{ scale: {s_end}, duration: {r3(push[0] - t0)}, '
+           f'ease: (p) => (1 - Math.exp(-{pk} * p)) / (1 - Math.exp(-{pk})), immediateRender: false }}, 0);',
+           f'tl.fromTo("{both}", {{ scale: {s_end} }}, {{ scale: 1.044, duration: {r3(push[1] - push[0])}, '
+           f'ease: "power1.inOut", immediateRender: false }}, {sc.at(push[0])});',
+           f'tl.to("{both}", {{ scale: 1.054, duration: {r3(t1 - push[1])}, ease: "none" }}, {sc.at(push[1])});']
+    ov = sc.uid("ovl")                                   # the plate again, ghosted over him on some beats
+    sc.raw(f'<div id="{ov}" class="grp" data-layout-ignore style="z-index:50;opacity:0">'
+           f'<video id="{ov}-v" class="clip" src="assets/clips2/cy_broll_ovl.mp4" muted playsinline {sc.timed(t0, t1)} '
+           f'data-hf-media-start-basis="local" data-media-start="{off}" data-track-index="2" style="position:absolute;left:0;'
+           f'top:0;width:1920px;height:1080px;object-fit:cover"></video></div>')
+    for k0, nn, op in CY_OVL:
+        if K(k0) >= t0:
+            js += [f'tl.set("#{ov}", {{ opacity: {op} }}, {sc.at(K(k0))});', f'tl.set("#{ov}", {{ opacity: 0 }}, {sc.at(K(k0 + nn))});']
+    sc.raw(f'<div id="{sc.uid("vig")}" class="clip solid" {sc.timed(t0, t1)} data-track-index="6" data-layout-ignore '
+           f'style="background:radial-gradient(ellipse 75% 70% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.38) 100%);'
+           f'z-index:55"></div>')
+    ex = sc.uid("expo")
+    sc.raw(f'<div id="{ex}" class="clip solid" {sc.timed(t0, K(part_b))} data-track-index="6" data-layout-ignore '
+           f'style="background:#000;opacity:0;z-index:60"></div>')
+    prev = None
+    for k, e in enumerate(CY_E):
+        if K(k) < t0:
+            continue
+        o = round(1 - e, 2)
+        if o != prev:
+            js.append(f'tl.set("#{ex}", {{ opacity: {o} }}, {sc.at(K(k))});')
+            prev = o
+    for k, op in CY_WHITE:
+        sc.raw(f'<div id="{sc.uid("cyw")}" class="clip solid" {sc.timed(K(k), K(k + 1))} data-track-index="6" '
+               f'data-layout-ignore style="background:#FFFDF6;opacity:{op};z-index:61"></div>')
+    sp_tiles(sc, t0, DIS_T3, z=900)                       # Dario 37.60: the new picture comes through in fragments
+    sc.J("\n    ".join(js))
+    return rig
+
+
 STY = {  # family, weight, size, kind.  A style may carry a size override: "sh@200".
     "s": ("Inter Tight", 700, 84, "sans"),
     "sm": ("Inter Tight", 600, 62, "sans"),
@@ -1892,7 +2055,7 @@ def push(sc, cam, t0, t1, a=1.0, b=1.04):
 
 # ---- S01  0.00-9.05  the Bloomberg open, re-cut: "The name of the game in American capitalism, is being big, and no
 #      one is bigger [held] on Wall Street than JPMorgan Chase."  (the reporter's voice alone; the music from frame 0)
-s = Scene("s01", 0.0, VO1_AT)
+s = Scene("s01", 0.0, S2_0)   # v6: ends where the cyber portrait comes in
 montage(s, [
     (0.0, "GAME", 0.0, {"rate": 0.9}),                  # The: Lower Manhattan
     (CUT(NT(1)), "HOW", 323.2, {"grade": "bw"}),        # name of the: the Wall St sign, 1920s
@@ -1921,12 +2084,10 @@ JPMC_T = [FR(JPF + 2 * k) for k in range(13)]          # 7.283 7.35 7.417 ... 8.
 TOW0 = JPMC_T[9]                                       # 7.883 (frame 237): the tower lands with the "h"
 camF, _ = s.vfile("flag_slow.mp4", CUT(NT(20)), TOW0, grade="night")
 push(s, camF, CUT(NT(20)), TOW0, 1.0, 1.03)
-camT, _ = s.vfile("tower_slow.mp4", TOW0, VO1_AT, grade="night")
-push(s, camT, TOW0, VO1_AT, 1.0, 1.04)
+camT, _ = s.vfile("tower_slow.mp4", TOW0, S2_0, grade="night")
+push(s, camT, TOW0, S2_0, 1.0, 1.04)
 sp_type_word(s, CUT(NT(20)), S2_0, "JPMorgan Chase", JPMC_T, size=450, squeeze=0.70, base=672, track=-0.015,
              exit_at=S2_0)
-sp_slide_pop(s, POP0, VO1_AT, CL("SPEAK", SPK(POP0), VO1_AT - POP0, xyz=SPK_XYZ, matte=True),
-             steps=(1080, 560, 230, 60, 0), every=3)
 cap([[N_(0, "s"), N_(1, "s"), N_(2, "s"), N_(3, "s"), N_(4, "s")]], end=1.29)
 cap([[N_(5, "s"), N_(6, "s")], [N_(7, "sh")]], end=CUT(NT(8)) + 0.02)       # "in American" as before (user)
 cap([[N_(8, "s"), N_(9, "s")]], end=CUT(NT(10)))
@@ -1934,43 +2095,27 @@ cap([[N_(11, "s"), N_(12, "s"), N_(13, "s"), N_(14, "s")]], y=900, end=CUT(NT(15
 cap([[N_(16, "ss@112"), N_(17, "sx@340"), N_(18, "sx@340")]], y=560, end=CUT(NT(19)))
 cap([[N_(19, "s")]], end=CUT(NT(20)))
 
-# ---- S02  9.05-12.36  "This is the most influential man in America right now."  (Hemant Taneja, on video)
-s = Scene("s02", VO1_AT, CUT(VT(10)), tex=(0.05, 0.0))
-OPEN_END = 10.70
-s.v("SPEAK", SPK(VO1_AT), VO1_AT, OPEN_END, grade="dim", push=None, xyz=SPK_XYZ)   # the live picture under the open
-sp_hemant_open(s, VO1_AT, OPEN_END, "spk", live=[(9.15, 2), (9.41, 2), (9.73, 1), (10.00, 2), (10.28, 1), (10.52, 3)],
-               grey_until=9.55)
-STRIP = s.uid("strip")   # Hemant 0.33: a strip of the live picture across the silhouette, then white bars
-s.raw(f'<img id="{STRIP}" class="clip" src="assets/img2/spk_f.jpg" alt="" {s.timed(9.40, 9.40 + F1)} data-track-index="5"'
-      f'{gattr("doc")} style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;'
-      f'clip-path:inset(47% 22% 41% 22%);z-index:{s.nz() + 30}" />')
-blk(s, 9.433, 1, (560, 560, 760, 96))
-blk(s, 9.467, 2, (84, 250, 22, 150))
-blk(s, 9.50, 1, (700, 300, 70, 14))
-blk(s, 10.01, 2, (1150, 380, 40, 160))
-INF_W = textw("influential", "Instrument Serif", 400, 180)
-INF_TOP = 330 - 180 * 0.92 / 2 + 180 * 0.92 * 0.8 - 180 * 0.8
-BAND = s.uid("band")     # Hemant 1.46: a white band through the right-hand word, the word dark and offset inside it
-s.raw(f'<div id="{BAND}" class="clip grp" {s.timed(10.50, 10.50 + 2 * F1)} data-track-index="6" style="z-index:{s.nz() + 60}">'
-      f'<div style="position:absolute;left:1120px;top:{INF_TOP + 50:.0f}px;width:780px;height:112px;background:#F4F1EA"></div>'
-      f'<div class="t" style="left:{1820 - INF_W + 34:.0f}px;top:{INF_TOP:.0f}px;font-family:\'Instrument Serif\';'
-      f'font-size:180px;letter-spacing:-0.01em;color:#101010;clip-path:inset(28% 0 30% 0)">influential</div></div>')
-sp_sil_flash(s, OPEN_END, "spk", 2)                                     # Hemant 21.375: the blazing silhouette
-STAGE0 = round(OPEN_END + 2 * F1, 3)
+# ---- S02  8.50-12.365  "This is the most influential man in America right now."  The Glitchy JP Morgan Chase Cyber
+#      Portrait (user's picture) in the Metro Media House Alex Karp / Palantir opening, with Hemant Taneja's cards and
+#      the seal (user, v6 note 2; spec_s02.md). No pop-up, no flicker of live frames, one white flash.
+s = Scene("s02", S2_0, CUT(VT(10)), tex=(0.05, 0.0))
 SWAP = round(CUT(VT(8)) + 0.07, 3)
-sp_hemant_stage(s, STAGE0, CUT(VT(10)), CL("SPEAK", SPK(STAGE0), CUT(VT(10)) - STAGE0, xyz=SPK_XYZ, matte=True), [
-    (CARD["fortune"], 623, 388, 534, 296, 10.86, False, SWAP),
-    (CARD["congress"], 1578, 810, 416, 260, 11.00, False, SWAP),
-    (CARD["whitehouse"], 1373, 382, 434, 244, 11.20, False, None),
-    (CARD["press"], 487, 833, 326, 254, 11.40, False, None),
-    (CARD["cash"], 623, 388, 534, 296, SWAP, True, None),
-    (CARD["park"], 1578, 810, 416, 260, round(SWAP + 2 * F1, 3), True, None),
-], zoom=(VT(6), VT(8)), seal_at=VT(7))
-sp_white_wipe(s, CUT(VT(10)) - 3 * F1, 3)                               # Hemant 25.08: the white sweep out
-cap([dict(w=[W_(0, "ss@80"), W_(1, "ss@80"), W_(2, "ss@80"), W_(3, "sh@180")], x=114, y=330, align="left")], end=OPEN_END)
-cap([dict(w=[W_(4, "sh@180")], x=1820, y=330, align="right")], end=OPEN_END, blinks=[(10.50, 2)])
-cap([[W_(5, "sm@60"), W_(6, "sm@60"), W_(7, "sh@126")]], x=960, y=650, end=CUT(VT(8)))
-cap([[W_(8, "sm@60"), W_(9, "sh@126")]], x=960, y=650, end=round(CUT(VT(10)) - 3 * F1, 3))
+sp_cyber_user(s, [
+    (CARD["fortune"], 395, 330, 520, 288, 10.86, False, SWAP),
+    (CARD["congress"], 1562, 780, 416, 260, 11.00, False, SWAP),
+    (CARD["whitehouse"], 1537, 330, 434, 244, 11.20, False, None),
+    (CARD["press"], 372, 770, 326, 254, 11.40, False, None),
+    (CARD["cash"], 395, 330, 520, 288, SWAP, True, None),
+    (CARD["park"], 1562, 780, 416, 260, round(SWAP + 2 * F1, 3), True, None),
+], seal_at=VT(7), push=(VT(6), VT(8)), part_b=67)
+# plain, centred, aligned (user: "text can be normal ... adjusting size"): small sans over a big serif word, on fixed
+# baselines, like the "in American / capitalism" lockup; four groups as in v5 (the first split into its two lines)
+CAP_END1 = round(VT(5) - 2 * F1, 3)                                          # 10.663, when "man in" arrives
+cap([dict(w=[W_(0, "s@64"), W_(1, "s@64"), W_(2, "s@64"), W_(3, "s@64")], x=960, y=810)], y=885, lh=1.0, scrim=0.42,
+    end=CAP_END1)
+cap([dict(w=[W_(4, "sh@150")], x=960, y=917)], y=885, lh=1.0, end=CAP_END1)
+cap([[W_(5, "s@64"), W_(6, "s@64")], [W_(7, "sh@150")]], x=960, y=885, lh=1.0, scrim=0.42)
+cap([[W_(8, "s@64")], [W_(9, "sh@150")]], x=960, y=885, lh=1.0, scrim=0.42)
 
 # ---- S03  12.36-15.07  "He's basically the CEO of Wall Street,"  (real video only; Pattinson's transitions)
 s = Scene("s03", CUT(VT(10)), CUT(VT(17)))
@@ -2026,8 +2171,8 @@ camG, _ = s.v("MPB", 1056.6, 19.62, CUT(VT(35)), push=None)            # family 
 s.J(f'tl.fromTo("#{camG}", {{ scale: 1.22, x: 170 }}, {{ scale: 1.05, x: -70, duration: {r3(CUT(VT(35)) - 19.62)}, '
     f'ease: "power1.inOut", immediateRender: false }}, {s.at(19.62)});')
 s.neg(19.62, 1)
-cap([[W_(24, "sl@116"), W_(25, "sl@116"), W_(26, "sl@116")], [W_(27, "sl@172")]], y=540,
-    end=CUT(VT(28)))                                                     # by his own / mentor: centred, serif glow (v6)
+cap([[W_(24, "sh@160"), W_(25, "sh@160"), W_(26, "sh@160"), W_(27, "sh@160")]], y=880, scrim=0.45,
+    end=CUT(VT(28)))   # by his own mentor: ONE line at the bottom, under the square, Dario's serif bloom-in (user, v6)
 cap([[W_(28, "s"), W_(29, "s")]], end=BON)
 cap([[W_(30, "sh@240")]], y=880, end=CUT(VT(31)))
 cap([[W_(31, "s"), W_(32, "s"), W_(33, "s")]], y=540, end=CUT(VT(34)))   # user: in the centre
@@ -2498,6 +2643,7 @@ def write_root():
 
 
 if __name__ == "__main__":
+    MEDIA["cyber"] = CYBER
     json.dump(MEDIA, open(f"{PRJ}/tools/media_v6.json", "w"), indent=1)
     if "--specs" in sys.argv:
         print("clips:", len(MEDIA["clips"]), "stills:", len(MEDIA["stills"]))

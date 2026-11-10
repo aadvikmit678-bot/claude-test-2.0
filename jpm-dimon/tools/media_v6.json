@@ -158,53 +158,6 @@
    ],
    "frame_xyz": null
   },
-  "SPEAK_1220_70_x59_40_114": {
-   "key": "SPEAK",
-   "t": 12.2,
-   "dur": 0.7,
-   "frame": "FULL",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": [
-    0.592,
-    0.4,
-    1.15
-   ],
-   "matte": true
-  },
-  "SPEAK_1265_190_x59_40_114": {
-   "key": "SPEAK",
-   "t": 12.65,
-   "dur": 1.9,
-   "frame": "FULL",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": [
-    0.592,
-    0.4,
-    1.15
-   ]
-  },
-  "SPEAK_1437_185_x59_40_114": {
-   "key": "SPEAK",
-   "t": 14.367,
-   "dur": 1.85,
-   "frame": "FULL",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": [
-    0.592,
-    0.4,
-    1.15
-   ],
-   "matte": true
-  },
   "GAME_6155_71": {
    "key": "GAME",
    "t": 61.55,
@@ -2002,5 +1955,295 @@
     560
    ]
   }
+ },
+ "cyber": {
+  "frames": 117,
+  "pad": 8,
+  "main": [
+   [
+    0,
+    1,
+    "MONT@24.10",
+    "night",
+    1.0,
+    1.0,
+    0
+   ],
+   [
+    1,
+    1,
+    "img:new_dimon_images/06_Lincoln_Memorial_statue_2024.jpg",
+    "night",
+    1.04,
+    1.04,
+    0
+   ],
+   [
+    2,
+    4,
+    "BM@0.10",
+    "warm",
+    1.02,
+    1.05,
+    0
+   ],
+   [
+    6,
+    4,
+    "hud1:new_dimon_images/01_NYSE_August_2017_02.jpg",
+    "navy",
+    1.06,
+    1.06,
+    -12
+   ],
+   [
+    10,
+    4,
+    "MONT@20.90",
+    "white",
+    1.0,
+    1.02,
+    0
+   ],
+   [
+    14,
+    4,
+    "img:new_dimon_images/14_US_Treasury_2023.jpg",
+    "cool",
+    1.03,
+    1.06,
+    0
+   ],
+   [
+    18,
+    4,
+    "MONT@27.10",
+    "cool",
+    1.02,
+    1.04,
+    0
+   ],
+   [
+    22,
+    3,
+    "img:new_dimon_images/03_NYSE_Wall_Street_1.jpg",
+    "night",
+    1.04,
+    1.06,
+    8
+   ],
+   [
+    25,
+    3,
+    "hud2:Jamie_Dimon_Image_Pack/07_US_Government_America/06_Federal_Reserve_Eccles_Building.jpg",
+    "grey",
+    1.0,
+    1.02,
+    0
+   ],
+   [
+    28,
+    5,
+    "img:new_dimon_images/02_Capitol_west_front_from_Newseum.jpg",
+    "night",
+    1.04,
+    1.07,
+    0
+   ],
+   [
+    33,
+    5,
+    "MONT@18.55#0.25,0.45,2.0",
+    "cool",
+    1.0,
+    1.03,
+    0
+   ],
+   [
+    38,
+    3,
+    "MONT@14.20",
+    "cool",
+    1.02,
+    1.04,
+    0
+   ],
+   [
+    41,
+    4,
+    "MONT@20.45",
+    "cool",
+    1.02,
+    1.04,
+    0
+   ],
+   [
+    45,
+    22,
+    "img:new_dimon_images/02_270_Park_Avenue_under_construction_2024.jpg",
+    "cool",
+    1.0,
+    1.06,
+    0
+   ],
+   [
+    67,
+    7,
+    "img:new_dimon_images/05_White_House_south_facade.jpg",
+    "cool",
+    1.03,
+    1.08,
+    0
+   ],
+   [
+    74,
+    5,
+    "img:new_dimon_images/02_NYSE_Wall_Street_facade.jpg@0.40",
+    "cool",
+    1.04,
+    1.08,
+    0
+   ],
+   [
+    79,
+    7,
+    "img:new_dimon_images/03_Capitol_west_front_PD.jpg",
+    "warm",
+    1.03,
+    1.08,
+    0
+   ],
+   [
+    86,
+    7,
+    "img:new_dimon_images/10_Reflecting_Pool_Washington_Monument.jpg",
+    "cool",
+    1.03,
+    1.08,
+    0
+   ],
+   [
+    93,
+    7,
+    "MONT@23.05",
+    "night",
+    1.02,
+    1.05,
+    0
+   ],
+   [
+    100,
+    7,
+    "BM@2.85",
+    "warm",
+    1.02,
+    1.05,
+    0
+   ],
+   [
+    107,
+    5,
+    "MONT@14.70",
+    "cool",
+    1.02,
+    1.04,
+    0
+   ],
+   [
+    112,
+    5,
+    "BM@4.30",
+    "night",
+    1.02,
+    1.04,
+    0
+   ]
+  ],
+  "sec": [
+   [
+    14,
+    8,
+    "frame:BM@0.63",
+    "cool",
+    0.3,
+    "screen"
+   ],
+   [
+    22,
+    3,
+    "img:new_dimon_images/08_Federal_Hall_historic_1789.jpg",
+    "bw",
+    0.22,
+    "normal"
+   ],
+   [
+    45,
+    11,
+    "frame:MONT@21.60",
+    "white",
+    0.12,
+    "normal"
+   ],
+   [
+    56,
+    11,
+    "img:new_dimon_images/21_National_City_Bank_Wall_Street_1893.jpg",
+    "bw",
+    0.16,
+    "normal"
+   ],
+   [
+    67,
+    12,
+    "img:Jamie_Dimon_Image_Pack/07_US_Government_America/07_Federal_Reserve_Eccles_1937_archival.jpg",
+    "bw",
+    0.2,
+    "normal"
+   ],
+   [
+    79,
+    14,
+    "frame:MONT@19.10",
+    "bw",
+    0.18,
+    "normal"
+   ],
+   [
+    93,
+    14,
+    "frame:BM@1.20",
+    "bw",
+    0.22,
+    "normal"
+   ],
+   [
+    107,
+    10,
+    "img:new_dimon_images/09_NYSE_panoramio.jpg",
+    "bw",
+    0.2,
+    "normal"
+   ]
+  ],
+  "list": [
+   "Investment Banking.",
+   "Commercial Banking.",
+   "Asset Management.",
+   "Wealth Management.",
+   "Consumer Banking.",
+   "Payments.",
+   "Markets.",
+   "Private Bank.",
+   "Securities Services.",
+   "Card Services.",
+   "Home Lending.",
+   "Auto Finance."
+  ],
+  "list_at": [
+   25,
+   13
+  ],
+  "list_speed": 110,
+  "list_opacity": 0.22
  }
 }
