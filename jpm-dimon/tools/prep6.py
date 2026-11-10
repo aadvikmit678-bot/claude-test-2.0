@@ -3,9 +3,13 @@
 
 1. Note 4, "a guy who got FIRED" (S04, film 15.065-16.200 s): yd6_01 .. yd6_10, square photos of young Dimon centred
    on his face (tools/faces.square, the call prep5.young() makes), youngest first; the last one is the black-and-white
-   hero (the same crop as v5's yd5_3). The face fills a little more of each square, photo by photo (square side / face
-   width 2.22 -> 1.67, the hero 1.45), so that the face on screen grows with the card. build6.sp_fired_flip shows the
-   first nine for two frames each and lands the hero on "fired". Three come from the user's old photos
+   hero (the same crop as v5's yd5_3). The first nine put the midpoint of his eyes on one line, 0.355 of the square
+   down, drifting from the centre to 0.56 across the run so that the flip reads as one face leading into the hero's
+   eyes (0.575, 0.40); the face fills about 0.45 of the square at first and 0.6 by the ninth (the hero 0.69), so it grows
+   with the card. The eye points were measured on the squares (OpenCV's eye cascade, checked by eye) and the offsets
+   solved from them; MPB@700, MPB@720 and old-image-05 have his face near the top of the frame, so their squares are
+   tighter than the ramp to reach the eye line. build6.sp_fired_flip shows the first nine for two frames each and
+   lands the hero on "fired". Three come from the user's old photos
    (dimon-src/jamie-old-images); the others are documentary frames (KEY@seconds, the keys of tools/prep2.py). The
    user's other old photos show him grey-haired after 1998, as a half face, or too small in a group.
 
@@ -24,16 +28,16 @@ PRJ, CLIPS, IMG = prep2.PRJ, prep2.CLIPS, prep2.IMG
 OLD = "jamie-old-images/jamie-old-images"   # the user's 12 old photos (dimon-src/jamie-old-images, from the Drive)
 
 YOUNG6 = [  # id, source[#search region fx,fy,fw,fh], square side / face width, dx, dy (in face widths) -- youngest first
-    ("yd6_01", f"{OLD}/jamie-old-image-03.jpg", 2.22, -0.15, 0.13),                 # at college, long hair (B&W)
-    ("yd6_02", "MPB@700.0", 2.13, 0.0, 0.10),                                       # young banker, smiling over his shoulder (v5 yd5_2)
-    ("yd6_03", f"{OLD}/jamie-old-image-01.jpg#0,0,0.55,0.6", 2.04, 0.0, 0.12),      # Commercial Credit, 1986, at the podium (B&W)
-    ("yd6_04", f"{OLD}/jamie-old-image-05.jpg#0.45,0,0.55,0.65", 1.55, 0.0, 0.10),  # laughing, Weill beside him
-    ("yd6_05", "MPB@871.0", 1.89, 0.0, 0.10),                                       # the Primerica/Travelers years (v5 yd5_1)
-    ("yd6_06", "MPB@720.0#0.5,0,0.5,0.8", 1.85, 0.0, 0.12),                         # beside Weill (right half of the frame)
-    ("yd6_07", "UNT@580.0#0.5,0.15,0.4,0.7", 1.79, 0.0, 0.10),                      # beside the man in glasses (Travelers)
-    ("yd6_08", "UNT@619.0#0,0,0.5,0.8", 1.72, 0.0, 0.08),                           # beside Jessica Weill (left half)
-    ("yd6_09", "MPB@930.0", 1.67, 0.0, 0.08),                                       # Citigroup, 1998, at the citi podium
-    ("yd6_10", "UNT@543.0#0.2,0,0.6,1", 1.45, -0.12, 0.12),                         # the B&W hero (same crop as v5 yd5_3)
+    ("yd6_01", f"{OLD}/jamie-old-image-03.jpg", 2.22, -0.028, 0.219),                    # at college, long hair (B&W)
+    ("yd6_02", "MPB@700.0", 1.89, -0.067, 0.154),                                        # young banker, smiling over his shoulder (v5 yd5_2)
+    ("yd6_03", f"{OLD}/jamie-old-image-01.jpg#0,0,0.55,0.6", 2.04, -0.033, 0.165),       # Commercial Credit, 1986, at the podium (B&W)
+    ("yd6_04", f"{OLD}/jamie-old-image-05.jpg#0.45,0,0.55,0.65", 1.53, -0.022, 0.089),   # laughing, Weill beside him
+    ("yd6_05", "MPB@871.0", 1.88, -0.054, 0.165),                                        # the Primerica/Travelers years (v5 yd5_1)
+    ("yd6_06", "MPB@720.0#0.5,0,0.5,0.8", 1.66, -0.086, 0.150),                          # beside Weill (right half of the frame)
+    ("yd6_07", "UNT@580.0#0.5,0.15,0.4,0.7", 1.79, -0.136, 0.138),                       # beside the man in glasses (Travelers)
+    ("yd6_08", "UNT@619.0#0,0,0.5,0.8", 1.72, -0.082, 0.163),                            # beside Jessica Weill (left half)
+    ("yd6_09", "MPB@930.0", 1.67, -0.092, 0.162),                                        # Citigroup, 1998, at the citi podium
+    ("yd6_10", "UNT@543.0#0.2,0,0.6,1", 1.45, -0.12, 0.12),                              # the B&W hero (same crop as v5 yd5_3)
 ]
 
 
