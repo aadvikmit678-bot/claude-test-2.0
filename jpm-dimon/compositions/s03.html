@@ -49,8 +49,7 @@
     const tl = gsap.timeline({ paused: true });
     tl.to({}, { duration: 2.700 }, 0);
     tl.fromTo("#s03-cam1", { scale: 1.0 }, { scale: 1.03, duration: 0.465, ease: "none" }, 0.000);
-    tl.fromTo("#s03-cam3", { x: 220, scale: 1.26 }, { x: 0, scale: 1.03, duration: 0.34, ease: "power2.out", immediateRender: false }, 0.465);
-    tl.to("#s03-cam3", { scale: 1.05, duration: 0.033, ease: "none" }, 0.805);
+    tl.fromTo("#s03-cam3", { scale: 1.0 }, { scale: 1.025, duration: 0.330, ease: "none" }, 0.465);
     tl.fromTo("#s03-cam5", { scale: 1.0 }, { scale: 0.64, duration: 0.42, ease: "power4.out", immediateRender: false }, 0.875);
     tl.to("#s03-cam5", { scale: 0.6304, duration: 0.060, ease: "none" }, 1.295);
     tl.set("#s03-wc8", { scale: 0.62, rotation: -4, x: 261, y: 74 }, 0.955);
