@@ -2356,34 +2356,224 @@ cap([[Q_(25, "s"), Q_(26, "s"), Q_(27, "s"), Q_(28, "s")]], y=900, end=CUT(QT(29
 #                                                                        Dimon fills the right of the wide shot
 cap([[Q_(29, "sx", "big")]], end=QUOTE_END)                                                  # v7: "big", the hero serif
 
-# ---- S07  28.77-32.35  "Meet Jamie Dimon, the golden boy of Wall Street,"  (the name card; v5: 34.85, now SHIFT earlier)
-s = Scene("s07", QUOTE_END, CUT(VT(64)))
-s.whiteframe(QUOTE_END, 1)
-sp_name_card(s, round(QUOTE_END + F1, 3), CUT(VT(58)), CUT_DIMON_SMILE, small_at=VT(55), name_at=VT(56))
-montage(s, [
-    (CUT(VT(58)), "MPB", 294.8, {"grade": "gold", "xyz": (0.68, 0.45, 1.5)}),   # the golden: young Dimon laughing
-    (CUT(VT(60)), "MPB", 356.2, {"grade": "gold"}),                             # boy
-    (CUT(VT(61)), "HOW", 323.6, {"grade": "bw"}),                               # of Wall Street
-], CUT(VT(64)))
-sp_gleam(s, CUT(VT(58)) + 0.05, CUT(VT(58)) + 0.5)
-sp_gleam(s, CUT(VT(60)) + 0.03, CUT(VT(61)))
-cap([[W_(58, "s")], [W_(59, "gold"), W_(60, "gold")]], end=CUT(VT(61)))
-cap([[W_(61, "s")], [W_(62, "sh"), W_(63, "sh")]], end=CUT(VT(64)))
+# ---- S07  29.87-38.10  "Meet Jamie Dimon, the golden boy of Wall Street, the guy everyone said was next in line to run
+#      the biggest financial company in the world."  v7 (user): exactly like the opening of the Heath Ledger reel
+#      (instagram DfXuoMjR0Ru; measured frame by frame in notes/v7/heath_spec.md): name words flanking fast, dead-still
+#      photos; negative rectangles; black frames; a blur-in; a vertical whip into the dark hero where a coloured word
+#      flies in (the reel's Joker beat: "the golden boy"); the Wall Street sign with its focus window (the reel's
+#      Hollywood sign); words that arrive as white bars; the client's Wall Street Gazette (the reel's Gotham Gazette)
+#      with a highlighter on its headline; a moving shot with the words building; a strobe. Pictures: tools/prep7.py.
+T7, S7_END = QUOTE_END, CUT(VT(81))
+s = Scene("s07", T7, S7_END, tex=(0.04, 0.0))
+FR7 = lambda n: FT(T7 + n / 30)
+K7 = lambda i: max(0, round((VT(i) - T7) * 30))
+E7 = round((S7_END - T7) * 30)                          # the section's length in frames
+SANS7 = "0 2px 14px rgba(0,0,0,0.55)"                   # the reel's plain white words, a soft dark shadow
+G7 = json.load(open(f"{PRJ}/assets/img2/gz_boxes.json")) if os.path.exists(f"{PRJ}/assets/img2/gz_boxes.json") else \
+    {"highlight": [1068, 148, 1919, 459], "portraits": [[40, 504, 561, 1165], [574, 505, 1035, 1165]]}
 
-# ---- S08  38.43-42.85  "the guy everyone said was next in line to run the biggest financial company in the world."
-s = Scene("s08", CUT(VT(64)), CUT(VT(81)))
-montage(s, [
-    (CUT(VT(64)), "MPB", 850.6),                       # the guy: the press flashes at the Citigroup launch
-    (CUT(VT(66)), "BANK", 34.6),                       # everyone: the press around him
-], CUT(VT(67)))
-sp_nyt(s, CUT(VT(67)), CUT(VT(81)), hl1_at=VT(69), hl1_end=VT(71) + 0.3, reframe_at=CUT(VT(72)),
-       hl2_at=VT(75), hl2_end=VT(78))
-s.neg(CUT(VT(67)), 1)
-s.neg(CUT(VT(72)), 1)
-cap([[W_(64, "s"), W_(65, "s"), W_(66, "s")]], end=CUT(VT(67)))
-cap([[W_(67, "sm"), W_(68, "sm")], [W_(69, "sh"), W_(70, "sh"), W_(71, "sh")]], y=760, end=CUT(VT(72)))
-cap([[W_(72, "sm"), W_(73, "sm"), W_(74, "sm"), W_(75, "sm"), W_(76, "sm"), W_(77, "sm")], [W_(78, "sm"), W_(79, "sm"), W_(80, "sh")]],
-    y=770, end=CUT(VT(81)))
+
+def m_img(src, a, b, istyle="", z=None):
+    """A still for frames [a, b): dead still, no grade (the reel never moves a photo)."""
+    return s.img(src, FR7(a), FR7(b), grade="", push=None, istyle=istyle, z=z)
+
+
+def m_word(text, a, b, x, y, fam="Inter Tight", wt=700, size=96, color="#FFFFFF", align="left", shadow=SANS7, z=None):
+    """A word on screen for frames [a, b), its vertical centre at y; returns (id, left, width)."""
+    wid = s.uid("w")
+    trk = -0.03 if fam == "Inter Tight" else -0.01
+    tw = textw(text, fam, wt, size, track=trk)
+    left = {"left": x, "right": x - tw, "center": x - tw / 2}[align]
+    top = y - size * (0.52 if fam == "Inter Tight" else 0.56)
+    s.raw(f'<div id="{wid}" class="clip t" {s.timed(FR7(a), FR7(b))} data-track-index="5" data-layout-allow-overflow '
+          f'style="left:{left:.0f}px;top:{top:.0f}px;font-family:\'{fam}\';font-weight:{wt};font-size:{size}px;'
+          f'letter-spacing:{trk}em;color:{color};text-shadow:{shadow};z-index:{z or s.nz() + 500}">{esc(text)}</div>')
+    return wid, left, tw
+
+
+def m_bar(a, b, left, y, w, h, blur=0, z=None):
+    """The reel's white bar: the size of the coming word, solid, for frames [a, b)."""
+    bid = s.uid("bar")
+    s.raw(f'<div id="{bid}" class="clip solid" {s.timed(FR7(a), FR7(b))} data-track-index="5" data-layout-ignore '
+          f'style="left:{left:.0f}px;top:{y - h / 2:.0f}px;width:{w:.0f}px;height:{h:.0f}px;background:#FFFFFF;'
+          f'{f"filter:blur({blur}px);" if blur else ""}z-index:{z or s.nz() + 520}"></div>')
+    return bid
+
+
+def m_solid(a, b, color):
+    """A full black or white frame (the reel's single black frames and strobes), over everything in the scene."""
+    s.raw(f'<div id="{s.uid("fr")}" class="clip solid" {s.timed(FR7(a), FR7(b))} data-track-index="6" '
+          f'style="background:{color};z-index:{s.nz() + 900}"></div>')
+
+
+def m_blur_steps(wid, steps):
+    """steps: [(frame, blur px)] set on a word (the reel's words arriving soft)."""
+    for f, px in steps:
+        s.J(f'tl.set("#{wid}", {{ filter: "blur({px}px)" }}, {s.at(FR7(f))});')
+
+
+# the frames of the line (the reel's beats; see notes/v7/heath_spec.md, "Mapping onto our line")
+W_THE1, W_GOLDEN = K7(58), K7(59)
+W_OF, W_WALL, W_STREET = K7(61), K7(62), K7(63)
+W_THE2, W_GUY, W_EVERY, W_SAID, W_WAS = K7(64), K7(65), K7(66), K7(67), K7(68)
+W_NEXT, W_IN, W_LINE = K7(69), K7(70), K7(71)
+W_TO, W_RUN, W_THE3, W_BIGGEST, W_FIN, W_COMP, W_IN2, W_THE4, W_WORLD = [K7(i) for i in range(72, 81)]
+M7_WHIP = W_THE1 - 3                                       # the vertical whip: 2 frames, then the hero M7_cuts in
+M7_HERO = M7_WHIP + 2
+M7_WALL = W_OF                                             # the Wall Street sign enters as a negative on "of"
+M7_GUY = W_THE2
+M7_GAZ = W_NEXT
+M7_TOWER = W_TO
+M7_CITI = W_IN2 - 1
+
+# ---- 1. pictures (lowest), in time order
+m_img("mt_p01z.jpg", 0, 1)                              # the first photo 7 % big, pulling back on the next frame
+m_img("mt_p01.jpg", 1, 5)
+m_img("mt_p02.jpg", 5, 10)
+M7_RUN = ["mt_p03.jpg", "mt_p04.jpg", "mt_p05.jpg", "mt_p07.jpg", "mt_p08.jpg", "mt_p09.jpg", "mt_p11.jpg"]
+M7_cuts = [round(10 + k * (M7_WHIP - 10) / len(M7_RUN)) for k in range(len(M7_RUN) + 1)]
+for k, src in enumerate(M7_RUN):
+    if src == "mt_p07.jpg":                             # the reel's blur-in (f19): 1 frame soft, then sharp
+        m_img("mt_p07b.jpg", M7_cuts[k], M7_cuts[k] + 1)
+        m_img(src, M7_cuts[k] + 1, M7_cuts[k + 1])
+    else:
+        m_img(src, M7_cuts[k], M7_cuts[k + 1])
+M7_BLUR_IN = M7_cuts[M7_RUN.index("mt_p07.jpg")]
+m_img("mt_whip1.jpg", M7_WHIP, M7_WHIP + 1)                   # vertical smear of the last photo
+m_img("mt_whip2.jpg", M7_WHIP + 1, M7_HERO)                   # a pure grey smear
+m_img("mt_hero.jpg", M7_HERO, M7_WALL)                        # the dark hero (the reel's Joker), static
+M7_NEG1 = M7_HERO + 13                                        # the strobe: black, the top negative box, black
+m_img("mt_hero_top.jpg", M7_NEG1 + 1, M7_NEG1 + 2)
+m_img("mt_hero_sil.jpg", M7_WALL - 2, M7_WALL - 1)            # the silhouette frame
+m_img("mt_wall_n.jpg", M7_WALL, M7_WALL + 1)                  # the sign enters as a full negative
+m_img("mt_wall.jpg", M7_WALL + 1, M7_GUY)
+M7_FOCUS = W_STREET + 5                                    # the focus window: 3 frames, then black, then clean
+m_img("mt_wall_focus.jpg", M7_FOCUS, M7_FOCUS + 3)
+M7_gx = [M7_GUY, M7_GUY + 9, M7_GUY + 19, M7_GUY + 29, M7_GAZ]
+m_img("mt_g01.jpg", M7_gx[0], M7_gx[1])
+m_img("mt_g03.jpg", M7_gx[1], M7_gx[2])
+s.v("MPB", 853.9, FR7(M7_gx[2]), FR7(M7_gx[3]), grade="", push=None)    # the press around him at the Citigroup launch (video)
+m_img("mt_g05.jpg", M7_gx[3], M7_gx[4])
+m_img("gz_clean.jpg", M7_GAZ, M7_TOWER)                       # the Wall Street Gazette
+M7_HL1 = (M7_GAZ, M7_GAZ + 7)                                    # stroke 1: GOLDEN BOY (the original's own highlight revealed)
+x0, y0, x1, y1 = G7["highlight"]
+M7_hl1, M7_hl1i = m_img("gz_orig.jpg", M7_HL1[0], M7_TOWER, istyle=f"clip-path: inset({y0}px {1920 - x0}px {1080 - y1}px {x0}px)")
+s.J(f'tl.fromTo("#{M7_hl1i}", {{ clipPath: "inset({y0}px {1920 - x0}px {1080 - y1}px {x0}px)" }}, '
+    f'{{ clipPath: "inset({y0}px 0px {1080 - y1}px {x0}px)", duration: {r3((M7_HL1[1] - M7_HL1[0]) / 30)}, ease: "power1.inOut", '
+    f'immediateRender: false }}, {s.at(FR7(M7_HL1[0]))});')
+M7_NEGP = M7_TOWER - 3                                        # the paper's two portraits go negative for 2 frames
+m_img("gz_neg.jpg", M7_NEGP, M7_NEGP + 2)
+s.v("MPB", 855.65, FR7(M7_TOWER), FR7(E7), grade="", push=None)       # Citigroup's tower from the air (video), to the end
+s.black(FR7(M7_TOWER), FR7(E7), color="rgba(0,0,0,0.38)", tex=False)   # dimmed under the white words (the reel's dark map)
+
+# ---- 2. the words (above the pictures, under the overlays)
+M7_NAME_Y, M7_NAME_SZ = 543, 98
+M7_jw, M7_jl, M7_jwid = m_word("Jamie", 3, M7_WHIP, 473, M7_NAME_Y, size=M7_NAME_SZ, align="right")
+M7_dw, M7_dl, M7_dwid = m_word("Dimon", 3, M7_WHIP, 1401, M7_NAME_Y, size=M7_NAME_SZ, align="left")
+for wid in (M7_jw, M7_dw):                                    # the reel's f3-6: soft, then sharp from f8
+    m_blur_steps(wid, [(3, 9), (4, 5), (5, 2), (6, 0), (M7_BLUR_IN, 8), (M7_BLUR_IN + 1, 0)])
+M7_mw, _, _ = m_word("Meet", K7(55), M7_WHIP, 473, M7_NAME_Y - 92, size=52, align="right")
+# the golden boy: a gold blur flying in from the left, resolving in 5 frames (the reel's red "Joker", f25-30)
+M7_GOLD7 = "#E9C27A"
+M7_gwid, M7_gl, M7_gtw = m_word("golden boy", M7_HERO, M7_WALL - 1, 960, 548, fam="Instrument Serif", wt=400, size=168, color=M7_GOLD7,
+                       align="center", shadow=GOLD_REST)
+for f, (dx, sc, px) in zip(range(M7_HERO, M7_HERO + 6), [(-430, 0.55, 22), (-60, 0.92, 16), (-24, 0.97, 10), (-9, 0.99, 6),
+                                                    (-2, 1.0, 3), (0, 1.0, 0)]):
+    s.J(f'tl.set("#{M7_gwid}", {{ x: {dx}, scale: {sc}, filter: "blur({px}px)" }}, {s.at(FR7(f))});')
+# of Wall Street: white bars, then the words under the sign; black inside the focus window
+M7_WS_Y, M7_WS_SZ = 735, 112
+M7_ws_w = textw("Wall Street", "Inter Tight", 700, M7_WS_SZ, track=-0.03)
+M7_ws_l = 960 - M7_ws_w / 2
+M7_wall_w = textw("Wall", "Inter Tight", 700, M7_WS_SZ, track=-0.03)
+M7_street_l = M7_ws_l + M7_wall_w + M7_WS_SZ * 0.24
+M7_street_w = textw("Street", "Inter Tight", 700, M7_WS_SZ, track=-0.03)
+m_bar(M7_WALL, W_WALL, M7_ws_l, M7_WS_Y, M7_wall_w, M7_WS_SZ * 0.78, blur=1.2)
+m_bar(W_STREET - 3, W_STREET, M7_street_l, M7_WS_Y, M7_street_w, M7_WS_SZ * 0.78, blur=1.2)
+for (txt, M7_xl, a_) in (("Wall", M7_ws_l, W_WALL), ("Street", M7_street_l, W_STREET)):
+    m_word(txt, a_, M7_FOCUS, M7_xl, M7_WS_Y, size=M7_WS_SZ)
+    m_word(txt, M7_FOCUS, M7_FOCUS + 3, M7_xl, M7_WS_Y, size=M7_WS_SZ, color="#0B0B0B", shadow="none")
+    m_word(txt, M7_FOCUS + 4, M7_GUY, M7_xl, M7_WS_Y, size=M7_WS_SZ)
+m_word("of", W_OF, M7_FOCUS, M7_ws_l - 8, M7_WS_Y - 92, size=52, align="left")
+m_word("of", M7_FOCUS + 4, M7_GUY, M7_ws_l - 8, M7_WS_Y - 92, size=52, align="left")
+# the guy everyone said was: words on the right, each one a white bar for 2 frames first; bars again on the way out
+M7_GX, M7_GY1, M7_GY2 = 1170, 432, 560
+M7_the_w = textw("the", "Inter Tight", 700, 64, track=-0.03)
+M7_guy_l = M7_GX + M7_the_w + 20
+M7_guy_w = textw("guy", "Instrument Serif", 400, 150, track=-0.01)
+M7_ev_w = textw("everyone", "Inter Tight", 700, 74, track=-0.03)
+M7_said_l = M7_GX + M7_ev_w + 74 * 0.24
+M7_said_w = textw("said", "Inter Tight", 700, 74, track=-0.03)
+M7_was_l = M7_said_l + M7_said_w + 74 * 0.24
+M7_was_w = textw("was", "Inter Tight", 700, 74, track=-0.03)
+M7_OUT = M7_GAZ - 2
+for (txt, M7_xl, y_, w_, a_, fam, wt, sz) in (("the", M7_GX, M7_GY1, M7_the_w, W_THE2, "Inter Tight", 700, 64),
+                                          ("guy", M7_guy_l, M7_GY1 - 6, M7_guy_w, W_GUY, "Instrument Serif", 400, 150),
+                                          ("everyone", M7_GX, M7_GY2, M7_ev_w, W_EVERY, "Inter Tight", 700, 74),
+                                          ("said", M7_said_l, M7_GY2, M7_said_w, W_SAID, "Inter Tight", 700, 74),
+                                          ("was", M7_was_l, M7_GY2, M7_was_w, W_WAS, "Inter Tight", 700, 74)):
+    M7_bar_a = max(M7_GUY, a_ - 2)
+    if a_ - M7_bar_a >= 1:
+        m_bar(M7_bar_a, a_, M7_xl, y_, w_, sz * (0.72 if fam == "Inter Tight" else 0.5), blur=1.0)
+    m_word(txt, a_, M7_OUT, M7_xl, y_, fam=fam, wt=wt, size=sz)
+    m_bar(M7_OUT, M7_GAZ, M7_xl, y_, w_, sz * (0.72 if fam == "Inter Tight" else 0.5), blur=1.0)
+# next in line: on the Gazette, over the two portraits
+M7_NL_Y, M7_NL_SZ = 815, 92
+M7_nl_x = (G7["portraits"][0][0] + G7["portraits"][1][2]) / 2
+M7_nl_words = [("next", W_NEXT), ("in", W_IN), ("line", W_LINE)]
+M7_nl_total = sum(textw(t, "Inter Tight", 700, M7_NL_SZ, track=-0.03) for t, _ in M7_nl_words) + 2 * M7_NL_SZ * 0.24
+M7_xl = M7_nl_x - M7_nl_total / 2
+for (txt, a_) in M7_nl_words:
+    w_ = textw(txt, "Inter Tight", 700, M7_NL_SZ, track=-0.03)
+    m_bar(max(M7_GAZ, a_ - 2), max(M7_GAZ + 1, a_), M7_xl, M7_NL_Y, w_, M7_NL_SZ * 0.72, blur=1.0)
+    m_word(txt, max(M7_GAZ + 1, a_), M7_TOWER, M7_xl, M7_NL_Y, size=M7_NL_SZ, shadow="0 3px 18px rgba(0,0,0,0.85)")
+    M7_xl += w_ + M7_NL_SZ * 0.24
+# stroke 2: a fresh marker over THE HEIR APPARENT, on "next"
+M7_sx0, M7_sy0, M7_sx1, M7_sy1 = G7.get("subhead", [11, 411, 1878, 509])
+M7_heir_x1 = G7.get("subhead_gaps", [30, 186, 364, 725])[3] if "subhead_gaps" in G7 else 725
+M7_hl2 = s.uid("hl2")
+s.raw(f'<div id="{M7_hl2}" class="clip solid" {s.timed(FR7(W_NEXT + 3), FR7(M7_TOWER))} data-track-index="5" data-layout-ignore '
+      f'style="left:{M7_sx0 + 14}px;top:{M7_sy0 + 18}px;width:{M7_heir_x1 - M7_sx0 - 4}px;height:{M7_sy1 - M7_sy0 - 30}px;'
+      f'background:rgba(244,196,64,0.62);mix-blend-mode:multiply;border-radius:6px 14px 10px 4px;transform:rotate(-0.5deg);'
+      f'clip-path:inset(0px 100% 0px 0px);z-index:{s.nz() + 450}"></div>',
+      [f'tl.fromTo("#{M7_hl2}", {{ clipPath: "inset(0px 100% 0px 0px)" }}, {{ clipPath: "inset(0px 0% 0px 0px)", '
+       f'duration: {r3(6 / 30)}, ease: "power1.inOut", immediateRender: false }}, {s.at(FR7(W_NEXT + 3))});'])
+# to run the biggest financial company / in the WORLD: the words build from bars over the moving tower, then CITIGROUP
+M7_L1 = [("to", W_TO), ("run", W_RUN), ("the", W_THE3), ("biggest", W_BIGGEST)]
+M7_L2 = [("financial", W_FIN), ("company", W_COMP)]
+for line, y_, sz in ((M7_L1, 470, 96), (M7_L2, 600, 96)):
+    M7_tot = sum(textw(t, "Inter Tight", 700, sz, track=-0.03) for t, _ in line) + (len(line) - 1) * sz * 0.24
+    M7_xl = 960 - M7_tot / 2
+    for (txt, a_) in line:
+        w_ = textw(txt, "Inter Tight", 700, sz, track=-0.03)
+        M7_bar_a = max(M7_TOWER, a_ - 2)
+        if a_ - M7_bar_a >= 1:
+            m_bar(M7_bar_a, a_, M7_xl, y_, w_, sz * 0.72, blur=1.0)
+        m_word(txt, max(a_, M7_TOWER), M7_CITI, M7_xl, y_, size=sz)
+        M7_xl += w_ + sz * 0.24
+M7_WY = 880
+M7_in_w = textw("in the", "Inter Tight", 700, 64, track=-0.03)
+M7_world_w = textw("WORLD", "Inter Tight", 800, 150, track=-0.03)
+M7_tot = M7_in_w + 22 + M7_world_w
+M7_xl = 960 - M7_tot / 2
+M7_STROBE = E7 - 4
+m_word("in", W_IN2, M7_STROBE - 2, M7_xl, M7_WY + 18, size=64)
+m_word("the", W_THE4, M7_STROBE - 2, M7_xl + textw("in ", "Inter Tight", 700, 64, track=-0.03), M7_WY + 18, size=64)
+m_bar(W_WORLD - 2, W_WORLD, M7_xl + M7_in_w + 22, M7_WY, M7_world_w, 150 * 0.72, blur=1.0)
+m_word("WORLD", W_WORLD, M7_STROBE - 2, M7_xl + M7_in_w + 22, M7_WY, wt=800, size=150)
+m_bar(M7_STROBE - 2, M7_STROBE, M7_xl, M7_WY, M7_tot, 150 * 0.72, blur=1.0)   # the line becomes one white bar (the reel's f187-188)
+
+# ---- 3. overlays: the negative rectangle on the face, soft bars, black frames, the strobe (highest)
+M7_FACE_RECT = "clip-path: inset(250px 480px 290px 480px)"          # 960x540 centred on the face at (960, 520)
+m_img("mt_p01n.jpg", 3, 5, istyle=M7_FACE_RECT, z=s.nz() + 700)
+m_img("mt_p02n.jpg", 5, 7, istyle=M7_FACE_RECT, z=s.nz() + 700)
+for (left, w_) in ((473 - textw("Jamie", "Inter Tight", 700, M7_NAME_SZ, track=-0.03),
+                    textw("Jamie", "Inter Tight", 700, M7_NAME_SZ, track=-0.03)),
+                   (1401, textw("Dimon", "Inter Tight", 700, M7_NAME_SZ, track=-0.03))):
+    m_bar(1, 2, left, M7_NAME_Y, w_, M7_NAME_SZ * 0.7, blur=7)          # the reel's f1: soft white bars at the name places
+for f_ in (2, 7, M7_NEG1, M7_NEG1 + 2, M7_FOCUS + 3):
+    m_solid(f_, f_ + 1, "#000000")
+for f_, col in ((M7_STROBE, "#FFFFFF"), (M7_STROBE + 1, "#000000"), (M7_STROBE + 2, "#FFFFFF"), (M7_STROBE + 3, "#FFFFFF")):
+    m_solid(f_, f_ + 1, col)
 
 # ---- S09  42.85-47.76  "He built Citigroup side-by-side with his mentor Sandy Weill for 16 years."
 s = Scene("s09", CUT(VT(81)), CUT(VT(95)))
@@ -2410,10 +2600,9 @@ cam, _ = s.v("UNT", 543.8, CUT(VT(97)), CUT(VT(99)), grade="bw", push=(1.0, 1.02
 s.punch(cam, VT(98) + 0.12, 1.45, origin="46% 34%")
 s.neg(CUT(VT(97)), 1)
 sp_bars(s, CUT(VT(99)), CUT(VT(101)) + 2 * F1, [("he", VT(99)), ("was", VT(100))], exit_at=CUT(VT(101)) - F1)
-STRIKE_MS = round(97.0 - 96.35 - (VT(101) - CUT(VT(101))) * 1.4, 3)
 s.black(CUT(VT(101)), CUT(VT(102)), color="#030303", tex=False)
-s.v("FIRED", 96.35 + max(0.0, STRIKE_MS), CUT(VT(101)), CUT(VT(102)), rate=1.4, push=(1.0, 1.08), box=(0, 138, 1920, 804),
-    size=(1920, 804))
+s.v("FIRED", 55.0, CUT(VT(101)), CUT(VT(102)), push=(1.0, 1.04), box=(0, 138, 1920, 804),   # v7 (user): the push from
+    size=(1920, 804))                                                   # its 55th second, a slow-motion pause
 s.flash(VT(101), d=0.24)
 s.neg(VT(101) + 2 * F1, 2)
 cap([[W_(97, "s")], [W_(98, "sx", "42")]], end=CUT(VT(99)))
@@ -2639,9 +2828,10 @@ cap([[W_(214, "s"), W_(215, "s"), W_(216, "s"), W_(217, "s")]], end=CUT(VT(218))
 cap([[W_(220, "s"), W_(221, "s"), W_(222, "sh")]], y=860, end=CUT(VT(223)))
 
 # ---- negative-flash rhythm (Fink: one every few seconds, on cuts that change world)
-for sc_, t_ in ((SCENES[4], CUT(VT(38))), (SCENES[8], CUT(VT(83))), (SCENES[11], CUT(VT(113))),
-                (SCENES[13], CUT(VT(145))), (SCENES[15], CUT(VT(161))), (SCENES[21], CUT(VT(203)))):
-    sc_.neg(t_, 1)
+_SC = {sc.sid: sc for sc in SCENES}
+for sid_, t_ in (("s05", CUT(VT(38))), ("s09", CUT(VT(83))), ("s12", CUT(VT(113))),
+                 ("s14", CUT(VT(145))), ("s16", CUT(VT(161))), ("s22", CUT(VT(203)))):
+    _SC[sid_].neg(t_, 1)
 
 
 # ================================================================================================
@@ -2698,6 +2888,9 @@ def write_root():
     a_html = []
     lane = {"music": 11}
     for aid, src, st, d, ms, fi, fo in auds:
+        d = round(min(d, DUR - st), 3)
+        if d <= 0:
+            continue
         fin = f' data-fade-in="{fi}"' if fi else ""
         a_html.append(f'<audio id="{aid}" class="clip" src="assets/audio/{src}" data-start="{r3(st)}" data-duration="{r3(d)}" '
                       f'data-media-start="{r3(ms)}" data-volume="1"{fin} data-fade-out="{fo}" data-track-index="{lane.get(aid, 10)}"></audio>')
@@ -2731,7 +2924,27 @@ def write_root():
 """)
 
 
+PREVIEW_END = CUT(VT(102))   # v7 round 1 (user): "till he was fired"; None = the whole film
+
+
+def trim_to_preview():
+    """Keep the scenes, captions and audio before PREVIEW_END (the later scenes are rebuilt next round)."""
+    global DUR
+    if not PREVIEW_END:
+        return
+    DUR = PREVIEW_END
+    SCENES[:] = [sc for sc in SCENES if sc.start < DUR - 1e-6]
+    for sc in SCENES:
+        sc.end = min(sc.end, DUR)
+    first = lambda g: min(t for line in g["lines"] for _, t, _ in _words(line))
+    CAPS[:] = [g for g in CAPS if first(g) < DUR - 1e-6]
+    for g in CAPS:
+        if g["end"] is not None:
+            g["end"] = min(g["end"], DUR)
+
+
 if __name__ == "__main__":
+    trim_to_preview()
     MEDIA["cyber"] = CYBER
     json.dump(MEDIA, open(f"{PRJ}/tools/media_v7.json", "w"), indent=1)
     if "--specs" in sys.argv:

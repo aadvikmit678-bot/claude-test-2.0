@@ -32,6 +32,11 @@ V = {
     # asset for the four-square, the user's Wolf of Wall Street cut (vertical)
     "MONT": "_direct/jpm_montage.mp4", "BONUS": "_bonus/over_a_bonus.mp4", "MONEY": "_money/money_asset.mp4",
     "WOLF2": "_wolf2/wolf_first_part.mp4",
+    # v7: the user's new edit videos (10 Nov) and the documentaries the v7 scenes cut from
+    "WSMONT": "_drive/wall street videos montge edits.mp4", "JPFLASH": "_drive/Jp morgab edit w flashes.mp4",
+    "JPHORIZ": "_drive/JP mogran building horizontal.mp4", "CUTCUT": "_drive/Edit style cut cut photos..mp4",
+    "LASTFAST": "_drive/jp morgan edit use clips in the last fast paced.mp4", "JPD": "_drive/J P Morgan The Man Who Bought America   Full Documentary.mp4",
+    "BM": "_drive/banking montage 1-2 sec clip can be used.mp4",
 }
 # logo-safe framings: (cx, cy, zoom) of the crop window, relative to the frame
 FRAMES = {"FULL": (0.5, 0.5, 1.0), "BBG": (0.47, 0.53, 1.07), "CNBC": (0.46, 0.54, 1.08), "UNTF": (0.45, 0.56, 1.12),

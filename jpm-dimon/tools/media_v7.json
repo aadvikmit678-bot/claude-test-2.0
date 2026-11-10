@@ -383,46 +383,9 @@
    ],
    "frame_xyz": null
   },
-  "MPB_29480_73_x68_45_150": {
+  "MPB_85390_58": {
    "key": "MPB",
-   "t": 294.8,
-   "dur": 0.73,
-   "frame": "FULL",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": [
-    0.68,
-    0.45,
-    1.5
-   ]
-  },
-  "MPB_35620_49": {
-   "key": "MPB",
-   "t": 356.2,
-   "dur": 0.49,
-   "frame": "FULL",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": null
-  },
-  "HOW_32360_120": {
-   "key": "HOW",
-   "t": 323.6,
-   "dur": 1.2,
-   "frame": "CNBC",
-   "size": [
-    1920,
-    1080
-   ],
-   "frame_xyz": null
-  },
-  "MPB_85060_58": {
-   "key": "MPB",
-   "t": 850.6,
+   "t": 853.9,
    "dur": 0.58,
    "frame": "FULL",
    "size": [
@@ -431,11 +394,11 @@
    ],
    "frame_xyz": null
   },
-  "BANK_3460_65": {
-   "key": "BANK",
-   "t": 34.6,
-   "dur": 0.65,
-   "frame": "BBG",
+  "MPB_85565_275": {
+   "key": "MPB",
+   "t": 855.65,
+   "dur": 2.75,
+   "frame": "FULL",
    "size": [
     1920,
     1080
@@ -519,10 +482,10 @@
    ],
    "frame_xyz": null
   },
-  "FIRED_9693_161": {
+  "FIRED_5500_122": {
    "key": "FIRED",
-   "t": 96.93,
-   "dur": 1.61,
+   "t": 55.0,
+   "dur": 1.22,
    "frame": "FULL",
    "size": [
     1920,
