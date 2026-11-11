@@ -1,9 +1,11 @@
 <template>
   <style>
   
-  @font-face { font-family: 'TeX Gyre Heros'; src: url('assets/fonts/TeXGyreHeros-Bold.woff2') format('woff2'); font-weight: 600; font-style: normal; ascent-override: 96.875%; descent-override: 24.12%; line-gap-override: 0%; }
   @font-face { font-family: 'TeX Gyre Heros'; src: url('assets/fonts/TeXGyreHeros-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; ascent-override: 96.875%; descent-override: 24.12%; line-gap-override: 0%; }
+  @font-face { font-family: 'TeX Gyre Heros'; src: url('assets/fonts/TeXGyreHeros-BoldItalic.woff2') format('woff2'); font-weight: 700; font-style: italic; ascent-override: 96.875%; descent-override: 24.12%; line-gap-override: 0%; }
   @font-face { font-family: 'TeX Gyre Heros'; src: url('assets/fonts/TeXGyreHeros-Bold.woff2') format('woff2'); font-weight: 800; font-style: normal; ascent-override: 96.875%; descent-override: 24.12%; line-gap-override: 0%; }
+  @font-face { font-family: 'TeX Gyre Heros'; src: url('assets/fonts/TeXGyreHeros-BoldItalic.woff2') format('woff2'); font-weight: 800; font-style: italic; ascent-override: 96.875%; descent-override: 24.12%; line-gap-override: 0%; }
+  @font-face { font-family: 'TeX Gyre Heros'; src: url('assets/fonts/TeXGyreHeros-Bold.woff2') format('woff2'); font-weight: 600; font-style: normal; ascent-override: 96.875%; descent-override: 24.12%; line-gap-override: 0%; }
   @font-face { font-family: 'Instrument Serif'; src: url('assets/fonts/InstrumentSerif-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
   @font-face { font-family: 'Instrument Serif'; src: url('assets/fonts/InstrumentSerif-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
 
@@ -84,27 +86,16 @@
   <script>
     const tl = gsap.timeline({ paused: true });
     tl.to({}, { duration: 7.090 }, 0);
-    tl.set("#s23-cam3", { scale: 0.9, x: 0, y: 0 }, 0.000);
-    tl.set("#s23-cam3", { scale: 1.0, x: 0, y: 0 }, 0.067);
-    tl.set("#s23-cam6", { scale: 0.9, x: 58, y: 33 }, 0.067);
-    tl.set("#s23-cam6", { scale: 1.0, x: 0, y: 0 }, 0.134);
-    tl.set("#s23-cam9", { scale: 0.9, x: -58, y: -33 }, 0.133);
-    tl.set("#s23-cam9", { scale: 1.0, x: -0, y: -0 }, 0.200);
-    tl.set("#s23-cam12", { scale: 0.9, x: -58, y: 33 }, 0.200);
-    tl.set("#s23-cam12", { scale: 1.0, x: -0, y: 0 }, 0.267);
-    tl.set("#s23-cam15", { scale: 0.9, x: 58, y: -33 }, 0.267);
-    tl.set("#s23-cam15", { scale: 1.0, x: 0, y: -0 }, 0.334);
-    tl.set("#s23-cam18", { scale: 0.9, x: 0, y: 33 }, 0.333);
-    tl.set("#s23-cam18", { scale: 1.0, x: 0, y: 0 }, 0.400);
-    tl.set("#s23-cam21", { scale: 0.9, x: 0, y: -33 }, 0.400);
-    tl.set("#s23-cam21", { scale: 1.0, x: 0, y: -0 }, 0.467);
-    tl.set("#s23-cam24", { scale: 0.9, x: 58, y: 0 }, 0.467);
-    tl.set("#s23-cam24", { scale: 1.0, x: 0, y: 0 }, 0.534);
-    tl.set("#s23-cam27", { scale: 0.9, x: -58, y: 0 }, 0.533);
-    tl.set("#s23-cam27", { scale: 1.0, x: -0, y: 0 }, 0.600);
-    tl.set("#s23-cam30", { scale: 0.8, x: 0, y: 0 }, 0.995);
-    tl.set("#s23-cam30", { scale: 0.94, x: 0, y: 0 }, 1.062);
-    tl.set("#s23-cam30", { scale: 1.0, x: 0, y: 0 }, 1.128);
+    tl.set("#s23-cam3", { scale: 1.0, x: 0, y: 0 }, 0.000);
+    tl.set("#s23-cam6", { scale: 1.0, x: 0, y: 0 }, 0.067);
+    tl.set("#s23-cam9", { scale: 1.0, x: -0, y: -0 }, 0.133);
+    tl.set("#s23-cam12", { scale: 1.0, x: -0, y: 0 }, 0.200);
+    tl.set("#s23-cam15", { scale: 1.0, x: 0, y: -0 }, 0.267);
+    tl.set("#s23-cam18", { scale: 1.0, x: 0, y: 0 }, 0.333);
+    tl.set("#s23-cam21", { scale: 1.0, x: 0, y: -0 }, 0.400);
+    tl.set("#s23-cam24", { scale: 1.0, x: 0, y: 0 }, 0.467);
+    tl.set("#s23-cam27", { scale: 1.0, x: -0, y: 0 }, 0.533);
+    tl.set("#s23-cam30", { scale: 1.0, x: 0, y: 0 }, 0.995);
     tl.set("#s23-typ33-l0", { opacity: 1, filter: "blur(2.5px)", textShadow: "0 0 6px #fff, 0 0 16px #fff, 0 0 36px rgba(255,255,255,0.9)" }, 0.149);
     tl.set("#s23-typ33-l0", { filter: "blur(0px)", textShadow: "0 6px 26px rgba(0,0,0,0.42), 0 0 22px rgba(255,255,255,0.28)" }, 0.182);
     tl.set("#s23-typ33-l1", { opacity: 1, filter: "blur(2.5px)", textShadow: "0 0 6px #fff, 0 0 16px #fff, 0 0 36px rgba(255,255,255,0.9)" }, 0.216);
@@ -131,12 +122,6 @@
     tl.set("#s23-typ33-l12", { filter: "blur(0px)", textShadow: "0 6px 26px rgba(0,0,0,0.42), 0 0 22px rgba(255,255,255,0.28)" }, 1.416);
     tl.set("#s23-typ33-l13", { opacity: 1, filter: "blur(2.5px)", textShadow: "0 0 6px #fff, 0 0 16px #fff, 0 0 36px rgba(255,255,255,0.9)" }, 1.449);
     tl.set("#s23-typ33-l13", { filter: "blur(0px)", textShadow: "0 6px 26px rgba(0,0,0,0.42), 0 0 22px rgba(255,255,255,0.28)" }, 1.482);
-    tl.fromTo("#s23-cam34", { scale: 1.0 }, { scale: 1.06, duration: 0.720, ease: "none" }, 1.740);
-    tl.fromTo("#s23-cam36", { scale: 1.0 }, { scale: 1.06, duration: 1.420, ease: "none" }, 2.460);
-    tl.fromTo("#s23-cam39", { scale: 1.0 }, { scale: 1.05, duration: 0.225, ease: "none" }, 3.880);
-    tl.fromTo("#s23-cam41", { scale: 1.0 }, { scale: 1.05, duration: 0.320, ease: "none" }, 4.105);
-    tl.fromTo("#s23-cam43", { scale: 1.0 }, { scale: 1.05, duration: 0.320, ease: "none" }, 4.425);
-    tl.fromTo("#s23-cam46", { scale: 1.0 }, { scale: 1.1, duration: 2.345, ease: "none" }, 4.745);
     tl.set("#s23-typ49-l0", { opacity: 1, filter: "blur(2.5px)", textShadow: "0 0 6px #fff, 0 0 16px #fff, 0 0 36px rgba(255,255,255,0.9)" }, 4.783);
     tl.set("#s23-typ49-l0", { filter: "blur(0px)", textShadow: "0 6px 26px rgba(0,0,0,0.42), 0 0 22px rgba(255,255,255,0.28)" }, 4.816);
     tl.set("#s23-typ49-l1", { opacity: 1, filter: "blur(2.5px)", textShadow: "0 0 6px #fff, 0 0 16px #fff, 0 0 36px rgba(255,255,255,0.9)" }, 4.849);
