@@ -1,4 +1,29 @@
-# Jamie Dimon / JPMorgan Chase: review (v13, the whole film)
+# Jamie Dimon / JPMorgan Chase: review (v16, the whole film)
+
+v16 is built by `tools/build16.py`. `notes/v16/notes.md` lists the user's notes of 11 Nov (three batches on the v13 render, then the notes on this version's stills) and what each became. v14 and v15 were built but never rendered; v16 contains them.
+
+**Rendered:** `renders/jpm-dimon-v16.mp4`: 85.63 s, 1920x1080, 60 fps, 5,138 frames, rendered in 41 min. `renders/jpm-dimon-v16-preview720.mp4` is a 720p preview. `renders/jpm-dimon-v16-project.zip` is the project with only the media it uses (`tools/pack_project.py v16`).
+
+### v16: what was checked in the rendered file
+
+- **Length and frames:** 5,138 frames at 60 fps; picture and sound the same length.
+- **Flash frames:** 20 white frames; every one is evenly white (no caption backing shows on any of them). No black gaps.
+- **Cuts out of the three light scenes** (the painted clip to the floor, the band to Dimon, the picture card to Bear Stearns): read frame by frame; each is a clean cut with nothing left over from the scene before.
+- **The band:** read every fifth frame. It is level, fills the width, and slows evenly to rest at the cut; the title's words come up on the voice.
+- **Type:** a sheet of the whole film, one frame every 1.4 s, matches the table in the notes (upright serif on the user's list; slanted serif on bonus, Grudge, the Bezos frame, JP Morgan, standing; bold Helvetica elsewhere).
+- **Sound:** -16.7 LUFS integrated, true peak -1.5 dBTP. Measured, not listened to.
+- **Before the render:** `hyperframes check`: 0 errors (lint, runtime, layout, contrast 11 of 11, audio).
+
+### v16: open points for the user
+
+- "And when" stands in black on the paper above the band; the reference has its small words on the band, where black could not be read on these dark cards.
+- The band is on screen from the cut and glides (the user asked for slow and smooth); the reference's band whips in from the right first.
+- The words on the user's list arrive with the calm blur-in of v14, not v13's pop.
+- Helvetica Neue is a commercial face; TeX Gyre Heros Bold stands in.
+
+---
+
+## Earlier: v13
 
 v13 is built by `tools/build13.py`. Its media come from `tools/prep2.py --spec=media_v13.json` (clips), `tools/prep13.py` (the paintings, the cleaned Bezos clip, the one cut-out) and the earlier rounds' media. `notes/v13/notes.md` lists the user's notes of 11 Nov and what each became, scene by scene.
 
