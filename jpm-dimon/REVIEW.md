@@ -1,4 +1,39 @@
-# Jamie Dimon / JPMorgan Chase: review (v12, the whole film)
+# Jamie Dimon / JPMorgan Chase: review (v13, the whole film)
+
+v13 is built by `tools/build13.py`. Its media come from `tools/prep2.py --spec=media_v13.json` (clips), `tools/prep13.py` (the paintings, the cleaned Bezos clip, the one cut-out) and the earlier rounds' media. `notes/v13/notes.md` lists the user's notes of 11 Nov and what each became, scene by scene.
+
+**Rendered:** `renders/jpm-dimon-v13.mp4`: 85.17 s, 1920x1080, 60 fps, 5,110 frames. `renders/jpm-dimon-v13-preview720.mp4` is a 720p preview. `renders/jpm-dimon-v13-project.zip` is the project with only the media it uses.
+
+**Sound:** voices only, unchanged from v12 (no music, no effects).
+
+## How it was rendered
+1. The whole film in one pass (about 46 min, 2 workers).
+2. The render was read frame by frame at every new transition (below) and scanned for black frames.
+3. One defect was found (below). It was fixed in the builder, and the same 12 frames were replaced in the rendered file with a clean white frame taken from the render itself (one ffmpeg pass, video re-encoded once at CRF 14, audio copied). Each replaced frame and its neighbours were then compared with the raw render by exact frame number.
+
+## Checked
+- **`lint`:** 0 errors, 33 warnings (timeline density and overlay-count notices).
+- **`check`:** ok. 0 errors in lint, runtime, layout, contrast (15 of 15 samples pass) and audio. Run again after the fix below.
+- **Stills before the render:** about 110 frames across every new or changed moment.
+- **The rendered file, frame by frame:** the cut after FIRED; both pinboard moves; the two card-to-full-frame throws (the jester, the boxers); the whip-pan to the readers; the Bezos hand-over; the card pops on "premise"; "comeback" on the fire and the first strips; the band of bank cards (its arrival, the cards dropping, the zoom); "standing"; the two cards dropping on "fell"; the mosaic and the typed name.
+- **Black frames after 39 s:** three, all intended (the pinboard's last frames, the black frame on "cuts", the end of the fade-out).
+- **Clips:** all 69 new clips were scanned for a cut inside their shown span. Four were moved (the wave at the Capitol, the town-hall walk, the night tower, one mosaic cell swapped). Two flagged clips are a flicker and punch-ins inside one shot, not cuts.
+
+## Found in the render and fixed
+- **A grey oval on seven white flash frames.** A caption group's dark backing started two frames before its first word, so on a cut with a white flash frame it showed as a grey oval on the white (12 frames in all, at 50.85, 54.88, 64.53, 67.38, 74.52, 79.82 and 81.95 s). Those groups now start after the flash (`AFT()` in the builder). The rendered file was patched as described above.
+
+## Not verified by watching
+I cannot play video; the motion was judged from consecutive frames. The pinboard's 15 fps camera is the one thing whose feel only playback settles. `kboard11(fps=60)` gives the smooth camera back with the same ramps.
+
+## Open
+- The boxing picture is 550 px wide at source and is soft at the full frame.
+- The Dimon montage (720 px) and the planet film (1280 px, letterboxed) are enlarged.
+- "This is the most influential man ... the CEO" stays all in the serif, as the user asked for that line in v11; everything else is the Helvetica and serif mixture.
+- Higgsfield was not usable (free plan, no credits). Nothing in the film is generated.
+
+---
+
+# The v12 review (previous round)
 
 v12 is built by `tools/build12.py`. Its media come from `tools/prep2.py --spec=media_v12.json` (clips) and `tools/prep10.py` (the Meet scene's stills), on top of the earlier rounds' media. `notes/v10`, `notes/v11` and `notes/v12` say what each round changed and why.
 

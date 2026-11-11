@@ -61,6 +61,8 @@ Everything is HyperFrames: HTML and GSAP written by the builder, rendered by the
 
 `hyperframes lint`: 0 errors. `hyperframes check`: 0 errors in lint, runtime, layout, contrast (15 of 15 samples pass), audio. Every new clip was scanned for a cut inside its shown span; four were moved.
 
+Found in the render: the dark backing of seven caption groups showed as a grey oval on a white flash frame. Those groups now start after the flash (`AFT()`); the delivered file had the same 12 frames replaced. See `REVIEW.md`.
+
 ## Known limits
 
 - The boxing picture is 550 px wide at source; it is soft at the full frame.

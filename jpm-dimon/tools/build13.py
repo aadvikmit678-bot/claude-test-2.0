@@ -3724,6 +3724,8 @@ def kbehind(sc, key, st, t0, t1, word, wt_, size=430, y=540, xyz=None, drift=(15
     return cam
 
 
+AFT = lambda t: round(t + F1 + 0.002, 3)   # a caption group after a white flash frame starts once the frame is over
+#                                            (its dark backing would show as a grey oval on the white)
 DM2_XYZ = (0.5, 0.463, 1.0)   # the user's Dimon montage: the picture band of the vertical file (its subtitles out)
 BEZ_T = 6.4                   # the user's 1999 Bezos interview: he looks up, eyes wide
 
@@ -3828,7 +3830,7 @@ kstrips(s, T_HIS, A(137), [("HOW", 96.5), ("HOW", 32.0), ("HOW", 144.5), ("HOW",
                             ("HOW", 136.5)], under=("MPB", 1440.0, None))
 cap([[W_(121, "s"), W_(122, "s"), W_(123, "s"), W_(124, "s"), W_(125, "s")], [W_(126, "sx", "premise")]], y=548,
     scrim=0.45, end=T_GRT)
-cap([[W_(127, "s"), W_(128, "s")], [W_(129, "sx", "greatest")]], y=650, scrim=0.45, end=T_CMB)
+cap([[W_(127, "s"), W_(128, "s")], [W_(129, "sx", "greatest")]], y=650, scrim=0.45, end=T_CMB, start=AFT(T_GRT))
 cap([[W_(131, "s"), W_(132, "s"), W_(133, "s"), W_(134, "s")], [W_(135, "sx@270"), W_(136, "sx@270")]], y=540, scrim=0.5,
     end=round(A(137) - 0.3, 3))
 
@@ -3842,7 +3844,7 @@ hwhite(s, A(139))
 for f in (0, 3):
     kdiff(s, round(VT(143) + f * F1, 3), 1)
 cap([[W_(137, "s")]], y=330, end=A(139))
-cap([[W_(139, "s"), W_(140, "s"), W_(141, "s"), W_(142, "s")]], y=860, scrim=0.45, end=A(143))
+cap([[W_(139, "s"), W_(140, "s"), W_(141, "s"), W_(142, "s")]], y=860, scrim=0.45, end=A(143), start=AFT(A(139)))
 cap([[W_(143, "sx@270"), W_(144, "sx@270")]], y=548, scrim=0.45, end=A(145))
 cap([[W_(145, "s"), W_(146, "sx", "Chicago")]], y=548, scrim=0.45, end=A(147))
 
@@ -3900,7 +3902,7 @@ cap([[W_(164, "s"), W_(165, "s")]], y=548, scrim=0.45, end=round(VT(166) - 0.02,
 kdiff(s, T_LOSS, 2)
 cap([[W_(168, "sx", "loss")]], y=548, scrim=0.45, end=T_INTO)
 hwhite(s, T_INTO)
-cap([[W_(169, "s"), W_(170, "sx@270", "billions")]], y=548, scrim=0.45, end=T_PROF)
+cap([[W_(169, "s"), W_(170, "sx@270", "billions")]], y=548, scrim=0.45, end=T_PROF, start=AFT(T_INTO))
 cap([[W_(171, "s"), W_(172, "sx", "profit")]], y=800, scrim=0.45, end=A(173))
 
 # ---- S18  "That bank got acquired by JP Morgan in 2004."  the handshake under the JPMorgan Chase banner; the name on
@@ -3911,7 +3913,7 @@ kc(s, [(A(173), "HOW", 654.5, None), (T_JPM, "GAME", 522.0, None), (T_04, "HOW",
 hwhite(s, T_JPM)
 kcount(s, round(VT(181) + 0.18, 3), A(182), ["2000", "2001", "2002", "2003", "2004"], size=330, cy=560, t_min=T_04)
 cap([[W_(173, "s"), W_(174, "s"), W_(175, "s")], [W_(176, "sx@250", "acquired")]], y=830, scrim=0.5, end=T_JPM)
-cap([[W_(177, "s")], [W_(178, "sx@250", "JP"), W_(179, "sx@250", "Morgan")]], y=600, scrim=0.5, end=T_04)
+cap([[W_(177, "s")], [W_(178, "sx@250", "JP"), W_(179, "sx@250", "Morgan")]], y=600, scrim=0.5, end=T_04, start=AFT(T_JPM))
 cap([[W_(180, "s")]], y=330, end=A(182))
 
 # ---- S19  "Then, 2008 financial crisis hit,"  a run of the crash, a shot every ten frames, the year rolling from 2004
@@ -3951,8 +3953,8 @@ kbehind(s, "GAME", round(G20 + (T_FULL - T_CAR), 3), T_FULL, A(200), "standing",
 cap([[W_(187, "s"), W_(188, "s")]], y=548, scrim=0.45, end=T_CAR)
 cap([[W_(189, "s"), W_(190, "s"), W_(191, "s")]], y=915, end=round(VT(192) - 0.02, 3))
 cap([[W_(192, "s"), W_(193, "sh@200", "dying")]], y=900, end=T_ZOOM)
-cap([[W_(194, "s"), W_(195, "s"), W_(196, "s")]], y=915, scrim=0.4, end=round(VT(197) - 0.02, 3))
-cap([[W_(197, "sh@190", "only"), W_(198, "sh@190", "one")]], y=900, scrim=0.45, end=round(VT(199) - 0.02, 3))
+cap([[W_(194, "s"), W_(195, "s"), W_(196, "s")]], y=915, scrim=0.4, end=T_FULL)
+cap([[W_(197, "sh@190", "only"), W_(198, "sh@190", "one")]], y=900, scrim=0.45, end=round(VT(199) - 0.02, 3), start=AFT(T_FULL))
 
 # ---- S22  "with enough money to buy the ones that fell."  the user's picture of the treasury, a card growing on the
 #      paper, thrown into its chests of coin on "money"; the anchor under FIRE SALE: JPMorgan Chase, Bear Stearns; then
@@ -4000,7 +4002,7 @@ sp_type_word(s, A(209), T_NAME, "JPMorgan Chase", [FR(n1 + 2 * k) for k in range
 cap([[W_(209, "s")]], y=232, scrim=0.4, end=round(VT(213), 3))
 kc(s, [(T_NAME, "JPH2", 9.5, None), (T_10, "JPH2", 11.0, None)], T_EV, push=(1.0, 1.06))
 hwhite(s, T_NAME)
-cap([[W_(214, "s"), W_(215, "s"), W_(216, "s"), W_(217, "s")]], y=548, scrim=0.5, end=T_10)
+cap([[W_(214, "s"), W_(215, "s"), W_(216, "s"), W_(217, "s")]], y=548, scrim=0.5, end=T_10, start=AFT(T_NAME))
 w10, wtr = textw("$10", "Inter Tight", 800, 250, track=-0.03), textw("trillion", "Instrument Serif", 400, 236, track=-0.01)
 x10 = 960 - (w10 + 44 + wtr) / 2
 kcount(s, round(VT(218) + 0.16, 3), T_EV, ["$1", "$2", "$4", "$6", "$8", "$10"], cx=round(x10 + w10 / 2), cy=544, size=250,
@@ -4010,7 +4012,7 @@ cap([dict(w=[W_(219, "sh", "trillion")], x=round(x10 + w10 + 44 + wtr / 2), y=54
 kc(s, [(T_EV, "CIT", 40.2, (0.42, 0.42, 1.2)), (A(221), "BANK", 57.0, None), (A(222), "BANK", 58.75, None)], T_TODAY,
    push=(1.0, 1.05))
 hwhite(s, T_EV)
-cap([[W_(220, "sx")]], y=548, scrim=0.5, end=A(221))
+cap([[W_(220, "sx")]], y=548, scrim=0.5, end=A(221), start=AFT(T_EV))
 cap([[W_(221, "sx")]], y=548, scrim=0.5, end=A(222))
 cap([[W_(222, "sx")]], y=548, scrim=0.5, end=T_TODAY)
 s.v("JPH2", 4.72, T_TODAY, DUR, rate=0.87, grade="doc", push=(1.0, 1.10))
