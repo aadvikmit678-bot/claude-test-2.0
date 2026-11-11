@@ -56,6 +56,9 @@ V = {
     # v13: the user's film of the planet (Drive 10N79_Vgax-uUfh3wBZBSwSvxAidMEvUw, 11 Nov; "from 2 min 1 sec"), for "in
     # the world": letterboxed 1280x482 at y 118, cut with xyz (0.5, 0.4986, 1.52)
     "WORLD": "_v13/world/world_src.mp4",
+    # v15: the user's Google Flow clip for "18 months of no job, he took up boxing, read biographies", the Gemini
+    # sparkle removed and the title held for the phrase (tools/prep15.py flow)
+    "FLOW": "_v15/flow_retimed.mp4",
 }
 # logo-safe framings: (cx, cy, zoom) of the crop window, relative to the frame
 FRAMES = {"FULL": (0.5, 0.5, 1.0), "BBG": (0.47, 0.53, 1.07), "CNBC": (0.46, 0.54, 1.08), "UNTF": (0.45, 0.56, 1.12),
