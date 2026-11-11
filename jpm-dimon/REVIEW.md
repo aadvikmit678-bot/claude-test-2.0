@@ -1,4 +1,24 @@
-# Jamie Dimon / JPMorgan Chase: review (v16, the whole film)
+# Jamie Dimon / JPMorgan Chase: review (v17, the whole film)
+
+v17 is built by `tools/build17.py` (from build16). `notes/v17/notes.md` lists the user's notes on the v16 render and what each became.
+
+**Rendered:** `renders/jpm-dimon-v17.mp4`: 85.17 s, 1920x1080, 60 fps, 5,110 frames, rendered in 42 min. `renders/jpm-dimon-v17-preview720.mp4` is a 720p preview. `renders/jpm-dimon-v17-project.zip` is the project with only the media it uses (`tools/pack_project.py v17`).
+
+### v17: what was checked in the rendered file
+
+- **Length and frames:** 5,110 frames at 60 fps (28 fewer than v16: the hold after "Dimon" is gone); picture and sound the same length.
+- **Flash frames:** 19 white frames, every one evenly white. No black gaps.
+- **Entrances:** influential, America, bonus, Biggest Bank, world, countries, World Bank and IMF read frame by frame: each arrives blown out in its bloom and is crisp a few frames later.
+- **Meet Jamie Dimon:** the four black-and-white portraits, the whip, the cell picture with "Golden Boy"; "the guy" run with the colour portraits.
+- **Bezos:** the head comes up from the bottom edge in three steps; then the figure with the flash masked to his shape (two frames full, three at half).
+- **Years:** 2000, 2004 and 2008 flash in; the white box sits tight on the first two digits, on and off, clear of the small word above.
+- **standing:** upright serif behind him.
+- **Sound:** -16.7 LUFS integrated, true peak -1.5 dBTP. Measured, not listened to.
+- **Before the render:** `hyperframes check`: 0 errors (lint, runtime, layout, contrast 14 of 14, audio).
+
+---
+
+## Earlier: v16
 
 v16 is built by `tools/build16.py`. `notes/v16/notes.md` lists the user's notes of 11 Nov (three batches on the v13 render, then the notes on this version's stills) and what each became. v14 and v15 were built but never rendered; v16 contains them.
 
