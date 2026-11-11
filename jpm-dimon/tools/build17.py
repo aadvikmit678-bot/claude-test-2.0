@@ -4106,7 +4106,7 @@ def kbehind(sc, key, st, t0, t1, word, wt_, size=430, y=540, xyz=None, drift=(15
     behind him. The subject is a matte of the same clip (tools/prep13.py mattes), laid exactly over it."""
     cam, _ = sc.v(key, st, t0, t1, grade=grade, push=push, xyz=xyz, matte=True)
     cid = CL(key, st, t1 - t0, xyz=xyz, matte=True)
-    kword(sc, word, wt_, t1, y=y, size=size, squeeze=0.86, drift=drift, z=sc.nz() + 5, italic=True)   # v16: slanted, as it was
+    kword(sc, word, wt_, t1, y=y, size=size, squeeze=0.86, drift=drift, z=sc.nz() + 5, italic=False)   # v17: upright (user)
     cm, vm = sc.uid("cam"), sc.uid("v")
     sc.raw(f'<div class="cam" id="{cm}" style="left:0px;top:0px;width:1920px;height:1080px;z-index:{sc.nz() + 10};'
            f'transform-origin:50% 50%"><video id="{vm}" class="clip" src="assets/clips2/{cid}_cut.webm" muted playsinline '
