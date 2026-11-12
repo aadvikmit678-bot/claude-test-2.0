@@ -1,4 +1,24 @@
-# Jamie Dimon / JPMorgan Chase: review (v17, the whole film)
+# Jamie Dimon / JPMorgan Chase: review (v18, the whole film)
+
+v18 is built by `tools/build18.py` (from build17). `notes/v18/notes.md` lists the user's notes on the v17 render and what each became.
+
+**Rendered:** `renders/jpm-dimon-v18.mp4`: 85.03 s, 1920x1080, 60 fps, 5,102 frames, rendered in 36 min. `renders/jpm-dimon-v18-preview720.mp4` is a 720p preview. `renders/jpm-dimon-v18-project.zip` is the project with only the media it uses.
+
+### v18: what was checked in the rendered file
+
+- **Length and frames:** 5,102 frames at 60 fps (8 fewer than v17: the pause after "Chase"); picture and sound the same length.
+- **Flash frames:** 21 white frames, every one evenly white. No black gaps.
+- **Opening:** the glowing squares, then "The name of the game" and "in American" in the serif; "capitalism" with its flash.
+- **The pause:** the cyber portrait comes in as "Chase" ends; "This" follows 0.13 s sooner than in v17.
+- **"A guy who got FIRED":** the photos change every three frames to the cut, the square grows steadily, the black-and-white portrait is last for five frames, then the 1998 counter.
+- **Bezos:** the whole figure steps up from below; the white glow covers his whole shape; then he stands there.
+- **Words:** Grudge upright; "United States Government"; "Billions" and "Profit"; "he takes over" and "Broken" over moving footage.
+- **Sound:** -16.7 LUFS integrated, true peak -1.5 dBTP. Measured, not listened to.
+- **Before the render:** `hyperframes check`: 0 errors (lint, runtime, layout, contrast 10 of 10, audio).
+
+---
+
+## Earlier: v17
 
 v17 is built by `tools/build17.py` (from build16). `notes/v17/notes.md` lists the user's notes on the v16 render and what each became.
 
