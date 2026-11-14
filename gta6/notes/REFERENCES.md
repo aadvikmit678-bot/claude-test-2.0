@@ -1,6 +1,6 @@
 # GTA 6 edit: the reference folder, studied
 
-Drive folder `1Li0fFSxSyK9EHdm2Y2T8mp5Pjg2TYvHK` (24 files, 2.2 GB), downloaded to `gta6-src/_drive/<key>.mp4` (not in git; `gta6-src/manifest.tsv` maps keys to Drive ids and titles). Every clip was read frame by frame: `gta6/tools/study.py` makes a 480p proxy of every frame, finds every cut, flash and black frame, measures the music's onsets and tempo, and transcribes the speech; `gta6/tools/dense.py` draws every frame (or every 2nd-15th for long or slow clips) as labelled sheets. One file per clip in `notes/refs/` has the shot-by-shot breakdown. **Nothing is built yet** (the user's instruction: study first, the script and references come next).
+Drive folder `1Li0fFSxSyK9EHdm2Y2T8mp5Pjg2TYvHK` (24 files, 2.2 GB), downloaded to `gta6-src/_drive/<key>.mp4` (not in git; `gta6-src/manifest.tsv` maps keys to Drive ids and titles). Every clip's frames were read by `gta6/tools/study.py` (a 480p proxy of every frame; every cut, flash and black frame; the music's onsets and tempo; a transcript of the speech). The edit references were then looked at frame by frame on `gta6/tools/dense.py`'s sheets (every frame, or every 2nd-15th for long or slow clips); the raw trailers and the long gameplay film were indexed shot by shot (one still per shot, four across every long take). One file per clip in `notes/refs/` has the shot-by-shot breakdown. **Nothing is built yet** (the user's instruction: study first, the script and references come next).
 
 ## The folder at a glance
 | key | file | format | length | what it is |
@@ -28,7 +28,7 @@ Drive folder `1Li0fFSxSyK9EHdm2Y2T8mp5Pjg2TYvHK` (24 files, 2.2 GB), downloaded 
 | launch | GTA VI Launch Trailer | 1080p | 90 s | the same trailer at 1080p |
 | netflix | An Extended Look (Netflix) | 4K | 26 s | Netflix teaser with in-game HUD footage |
 | preload | Pre-Load Now | 1080p | 30 s | official "pre-load now" spot, party energy |
-| netflix4k | GTA 6 4K Gameplay Trailer FULL NETFLIX EXTENDED | 4K | 26.8 min | the long gameplay film (indexed separately: `refs/netflix4k.md`) |
+| netflix4k | GTA 6 4K Gameplay Trailer FULL NETFLIX EXTENDED | 4K | 26.8 min | 27 minutes of story gameplay: the drug-den pickup, the apartment, Brian's dinner, the store robbery and getaway, an activities montage, the skydive, Andres de Leon and the MegaMundo party attack; HUD on the gameplay shots |
 
 ## The edit styles in the references
 1. **Flash-beat montage** (editm6, ahhshit): one shot a beat (0.3-0.6 s), a white flash on almost every cut (2 frames at 60 fps; 3-5 fading frames at 30 fps), split wipes, silhouette flashes, B&W runs; logo bookends.
@@ -70,12 +70,13 @@ Drive folder `1Li0fFSxSyK9EHdm2Y2T8mp5Pjg2TYvHK` (24 files, 2.2 GB), downloaded 
 ## Audio in the folder
 - Meme lines: "Ah shit, here we go again" (awshit 0.13 s, CJ, clean), "Oh shit!" (ahhshit 0.12 s).
 - Trailer dialogue: Lucia "Bad luck, I guess" (trailer1); "I am here for Lucia Caminos" / "What's your name?" "Jason." (trailer2); "I got in some trouble in the army..." / "Are we gonna be okay?" (launch).
+- The long gameplay film (netflix4k): "I guess they know we're coming" (0.0); Brian's carousel story, ending "You gotta know when to get off, Jason" (684-744); "Are you a professional?" "We'll see." (~903); "This could be the start of something good" (~1000); Brian's closing "These are your glory days ... nothing is gonna beat who you are now ... Trust me." (1549-1570). Strong language elsewhere.
 - News: "A video game so popular it could cost the US economy a billion dollars in just one day" (billion 0.04 s) and the guest's quotes (see refs/billion.md).
 - AI sketches: "You did good." / "We've got it from here." / "Go. They're waiting for you." (gta5nost); "I got a mission" / "a very important mission" (oldchars).
 - Songs (copyrighted, for reference only): Tom Petty "Love Is a Long Road" (trailer1), The Pointer Sisters "Hot Together" (trailer2), Wiz Khalifa "See You Again" (gta5nost), and the edits' tracks.
 
 ## Raw footage: what to cut from
-Use the 4K launch trailer (launchps5) and the 4K Netflix files first, then trailer2 and trailer1 (1080p). Each has a shot index with times in `refs/`. Avoid the frames with burned-in text when a clean shot is needed: ESRB cards, "ROCKSTAR GAMES PRESENTS", the PS5 cards, the Netflix HUD.
+Use the 4K launch trailer (launchps5) and the 4K Netflix files first (the 26-minute netflix4k has the most variety: real gameplay with the HUD, the party, the races, the skydive), then trailer2 and trailer1 (1080p). Each has a shot index with times in `refs/`. Avoid the frames with burned-in text when a clean shot is needed: ESRB cards, "ROCKSTAR GAMES PRESENTS", the PS5 cards, the Netflix HUD.
 
 ## Caveats
 - montage2 and city are landscape pictures rotated 90° inside a 9:16 file: rotate before use.
