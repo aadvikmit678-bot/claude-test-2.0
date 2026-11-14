@@ -38,12 +38,12 @@ Mostly GTA footage cut fast (trailers, the launch trailer, the Netflix gameplay,
 | 20.40-25.84 | The release got pushed from 2025 to May 2026, and then again to November. | the fan edit (billboard, flash) → COMING 2025 (struck) → MAY 26, 2026 (struck) → NOVEMBER 19, 2026 | captions above the cards |
 | 25.84-28.46 | And yet, nobody seems to have moved on. | 2026 on the sofa → Times Square → "Welcome to Vice City" | stacked, top |
 | 28.46-29.64 | But why? | the Tesla reel's white card | black serif, hero |
-| 29.64-31.23 | Why are grown adults waiting | the red room, Vice City on the TV | |
+| 29.64-31.23 | Why are grown adults waiting | the Vice City title screen on the TV in the red room, then its gameplay | on the TV stand, under the screen |
 | 31.23-31.96 | 13 years | the 2013 store, darkened | the 2013 → 2026 year roller + "years" |
 | 31.96-35.20 | for a game that's supposedly just about stealing cars? | donuts → the red classic (fan montage) → Jason driving → the Ocean Drive chase | weight flash on "stealing" |
 | 35.20-37.23 | Because GTA was never just about | reel3's wall of every GTA (Tommy, CJ, the V trio, Jason, Lucia) | stacked over a scrim |
 | 37.23-38.32 | cars and guns. | the green supercar → Lucia firing | heroes, a flash on each |
-| 38.32-40.38 | It was about what it really gave you. | arms up on the convertible → the cave diver → the dive | |
+| 38.32-40.38 | It was about what it really gave you. | arms up on the convertible → the jet ski → the dive | |
 | 40.38-41.50 | Freedom. | freedom.mp4 | hero, bloom cut + bass |
 | 41.50-43.03 | Back to being 10 years old, | kidcine | year inversion on 10 |
 | 43.03-44.90 | sitting in front of the family computer, | the CRT with Vice City inside, a jump cut in | |
@@ -51,8 +51,8 @@ Mostly GTA footage cut fast (trailers, the launch trailer, the Netflix gameplay,
 | 45.66-47.42 | with the volume turned all the way down | Vice City gameplay + a TV volume bar 16 → 0 | |
 | 47.42-49.66 | so nobody could hear the gunshots. | the 10th-anniversary trailer, the explosion on "gunshots" | muzzle flashes |
 | 49.66-53.78 | With cheat codes like ASPIRINE and PANZER scribbled at the back of your notebook. | the notebook page: ASPIRINE and PANZER written on the word, a jump cut in on PANZER, the Rhino polaroid | dark ink |
-| 53.78-56.00 | For a kid, it wasn't just a game. | 2013: the boy and GTA V | |
-| 56.00-59.58 | It was a psychological escape. An alternate reality. | escape.mp4 → Lucia's eyes → the fast clip → the cave | streaks on "escape" |
+| 53.78-56.00 | For a kid, it wasn't just a game. | 2013: Michael hands over GTA V → the boy with the box | |
+| 56.00-59.58 | It was a psychological escape. An alternate reality. | escape.mp4 → the eyes → the dark nebula → the fast clip → the airboat → the cave diver | streaks on "escape" |
 | 59.58-62.42 | It was everything you imagined adulthood would be. | the 2x2 grid filling a tile a word: gold dress, yacht, red car, Ocean Drive | |
 | 62.42-67.80 | Driving supercars, firing guns, flying planes and owning an entire city. | 7 cuts: convertible, the Cheetah, firing, explosion, banner plane, seaplane gunman, the city with the Vice City blimp | weight flashes |
 | 67.80-70.50 | And while every other game asks you to be the hero, | cops, the sheriff chase, Jason under the EXIT light | |

@@ -178,7 +178,7 @@ def loudnorm(src, out, target):
 
 def assets():
     A = f"{PROJ}/assets"
-    for d in ["audio", "fonts", "sfx", "img", "tex"]:
+    for d in ["audio", "fonts", "img", "tex"] + (["sfx"] if edit.SFX else []):
         os.makedirs(f"{A}/{d}", exist_ok=True)
     run(["ffmpeg", "-nostdin", "-v", "error", "-y", "-i", edit.SRC["billion"], "-t", "6.70", "-vn", "-ac", "2", "-ar", "48000",
          "-af", "afade=t=out:st=6.64:d=0.06", f"{A}/audio/news.wav"])
@@ -189,9 +189,10 @@ def assets():
     for name, target in [("news", -17.0), ("cj", -16.0), ("vo", -16.0)]:
         loudnorm(f"{A}/audio/{name}.wav", f"{A}/audio/{name}_n.wav", target)
     sfx = "/root/.claude/skills/media-use/audio/assets/sfx"
-    for name in sorted({x[0] for x in edit.SFX}):
-        shutil.copy(f"{sfx}/{name}.mp3", f"{A}/sfx/{name}.mp3")
-    shutil.copy(f"{sfx}/CREDITS.md", f"{A}/sfx/CREDITS.md")
+    if edit.SFX:                 # v2 (user): none in the video
+        for name in sorted({x[0] for x in edit.SFX}):
+            shutil.copy(f"{sfx}/{name}.mp3", f"{A}/sfx/{name}.mp3")
+        shutil.copy(f"{sfx}/CREDITS.md", f"{A}/sfx/CREDITS.md")
     for f in ["InstrumentSerif-Regular.woff2", "InstrumentSerif-Italic.woff2"]:
         shutil.copy(f"{edit.ROOT}/jpm-dimon/assets/fonts/{f}", f"{A}/fonts/{f}")
     cf = "/mnt/skills/examples/canvas-design/canvas-fonts"
