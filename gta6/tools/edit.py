@@ -62,7 +62,7 @@ shot("s14", F(14.91), F(16.58), "launchps5", 80.90)                       # NOVE
 cuts("s15", F(16.58), F(19.20), [("realwait", 11.80, F(17.50), dict(cy=0.50)), ("willnyc", 0.50, F(18.33), dict(cy=0.45)),
                                   ("edits", 2.40, None, dict(cy=0.30))])
 scene("s16", F(19.20), F(20.38), "white")                                 # But why?
-cuts("s17", F(20.38), F(21.97), [("waiting", 0.50, F(21.18), dict(cy=0.42)), ("waiting", 12.00, None, dict(cy=0.40))])
+cuts("s17", F(20.38), F(21.97), [("waiting", 3.50, F(21.18), dict(cy=0.47)), ("waiting", 12.00, None, dict(cy=0.47))])   # v2: the title screen; the TV stand below takes the line
 shot("s18", F(21.97), F(22.70), "realwait", 2.60, cy=0.50, grade="dark")  # + the 2013 -> 2026 year roller
 cuts("s19", F(22.70), F(24.87), [("trailer1", 70.40, F(23.61), {}), ("montage", 4.70, F(24.38), {}), ("trailer2", 27.60, None, {})])
 shot("s20", F(24.87), F(25.94), "launchps5", 46.35)                       # the Ocean Drive chase
@@ -70,7 +70,7 @@ shot("s20", F(24.87), F(25.94), "launchps5", 46.35)                       # the 
 scene("s21", F(25.94), F(27.97), "wall")                                  # reel3's wall of faces: every GTA
 shot("s22", F(27.97), F(28.27), "launchps5", 47.55)                       # cars
 shot("s23", F(28.27), F(29.06), "launchps5", 72.10)                       # guns
-cuts("s24", F(29.06), F(31.12), [("trailer1", 25.00, F(29.97), {}), ("montage", 20.20, F(30.49), {}), ("montage", 22.60, None, {})])
+cuts("s24", F(29.06), F(31.12), [("trailer1", 25.00, F(29.97), {}), ("trailer2", 140.30, F(30.49), {}), ("montage", 22.60, None, {})])   # v2: the jet ski (the diver is s34's)
 shot("s25", F(31.12), F(32.24), "freedom", 2.00)                          # Freedom.
 # F. the kid
 shot("s26", F(32.24), F(33.77), "kidcine", 0.50)
@@ -79,9 +79,9 @@ shot("s28", F(35.64), F(36.40), "vc10", 21.00)                            # the 
 cuts("s29", F(36.40), F(38.16), [("vc10", 25.30, F(37.30), {}), ("vc10", 29.50, None, {})])   # + the volume bar
 shot("s30", F(38.16), F(40.40), "vc10", 36.48)                            # the explosion lands on "gunshots"
 scene("s31", F(40.40), F(44.52), "notebook")                              # ASPIRINE, PANZER
-cuts("s32", F(44.52), F(46.74), [("gta5bye", 2.50, F(45.62), {}), ("gta5bye", 8.25, None, {})])
+cuts("s32", F(44.52), F(46.74), [("gta5bye", 3.40, F(45.62), {}), ("gta5bye", 6.60, None, {})])   # v2: both 2013 (8.25 was labelled 2026)
 # G. the escape
-cuts("s33", F(46.74), F(48.71), [("escape", 0.00, F(47.17), {}), ("ahhshit", 4.85, F(47.80), dict(z=1.18, cy=0.36)), ("escape", 0.90, None, {})])
+cuts("s33", F(46.74), F(48.71), [("escape", 0.00, F(47.17), {}), ("ahhshit", 4.85, F(47.80), dict(z=1.18, cy=0.36)), ("escape", 3.40, None, {})])   # v2: "escape," lands on the dark nebula
 cuts("s34", F(48.71), F(50.32), [("fastclip", 0.00, F(49.01), {}), ("montage", 20.00, None, {})])
 scene("s35", F(50.32), F(53.16), "grid4")                                 # the adult dream, a tile a beat
 cuts("s36", F(53.16), F(58.54), [("netflix4k", 520.0, F(53.86), {}), ("vcde", 14.10, F(54.56), {}),
@@ -199,12 +199,12 @@ cap("n4", "news", 5.40, 6.54, "in just | one #day.@156", size=74, pos=(960, 480)
     scrim=0.35)
 cap("c1", "cj", 0.0, 1.0, "*Ah *shit,", size=96, pos=(560, 500), end=F(0.0), drift=18)
 cap("c2", "cj", 1.0, 2.4, "*here *we *go *again.", size=96, pos=(1390, 600), end=F(0.0), drift=18)
-cap("h1", "vo", 0.0, 1.02, "That's exactly how", pos=(960, 860), end=F(1.02))
+cap("h1", "vo", 0.0, 1.02, "That's exactly how", pos=(1390, 720), end=F(1.02))   # v2: off CJ's white vest, on the alley wall
 cap("h2", "vo", 1.02, 2.76, "!millions@132 | of adults are going to feel", size=64, pos=(960, 520), end=F(2.76),
-    layout="stack", indent=0.05)
+    layout="stack", indent=0.05, scrim=0.45)
 cap("h3", "vo", 2.76, 4.00, "on November | ^19th@150", size=96, pos=(960, 520), end=F(4.00), layout="stack", scrim=0.35)
 cap("h4", "vo", 4.00, 5.20, "when they play GTA 6", pos=(960, 900), end=F(5.20), scrim=0.5)
-cap("h5", "vo", 5.20, 6.62, "for the first %time.", size=96, pos=(960, 520), end=F(6.62))
+cap("h5", "vo", 5.20, 6.62, "for the first %time.", size=96, pos=(960, 520), end=F(6.62), scrim=0.45)
 # C. the wait
 cap("b1", "vo", 6.62, 7.52, "GTA 6 took", size=96, pos=(470, 540), end=F(8.51), drift=16)
 cap("b2", "vo", 7.52, 8.51, "^13@132 years", size=96, pos=(1460, 540), end=F(8.51), drift=16)
@@ -217,20 +217,20 @@ cap("b7", "vo", 14.91, 16.58, "and then again to #November.", pos=(960, 120), en
 cap("b8", "vo", 16.58, 19.20, "And yet, | *nobody seems to have moved on.", size=64, pos=(960, 300), end=F(19.20),
     layout="stack", scrim=0.45)
 cap("b9", "vo", 19.20, 20.38, "But !why?", size=118, pos=(960, 540), end=F(20.38), ink="dark", drift=24)
-cap("b10", "vo", 20.38, 21.97, "Why are grown adults waiting", pos=(960, 880), end=F(21.97))
+cap("b10", "vo", 20.38, 21.97, "Why are grown adults waiting", pos=(960, 945), end=F(21.97))   # v2: on the TV stand, under the screen
 cap("b11", "vo", 22.37, 22.70, "years", size=96, pos=(1180, 650), end=F(22.70), drift=0)   # + the 2013 -> 2026 roller
-cap("b12", "vo", 22.70, 24.87, "for a game that's *supposedly just about", pos=(960, 880), end=F(24.87))
+cap("b12", "vo", 22.70, 24.87, "for a game that's *supposedly just about", pos=(960, 880), end=F(24.87), scrim=0.5)
 cap("b13", "vo", 24.87, 25.94, "%stealing cars?", size=96, pos=(960, 540), end=F(25.94))
 cap("b14", "vo", 25.94, 27.97, "Because GTA was | *never just about", size=96, pos=(960, 520), end=F(27.97),
     layout="stack", drift=0, scrim=0.55)
 cap("b15", "vo", 27.97, 28.27, "!cars", size=132, pos=(960, 540), end=F(28.27), drift=0)
 cap("b16", "vo", 28.27, 29.06, "and !guns.@132", size=96, pos=(960, 540), end=F(29.06))
-cap("b17", "vo", 29.06, 31.12, "It was about what it really gave you.", pos=(960, 880), end=F(31.12))
+cap("b17", "vo", 29.06, 31.12, "It was about what it really gave you.", pos=(960, 880), end=F(31.12), scrim=0.45)
 cap("b18", "vo", 31.12, 32.24, "!Freedom.", size=132, pos=(960, 540), end=F(32.24), drift=14)
 # F. the kid
 cap("k1", "vo", 32.24, 33.77, "Back to being | ^10 years old,", size=64, pos=(960, 500), end=F(33.77), layout="stack", l2=96)
-cap("k2", "vo", 33.77, 35.64, "sitting in front of | the *family *computer,", size=64, pos=(960, 935), end=F(35.64),
-    layout="stack", l2=84)
+cap("k2", "vo", 33.77, 35.64, "sitting in front of | the *family *computer,", size=64, pos=(960, 930), end=F(35.64),
+    layout="stack", l2=84)   # v2: on the dark desk under the smaller CRT
 cap("k3", "vo", 35.64, 36.40, "playing !Vice !City", size=96, pos=(960, 880), end=F(36.40))
 cap("k4", "vo", 36.40, 38.16, "with the volume turned all the way down", pos=(960, 880), end=F(38.16))
 cap("k5", "vo", 38.16, 40.40, "so nobody could hear | the *gunshots.", size=64, pos=(960, 800), end=F(40.40),
@@ -248,8 +248,8 @@ cap("k11", "vo", 50.32, 53.16, "It was everything you imagined | *adulthood woul
 cap("k12", "vo", 53.16, 54.56, "Driving %supercars,", size=96, pos=(960, 540), end=F(54.56))
 cap("k13", "vo", 54.56, 55.49, "firing %guns,", size=96, pos=(960, 540), end=F(55.49))
 cap("k14", "vo", 55.49, 56.58, "flying %planes,", size=96, pos=(960, 540), end=F(56.58))
-cap("k15", "vo", 56.58, 58.54, "and owning | an *entire !city.@132", size=64, pos=(960, 520), end=F(58.54),
-    layout="stack", l2=96)
+cap("k15", "vo", 56.58, 58.54, "and owning | an *entire !city.@132", size=64, pos=(960, 270), end=F(58.54),
+    layout="stack", l2=96, scrim=0.35)   # v2: over the skyline, clear of the blimp
 # H. the problem
 cap("p1", "vo", 58.54, 61.24, "And while every other game asks you | to be the *hero,", size=64, pos=(960, 820),
     end=F(61.24), layout="stack", l2=96)
@@ -260,18 +260,21 @@ cap("p4", "vo", 65.03, 67.38, "in a world that looks | just like *yours.", size=
     layout="stack", drift=0, l2=96, scrim=0.4)
 cap("p5", "vo", 67.38, 69.07, "And somewhere along the way,", pos=(960, 300), end=F(69.07))
 cap("p6", "vo", 69.07, 70.38, "those kids | *grew *up.", size=64, pos=(960, 820), end=F(70.38), layout="stack", l2=118)
-cap("p7", "vo", 70.38, 72.70, "Today, | it's the exact *opposite.", size=64, pos=(960, 520), end=F(72.70), layout="stack", l2=96)
+cap("p7", "vo", 70.38, 72.70, "Today, | it's the exact *opposite.", size=64, pos=(960, 520), end=F(72.70), layout="stack", l2=96,
+    scrim=0.4)
 cap("p8", "vo", 72.70, 74.48, "It's an escape from | ~*adulthood,", size=64, pos=(960, 520), end=F(74.48), layout="stack",
     l2=118)
 cap("p9", "vo", 74.48, 77.34, "back to the world | they once dreamed of living in.", size=64, pos=(960, 820),
     end=F(77.34), layout="stack", l2=84)
 # J. back to Vice City
-cap("v1", "vo", 77.34, 78.89, "And on | #November ^19th,", size=64, pos=(960, 260), end=F(78.89), layout="stack", l2=96)
+cap("v1", "vo", 77.34, 78.89, "And on | #November ^19th,", size=64, pos=(960, 880), end=F(78.89), layout="stack", l2=96,
+    scrim=0.35)   # v2: under the billboard's own NOVEMBER 19
 cap("v2", "vo", 78.89, 81.04, "Rockstar takes you back to | !Vice !City,", size=64, pos=(960, 840), end=F(81.04),
-    layout="stack", l2=132)
-cap("v3", "vo", 81.04, 83.06, "the city where | it all *started.", size=64, pos=(960, 840), end=F(83.06), layout="stack", l2=96)
+    layout="stack", l2=132, scrim=0.45)
+cap("v3", "vo", 81.04, 83.06, "the city where | it all *started.", size=64, pos=(960, 840), end=F(83.06), layout="stack", l2=96,
+    scrim=0.4)
 cap("v4", "vo", 83.06, 85.63, "So if you're still lost in | *Los *Santos this week,", size=64, pos=(960, 840),
-    end=F(85.63), layout="stack", l2=84)
+    end=F(85.63), layout="stack", l2=84, scrim=0.4)
 cap("v5", "vo", 85.63, 86.62, "=don't =rush.", size=96, pos=(960, 540), end=F(86.62), drift=12)
 cap("v6", "vo", 86.62, 88.42, "=Take =the =long =way =home.", size=96, pos=(960, 540), end=F(88.42), drift=16)
 cap("v7", "vo", 88.42, 89.42, "=Drive =slow.", size=96, pos=(960, 540), end=F(89.42), drift=12)

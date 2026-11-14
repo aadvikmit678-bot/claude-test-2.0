@@ -42,6 +42,57 @@ def esc(s):
     return html.escape(s, quote=True)
 
 
+def all_cuts():
+    """Every cut in film time: beat starts and the hard cuts inside multi-segment beats (frame-snapped)."""
+    c = set()
+    for b in edit.S:
+        c.add(fr(b["a"]))
+        a = b["a"]
+        for seg in b.get("segs") or []:
+            if seg[2] is not None:
+                c.add(fr(seg[2]))
+    return sorted(c)
+
+
+CUTS = all_cuts()
+
+
+def cut_in(lo, hi):
+    """The first cut c with lo < c <= hi, or None."""
+    for c in CUTS:
+        if lo < c <= hi + 1e-9:
+            return c
+    return None
+
+
+def last_cut_at_or_before(t):
+    best = 0.0
+    for c in CUTS:
+        if c <= t + 1e-9:
+            best = c
+    return best
+
+
+_FONT_TTF = {False: "/mnt/skills/examples/canvas-design/canvas-fonts/InstrumentSerif-Regular.ttf",
+             True: "/mnt/skills/examples/canvas-design/canvas-fonts/InstrumentSerif-Italic.ttf"}
+_FONTS = {}
+
+
+def text_w(txt, size, italic=False):
+    """Advance width of a word in Instrument Serif at `size` px (PIL with the TTF; an estimate without it)."""
+    try:
+        from PIL import ImageFont
+        key = (italic, int(round(size)))
+        if key not in _FONTS:
+            _FONTS[key] = ImageFont.truetype(_FONT_TTF[italic], key[1])
+        return _FONTS[key].getlength(txt) * (0.98 if italic else 0.99)   # the -0.01/-0.02 em tracking
+    except Exception:
+        return len(txt) * size * 0.40
+
+
+HALO = ", 0 0 3px rgba(0,0,0,0.32), 0 0 18px rgba(0,0,0,0.42)"   # v2: a dark halo under the glow on scrimmed groups
+
+
 def beat_at(t):
     for b in edit.S:
         if b["a"] - 1e-6 <= t < b["b"] - 1e-6:
@@ -76,7 +127,7 @@ def build_captions():
   #root .cg {{ position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }}
   #root .anchor {{ position: absolute; transform: translate(-50%, -50%); }}
   #root .drift {{ position: relative; }}
-  #root .ln {{ white-space: nowrap; line-height: 1.0; font-family: 'Instrument Serif'; font-weight: 400; letter-spacing: -0.01em; }}
+  #root .ln {{ position: relative; white-space: nowrap; line-height: 1.0; font-family: 'Instrument Serif'; font-weight: 400; letter-spacing: -0.01em; }}
   #root .w {{ display: inline-block; position: relative; }}
   #root .wt {{ display: inline-block; position: relative; opacity: 0; -webkit-text-stroke: var(--sw, 0px) currentColor; paint-order: stroke fill; }}
   #root .it {{ font-style: italic; letter-spacing: -0.02em; }}
@@ -87,17 +138,21 @@ def build_captions():
   #root .sk {{ position: absolute; left: 0; right: 0; top: -0.30em; bottom: -0.30em; opacity: 0;
     background: repeating-linear-gradient(90deg, rgba(255,255,255,0.95) 0 3px, rgba(255,255,255,0) 3px 10px); }}
   #root .yi {{ display: inline-block; line-height: 0.8; }}
-  #root .scrim {{ position: absolute; width: 1500px; height: 560px; }}
+  #root .scrim {{ position: absolute; pointer-events: none; }}
   #root .cnv {{ position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); white-space: nowrap; line-height: 1;
     font-family: 'Instrument Serif'; letter-spacing: -0.01em; color: {INK}; }}
   #root .cnt {{ display: inline-block; opacity: 0; text-shadow: {SERIF_REST}; }}
 """
-    prev = []
+    prev, spans_t = [], []
     for g in edit.C:
         gid = g["id"]
         dark = g["ink"] == "dark"
         INKc = DARK if dark else INK
         REST, BLOOM, SOFT = (D_REST, D_BLOOM, D_SOFT) if dark else (SERIF_REST, SERIF_BLOOM, SERIF_SOFT)
+        halo = bool(g.get("scrim")) and not dark
+        if halo:
+            REST, SOFT = REST + HALO, SOFT + HALO
+        HHALO = HERO_HALO + (HALO if halo else "")
         lines, cur = [], []
         toks = g["text"].split()
         wi = 0
@@ -107,16 +162,25 @@ def build_captions():
                 continue
             cur.append((tok, g["words"][wi])); wi += 1
         lines.append(cur)
-        a_first = fr(max(0.0, g["words"][0][1] - F1))
-        t0 = fr(max(a_first - 4 * F1, beat_at(a_first)["a"], 0.0))
-        for pend, py in prev:          # the group before, in the same band, still showing: the square waits for it
-            if abs(py - g["pos"][1]) < 260 and t0 < pend <= a_first + 3 * F1:
-                t0 = fr(min(pend, a_first))
-        prev.append((fr(g["end"]), g["pos"][1]))
+        t_sp = g["words"][0][1]
+        a_first = fr(max(0.0, t_sp - F1))
+        c = cut_in(a_first - 1e-6, fr(t_sp + F1))
+        if c is not None:              # v2: the first word is spoken on a cut: the group starts on the cut, no square
+            a_first = t0 = c
+        else:
+            t0 = fr(max(a_first - 4 * F1, last_cut_at_or_before(a_first), 0.0))
+        for pend, py, px, pid in prev:  # a group still showing that ends during this one's lead-in: this one waits
+            if t0 < pend - 1e-6:
+                if pend <= a_first + 3 * F1 + 1e-6:
+                    t0 = fr(pend); a_first = fr(max(a_first, t0))
+                elif abs(py - g["pos"][1]) < 260 and abs(px - g["pos"][0]) < 700:
+                    print(f"WARNING: {gid} overlaps {pid} by {pend - t0:.2f}s in the same place")
+        prev.append((fr(g["end"]), g["pos"][1], g["pos"][0], gid))
+        spans_t.append((gid, t0, fr(g["end"]), g["pos"][1]))
         t1 = fr(g["end"])
         assert t1 > t0, (gid, t0, t1)
         x, y = g["pos"]
-        lines_html = []
+        lines_html, line_ws = [], []
         for li, line in enumerate(lines):
             size = g["size"] if li == 0 or not g.get("l2") else g["l2"]
             style = f"font-size:{size}px;"
@@ -141,9 +205,16 @@ def build_captions():
                 spans.append(f'<span id="{sid}" class="{cls}" style="{wsty}"><span id="{sid}-f" class="{flc}"></span>{extra}'
                              f'<span id="{sid}-t" class="wt" style="color:{INKc};text-shadow:{REST}">{inner}</span></span>')
                 a = fr(max(t0, t - F1))
+                c = cut_in(a - 1e-6, fr(t + F1))
+                if c is not None:          # v2: a word spoken on a cut appears on the cut, not a frame before it
+                    a = c
+                a = fr(max(a, t0))
                 T = f"#{sid}-t"
                 if kind == "serif":
                     b0 = fr(max(t0, a - 4 * F1))
+                    cb = cut_in(b0, a - 1e-6)
+                    if cb is not None:     # v2: the square stays inside the word's own shot
+                        b0 = cb
                     if a - b0 >= 2 * F1 - 1e-6:
                         js += [f'tl.set("#{sid}-f", {{ opacity: 1, filter: "blur(3px)" }}, {r3(b0)});',
                                f'tl.set("#{sid}-f", {{ filter: "blur(0px)" }}, {r3(b0 + F1)});',
@@ -155,7 +226,7 @@ def build_captions():
                     js += [f'tl.set("{T}", {{ opacity: 1, scale: 1.04, filter: "blur(14px)", textShadow: "{BLOOM}" }}, {r3(a)});',
                            f'tl.set("{T}", {{ scale: 1.015, filter: "blur(5px)", textShadow: "{SOFT}" }}, {r3(a + F1)});',
                            f'tl.set("{T}", {{ scale: 1.005, filter: "blur(2.5px)" }}, {r3(a + 3 * F1)});',
-                           f'tl.set("{T}", {{ scale: 1, filter: "blur(0px)", textShadow: "{REST if dark else HERO_HALO if kind == "hero" and size >= 118 else REST}" }}, {r3(a + 4 * F1)});']
+                           f'tl.set("{T}", {{ scale: 1, filter: "blur(0px)", textShadow: "{REST if dark else HHALO if kind == "hero" and size >= 118 else REST}" }}, {r3(a + 4 * F1)});']
                     if kind == "yr" and len(word) >= 2:
                         for f_, on in ((6, 1), (8, 0), (10, 1), (11, 0)):
                             if a + f_ * F1 < t1 - 1e-6:
@@ -166,7 +237,7 @@ def build_captions():
                            f'tl.set("{T}", {{ opacity: 1, color: "{INK if dark else "#0b0b0b"}", textShadow: "none" }}, {r3(a)});',
                            f'tl.set("#{sid}-f", {{ opacity: 0 }}, {r3(a + 2 * F1)});',
                            f'tl.set("{T}", {{ color: "{INKc}", filter: "blur(7px)", textShadow: "{BLOOM if dark else HERO_BLOWN}" }}, {r3(a + 2 * F1)});',
-                           f'tl.set("{T}", {{ filter: "blur(0px)", textShadow: "{REST if dark else HERO_HALO}" }}, {r3(a + 3 * F1)});']
+                           f'tl.set("{T}", {{ filter: "blur(0px)", textShadow: "{REST if dark else HHALO}" }}, {r3(a + 3 * F1)});']
                 elif kind == "streak":
                     js += [f'tl.set("#{sid}-s", {{ opacity: 1, scaleY: 1.8 }}, {r3(a)});',
                            f'tl.set("#{sid}-s", {{ opacity: 0.8, scaleY: 1.3 }}, {r3(a + F1)});',
@@ -176,6 +247,9 @@ def build_captions():
                            f'tl.set("{T}", {{ filter: "blur(0px)", textShadow: "{REST}" }}, {r3(a + 5 * F1)});']
                 elif kind == "dnorm":
                     b0 = fr(max(t0, a - 2 * F1))
+                    cb = cut_in(b0, a - 1e-6)
+                    if cb is not None:
+                        b0 = cb
                     if a - b0 > 0.02:
                         js += [f'tl.set("#{sid}-f", {{ opacity: 1 }}, {r3(b0)});', f'tl.set("#{sid}-f", {{ opacity: 0 }}, {r3(a)});']
                     js += [f'tl.set("{T}", {{ opacity: 0.5, filter: "blur(1.5px)", textShadow: "{SOFT}" }}, {r3(a)});',
@@ -187,20 +261,42 @@ def build_captions():
                            f'tl.set("{T}", {{ filter: "blur(0px)", textShadow: "{REST}" }}, {r3(a + 3 * F1)});']
                 spans.append(" ")
             lines_html.append(f'<div class="ln" style="{style}">{"".join(spans).rstrip()}</div>')
+            lw = 0.0
+            for k, (tok, _) in enumerate(line):
+                wtxt = tok.lstrip("*!^#~=%")
+                wword, _, wsz = wtxt.partition("@")
+                wsize = float(wsz) if wsz else size
+                lw += text_w(wword, wsize, "*" in tok[:3]) + (0.25 * size if k else 0)
+            if g["layout"] == "stack" and li > 0:
+                lw += g["indent"] * size
+            line_ws.append((lw, max([size] + [float(t.partition("@")[2]) for t, _ in line if "@" in t])))
         scrim = ""
-        if g.get("scrim"):
-            s_ = g["scrim"]
-            scrim = (f'<div class="scrim" style="left:{x - 750}px;top:{y - 280}px;background:radial-gradient(closest-side, '
-                     f'rgba(6,5,4,{s_}) 0%, rgba(6,5,4,{round(s_ * 0.6, 2)}) 50%, rgba(6,5,4,0) 100%)"></div>')
+        bw = max(w for w, _ in line_ws)
+        bh = sum(h for _, h in line_ws) * 0.92
+        mx = max(h for _, h in line_ws)
+        if bw / 2 > 960 - 96 or (g["layout"] != "stack" and abs(x - 960) + bw / 2 > 960 - 96):
+            print(f"WARNING: {gid} is {bw:.0f}px wide; it leaves the 90% safe area")
+        if g.get("scrim"):               # v2: a tight soft shadow behind the words, moving with them
+            s_ = g["scrim"] * 0.85
+            W_, H_ = int(bw + 2.4 * mx), int(bh + 1.9 * mx)
+            scrim = (f'<div class="scrim" style="left:50%;top:50%;margin-left:{-W_ // 2}px;margin-top:{-H_ // 2}px;width:{W_}px;'
+                     f'height:{H_}px;background:radial-gradient(closest-side, rgba(6,5,4,{s_:.2f}) 0%, rgba(6,5,4,{s_ * 0.72:.2f}) 38%, '
+                     f'rgba(6,5,4,{s_ * 0.3:.2f}) 68%, rgba(6,5,4,0) 100%)"></div>')
         align = "left" if g["layout"] == "stack" else "center"
         els.append(f'<div id="{gid}" class="clip cg{" dk" if dark else ""}" data-start="{r3(t0)}" data-duration="{r3(t1 - t0)}" '
-                   f'data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>{scrim}'
-                   f'<div class="anchor" style="left:{x}px;top:{y}px;text-align:{align}"><div id="{gid}-d" class="drift">'
+                   f'data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>'
+                   f'<div class="anchor" style="left:{x}px;top:{y}px;text-align:{align}"><div id="{gid}-d" class="drift">{scrim}'
                    f'{"".join(lines_html)}</div></div></div>')
         if g["drift"]:
             d = t1 - t0
             js.append(f'tl.fromTo("#{gid}-d", {{ x: 0 }}, {{ x: {-g["drift"] * d:.1f}, duration: {r3(d)}, ease: "none", '
                       f'immediateRender: false }}, {r3(t0)});')
+    ok_pairs = {("c1", "c2"), ("b1", "b2"), ("n3", "n3b"), ("b3", "b3b")}
+    for i, (ga, a0, a1, ay) in enumerate(spans_t):
+        for gb, b0_, b1_, by in spans_t[i + 1:]:
+            ov = min(a1, b1_) - max(a0, b0_)
+            if ov > 1.5 * F1 and (ga, gb) not in ok_pairs:
+                print(f"NOTE: {ga} and {gb} are both on screen for {ov:.2f}s")
     # counters: a number rolling in place, fast then slowing, the last value landing with the hero bloom
     for cid, start, land, values, x, y, size, end in edit.COUNTERS:
         start, land, end = fr(start), fr(land), fr(end)
@@ -402,26 +498,26 @@ def scene_crt(b):
     d = b["b"] - b["a"]
     jc = fr(edit.F(34.81) - b["a"])            # jump cut in on "family"
     css = """  #root { background: radial-gradient(ellipse at 50% 38%, #2a2018 0%, #120d09 55%, #050403 100%); }
-  #root .desk { position: absolute; left: 0; top: 900px; width: 1920px; height: 180px; background: linear-gradient(180deg, #3a2a1c 0%, #1c140d 100%); }
-  #root .cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 50% 46%; }
-  #root .crt { position: absolute; left: 400px; top: 70px; width: 1120px; height: 860px; border-radius: 40px;
+  #root .desk { position: absolute; left: 0; top: 720px; width: 1920px; height: 360px; background: linear-gradient(180deg, #3a2a1c 0%, #1c140d 45%, #0d0906 100%); }
+  #root .cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 50% 36%; }
+  #root .crt { position: absolute; left: 512px; top: 50px; width: 896px; height: 688px; border-radius: 32px;
     background: linear-gradient(160deg, #e3dccb 0%, #cfc6b1 55%, #b3a990 100%);
     box-shadow: 0 40px 90px rgba(0,0,0,0.7), inset 0 -10px 30px rgba(0,0,0,0.25), inset 0 6px 14px rgba(255,255,255,0.5); }
-  #root .bez { position: absolute; left: 60px; top: 50px; width: 1000px; height: 760px; border-radius: 30px; background: #1d1c1a;
+  #root .bez { position: absolute; left: 48px; top: 40px; width: 800px; height: 608px; border-radius: 24px; background: #1d1c1a;
     box-shadow: inset 0 0 30px rgba(0,0,0,0.9); }
-  #root .scr { position: absolute; left: 20px; top: 20px; width: 960px; height: 720px; border-radius: 26px; overflow: hidden; background: #000; }
-  #root .scr video { position: absolute; left: 0; top: 0; width: 960px; height: 720px; object-fit: cover; }
+  #root .scr { position: absolute; left: 16px; top: 16px; width: 768px; height: 576px; border-radius: 20px; overflow: hidden; background: #000; }
+  #root .scr video { position: absolute; left: 0; top: 0; width: 768px; height: 576px; object-fit: cover; }
   #root .lines { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(0,0,0,0.22) 0px, rgba(0,0,0,0.22) 2px, rgba(0,0,0,0) 2px, rgba(0,0,0,0) 4px); }
   #root .glare { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 45%),
     radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.55) 100%); }
-  #root .led { position: absolute; left: 990px; top: 826px; width: 12px; height: 12px; border-radius: 6px; background: #5dff7a; box-shadow: 0 0 10px #5dff7a; }
+  #root .led { position: absolute; left: 792px; top: 661px; width: 12px; height: 12px; border-radius: 6px; background: #5dff7a; box-shadow: 0 0 10px #5dff7a; }
 """
     body = (f'    <div id="crtbox" class="box">'
             f'<div class="desk"></div><div id="crtcam" class="cam"><div class="crt"><div class="bez"><div class="scr">'
             f'<video id="crtv" class="clip" src="assets/clips/l_crt.mp4" muted playsinline data-start="0" data-duration="{r3(d)}" '
             f'data-track-index="2" data-media-start="0" data-hf-media-start-basis="local"></video><div class="lines"></div><div class="glare"></div></div></div>'
             f'<div class="led"></div></div></div></div>')
-    js = [f'tl.set("#crtcam", {{ scale: 1.32, y: 40 }}, {r3(jc)});']
+    js = [f'tl.set("#crtcam", {{ scale: 1.32 }}, {r3(jc)});']
     comp_file(f"sc_{b['id']}", css, body, js, d)
 
 
@@ -457,7 +553,7 @@ def scene_notebook(b):
             f'</div><div id="nbphoto" class="photo" style="opacity:0"><img src="assets/img/tank.jpg"></div><div id="nbpin" class="pin"></div>'
             f'</div><div class="vig"></div></div>')
     js = [f'tl.fromTo("#nbasp", {{ clipPath: "inset(0% 100% 0% 0%)" }}, {{ clipPath: "inset(0% 0% 0% 0%)", duration: 0.36, ease: "none", immediateRender: false }}, {r3(asp)});',
-          f'tl.set("#nbcam", {{ scale: 1.65, x: -60, y: -260 }}, {r3(close_in)});',
+          f'tl.set("#nbcam", {{ scale: 1.65, x: -60, y: -300 }}, {r3(close_in)});',
           f'tl.fromTo("#nbpz", {{ clipPath: "inset(0% 100% 0% 0%)" }}, {{ clipPath: "inset(0% 0% 0% 0%)", duration: 0.30, ease: "none", immediateRender: false }}, {r3(pz)});',
           f'tl.fromTo("#nbul", {{ scaleX: 0 }}, {{ scaleX: 1, duration: 0.16, ease: "none", immediateRender: false }}, {r3(pz + 0.30)});',
           f'tl.set("#nbcam", {{ scale: 1, x: 0, y: 0 }}, {r3(close_out)});',
@@ -496,8 +592,8 @@ def scene_split(b):
   #root .half video { position: absolute; left: 0; top: 0; width: 960px; height: 1080px; object-fit: cover; }
   #root .seam { position: absolute; left: 957px; top: 0; width: 6px; height: 1080px; background: #FBF8EC;
     box-shadow: 0 0 14px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,0.4); }
-  #root .lab { position: absolute; top: 120px; font-family: 'Instrument Serif'; font-style: italic; font-size: 52px; color: #FBF8EC;
-    text-shadow: 0 0 14px rgba(255,255,255,0.62), 0 0 42px rgba(255,255,255,0.30), 0 3px 10px rgba(0,0,0,0.5); white-space: nowrap; }
+  #root .lab { position: absolute; top: 915px; font-family: 'Instrument Serif'; font-style: italic; font-size: 52px; color: #FBF8EC;
+    text-shadow: 0 0 14px rgba(255,255,255,0.62), 0 0 42px rgba(255,255,255,0.30), 0 0 4px rgba(0,0,0,0.4), 0 0 22px rgba(0,0,0,0.55); white-space: nowrap; }
 """
     body = (f'    <div id="spbox" class="box">'
             f'<div class="half" style="left:0"><video id="spl" class="clip" src="assets/clips/l_spl.mp4" muted playsinline data-start="0" data-duration="{r3(d)}" data-track-index="2" data-media-start="0" data-hf-media-start-basis="local"></video></div>'

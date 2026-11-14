@@ -8,19 +8,19 @@
   #root { position: absolute; inset: 0; overflow: hidden; }
   #root .box { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
   #root { background: radial-gradient(ellipse at 50% 38%, #2a2018 0%, #120d09 55%, #050403 100%); }
-  #root .desk { position: absolute; left: 0; top: 900px; width: 1920px; height: 180px; background: linear-gradient(180deg, #3a2a1c 0%, #1c140d 100%); }
-  #root .cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 50% 46%; }
-  #root .crt { position: absolute; left: 400px; top: 70px; width: 1120px; height: 860px; border-radius: 40px;
+  #root .desk { position: absolute; left: 0; top: 720px; width: 1920px; height: 360px; background: linear-gradient(180deg, #3a2a1c 0%, #1c140d 45%, #0d0906 100%); }
+  #root .cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 50% 36%; }
+  #root .crt { position: absolute; left: 512px; top: 50px; width: 896px; height: 688px; border-radius: 32px;
     background: linear-gradient(160deg, #e3dccb 0%, #cfc6b1 55%, #b3a990 100%);
     box-shadow: 0 40px 90px rgba(0,0,0,0.7), inset 0 -10px 30px rgba(0,0,0,0.25), inset 0 6px 14px rgba(255,255,255,0.5); }
-  #root .bez { position: absolute; left: 60px; top: 50px; width: 1000px; height: 760px; border-radius: 30px; background: #1d1c1a;
+  #root .bez { position: absolute; left: 48px; top: 40px; width: 800px; height: 608px; border-radius: 24px; background: #1d1c1a;
     box-shadow: inset 0 0 30px rgba(0,0,0,0.9); }
-  #root .scr { position: absolute; left: 20px; top: 20px; width: 960px; height: 720px; border-radius: 26px; overflow: hidden; background: #000; }
-  #root .scr video { position: absolute; left: 0; top: 0; width: 960px; height: 720px; object-fit: cover; }
+  #root .scr { position: absolute; left: 16px; top: 16px; width: 768px; height: 576px; border-radius: 20px; overflow: hidden; background: #000; }
+  #root .scr video { position: absolute; left: 0; top: 0; width: 768px; height: 576px; object-fit: cover; }
   #root .lines { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(0,0,0,0.22) 0px, rgba(0,0,0,0.22) 2px, rgba(0,0,0,0) 2px, rgba(0,0,0,0) 4px); }
   #root .glare { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 45%),
     radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.55) 100%); }
-  #root .led { position: absolute; left: 990px; top: 826px; width: 12px; height: 12px; border-radius: 6px; background: #5dff7a; box-shadow: 0 0 10px #5dff7a; }
+  #root .led { position: absolute; left: 792px; top: 661px; width: 12px; height: 12px; border-radius: 6px; background: #5dff7a; box-shadow: 0 0 10px #5dff7a; }
 
   </style>
   <div id="root" data-composition-id="sc_s27" data-width="1920" data-height="1080">
@@ -29,7 +29,7 @@
   <script>
     const tl = gsap.timeline({ paused: true });
     tl.to({}, { duration: 1.870 }, 0);
-    tl.set("#crtcam", { scale: 1.32, y: 40 }, 1.033);
+    tl.set("#crtcam", { scale: 1.32 }, 1.033);
     window.__timelines["sc_s27"] = tl;
   </script>
 </template>

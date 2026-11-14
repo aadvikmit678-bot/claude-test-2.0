@@ -1,5 +1,15 @@
 # GTA 6 edit: review
 
+## v2 (the delivered cut): v1 reviewed frame by frame on the render, every defect fixed
+v1 was rendered, then read at 5 fps on 28 labelled sheets against the cue sheet (`gta6-work/review/v1/`), with full-resolution frames wherever something looked off. What was wrong in v1 and what v2 does:
+- **Captions a frame early on a cut** ("millions", "for", "because", "never", "Drive"): every word spoken on a cut now appears on the cut, and a word's square never straddles a cut (the builder knows every cut, internal ones included).
+- **Two caption groups on screen at once** ("Take the long way home." under "Drive"; the "don't rush." square under "Los Santos"): a group now waits for any group that ends during its lead-in; the builder reports any other overlap.
+- **Unreadable lines on bright picture**: "That's exactly how" moved off CJ's white vest onto the alley wall; "Why are grown adults waiting" moved off the TV's menu onto the TV stand (the shot is now the Vice City title screen); the CRT is smaller so "sitting in front of the family computer" sits on the dark desk; "and owning an entire city" moved above the blimp; "And on November 19th" moved under the billboard's own NOVEMBER 19; scrims on "millions of adults", "for the first time", "for a game that's supposedly", "It was about what it really gave you", "Today, it's the exact opposite", the Vice City lines and "So if you're still lost in Los Santos".
+- **Grey smudges on white frames** (the old 1500 px scrim): scrims are now sized to the words, move with them, and scrimmed words get a dark halo under the glow, so they read on white without a grey cloud.
+- **Footage**: the remaster shot no longer carries "A ROCKSTAR NORTH PRODUCTION" (the clip had not been re-cut after its in-point changed; prep now re-cuts any shot whose spec changed); "For a kid" is all 2013 now (Michael hands over GTA V, the boy with the box) instead of a shot labelled 2026; the cave diver no longer appears twice (the jet ski replaces it in "what it really gave you"); "escape," lands on the dark nebula; the PANZER close-up clears ASPIRINE; the split's "Vice City" label reads (both labels sit low over the dark city).
+
+**Checked**: lint 0 errors; `check` ok (runtime, layout, motion, contrast, audio clean; craft only notes the TV volume counter's numbers ticking 16 to 0, which is the intended motion); 31 moments re-snapshotted after the fixes; the v2 render read back at the fixed moments. Sound unchanged from v1 (-16.0 LUFS, -0.9 dBFS peak).
+
 ## v1 (110 s, 1920x1080, 30 fps)
 Built from `tools/edit.py` (cut, captions, transitions, sound) by `tools/prep.py` (clips, stills, audio) and `tools/build.py` (the HyperFrames project); `tools/mix.py` writes the delivered mix.
 

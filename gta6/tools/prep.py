@@ -201,19 +201,39 @@ def assets():
     return "assets"
 
 
+SPECS = f"{CLIPS}/.specs.json"
+
+
+def spec_key(x):
+    """What a clip is cut from: if this changes, the clip is stale (v2: a changed in-point is never left uncut)."""
+    import hashlib, json as _j
+    keep = {k: x[k] for k in sorted(x) if k not in ("id",)}
+    return hashlib.sha1(_j.dumps(keep, sort_keys=True, default=str).encode()).hexdigest()[:16]
+
+
 if __name__ == "__main__":
+    import json as _j
     os.makedirs(CLIPS, exist_ok=True)
     os.makedirs(f"{PROJ}/assets/img", exist_ok=True)
-    only = set(sys.argv[1:])
-    jobs = [b for b in edit.S if b.get("segs") and (not only or b["id"] in only)]
-    lay = [l for l in edit.LAYERS if not only or l["id"] in only]
+    only = set(sys.argv[1:]) - {"--stale"}
+    stale_only = "--stale" in sys.argv[1:]
+    old = _j.load(open(SPECS)) if os.path.exists(SPECS) else {}
+    def wanted(x):
+        if only:
+            return x["id"] in only
+        if stale_only:
+            return old.get(x["id"]) != spec_key(x) or not os.path.exists(f"{CLIPS}/{x['id']}.mp4")
+        return True
+    jobs = [b for b in edit.S if b.get("segs") and wanted(b)]
+    lay = [l for l in edit.LAYERS if wanted(l)]
+    print("cutting:", " ".join(x["id"] for x in jobs + lay) or "(nothing stale)")
     with ThreadPoolExecutor(4) as ex:
         futs = [ex.submit(make, b) for b in jobs] + [ex.submit(make_layer, l) for l in lay]
-        if not only or "stills" in only:
+        if (not only and not stale_only) or "stills" in only:
             futs += [ex.submit(make_still, k, *v) for k, v in edit.STILLS.items()]
-        if not only or "s02" in only:
+        if (not only and not stale_only) or "s02" in only:
             futs.append(ex.submit(make_static))
-        if not only or "assets" in only:
+        if (not only and not stale_only) or "assets" in only:
             futs.append(ex.submit(assets))
         bad = 0
         for f in futs:
@@ -221,3 +241,7 @@ if __name__ == "__main__":
             if isinstance(r, tuple) and r[1] != r[2]:
                 print("FRAME MISMATCH", r); bad += 1
         print("done", len(futs), "jobs,", bad, "mismatches")
+    new = dict(old)
+    for x in jobs + lay:
+        new[x["id"]] = spec_key(x)
+    _j.dump(new, open(SPECS, "w"), indent=0, sort_keys=True)
