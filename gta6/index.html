@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #050505; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+      #bg { position: absolute; inset: 0; background: #050505; }
+      .v { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; object-fit: cover; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="110.000" data-width="1920" data-height="1080">
+      <div id="bg"></div>
+      <video id="v_s01" class="clip v" src="assets/clips/s01.mp4" muted playsinline data-start="0.000" data-duration="6.533" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s02" class="clip v" src="assets/clips/s02.mp4" muted playsinline data-start="6.533" data-duration="0.200" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s03" class="clip v" src="assets/clips/s03.mp4" muted playsinline data-start="6.733" data-duration="3.534" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s04" class="clip v" src="assets/clips/s04.mp4" muted playsinline data-start="10.267" data-duration="1.766" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s05" class="clip v" src="assets/clips/s05.mp4" muted playsinline data-start="12.033" data-duration="1.234" data-media-start="0" data-track-index="1"></video>
+      <div id="h_s06" class="clip" data-composition-id="sc_s06" data-composition-src="compositions/sc_s06.html" data-start="13.267" data-duration="1.200" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:5"></div>
+      <video id="v_s07" class="clip v" src="assets/clips/s07.mp4" muted playsinline data-start="14.467" data-duration="1.400" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s08" class="clip v" src="assets/clips/s08.mp4" muted playsinline data-start="15.867" data-duration="1.900" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s09" class="clip v" src="assets/clips/s09.mp4" muted playsinline data-start="17.767" data-duration="1.800" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s10" class="clip v" src="assets/clips/s10.mp4" muted playsinline data-start="19.567" data-duration="0.833" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s11" class="clip v" src="assets/clips/s11.mp4" muted playsinline data-start="20.400" data-duration="1.300" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s12" class="clip v" src="assets/clips/s12.mp4" muted playsinline data-start="21.700" data-duration="1.100" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s13" class="clip v" src="assets/clips/s13.mp4" muted playsinline data-start="22.800" data-duration="1.367" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s14" class="clip v" src="assets/clips/s14.mp4" muted playsinline data-start="24.167" data-duration="1.666" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s15" class="clip v" src="assets/clips/s15.mp4" muted playsinline data-start="25.833" data-duration="2.634" data-media-start="0" data-track-index="1"></video>
+      <div id="h_s16" class="clip" data-composition-id="sc_s16" data-composition-src="compositions/sc_s16.html" data-start="28.467" data-duration="1.166" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:5"></div>
+      <video id="v_s17" class="clip v" src="assets/clips/s17.mp4" muted playsinline data-start="29.633" data-duration="1.600" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s18" class="clip v" src="assets/clips/s18.mp4" muted playsinline data-start="31.233" data-duration="0.734" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s19" class="clip v" src="assets/clips/s19.mp4" muted playsinline data-start="31.967" data-duration="2.166" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s20" class="clip v" src="assets/clips/s20.mp4" muted playsinline data-start="34.133" data-duration="1.067" data-media-start="0" data-track-index="1"></video>
+      <div id="h_s21" class="clip" data-composition-id="sc_s21" data-composition-src="compositions/sc_s21.html" data-start="35.200" data-duration="2.033" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:5"></div>
+      <video id="v_s22" class="clip v" src="assets/clips/s22.mp4" muted playsinline data-start="37.233" data-duration="0.300" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s23" class="clip v" src="assets/clips/s23.mp4" muted playsinline data-start="37.533" data-duration="0.800" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s24" class="clip v" src="assets/clips/s24.mp4" muted playsinline data-start="38.333" data-duration="2.034" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s25" class="clip v" src="assets/clips/s25.mp4" muted playsinline data-start="40.367" data-duration="1.133" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s26" class="clip v" src="assets/clips/s26.mp4" muted playsinline data-start="41.500" data-duration="1.533" data-media-start="0" data-track-index="1"></video>
+      <div id="h_s27" class="clip" data-composition-id="sc_s27" data-composition-src="compositions/sc_s27.html" data-start="43.033" data-duration="1.867" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:5"></div>
+      <video id="v_s28" class="clip v" src="assets/clips/s28.mp4" muted playsinline data-start="44.900" data-duration="0.767" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s29" class="clip v" src="assets/clips/s29.mp4" muted playsinline data-start="45.667" data-duration="1.766" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s30" class="clip v" src="assets/clips/s30.mp4" muted playsinline data-start="47.433" data-duration="2.234" data-media-start="0" data-track-index="1"></video>
+      <div id="h_s31" class="clip" data-composition-id="sc_s31" data-composition-src="compositions/sc_s31.html" data-start="49.667" data-duration="4.100" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:5"></div>
+      <video id="v_s32" class="clip v" src="assets/clips/s32.mp4" muted playsinline data-start="53.767" data-duration="2.233" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s33" class="clip v" src="assets/clips/s33.mp4" muted playsinline data-start="56.000" data-duration="1.967" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s34" class="clip v" src="assets/clips/s34.mp4" muted playsinline data-start="57.967" data-duration="1.600" data-media-start="0" data-track-index="1"></video>
+      <div id="h_s35" class="clip" data-composition-id="sc_s35" data-composition-src="compositions/sc_s35.html" data-start="59.567" data-duration="2.866" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:5"></div>
+      <video id="v_s36" class="clip v" src="assets/clips/s36.mp4" muted playsinline data-start="62.433" data-duration="5.367" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s37" class="clip v" src="assets/clips/s37.mp4" muted playsinline data-start="67.800" data-duration="2.700" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s38" class="clip v" src="assets/clips/s38.mp4" muted playsinline data-start="70.500" data-duration="2.467" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s39" class="clip v" src="assets/clips/s39.mp4" muted playsinline data-start="72.967" data-duration="1.333" data-media-start="0" data-track-index="1"></video>
+      <div id="h_s40" class="clip" data-composition-id="sc_s40" data-composition-src="compositions/sc_s40.html" data-start="74.300" data-duration="2.333" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:5"></div>
+      <video id="v_s41" class="clip v" src="assets/clips/s41.mp4" muted playsinline data-start="76.633" data-duration="1.700" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s42" class="clip v" src="assets/clips/s42.mp4" muted playsinline data-start="78.333" data-duration="1.300" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s43" class="clip v" src="assets/clips/s43.mp4" muted playsinline data-start="79.633" data-duration="2.334" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s44" class="clip v" src="assets/clips/s44.mp4" muted playsinline data-start="81.967" data-duration="1.766" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s45" class="clip v" src="assets/clips/s45.mp4" muted playsinline data-start="83.733" data-duration="2.867" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s46" class="clip v" src="assets/clips/s46.mp4" muted playsinline data-start="86.600" data-duration="1.533" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s47" class="clip v" src="assets/clips/s47.mp4" muted playsinline data-start="88.133" data-duration="2.167" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s48" class="clip v" src="assets/clips/s48.mp4" muted playsinline data-start="90.300" data-duration="2.033" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s49" class="clip v" src="assets/clips/s49.mp4" muted playsinline data-start="92.333" data-duration="3.534" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s50" class="clip v" src="assets/clips/s50.mp4" muted playsinline data-start="95.867" data-duration="1.800" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s51" class="clip v" src="assets/clips/s51.mp4" muted playsinline data-start="97.667" data-duration="1.000" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s52" class="clip v" src="assets/clips/s52.mp4" muted playsinline data-start="98.667" data-duration="2.400" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s53" class="clip v" src="assets/clips/s53.mp4" muted playsinline data-start="101.067" data-duration="1.300" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s54" class="clip v" src="assets/clips/s54.mp4" muted playsinline data-start="102.367" data-duration="1.666" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s55" class="clip v" src="assets/clips/s55.mp4" muted playsinline data-start="104.033" data-duration="1.434" data-media-start="0" data-track-index="1"></video>
+      <video id="v_s56" class="clip v" src="assets/clips/s56.mp4" muted playsinline data-start="105.467" data-duration="4.533" data-media-start="0" data-track-index="1"></video>
+      <div id="fx" class="clip" data-composition-id="fx" data-composition-src="compositions/fx.html" data-start="0" data-duration="110.000" data-track-index="3" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:30"></div>
+      <div id="captions" class="clip" data-composition-id="captions" data-composition-src="compositions/captions.html" data-start="0" data-duration="110.000" data-track-index="4" data-track-kind="captions" data-width="1920" data-height="1080" style="z-index:40"></div>
+      <div id="grain" class="clip" data-composition-id="grain" data-composition-src="compositions/grain.html" data-start="0" data-duration="110.000" data-track-index="5" data-width="1920" data-height="1080" style="z-index:50"></div>
+      <audio id="a_news" class="clip" src="assets/audio/news.wav" data-start="0.000" data-duration="6.700" data-media-start="0" data-volume="1" data-track-index="10"></audio>
+      <audio id="a_cj" class="clip" src="assets/audio/cj.wav" data-start="6.740" data-duration="2.450" data-media-start="0" data-volume="1" data-track-index="11"></audio>
+      <audio id="a_vo" class="clip" src="assets/audio/vo.wav" data-start="9.260" data-duration="96.440" data-media-start="0" data-volume="1" data-track-index="12"></audio>
+      <audio id="a_sfx0" class="clip" src="assets/sfx/impact-bass-1.mp3" data-start="4.800" data-duration="2.116" data-media-start="0" data-volume="0.55" data-track-index="13"></audio>
+      <audio id="a_sfx1" class="clip" src="assets/sfx/glitch-1.mp3" data-start="6.520" data-duration="2.638" data-media-start="0" data-volume="0.45" data-track-index="14"></audio>
+      <audio id="a_sfx2" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="11.960" data-duration="0.575" data-media-start="0" data-volume="0.4" data-track-index="15"></audio>
+      <audio id="a_sfx3" class="clip" src="assets/sfx/impact-bass-2.mp3" data-start="13.660" data-duration="2.592" data-media-start="0" data-volume="0.4" data-track-index="13"></audio>
+      <audio id="a_sfx4" class="clip" src="assets/sfx/whoosh-cinematic.mp3" data-start="15.760" data-duration="5.544" data-media-start="0" data-volume="0.4" data-track-index="14"></audio>
+      <audio id="a_sfx5" class="clip" src="assets/sfx/impact-bass-2.mp3" data-start="17.770" data-duration="2.592" data-media-start="0" data-volume="0.5" data-track-index="15"></audio>
+      <audio id="a_sfx6" class="clip" src="assets/sfx/click.mp3" data-start="28.460" data-duration="0.366" data-media-start="0" data-volume="0.4" data-track-index="13"></audio>
+      <audio id="a_sfx7" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="35.140" data-duration="0.575" data-media-start="0" data-volume="0.4" data-track-index="14"></audio>
+      <audio id="a_sfx8" class="clip" src="assets/sfx/impact-bass-1.mp3" data-start="40.380" data-duration="2.116" data-media-start="0" data-volume="0.55" data-track-index="15"></audio>
+      <audio id="a_sfx9" class="clip" src="assets/sfx/whoosh.mp3" data-start="41.440" data-duration="0.575" data-media-start="0" data-volume="0.35" data-track-index="13"></audio>
+      <audio id="a_sfx10" class="clip" src="assets/sfx/glitch-3.mp3" data-start="44.800" data-duration="3.096" data-media-start="0" data-volume="0.4" data-track-index="14"></audio>
+      <audio id="a_sfx11" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="49.600" data-duration="0.575" data-media-start="0" data-volume="0.4" data-track-index="15"></audio>
+      <audio id="a_sfx12" class="clip" src="assets/sfx/whoosh-cinematic.mp3" data-start="55.880" data-duration="5.544" data-media-start="0" data-volume="0.4" data-track-index="13"></audio>
+      <audio id="a_sfx13" class="clip" src="assets/sfx/whoosh.mp3" data-start="59.520" data-duration="0.575" data-media-start="0" data-volume="0.35" data-track-index="14"></audio>
+      <audio id="a_sfx14" class="clip" src="assets/sfx/glitch-2.mp3" data-start="71.730" data-duration="3.504" data-media-start="0" data-volume="0.45" data-track-index="15"></audio>
+      <audio id="a_sfx15" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="74.230" data-duration="0.575" data-media-start="0" data-volume="0.4" data-track-index="13"></audio>
+      <audio id="a_sfx16" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="79.580" data-duration="0.575" data-media-start="0" data-volume="0.4" data-track-index="14"></audio>
+      <audio id="a_sfx17" class="clip" src="assets/sfx/whoosh.mp3" data-start="83.680" data-duration="0.575" data-media-start="0" data-volume="0.35" data-track-index="15"></audio>
+      <audio id="a_sfx18" class="clip" src="assets/sfx/impact-bass-2.mp3" data-start="104.030" data-duration="2.592" data-media-start="0" data-volume="0.45" data-track-index="13"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.to({}, { duration: 110.000 }, 0);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

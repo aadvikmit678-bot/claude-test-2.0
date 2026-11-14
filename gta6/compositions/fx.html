@@ -1,0 +1,275 @@
+<template>
+  <style>
+  @font-face { font-family: 'Instrument Serif'; src: url('assets/fonts/InstrumentSerif-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Instrument Serif'; src: url('assets/fonts/InstrumentSerif-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+  @font-face { font-family: 'Hand'; src: url('assets/fonts/NothingYouCouldDo-Regular.ttf') format('truetype'); }
+  @font-face { font-family: 'Pixel'; src: url('assets/fonts/Silkscreen-Regular.ttf') format('truetype'); }
+
+  #root { position: absolute; inset: 0; overflow: hidden; }
+  #root .box { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #root { pointer-events: none; }
+  #root .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #root .wf { background: #FFFDF6; opacity: 0; }
+  #root .neg { background: #ffffff; mix-blend-mode: difference; opacity: 0; }
+  #root .over { background: #ffffff; mix-blend-mode: screen; opacity: 0; }
+  #root .leak { background: radial-gradient(ellipse at 30% 60%, rgba(255,120,170,0.95) 0%, rgba(255,150,90,0.7) 35%, rgba(255,200,140,0.0) 75%);
+    mix-blend-mode: screen; opacity: 0; }
+  #root .wipe { position: absolute; top: 0; left: 0; width: 560px; height: 1080px;
+    background: linear-gradient(90deg, rgba(255,253,246,0) 0%, rgba(255,253,246,0.96) 38%, rgba(255,253,246,0.96) 62%, rgba(255,253,246,0) 100%); }
+  #root .vsm { background: repeating-linear-gradient(90deg, rgba(255,255,255,0) 0px, rgba(255,255,255,0.55) 3px, rgba(255,255,255,0) 9px);
+    opacity: 0; }
+  #root .strike { position: absolute; height: 8px; background: #FBF8EC; transform-origin: 0% 50%; transform: none;
+    box-shadow: 0 0 12px rgba(255,255,255,0.95), 0 0 32px rgba(255,255,255,0.5); }
+  #root .black { background: #000; opacity: 0; }
+  #root .osd { position: absolute; left: 120px; top: 110px; font-family: 'Pixel'; color: #4BFF6B; font-size: 40px; letter-spacing: 0.08em;
+    text-shadow: 0 0 10px rgba(75,255,107,0.75), 0 0 26px rgba(75,255,107,0.35); white-space: nowrap; }
+  #root .bar { display: inline-block; width: 20px; height: 44px; margin-right: 8px; background: #4BFF6B; vertical-align: middle;
+    box-shadow: 0 0 10px rgba(75,255,107,0.7); }
+  #root .stat { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; object-fit: cover; }
+
+  </style>
+  <div id="root" data-composition-id="fx" data-width="1920" data-height="1080">
+    <div id="wf1" class="clip " data-start="4.800" data-duration="0.133" data-track-index="1"  style=""><div id="wf1-c" class="full wf"></div></div>
+    <div id="wf2" class="clip " data-start="6.733" data-duration="0.100" data-track-index="1"  style=""><div id="wf2-c" class="full wf"></div></div>
+    <div id="wf3" class="clip " data-start="10.267" data-duration="0.100" data-track-index="1"  style=""><div id="wf3-c" class="full wf"></div></div>
+    <div id="wf4" class="clip " data-start="11.333" data-duration="0.100" data-track-index="1"  style=""><div id="wf4-c" class="full wf"></div></div>
+    <div id="wp5" class="clip " data-start="11.900" data-duration="0.300" data-track-index="1"  style=""><div id="wp5-c" class="wipe"></div></div>
+    <div id="wf6" class="clip " data-start="13.667" data-duration="0.133" data-track-index="1"  style=""><div id="wf6-c" class="full wf"></div></div>
+    <div id="wf7" class="clip " data-start="15.167" data-duration="0.100" data-track-index="1"  style=""><div id="wf7-c" class="full wf"></div></div>
+    <div id="bc8" class="clip " data-start="15.800" data-duration="0.167" data-track-index="1"  style=""><div id="bc8-o" class="full over"></div><div id="bc8-n" class="full neg"></div><div id="bc8-l" class="full leak"></div></div>
+    <div id="wf9" class="clip " data-start="17.767" data-duration="0.133" data-track-index="1"  style=""><div id="wf9-c" class="full wf"></div></div>
+    <div id="wf10" class="clip " data-start="18.667" data-duration="0.100" data-track-index="1"  style=""><div id="wf10-c" class="full wf"></div></div>
+    <div id="sk11" class="clip " data-start="22.467" data-duration="0.323" data-track-index="1"  style=""><div id="sk11-c" class="strike" style="left:650px;top:946px;width:620px"></div></div>
+    <div id="sk12" class="clip " data-start="23.867" data-duration="0.303" data-track-index="1"  style=""><div id="sk12-c" class="strike" style="left:650px;top:902px;width:620px"></div></div>
+    <div id="wf13" class="clip " data-start="26.767" data-duration="0.100" data-track-index="1"  style=""><div id="wf13-c" class="full wf"></div></div>
+    <div id="wf14" class="clip " data-start="27.600" data-duration="0.100" data-track-index="1"  style=""><div id="wf14-c" class="full wf"></div></div>
+    <div id="ng15" class="clip " data-start="28.467" data-duration="0.033" data-track-index="1"  style=""><div id="ng15-c" class="full neg" style="opacity:1"></div></div>
+    <div id="ng16" class="clip " data-start="28.867" data-duration="0.033" data-track-index="1"  style=""><div id="ng16-c" class="full neg" style="opacity:1"></div></div>
+    <div id="wf17" class="clip " data-start="31.233" data-duration="0.100" data-track-index="1"  style=""><div id="wf17-c" class="full wf"></div></div>
+    <div id="wf18" class="clip " data-start="33.067" data-duration="0.100" data-track-index="1"  style=""><div id="wf18-c" class="full wf"></div></div>
+    <div id="wh19" class="clip " data-start="35.167" data-duration="0.100" data-track-index="1"  style=""><div id="wh19-v" class="full vsm"></div><div id="wh19-w" class="full wf"></div></div>
+    <div id="wf20" class="clip " data-start="37.233" data-duration="0.100" data-track-index="1"  style=""><div id="wf20-c" class="full wf"></div></div>
+    <div id="wf21" class="clip " data-start="37.533" data-duration="0.100" data-track-index="1"  style=""><div id="wf21-c" class="full wf"></div></div>
+    <div id="wf22" class="clip " data-start="39.367" data-duration="0.100" data-track-index="1"  style=""><div id="wf22-c" class="full wf"></div></div>
+    <div id="bc23" class="clip " data-start="40.300" data-duration="0.167" data-track-index="1"  style=""><div id="bc23-o" class="full over"></div><div id="bc23-n" class="full neg"></div><div id="bc23-l" class="full leak"></div></div>
+    <div id="wp24" class="clip " data-start="41.367" data-duration="0.300" data-track-index="1"  style=""><div id="wp24-c" class="wipe"></div></div>
+    <video id="st25" class="clip stat" data-start="44.800" data-duration="0.133" data-track-index="1" src="assets/clips/s02.mp4" muted playsinline data-media-start="0" data-hf-media-start-basis="local" style=""></video>
+    <div id="wf26" class="clip " data-start="49.033" data-duration="0.100" data-track-index="1"  style=""><div id="wf26-c" class="full wf"></div></div>
+    <div id="wf27" class="clip " data-start="49.233" data-duration="0.100" data-track-index="1"  style=""><div id="wf27-c" class="full wf"></div></div>
+    <div id="wh28" class="clip " data-start="49.634" data-duration="0.100" data-track-index="1"  style=""><div id="wh28-v" class="full vsm"></div><div id="wh28-w" class="full wf"></div></div>
+    <div id="wf29" class="clip " data-start="54.867" data-duration="0.100" data-track-index="1"  style=""><div id="wf29-c" class="full wf"></div></div>
+    <div id="bc30" class="clip " data-start="55.933" data-duration="0.167" data-track-index="1"  style=""><div id="bc30-o" class="full over"></div><div id="bc30-n" class="full neg"></div><div id="bc30-l" class="full leak"></div></div>
+    <div id="wf31" class="clip " data-start="57.467" data-duration="0.100" data-track-index="1"  style=""><div id="wf31-c" class="full wf"></div></div>
+    <div id="wf32" class="clip " data-start="57.967" data-duration="0.100" data-track-index="1"  style=""><div id="wf32-c" class="full wf"></div></div>
+    <div id="wp33" class="clip " data-start="59.434" data-duration="0.300" data-track-index="1"  style=""><div id="wp33-c" class="wipe"></div></div>
+    <div id="wf34" class="clip " data-start="63.133" data-duration="0.100" data-track-index="1"  style=""><div id="wf34-c" class="full wf"></div></div>
+    <div id="wf35" class="clip " data-start="63.833" data-duration="0.100" data-track-index="1"  style=""><div id="wf35-c" class="full wf"></div></div>
+    <div id="wf36" class="clip " data-start="64.733" data-duration="0.100" data-track-index="1"  style=""><div id="wf36-c" class="full wf"></div></div>
+    <div id="wf37" class="clip " data-start="65.833" data-duration="0.100" data-track-index="1"  style=""><div id="wf37-c" class="full wf"></div></div>
+    <div id="wf38" class="clip " data-start="69.133" data-duration="0.100" data-track-index="1"  style=""><div id="wf38-c" class="full wf"></div></div>
+    <video id="st39" class="clip stat" data-start="71.733" data-duration="0.100" data-track-index="1" src="assets/clips/s02.mp4" muted playsinline data-media-start="0" data-hf-media-start-basis="local" style=""></video>
+    <div id="ng40" class="clip " data-start="72.967" data-duration="0.033" data-track-index="1"  style=""><div id="ng40-c" class="full neg" style="opacity:1"></div></div>
+    <div id="wf41" class="clip " data-start="73.600" data-duration="0.100" data-track-index="1"  style=""><div id="wf41-c" class="full wf"></div></div>
+    <div id="wp42" class="clip " data-start="74.167" data-duration="0.300" data-track-index="1"  style=""><div id="wp42-c" class="wipe"></div></div>
+    <div id="wh43" class="clip " data-start="79.600" data-duration="0.100" data-track-index="1"  style=""><div id="wh43-v" class="full vsm"></div><div id="wh43-w" class="full wf"></div></div>
+    <div id="wf44" class="clip " data-start="82.867" data-duration="0.100" data-track-index="1"  style=""><div id="wf44-c" class="full wf"></div></div>
+    <div id="wp45" class="clip " data-start="83.600" data-duration="0.300" data-track-index="1"  style=""><div id="wp45-c" class="wipe"></div></div>
+    <div id="wf46" class="clip " data-start="88.133" data-duration="0.100" data-track-index="1"  style=""><div id="wf46-c" class="full wf"></div></div>
+    <div id="db47" class="clip " data-start="90.967" data-duration="0.133" data-track-index="1"  style=""><div id="db47-c" class="full wf"></div></div>
+    <div id="bc48" class="clip " data-start="103.966" data-duration="0.167" data-track-index="1"  style=""><div id="bc48-o" class="full over"></div><div id="bc48-n" class="full neg"></div><div id="bc48-l" class="full leak"></div></div>
+    <div id="fo49" class="clip " data-start="109.200" data-duration="0.800" data-track-index="1"  style=""><div id="fo49-c" class="full black"></div></div>
+    <div id="osd" class="clip " data-start="46.000" data-duration="1.433" data-track-index="1"  style=""><div class="osd">VOLUME&nbsp;&nbsp;<span id="ob0" class="bar"></span><span id="ob1" class="bar"></span><span id="ob2" class="bar"></span><span id="ob3" class="bar"></span><span id="ob4" class="bar"></span><span id="ob5" class="bar"></span><span id="ob6" class="bar"></span><span id="ob7" class="bar"></span><span id="ob8" class="bar"></span><span id="ob9" class="bar"></span><span id="ob10" class="bar"></span><span id="ob11" class="bar"></span><span id="ob12" class="bar"></span><span id="ob13" class="bar"></span><span id="ob14" class="bar"></span><span id="ob15" class="bar"></span><span style="position:relative;display:inline-block;width:70px;height:40px;vertical-align:middle"><span id="on0" style="position:absolute;left:0;top:0;opacity:0">0</span><span id="on1" style="position:absolute;left:0;top:0;opacity:0">1</span><span id="on2" style="position:absolute;left:0;top:0;opacity:0">2</span><span id="on3" style="position:absolute;left:0;top:0;opacity:0">3</span><span id="on4" style="position:absolute;left:0;top:0;opacity:0">4</span><span id="on5" style="position:absolute;left:0;top:0;opacity:0">5</span><span id="on6" style="position:absolute;left:0;top:0;opacity:0">6</span><span id="on7" style="position:absolute;left:0;top:0;opacity:0">7</span><span id="on8" style="position:absolute;left:0;top:0;opacity:0">8</span><span id="on9" style="position:absolute;left:0;top:0;opacity:0">9</span><span id="on10" style="position:absolute;left:0;top:0;opacity:0">10</span><span id="on11" style="position:absolute;left:0;top:0;opacity:0">11</span><span id="on12" style="position:absolute;left:0;top:0;opacity:0">12</span><span id="on13" style="position:absolute;left:0;top:0;opacity:0">13</span><span id="on14" style="position:absolute;left:0;top:0;opacity:0">14</span><span id="on15" style="position:absolute;left:0;top:0;opacity:0">15</span><span id="on16" style="position:absolute;left:0;top:0;opacity:1">16</span></span></div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.to({}, { duration: 110.000 }, 0);
+    tl.set("#wf1-c", { opacity: 1.0 }, 4.800);
+    tl.set("#wf1-c", { opacity: 0.9 }, 4.833);
+    tl.set("#wf1-c", { opacity: 0.45 }, 4.867);
+    tl.set("#wf1-c", { opacity: 0.0 }, 4.900);
+    tl.set("#wf2-c", { opacity: 0.95 }, 6.733);
+    tl.set("#wf2-c", { opacity: 0.55 }, 6.766);
+    tl.set("#wf2-c", { opacity: 0.0 }, 6.800);
+    tl.set("#wf3-c", { opacity: 0.95 }, 10.267);
+    tl.set("#wf3-c", { opacity: 0.55 }, 10.300);
+    tl.set("#wf3-c", { opacity: 0.0 }, 10.334);
+    tl.set("#wf4-c", { opacity: 0.95 }, 11.333);
+    tl.set("#wf4-c", { opacity: 0.55 }, 11.366);
+    tl.set("#wf4-c", { opacity: 0.0 }, 11.400);
+    tl.fromTo("#wp5-c", { x: 1920 }, { x: -560, duration: 0.267, ease: "none", immediateRender: false }, 11.900);
+    tl.set("#wf6-c", { opacity: 1.0 }, 13.667);
+    tl.set("#wf6-c", { opacity: 0.9 }, 13.700);
+    tl.set("#wf6-c", { opacity: 0.45 }, 13.734);
+    tl.set("#wf6-c", { opacity: 0.0 }, 13.767);
+    tl.set("#wf7-c", { opacity: 0.95 }, 15.167);
+    tl.set("#wf7-c", { opacity: 0.55 }, 15.200);
+    tl.set("#wf7-c", { opacity: 0.0 }, 15.234);
+    tl.set("#bc8-o", { opacity: 0.45 }, 15.800);
+    tl.set("#bc8-o", { opacity: 0.85 }, 15.834);
+    tl.set("#bc8-o", { opacity: 0 }, 15.867);
+    tl.set("#bc8-n", { opacity: 1 }, 15.867);
+    tl.set("#bc8-n", { opacity: 0 }, 15.900);
+    tl.set("#bc8-l", { opacity: 0.9 }, 15.900);
+    tl.set("#bc8-l", { opacity: 0.4 }, 15.934);
+    tl.set("#wf9-c", { opacity: 1.0 }, 17.767);
+    tl.set("#wf9-c", { opacity: 0.9 }, 17.800);
+    tl.set("#wf9-c", { opacity: 0.45 }, 17.834);
+    tl.set("#wf9-c", { opacity: 0.0 }, 17.867);
+    tl.set("#wf10-c", { opacity: 0.95 }, 18.667);
+    tl.set("#wf10-c", { opacity: 0.55 }, 18.700);
+    tl.set("#wf10-c", { opacity: 0.0 }, 18.734);
+    tl.fromTo("#sk11-c", { scaleX: 0 }, { scaleX: 1, duration: 0.167, ease: "power2.out", immediateRender: false }, 22.467);
+    tl.fromTo("#sk12-c", { scaleX: 0 }, { scaleX: 1, duration: 0.167, ease: "power2.out", immediateRender: false }, 23.867);
+    tl.set("#wf13-c", { opacity: 0.95 }, 26.767);
+    tl.set("#wf13-c", { opacity: 0.55 }, 26.800);
+    tl.set("#wf13-c", { opacity: 0.0 }, 26.834);
+    tl.set("#wf14-c", { opacity: 0.95 }, 27.600);
+    tl.set("#wf14-c", { opacity: 0.55 }, 27.633);
+    tl.set("#wf14-c", { opacity: 0.0 }, 27.667);
+    tl.set("#wf17-c", { opacity: 0.95 }, 31.233);
+    tl.set("#wf17-c", { opacity: 0.55 }, 31.266);
+    tl.set("#wf17-c", { opacity: 0.0 }, 31.300);
+    tl.set("#wf18-c", { opacity: 0.95 }, 33.067);
+    tl.set("#wf18-c", { opacity: 0.55 }, 33.100);
+    tl.set("#wf18-c", { opacity: 0.0 }, 33.134);
+    tl.set("#wh19-v", { opacity: 0.9 }, 35.167);
+    tl.set("#wh19-w", { opacity: 0.55 }, 35.200);
+    tl.set("#wh19-v", { opacity: 0.5 }, 35.233);
+    tl.set("#wh19-w", { opacity: 0 }, 35.233);
+    tl.set("#wf20-c", { opacity: 0.95 }, 37.233);
+    tl.set("#wf20-c", { opacity: 0.55 }, 37.266);
+    tl.set("#wf20-c", { opacity: 0.0 }, 37.300);
+    tl.set("#wf21-c", { opacity: 0.95 }, 37.533);
+    tl.set("#wf21-c", { opacity: 0.55 }, 37.566);
+    tl.set("#wf21-c", { opacity: 0.0 }, 37.600);
+    tl.set("#wf22-c", { opacity: 0.95 }, 39.367);
+    tl.set("#wf22-c", { opacity: 0.55 }, 39.400);
+    tl.set("#wf22-c", { opacity: 0.0 }, 39.434);
+    tl.set("#bc23-o", { opacity: 0.45 }, 40.300);
+    tl.set("#bc23-o", { opacity: 0.85 }, 40.334);
+    tl.set("#bc23-o", { opacity: 0 }, 40.367);
+    tl.set("#bc23-n", { opacity: 1 }, 40.367);
+    tl.set("#bc23-n", { opacity: 0 }, 40.400);
+    tl.set("#bc23-l", { opacity: 0.9 }, 40.400);
+    tl.set("#bc23-l", { opacity: 0.4 }, 40.434);
+    tl.fromTo("#wp24-c", { x: 1920 }, { x: -560, duration: 0.267, ease: "none", immediateRender: false }, 41.367);
+    tl.set("#wf26-c", { opacity: 0.95 }, 49.033);
+    tl.set("#wf26-c", { opacity: 0.55 }, 49.066);
+    tl.set("#wf26-c", { opacity: 0.0 }, 49.100);
+    tl.set("#wf27-c", { opacity: 0.95 }, 49.233);
+    tl.set("#wf27-c", { opacity: 0.55 }, 49.266);
+    tl.set("#wf27-c", { opacity: 0.0 }, 49.300);
+    tl.set("#wh28-v", { opacity: 0.9 }, 49.634);
+    tl.set("#wh28-w", { opacity: 0.55 }, 49.667);
+    tl.set("#wh28-v", { opacity: 0.5 }, 49.700);
+    tl.set("#wh28-w", { opacity: 0 }, 49.700);
+    tl.set("#wf29-c", { opacity: 0.95 }, 54.867);
+    tl.set("#wf29-c", { opacity: 0.55 }, 54.900);
+    tl.set("#wf29-c", { opacity: 0.0 }, 54.934);
+    tl.set("#bc30-o", { opacity: 0.45 }, 55.933);
+    tl.set("#bc30-o", { opacity: 0.85 }, 55.967);
+    tl.set("#bc30-o", { opacity: 0 }, 56.000);
+    tl.set("#bc30-n", { opacity: 1 }, 56.000);
+    tl.set("#bc30-n", { opacity: 0 }, 56.033);
+    tl.set("#bc30-l", { opacity: 0.9 }, 56.033);
+    tl.set("#bc30-l", { opacity: 0.4 }, 56.067);
+    tl.set("#wf31-c", { opacity: 0.95 }, 57.467);
+    tl.set("#wf31-c", { opacity: 0.55 }, 57.500);
+    tl.set("#wf31-c", { opacity: 0.0 }, 57.534);
+    tl.set("#wf32-c", { opacity: 0.95 }, 57.967);
+    tl.set("#wf32-c", { opacity: 0.55 }, 58.000);
+    tl.set("#wf32-c", { opacity: 0.0 }, 58.034);
+    tl.fromTo("#wp33-c", { x: 1920 }, { x: -560, duration: 0.267, ease: "none", immediateRender: false }, 59.434);
+    tl.set("#wf34-c", { opacity: 0.95 }, 63.133);
+    tl.set("#wf34-c", { opacity: 0.55 }, 63.166);
+    tl.set("#wf34-c", { opacity: 0.0 }, 63.200);
+    tl.set("#wf35-c", { opacity: 0.95 }, 63.833);
+    tl.set("#wf35-c", { opacity: 0.55 }, 63.866);
+    tl.set("#wf35-c", { opacity: 0.0 }, 63.900);
+    tl.set("#wf36-c", { opacity: 0.95 }, 64.733);
+    tl.set("#wf36-c", { opacity: 0.55 }, 64.766);
+    tl.set("#wf36-c", { opacity: 0.0 }, 64.800);
+    tl.set("#wf37-c", { opacity: 0.95 }, 65.833);
+    tl.set("#wf37-c", { opacity: 0.55 }, 65.866);
+    tl.set("#wf37-c", { opacity: 0.0 }, 65.900);
+    tl.set("#wf38-c", { opacity: 0.95 }, 69.133);
+    tl.set("#wf38-c", { opacity: 0.55 }, 69.166);
+    tl.set("#wf38-c", { opacity: 0.0 }, 69.200);
+    tl.set("#wf41-c", { opacity: 0.95 }, 73.600);
+    tl.set("#wf41-c", { opacity: 0.55 }, 73.633);
+    tl.set("#wf41-c", { opacity: 0.0 }, 73.667);
+    tl.fromTo("#wp42-c", { x: 1920 }, { x: -560, duration: 0.267, ease: "none", immediateRender: false }, 74.167);
+    tl.set("#wh43-v", { opacity: 0.9 }, 79.600);
+    tl.set("#wh43-w", { opacity: 0.55 }, 79.633);
+    tl.set("#wh43-v", { opacity: 0.5 }, 79.666);
+    tl.set("#wh43-w", { opacity: 0 }, 79.666);
+    tl.set("#wf44-c", { opacity: 0.95 }, 82.867);
+    tl.set("#wf44-c", { opacity: 0.55 }, 82.900);
+    tl.set("#wf44-c", { opacity: 0.0 }, 82.934);
+    tl.fromTo("#wp45-c", { x: 1920 }, { x: -560, duration: 0.267, ease: "none", immediateRender: false }, 83.600);
+    tl.set("#wf46-c", { opacity: 0.95 }, 88.133);
+    tl.set("#wf46-c", { opacity: 0.55 }, 88.166);
+    tl.set("#wf46-c", { opacity: 0.0 }, 88.200);
+    tl.set("#db47-c", { opacity: 0.35 }, 90.967);
+    tl.set("#db47-c", { opacity: 0.5 }, 91.000);
+    tl.set("#db47-c", { opacity: 0.25 }, 91.033);
+    tl.set("#db47-c", { opacity: 0.0 }, 91.067);
+    tl.set("#bc48-o", { opacity: 0.45 }, 103.966);
+    tl.set("#bc48-o", { opacity: 0.85 }, 104.000);
+    tl.set("#bc48-o", { opacity: 0 }, 104.033);
+    tl.set("#bc48-n", { opacity: 1 }, 104.033);
+    tl.set("#bc48-n", { opacity: 0 }, 104.066);
+    tl.set("#bc48-l", { opacity: 0.9 }, 104.066);
+    tl.set("#bc48-l", { opacity: 0.4 }, 104.100);
+    tl.fromTo("#fo49-c", { opacity: 0 }, { opacity: 1, duration: 0.800, ease: "power1.in", immediateRender: false }, 109.200);
+    tl.set("#ob15", { opacity: 0.12 }, 46.067);
+    tl.set("#on16", { opacity: 0 }, 46.067);
+    tl.set("#on15", { opacity: 1 }, 46.067);
+    tl.set("#ob14", { opacity: 0.12 }, 46.133);
+    tl.set("#on15", { opacity: 0 }, 46.133);
+    tl.set("#on14", { opacity: 1 }, 46.133);
+    tl.set("#ob13", { opacity: 0.12 }, 46.233);
+    tl.set("#on14", { opacity: 0 }, 46.233);
+    tl.set("#on13", { opacity: 1 }, 46.233);
+    tl.set("#ob12", { opacity: 0.12 }, 46.300);
+    tl.set("#on13", { opacity: 0 }, 46.300);
+    tl.set("#on12", { opacity: 1 }, 46.300);
+    tl.set("#ob11", { opacity: 0.12 }, 46.367);
+    tl.set("#on12", { opacity: 0 }, 46.367);
+    tl.set("#on11", { opacity: 1 }, 46.367);
+    tl.set("#ob10", { opacity: 0.12 }, 46.433);
+    tl.set("#on11", { opacity: 0 }, 46.433);
+    tl.set("#on10", { opacity: 1 }, 46.433);
+    tl.set("#ob9", { opacity: 0.12 }, 46.500);
+    tl.set("#on10", { opacity: 0 }, 46.500);
+    tl.set("#on9", { opacity: 1 }, 46.500);
+    tl.set("#ob8", { opacity: 0.12 }, 46.600);
+    tl.set("#on9", { opacity: 0 }, 46.600);
+    tl.set("#on8", { opacity: 1 }, 46.600);
+    tl.set("#ob7", { opacity: 0.12 }, 46.667);
+    tl.set("#on8", { opacity: 0 }, 46.667);
+    tl.set("#on7", { opacity: 1 }, 46.667);
+    tl.set("#ob6", { opacity: 0.12 }, 46.733);
+    tl.set("#on7", { opacity: 0 }, 46.733);
+    tl.set("#on6", { opacity: 1 }, 46.733);
+    tl.set("#ob5", { opacity: 0.12 }, 46.800);
+    tl.set("#on6", { opacity: 0 }, 46.800);
+    tl.set("#on5", { opacity: 1 }, 46.800);
+    tl.set("#ob4", { opacity: 0.12 }, 46.867);
+    tl.set("#on5", { opacity: 0 }, 46.867);
+    tl.set("#on4", { opacity: 1 }, 46.867);
+    tl.set("#ob3", { opacity: 0.12 }, 46.933);
+    tl.set("#on4", { opacity: 0 }, 46.933);
+    tl.set("#on3", { opacity: 1 }, 46.933);
+    tl.set("#ob2", { opacity: 0.12 }, 47.033);
+    tl.set("#on3", { opacity: 0 }, 47.033);
+    tl.set("#on2", { opacity: 1 }, 47.033);
+    tl.set("#ob1", { opacity: 0.12 }, 47.100);
+    tl.set("#on2", { opacity: 0 }, 47.100);
+    tl.set("#on1", { opacity: 1 }, 47.100);
+    tl.set("#ob0", { opacity: 0.12 }, 47.167);
+    tl.set("#on1", { opacity: 0 }, 47.167);
+    tl.set("#on0", { opacity: 1 }, 47.167);
+    window.__timelines["fx"] = tl;
+  </script>
+</template>

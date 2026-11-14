@@ -1,0 +1,28 @@
+<template>
+  <style>
+  @font-face { font-family: 'Instrument Serif'; src: url('assets/fonts/InstrumentSerif-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Instrument Serif'; src: url('assets/fonts/InstrumentSerif-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+  @font-face { font-family: 'Hand'; src: url('assets/fonts/NothingYouCouldDo-Regular.ttf') format('truetype'); }
+  @font-face { font-family: 'Pixel'; src: url('assets/fonts/Silkscreen-Regular.ttf') format('truetype'); }
+
+  #root { position: absolute; inset: 0; overflow: hidden; }
+  #root .box { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #root { background: #000; }
+  #root .half { position: absolute; top: 0; width: 960px; height: 1080px; overflow: hidden; }
+  #root .half video { position: absolute; left: 0; top: 0; width: 960px; height: 1080px; object-fit: cover; }
+  #root .seam { position: absolute; left: 957px; top: 0; width: 6px; height: 1080px; background: #FBF8EC;
+    box-shadow: 0 0 14px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,0.4); }
+  #root .lab { position: absolute; top: 120px; font-family: 'Instrument Serif'; font-style: italic; font-size: 52px; color: #FBF8EC;
+    text-shadow: 0 0 14px rgba(255,255,255,0.62), 0 0 42px rgba(255,255,255,0.30), 0 3px 10px rgba(0,0,0,0.5); white-space: nowrap; }
+
+  </style>
+  <div id="root" data-composition-id="sc_s40" data-width="1920" data-height="1080">
+    <div id="spbox" class="box"><div class="half" style="left:0"><video id="spl" class="clip" src="assets/clips/l_spl.mp4" muted playsinline data-start="0" data-duration="2.350" data-track-index="2" data-media-start="0" data-hf-media-start-basis="local"></video></div><div class="half" style="left:960px"><video id="spr" class="clip" src="assets/clips/l_spr.mp4" muted playsinline data-start="0" data-duration="2.350" data-track-index="3" data-media-start="0" data-hf-media-start-basis="local"></video></div><div class="seam"></div><div class="lab" style="left:120px">Miami</div><div class="lab" style="left:1080px">Vice City</div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.to({}, { duration: 2.350 }, 0);
+
+    window.__timelines["sc_s40"] = tl;
+  </script>
+</template>

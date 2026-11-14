@@ -1,0 +1,37 @@
+<template>
+  <style>
+  @font-face { font-family: 'Instrument Serif'; src: url('assets/fonts/InstrumentSerif-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Instrument Serif'; src: url('assets/fonts/InstrumentSerif-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+  @font-face { font-family: 'Hand'; src: url('assets/fonts/NothingYouCouldDo-Regular.ttf') format('truetype'); }
+  @font-face { font-family: 'Pixel'; src: url('assets/fonts/Silkscreen-Regular.ttf') format('truetype'); }
+
+  #root { position: absolute; inset: 0; overflow: hidden; }
+  #root .box { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #root { background: #000; }
+  #root .cell { position: absolute; width: 960px; height: 540px; overflow: hidden; }
+  #root .cell video { position: absolute; left: 0; top: 0; width: 960px; height: 540px; object-fit: cover; }
+  #root .cf { position: absolute; inset: 0; background: #FFFDF6; opacity: 0; }
+  #root .seam { position: absolute; background: #000; }
+
+  </style>
+  <div id="root" data-composition-id="sc_s35" data-width="1920" data-height="1080">
+    <div id="g4box" class="box"><div class="cell" style="left:0px;top:0px"><video id="g4v0" class="clip" src="assets/clips/l_g1.mp4" muted playsinline data-start="0.000" data-duration="2.840" data-track-index="2" data-media-start="0.000" data-hf-media-start-basis="local"></video><div id="g4f0" class="cf"></div></div><div class="cell" style="left:960px;top:0px"><video id="g4v1" class="clip" src="assets/clips/l_g2.mp4" muted playsinline data-start="0.300" data-duration="2.540" data-track-index="3" data-media-start="0.300" data-hf-media-start-basis="local"></video><div id="g4f1" class="cf"></div></div><div class="cell" style="left:0px;top:540px"><video id="g4v2" class="clip" src="assets/clips/l_g3.mp4" muted playsinline data-start="1.100" data-duration="1.740" data-track-index="4" data-media-start="1.100" data-hf-media-start-basis="local"></video><div id="g4f2" class="cf"></div></div><div class="cell" style="left:960px;top:540px"><video id="g4v3" class="clip" src="assets/clips/l_g4.mp4" muted playsinline data-start="1.600" data-duration="1.240" data-track-index="5" data-media-start="1.600" data-hf-media-start-basis="local"></video><div id="g4f3" class="cf"></div></div><div class="seam" style="left:957px;top:0;width:6px;height:1080px"></div><div class="seam" style="left:0;top:537px;width:1920px;height:6px"></div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.to({}, { duration: 2.840 }, 0);
+    tl.set("#g4f0", { opacity: 1 }, 0.000);
+    tl.set("#g4f0", { opacity: 0.5 }, 0.033);
+    tl.set("#g4f0", { opacity: 0 }, 0.067);
+    tl.set("#g4f1", { opacity: 1 }, 0.300);
+    tl.set("#g4f1", { opacity: 0.5 }, 0.333);
+    tl.set("#g4f1", { opacity: 0 }, 0.367);
+    tl.set("#g4f2", { opacity: 1 }, 1.100);
+    tl.set("#g4f2", { opacity: 0.5 }, 1.133);
+    tl.set("#g4f2", { opacity: 0 }, 1.167);
+    tl.set("#g4f3", { opacity: 1 }, 1.600);
+    tl.set("#g4f3", { opacity: 0.5 }, 1.633);
+    tl.set("#g4f3", { opacity: 0 }, 1.667);
+    window.__timelines["sc_s35"] = tl;
+  </script>
+</template>

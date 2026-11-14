@@ -1,0 +1,23 @@
+<template>
+  <style>
+  @font-face { font-family: 'Instrument Serif'; src: url('assets/fonts/InstrumentSerif-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Instrument Serif'; src: url('assets/fonts/InstrumentSerif-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+  @font-face { font-family: 'Hand'; src: url('assets/fonts/NothingYouCouldDo-Regular.ttf') format('truetype'); }
+  @font-face { font-family: 'Pixel'; src: url('assets/fonts/Silkscreen-Regular.ttf') format('truetype'); }
+
+  #root { position: absolute; inset: 0; overflow: hidden; }
+  #root .box { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #root { background: #F3F0E9; }
+  #root .tex { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; opacity: 0.35; mix-blend-mode: multiply; }
+
+  </style>
+  <div id="root" data-composition-id="sc_s16" data-width="1920" data-height="1080">
+    <div id="wbox" class="box"><img class="tex" src="assets/tex/paper_light.png"></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.to({}, { duration: 1.180 }, 0);
+
+    window.__timelines["sc_s16"] = tl;
+  </script>
+</template>
