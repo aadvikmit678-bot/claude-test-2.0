@@ -31,3 +31,9 @@ jpm-dimon/assets/fonts/Satoshi-*
 jpm-dimon/assets/tex/
 jpm-dimon/assets/clips2/
 jpm-dimon/assets/img2/
+
+# GTA 6 edit: raw Drive download and analysis work stay local
+gta6-src/
+gta6-work/
+gta6/assets/clips/
+gta6/renders/
