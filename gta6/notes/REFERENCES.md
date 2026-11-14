@@ -1,6 +1,6 @@
 # GTA 6 edit: the reference folder, studied
 
-Drive folder `1Li0fFSxSyK9EHdm2Y2T8mp5Pjg2TYvHK` (24 files, 2.2 GB), downloaded to `gta6-src/_drive/<key>.mp4` (not in git; `gta6-src/manifest.tsv` maps keys to Drive ids and titles). Every clip's frames were read by `gta6/tools/study.py` (a 480p proxy of every frame; every cut, flash and black frame; the music's onsets and tempo; a transcript of the speech). The edit references were then looked at frame by frame on `gta6/tools/dense.py`'s sheets (every frame, or every 2nd-15th for long or slow clips); the raw trailers and the long gameplay film were indexed shot by shot (one still per shot, four across every long take). One file per clip in `notes/refs/` has the shot-by-shot breakdown. **Nothing is built yet** (the user's instruction: study first, the script and references come next).
+Drive folder `1Li0fFSxSyK9EHdm2Y2T8mp5Pjg2TYvHK` (24 files, 2.2 GB, then 13 more named by the user), downloaded to `gta6-src/_drive/<key>.mp4` (not in git; `gta6-src/manifest.tsv` maps keys to Drive ids and titles). Every clip's frames were read by `gta6/tools/study.py` (a 480p proxy of every frame; every cut, flash and black frame; the music's onsets and tempo; a transcript of the speech). The edit references were then looked at frame by frame on `gta6/tools/dense.py`'s sheets (every frame, or every 2nd-15th for long or slow clips); the raw trailers and the long gameplay film were indexed shot by shot (one still per shot, four across every long take). One file per clip in `notes/refs/` has the shot-by-shot breakdown. The three Instagram reels the user chose as the style (reel1-3) were read frame by frame on full-frame-rate crops of their captions.
 
 ## The folder at a glance
 | key | file | format | length | what it is |
@@ -29,6 +29,17 @@ Drive folder `1Li0fFSxSyK9EHdm2Y2T8mp5Pjg2TYvHK` (24 files, 2.2 GB), downloaded 
 | netflix | An Extended Look (Netflix) | 4K | 26 s | Netflix teaser with in-game HUD footage |
 | preload | Pre-Load Now | 1080p | 30 s | official "pre-load now" spot, party energy |
 | netflix4k | GTA 6 4K Gameplay Trailer FULL NETFLIX EXTENDED | 4K | 26.8 min | 27 minutes of story gameplay: the drug-den pickup, the apartment, Brian's dinner, the store robbery and getaway, an activities montage, the skydive, Andres de Leon and the MegaMundo party attack; HUD on the gameplay shots |
+
+| reel1 | Instagram reel DezFTyktEUp (Tesla Roadster) | 16:9, 24 fps | 58 s | **the caption-motion reference** (refs/reel1.md) |
+| reel2 | Instagram reel DfrunI_RXz9 (Adam Neumann) | 16:9, 30 fps | 107 s | words placed around the subject, shutter and whip transitions (refs/reel2.md) |
+| reel3 | Instagram reel DfEjvKjvRpz ("The most dangerous thing...") | 16:9, 30 fps | 65 s | **the font and caption-size reference** (refs/reel3.md) |
+| (13 clips) | took13, millions, freedom, kidcine, escape, adultrush, fastclip, klickpin, metav3rse, gta5bye, vc10, vcde, vcpanzer | mixed | 2-149 s | the clips the user named for scenes (refs/newclips.md) |
+
+## Typography for the edit (from the three reels)
+- **Font**: Instrument Serif, white with a soft glow (reel3); black on light shots (reel1 and reel3 both flip).
+- **Size** (reel3, measured): running captions ~56-72 px at 1080p, a line that matters ~96 px, two or three heroes ~130 px. Not the Dimon sizes (~190 px).
+- **Motion** (reel1): word by word on the spoken word, each word in its final place; every word arrives with a 2-3 frame flash (bloom, weight flash, scale pop or light streaks); the block never stands still (a constant drift of ~30 px/s, or reel3's ease-out slide); captions die with the shot.
+- **Layouts**: one centred line; reel3's stacked pair (second line indented, tucked under the first); reel2's words either side of a face or object.
 
 ## The edit styles in the references
 1. **Flash-beat montage** (editm6, ahhshit): one shot a beat (0.3-0.6 s), a white flash on almost every cut (2 frames at 60 fps; 3-5 fading frames at 30 fps), split wipes, silhouette flashes, B&W runs; logo bookends.
