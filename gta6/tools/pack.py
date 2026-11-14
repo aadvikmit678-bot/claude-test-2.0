@@ -16,6 +16,9 @@ with zipfile.ZipFile(out, "w") as z:
                     fp = f"{dp}/{f}"
                     if "/__pycache__" in fp:
                         continue
+                    rel = os.path.relpath(fp, ROOT)
+                    if rel in ("assets/audio/news.wav", "assets/audio/cj.wav", "assets/audio/vo.wav"):
+                        continue        # the un-normalised inputs: the film plays the *_n.wav files
                     ct = zipfile.ZIP_STORED if f.endswith((".mp4", ".jpg", ".png", ".woff2", ".mp3")) else zipfile.ZIP_DEFLATED
                     z.write(fp, "gta6/" + os.path.relpath(fp, ROOT), compress_type=ct); n += 1
 print(out, n, "files", round(os.path.getsize(out) / 1e6, 1), "MB")
