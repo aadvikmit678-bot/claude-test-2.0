@@ -298,6 +298,9 @@ FX = [
     ("wipe", F(65.03)), ("whip", F(70.38)), ("flash", F(73.60), 1), ("wipe", F(74.48)),
     ("flash", F(78.89), 1), ("double", F(81.74)), ("bloomcut", F(94.77)), ("fadeout", END - 0.8, END),
 ]
+SFX_GAIN = {   # per file: the bass hits ~-21 LUFS, whooshes and glitches ~-24, under the voice at -16
+    "impact-bass-1": 0.19, "impact-bass-2": 0.15, "glitch-1": 0.29, "glitch-2": 0.11, "glitch-3": 0.80,
+    "whoosh-cinematic": 0.32, "whoosh-short": 0.36, "whoosh": 0.36, "click": 0.40}
 SFX = [
     ("impact-bass-1", 4.80, 0.55), ("glitch-1", 6.52, 0.45), ("whoosh-short", F(2.70), 0.40),
     ("impact-bass-2", F(4.40), 0.40), ("whoosh-cinematic", F(6.50), 0.40), ("impact-bass-2", F(8.51), 0.50),

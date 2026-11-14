@@ -165,6 +165,17 @@ def make_static():
     return "s02 static"
 
 
+def loudnorm(src, out, target):
+    """Two-pass EBU R128 loudness normalisation (linear when it can be), true peak -1.5 dBTP."""
+    import json as _j
+    r = subprocess.run(["ffmpeg", "-nostdin", "-hide_banner", "-i", src, "-af",
+                        f"loudnorm=I={target}:TP=-1.5:LRA=11:print_format=json", "-f", "null", "-"], capture_output=True, text=True)
+    m = _j.loads(r.stderr[r.stderr.rindex("{"):r.stderr.rindex("}") + 1])
+    af = (f"loudnorm=I={target}:TP=-1.5:LRA=11:measured_I={m['input_i']}:measured_TP={m['input_tp']}:"
+          f"measured_LRA={m['input_lra']}:measured_thresh={m['input_thresh']}:offset={m['target_offset']}:linear=true")
+    run(["ffmpeg", "-nostdin", "-v", "error", "-y", "-i", src, "-af", af, "-ar", "48000", "-ac", "2", out])
+
+
 def assets():
     A = f"{PROJ}/assets"
     for d in ["audio", "fonts", "sfx", "img", "tex"]:
@@ -175,6 +186,8 @@ def assets():
          "-af", "afade=t=out:st=2.33:d=0.12", f"{A}/audio/cj.wav"])
     run(["ffmpeg", "-nostdin", "-v", "error", "-y", "-i", f"{edit.ROOT}/gta6-src/_vo/gta_Audio.mp3", "-vn", "-ac", "2",
          "-ar", "48000", f"{A}/audio/vo.wav"])
+    for name, target in [("news", -17.0), ("cj", -16.0), ("vo", -16.0)]:
+        loudnorm(f"{A}/audio/{name}.wav", f"{A}/audio/{name}_n.wav", target)
     sfx = "/root/.claude/skills/media-use/audio/assets/sfx"
     for name in sorted({x[0] for x in edit.SFX}):
         shutil.copy(f"{sfx}/{name}.mp3", f"{A}/sfx/{name}.mp3")

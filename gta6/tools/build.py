@@ -551,10 +551,11 @@ def build_root():
                f'data-duration="{r3(END)}" data-track-index="4" data-track-kind="captions" data-width="1920" data-height="1080" style="z-index:40"></div>')
     els.append(f'<div id="grain" class="clip" data-composition-id="grain" data-composition-src="compositions/grain.html" data-start="0" '
                f'data-duration="{r3(END)}" data-track-index="5" data-width="1920" data-height="1080" style="z-index:50"></div>')
-    els.append(f'<audio id="a_news" class="clip" src="assets/audio/news.wav" data-start="0.000" data-duration="6.700" data-media-start="0" data-volume="1" data-track-index="10"></audio>')
-    els.append(f'<audio id="a_cj" class="clip" src="assets/audio/cj.wav" data-start="{r3(edit.CJ0)}" data-duration="2.450" data-media-start="0" data-volume="1" data-track-index="11"></audio>')
-    els.append(f'<audio id="a_vo" class="clip" src="assets/audio/vo.wav" data-start="{r3(edit.V0)}" data-duration="96.440" data-media-start="0" data-volume="1" data-track-index="12"></audio>')
-    for k, (name, t, vol) in enumerate(edit.SFX):
+    els.append(f'<audio id="a_news" class="clip" src="assets/audio/news_n.wav" data-start="0.000" data-duration="6.700" data-media-start="0" data-volume="1" data-track-index="10"></audio>')
+    els.append(f'<audio id="a_cj" class="clip" src="assets/audio/cj_n.wav" data-start="{r3(edit.CJ0)}" data-duration="2.450" data-media-start="0" data-volume="1" data-track-index="11"></audio>')
+    els.append(f'<audio id="a_vo" class="clip" src="assets/audio/vo_n.wav" data-start="{r3(edit.V0)}" data-duration="96.440" data-media-start="0" data-volume="1" data-track-index="12"></audio>')
+    for k, (name, t, _) in enumerate(edit.SFX):
+        vol = edit.SFX_GAIN[name]
         ln = min(sfx_len(name), END - t)
         els.append(f'<audio id="a_sfx{k}" class="clip" src="assets/sfx/{name}.mp3" data-start="{r3(t)}" data-duration="{r3(ln)}" '
                    f'data-media-start="0" data-volume="{vol}" data-track-index="{13 + k % 3}"></audio>')
