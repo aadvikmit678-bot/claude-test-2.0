@@ -46,19 +46,19 @@ def build(s):
         pre.append(f"setpts=PTS/{s['speed']}")
     if s["fit"] == "cover":
         vf = ",".join(pre + ["scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos", "crop=1920:1080",
-                             grade, f"fps={edl.FPS}", "format=yuv420p"])
+                             grade, f"fps={s.get('fps', edl.FPS)}", "format=yuv420p"])
         cmd = ["-vf", vf]
     elif s["fit"] == "card":
         cw, ch = s["card"]
         vf = ",".join(pre + [f"scale={cw}:{ch}:force_original_aspect_ratio=increase:flags=lanczos", f"crop={cw}:{ch}",
-                             grade, f"fps={edl.FPS}", "format=yuv420p"])
+                             grade, f"fps={s.get('fps', edl.FPS)}", "format=yuv420p"])
         cmd = ["-vf", vf]
     elif s["fit"] == "blurfill":   # vertical/square source: sharp copy fit to height over a blurred, darkened cover copy
         base = ",".join(pre) + "," if pre else ""
         fc = (f"[0:v]{base}split=2[a][b];"
               f"[a]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,boxblur=40:2,eq=brightness=-0.28:saturation=0.8[bg];"
               f"[b]scale=-2:1080:flags=lanczos,{grade}[fg];"
-              f"[bg][fg]overlay=(W-w)/2:0,fps={edl.FPS},format=yuv420p[v]")
+              f"[bg][fg]overlay=(W-w)/2:0,fps={s.get('fps', edl.FPS)},format=yuv420p[v]")
         cmd = ["-filter_complex", fc, "-map", "[v]"]
     else:
         raise ValueError(s["fit"])

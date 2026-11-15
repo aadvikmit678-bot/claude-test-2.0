@@ -37,11 +37,17 @@ T_BD = round(NEWS_DUR + 1.54 - 0.06, 3)          # "here we go again": cut to th
 F = 1 / FPS
 
 
+# sources shot at 50/60 fps: their shots are cut at 60 fps; everything else is <= 30 fps and is cut at 30
+HFR = {"wait5", "goodbye", "em6", "blade", "freedom", "city", "nyc", "waitgta6", "metav3rse"}
+
+
 def S4(id, src, sin, start, end, crop="auto", grade="none", speed=1.0, card=None, push=None, rot=None):
     if crop == "auto":
         crop = CROP.get(src)
     d = dict(id=id, src=src, sin=sin, start=round(start, 3), end=round(end, 3), fit="card" if card else "cover",
              crop=crop, grade=grade, speed=speed, reverse=False, card=card, push=push)
+    if src in HFR:
+        d["fps"] = 60               # a 50/60 fps source keeps its motion in the 60 fps render (prep.py)
     if rot:
         d["rot"] = rot              # "ccw": a source stored sideways, turned upright before the crop (prep.py)
     return d

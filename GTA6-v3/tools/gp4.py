@@ -15,7 +15,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import edl4 as E
 
-FPS = 30
+FPS = 30                     # the design's frame units (the reference's); the clip is drawn at OUT fps
+OUT = int(os.environ.get("GP_FPS", "60"))
+UP = OUT // FPS              # output frames per design frame
 OW, OH = 1920, 1080
 VW = 2.25                    # wall units across the output width at the centre (the centre tile ~44% of the width)
 K = 0.32                     # barrel strength
@@ -27,7 +29,7 @@ GRADE = "eq=contrast=1.04:saturation=1.03"
 
 t0, t1 = E.SPAN["gp"]
 DUR = t1 - t0
-N = int(round(DUR * FPS)) + 5
+N = int(round(DUR * OUT)) + 5 * UP
 # reference 3, measured frame by frame (30 fps): the view starts zoomed on one tile; every 10 frames a pan of about
 # 1.3 tiles -- right, then down-left, then up-right -- that covers ~47% of its way in the first frame (smeared), ~80%
 # in the second, then eases out over ~6 more frames as the blur fades; still between pans. One tile flashes white for
@@ -56,7 +58,7 @@ class Decoder:
         path = os.path.normpath(os.path.join(E.ROOT, E.SRC[src]))
         crop = E.CROP.get(src)
         pre = f"crop={crop[2]}:{crop[3]}:{crop[0]}:{crop[1]}," if crop else ""
-        vf = f"{pre}scale={TPW}:{TPH}:force_original_aspect_ratio=increase:flags=lanczos,crop={TPW}:{TPH},{GRADE},fps={FPS}"
+        vf = f"{pre}scale={TPW}:{TPH}:force_original_aspect_ratio=increase:flags=lanczos,crop={TPW}:{TPH},{GRADE},fps={OUT}"
         self.p = subprocess.Popen(["ffmpeg", "-nostdin", "-v", "error", "-ss", f"{sin:.3f}", "-t", f"{N / FPS + 0.5:.3f}", "-i", path,
                                    "-vf", vf, "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
         self.last = np.zeros((TPH, TPW, 3), np.uint8)
@@ -132,13 +134,15 @@ def render(cx, cy, tiles, flash_on):
 
 
 enc = subprocess.Popen(["ffmpeg", "-nostdin", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{OW}x{OH}",
-                        "-r", str(FPS), "-i", "-", "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "17", "-g", "15",
+                        "-r", str(OUT), "-i", "-", "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "17", "-g", "15",
                         "-keyint_min", "15", "-sc_threshold", "0", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
                         os.path.join(E.PROJ, "assets", "clips", "gp.mp4")], stdin=subprocess.PIPE)
-for n in range(N):
+for m in range(N):
+    n = m / UP                   # the time in design (30 fps) frames: every other 60 fps frame is a 30 fps frame exactly
     tiles = [d.next() for d in DEC]
     flash_on = FLASH[1] <= n < FLASH[1] + FLASH[2]
-    # motion blur as the reference's: the frame integrates the last half of the move since the last frame (180-degree shutter)
+    # motion blur as the reference's: each frame integrates the move over the last 1/60 s (half a design frame), so
+    # the even frames are the 30 fps clip's frames and the odd ones fall between them
     x0, y0 = camera(n - 0.5)
     x1, y1 = camera(n)
     dist = np.hypot(x1 - x0, y1 - y0) * PX
@@ -156,4 +160,4 @@ enc.stdin.close()
 assert enc.wait() == 0
 for d in DEC:
     d.p.kill()
-print(f"gp: {N} frames ({DUR:.3f} s + handle) | pans at frames {PANS_F} | tile {TPW}x{TPH} px")
+print(f"gp: {N} frames at {OUT} fps ({DUR:.3f} s + handle) | pans at design frames {PANS_F} | tile {TPW}x{TPH} px")
