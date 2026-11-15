@@ -654,7 +654,10 @@ def build_fx():
             (E.SPAN["gp"][0] + 0.05, E.SPAN["hero"][1] - 0.05),  # the tile wall, the hero / bad guys,
             (E.SPAN["pb"][0] - 0.05, E.SPAN["pb"][1] - 0.05),    # the pin board (a white flash brings it in),
             (E.SPAN["tv2"][0] + 0.05, E.SPAN["tv2"][1] - 0.05),  # the second card,
-            (E.END_V - 0.3, TOTAL)]                              # and the ending
+            (E.END_V - 0.3, TOTAL),                              # and the ending;
+            (cut(61) - 0.2, cut(64) + 0.1),                      # none on "waiting 13 years" (the user), either time
+            (cut(278) - 0.2, cut(284) + 0.1),
+            (cut(79) - 0.2, cut(82) + 0.1)]                      # nor on "cars and guns" (the user)
     cuts = sorted({s["start"] for s in E.SHOTS if 0.5 < s["start"] < TOTAL - 0.3 and not s["id"].startswith(("grid", "r7t"))}
                   | {E.R7["t0"], E.TV[0]})
     flashes = [NEWS_DUR, cut(90), cut(212), E.END_V]                # + v2's "Today,", the ending
@@ -670,7 +673,8 @@ def build_fx():
         body.append(f'<div class="clip" id="hf{k}" data-start="{r3(fr(t) - 2 * F)}" data-duration="{r3(2 * F)}" style="position:absolute;inset:0;z-index:50;background:#fff"></div>')
     n = 0
     for i, t in enumerate(cuts):
-        if any(a <= t <= b for a, b in skip) or any(abs(t - f) < 0.3 for f in flashes) or i % 4 == 3:
+        # the user: too many, coming again and again -- one cut in four now (was three in four)
+        if any(a <= t <= b for a, b in skip) or any(abs(t - f) < 0.3 for f in flashes) or i % 4 != 1:
             continue
         seq = SEQ[(i * 5) % len(SEQ)]
         tc = fr(t)
