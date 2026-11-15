@@ -188,7 +188,8 @@ def build_captions():
         ([213, 214, 215, 216], {}), ([217, 218, 219, 220, 221], {"kinds": {221: "bloom"}, "end": E.SPAN["pb"][0] - 0.02}),
         ([222, 223, 224, 225], {}), ([226, 227, 228, 229, 230, 231], {}),       # over the pin board: centred, white glow (the user)
         ([232, 233, 234, 235], {"mode": "tight", "cls": {235: "card"}, "kinds": {235: "card", 234: "bloom"}}),
-        ([236, 237, 238, 239, 240], {"kinds": {236: "bloom"}, "y": 900, "end": W(241) - 0.04}),   # "Vice City," is the logo itself         ([243, 244, 245, 246, 247, 248], {}),
+        ([236, 237, 238, 239, 240], {"kinds": {236: "bloom"}, "y": 900, "end": W(241) - 0.04}),   # "Vice City," is the logo itself
+        ([243, 244, 245, 246, 247, 248], {}),                                                       # the city where it all started.
         ([249, 250, 251, 252, 253], {}), ([254, 255, 256, 257, 258], {"kinds": {255: "bloom", 256: "bloom"}}), ([259, 260], {}),
         ([261, 262, 263, 264, 265], {}), ([266, 267], {"kinds": {267: "bloom"}}),
         ([268, 269, 270], {"mode": "tight", "end": E.TV2["tc"] - 3 * F}),                          # then "playing" | "GTA" either side of the card
@@ -654,7 +655,9 @@ def build_fx():
             (cut(79) - 0.2, cut(82) + 0.1),                      # nor on "cars and guns" (the user)
             (cut(111) - 0.2, cut(115) + 0.1),                    # nor on "all the way down" (the user)
             (cut(128) - 0.2, cut(135) + 0.1),                    # nor on "scribbled at the back of your notebook." (the user)
-            (cut(195) - 0.2, cut(203) + 0.1)]                    # nor on "in a world that looks just like yours." (the user)
+            (cut(195) - 0.2, cut(203) + 0.1),                    # nor on "in a world that looks just like yours." (the user)
+            (cut(243) - 0.2, cut(249) + 0.1),                    # nor on "the city where it all started." (the user)
+            (cut(266) - 0.2, cut(268) + 0.1)]                    # nor on "Drive slow." (the user)
     cuts = sorted({s["start"] for s in E.SHOTS if 0.5 < s["start"] < TOTAL - 0.3 and not s["id"].startswith(("grid", "r7t"))}
                   | {E.R7["t0"], E.TV[0]})
     flashes = [NEWS_DUR, cut(90), cut(212), E.END_V]                # + v2's "Today,", the ending
