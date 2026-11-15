@@ -186,7 +186,7 @@ def build_captions():
         ([195, 196, 197, 198], {}), ([199, 200, 201, 202], {}),
         ([203, 204, 205, 206, 207], {"y": 880}), ([208, 209, 210, 211], {"y": 880}), ([212], {"kinds": {212: "bloom"}}),
         ([213, 214, 215, 216], {}), ([217, 218, 219, 220, 221], {"kinds": {221: "bloom"}, "end": E.SPAN["pb"][0] - 0.02}),
-        # "back to the world they once dreamed of living in." -- black, on the pin board (build4.pb_scene)
+        ([222, 223, 224, 225], {}), ([226, 227, 228, 229, 230, 231], {}),       # over the pin board: centred, white glow (the user)
         ([232, 233, 234, 235], {"mode": "tight", "cls": {235: "card"}, "kinds": {235: "card", 234: "bloom"}}),
         ([236, 237, 238, 239, 240], {"kinds": {236: "bloom"}, "y": 900, "end": W(241) - 0.04}),   # "Vice City," is the logo itself         ([243, 244, 245, 246, 247, 248], {}),
         ([249, 250, 251, 252, 253], {}), ([254, 255, 256, 257, 258], {"kinds": {255: "bloom", 256: "bloom"}}), ([259, 260], {}),
@@ -587,12 +587,6 @@ def pb_scene():
 .pin{position:absolute;z-index:91;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 34% 30%, #e3c4ff 0%, #a55ae6 32%, #5a1d99 100%);box-shadow:3px 7px 9px rgba(0,0,0,0.38);}
 .pclip{position:absolute;left:1548px;top:150px;z-index:92;transform:rotate(14deg);filter:drop-shadow(2px 3px 2px rgba(0,0,0,0.35));}
 """
-    # the words in black on the page, left of the picture, a line at a time (the reel's "his entire career.")
-    caps = [VL([222, 223, 224, 225], mode="tight", end=W(226) - 0.04, shift=t0, ink=True, halo=True),
-            VL([226, 227, 228], mode="tight", end=W(229) - 0.04, shift=t0, ink=True, halo=True),
-            VL([229, 230, 231], mode="tight", end=t1, shift=t0, ink=True, halo=True)]
-    for k, ln in enumerate(caps):
-        body.append(line_html(ln, f"pbl{k}", js).replace('style="top:540px"', 'style="top:770px;left:0;right:1250px;justify-content:flex-end;z-index:40"'))
     SCENES.append(("pb", t0, t1, "\n".join(body), "".join(js), css))
 
 
