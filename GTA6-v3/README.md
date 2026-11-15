@@ -73,6 +73,7 @@ The `gta6/` folder on this branch is a different session's edit.
 cd GTA6-v3/gta6-edit
 npx hyperframes@0.9.46 preview      # Studio
 npx hyperframes@0.9.46 render --fps 30 --quality delivery --output renders/gta6_v4_full.mp4
+npx hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 --output renders/gta6_v4_60fps.mp4   # highest quality, 60 fps
 ```
 
 ## Rebuild
@@ -91,7 +92,8 @@ python -I tools/mask4.py && node tools/text4.cjs && python -I tools/hero4.py   #
 python -I -X utf8 tools/build4.py               # writes index.html and compositions/
 ```
 
-prep writes clips with `-fps_mode passthrough`, so ffmpeg 6 (cloud) cuts the same frames with the same timestamps as
+Shots from 50/60 fps sources are cut at 60 fps (`HFR` in `edl4.py`) and the tile wall is drawn at 60 fps, so a 60 fps
+render keeps their motion; everything else is <= 30 fps footage. prep writes clips with `-fps_mode passthrough`, so ffmpeg 6 (cloud) cuts the same frames with the same timestamps as
 the desktop session's ffmpeg 8. The user's reference and B-roll files (beat drop, green-screen kid, Pinterest clips,
 the cheat-code notebook, chasing dreams, the hero art, the talking-to-the-kid clip) are downloaded to `gta6-src/` (not
 committed) and linked by `link_sources.py`; `hero4.py` reads the hero art and its cut-out mask from there.
