@@ -35,18 +35,22 @@ The `gta6/` folder on this branch is a different session's edit.
   its black background and see-through (paper 0.55, the writing and the glow solid) over v2's footage for those words
   (the dentist, Tommy with the gun; Tommy climbing into the Rhino), the clip's own highlight on ASPIRINE / PANZER drawn
   ~2.5x faster (`tools/nb4.py`); the caption below the writing, at v2's low line.
-- **"scribbled at the back of your notebook. For a kid, it wasn't just a game. It was a psychological escape,"**: v2.
+- **"scribbled at the back of your notebook."**: the tank (v2's) through "notebook.". **"For a kid, it wasn't just a game.
+  It was a psychological escape,"**: v2.
 - **"an alternate reality."**: the user's chasing-dreams clip from its start, half see-through, over the "gta city"
   aerial (stored sideways, turned upright) of the Vice City skyline zooming out. **"It was everything you imagined
-  adulthood would be."**: v2.
+  adulthood would be."**: the madebyajit clip from 12 s (the kiss, its car, the embrace), then Tommy & Lance with the
+  guns on "would be.".
 - **"Driving supercars, firing guns, flying planes, and owning an entire city."**: the screen in four, each phrase's
   clip coming in on its first word with a white flash; the four joined edge to edge, no gap, no glow, floating on black.
 - **"And while every other game asks you to be"**: reference 3's curved wall of GTA clips (`tools/gp4.py`), starting
-  on the first zoom, three motion-blurred whip-pans on "other", "asks", "you", a tile flashing white.
-- **"the hero, But GTA lets you be the problem. It lets you be the bad guy"**: reference 3's Palmer Luckey part
+  on the first zoom; the camera as measured on the reference frame by frame -- pans 10 frames apart, most of the way
+  in one smeared frame, then easing out over ~7 frames as the blur fades -- right, down-left, up-right.
+- **"the hero, But GTA lets you be the problem."**: reference 3's Palmer Luckey part
   (`tools/hero4.py`): the user's Lucia & Jason art with BE THE HERO behind them (`tools/text4.cjs`), the glowing
   jagged outline and glitch strips, then on "the problem." inverted squares, blur and a ghost into the user's bad-guys
-  art, both through a soft-edged, colour-fringed lens.
+  art, both through a soft-edged, colour-fringed lens. **"It lets you be the bad guy"**: v2's B-roll (the store
+  robbery, Lucia aiming).
 - **"in a world that looks just like yours." ... "It's an escape from adulthood,"**: v2 (the "2013" painted out).
 - **"back to the world they once dreamed of living in."**: the Ackman reel's pin board, frame for frame (`tools/pb4.py`
   grabs the pictures): two white frames, the board seen close on the window photo (Vice City at sunset) zooming out to

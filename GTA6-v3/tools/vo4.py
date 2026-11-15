@@ -115,6 +115,51 @@ for i, w in enumerate(W[:LAST + 1]):
     ne = remap(min(w["end"], w["start"] + 2.0))
     words4.append({"i": i, "text": w["text"], "start": ns, "end": ne if ne is not None else round(ns + 0.05, 3)})
 
+# a few transcript word starts fall in silence (e.g. "on." of "moved on." was put 0.38 s late, after the word had been
+# said): such a word starts at the next speech, unless that speech is the next word's -- then it was said before the
+# pause, from the last syllable onset of the speech before it
+env4 = np.sqrt(np.convolve(out ** 2, np.ones(win) / win, mode="same"))
+thr4 = np.percentile(env4, 95) * 10 ** (-30 / 20)
+E4 = lambda t: env4[min(len(env4) - 1, max(0, int(t * SR)))]
+fixed = []
+for k in range(1, len(words4)):
+    w, nw = words4[k], (words4[k + 1] if k + 1 < len(words4) else None)
+    st = w["start"]
+    if not all(E4(st + d) < thr4 for d in (0.0, 0.02, 0.04)):
+        continue
+    t = st
+    while t < st + 0.6 and E4(t) < thr4:
+        t += 0.005
+    nxt = t
+    if nw is None or abs(nw["start"] - nxt) > 0.06:
+        new = round(nxt - 0.02, 3)                                    # said after the pause
+    else:
+        t = st
+        while t > st - 0.6 and E4(t) < thr4:                          # back to the end of the speech before
+            t -= 0.005
+        seg_end, lo = t, max(words4[k - 1]["start"] + 0.06, t - 0.6)
+        ts = np.arange(lo, seg_end, 0.005)
+        if len(ts) < 8:
+            continue
+        ev = np.array([E4(x) for x in ts])
+        peak = ev.max()
+        after = np.maximum.accumulate(ev[::-1])[::-1]                 # the loudest point from here on
+        # a syllable break: a dip followed by a full syllable (back over half the peak)
+        dips = [j for j in range(2, len(ev) - 3) if ev[j] < 0.3 * peak and ev[j] <= ev[j - 2] and ev[j] <= ev[j + 2]
+                and after[j + 1] >= 0.5 * peak]
+        if not dips:
+            continue
+        j = dips[-1]
+        while j < len(ev) - 1 and ev[j] < 0.25 * peak:
+            j += 1
+        new = round(float(ts[j]), 3)                                   # said before the pause
+    fixed.append((w["i"], w["text"], st, new))
+    w["start"] = new
+    if w["end"] <= new:
+        w["end"] = round(new + 0.2, 3)
+for f in fixed:
+    print(f"  timing fix: {f[0]} {f[1]!r} {f[2]:.3f} -> {f[3]:.3f}")
+
 path = os.path.join(PROJ, "assets", "audio", "vo4.wav")
 pcm = (np.clip(out, -1, 1) * 32767).astype("<i2").tobytes()
 subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-y", "-f", "s16le", "-ar", str(SR), "-ac", "1", "-i", "-", path],

@@ -281,6 +281,7 @@ def news_scene():
 
 # ------------------------------------------------------------------ reference 7: the logo card and the white card
 BAR = [3, 8, 16, 24, 35, 47, 61, 77, 95, 116, 135, 155, 173, 191, 206, 218, 229, 237, 244, 250, 254, 258, 260, 262, 263]
+LEAD = 2 / 30                                               # reference 7's words come in 2 frames before they are said
 
 
 def r7_scene():
@@ -302,7 +303,8 @@ def r7_scene():
     body.append(f'<div class="r7g" id="r7g">{"".join(tiles)}</div>')
     js.append(f'  tl.set("#r7g",{{scale:1,transformOrigin:"50% 50%"}},0);\n  tl.set("#r7g",{{scale:1.5}},{L(tz)});\n')
     # "GTA VI" on the plain card
-    p1 = Line([("GTA", lt(W(22)), "", "bloom"), ("VI", lt(W(23)), "", "bloom")], "tight", end=lt(tz), ink=True)
+    lw = lambda i: r3(W(i) - LEAD - t0)                    # the words land 2 frames ahead of the voice (the user: in sync)
+    p1 = Line([("GTA", lw(22), "", "bloom"), ("VI", lw(23), "", "bloom")], "tight", end=lt(tz), ink=True)
     body.append(line_html(p1, "r7a", js))
     # the zoom: a square flash the frame before, the logo rising into the middle of the card, one dimmed frame
     body.append('<div class="r7sq" id="r7sq1" style="left:166px;top:68px;width:640px;height:677px;background:#fff;mix-blend-mode:difference"></div>'
@@ -322,8 +324,8 @@ def r7_scene():
     body.append(flank("r7fl", "GTA", 628, 900))
     body.append(flank("r7fr", "VI", 1292, 1036))
     # "took 13 years to make." -- a normal caption, centred, on top of everything
-    cap = Line([("took", lt(W(24)), "", "soft"), ("13", lt(W(25)), "", "scale"), ("years", lt(W(26)), "", "pop"),
-                ("to", lt(W(31)), "", "soft"), ("make.", lt(W(32)), "", "bloom")], "wide", end=lt(tw), ink=True, halo=True)
+    cap = Line([("took", lw(24), "", "soft"), ("13", lw(25), "", "scale"), ("years", lw(26), "", "pop"),
+                ("to", lw(31), "", "soft"), ("make.", lw(32), "", "bloom")], "wide", end=lt(tw), ink=True, halo=True)
     body.append(line_html(cap, "r7p", js).replace('style="top:540px"', 'style="top:540px;z-index:40"'))
     body.append('<div class="r7sq" id="r7neg" style="left:0;top:0;width:1920px;height:1080px;background:#fff;mix-blend-mode:difference;z-index:70"></div>')
     jn = L(W(24)) + 2 * F
@@ -331,9 +333,9 @@ def r7_scene():
     js.append(f'  tl.set("#r7logo,#r7g",{{opacity:0}},{L(tw)});\n')
     # the white card: the bars start to close right after "And yet" (the reel's per-frame curve), "moved on." in the band
     wbody = ['<div class="r7wbg"></div>']
-    run = Line([(("yet," if i == 48 else WT(i)), lt(W(i)), "", "soft") for i in range(47, 53)], "wide", end=lt(W(53) - 0.01), ink=True)
+    run = Line([(("yet," if i == 48 else WT(i)), lw(i), "", "soft") for i in range(47, 53)], "wide", end=r3(lw(53) - 0.01), ink=True)
     wbody.append(line_html(run, "r7b", js))
-    emph = Line([("moved", lt(W(53)), "", "bloom"), ("on.", lt(W(54)), "", "bloom")], "tight", end=lt(t1), ink=True)
+    emph = Line([("moved", lw(53), "", "bloom"), ("on.", lw(54), "", "bloom")], "tight", end=lt(t1), ink=True)
     wbody.append(line_html(emph, "r7c", js))
     wbody.append('<div class="bar top" id="r7bt"></div><div class="bar bot" id="r7bb"></div>')
     tb0 = W(48) + 0.16
