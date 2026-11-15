@@ -3,7 +3,9 @@
 SHOTS feed prep.py (EDL=edl3); LAYERS and LINES feed build3.py. Times are on the final timeline.
 """
 import os
-from edl import W, cut, N, VO_OFFSET, NEWS_DUR, TOTAL, SRC, CROP, PROJ, ROOT, FPS, NEWS_IN, WT
+from edl import W, cut, N, VO_OFFSET, NEWS_DUR, SRC, CROP, PROJ, ROOT, FPS, NEWS_IN, WT
+
+TOTAL = 107.6                           # v3 runs 1.1 s longer than v2 (edl.TOTAL)
 
 SHOTS, LAYERS = [], []
 _n = {}

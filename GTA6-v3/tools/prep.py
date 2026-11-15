@@ -56,7 +56,7 @@ def build(s):
         raise ValueError(s["fit"])
     out = os.path.join(OUT, s["id"] + ".mp4")
     args = ["ffmpeg", "-v", "error", "-y", "-ss", f"{s['sin']:.3f}", "-t", f"{sdur:.3f}", "-i", src] + cmd + [
-        "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "17", "-g", "15", "-keyint_min", "15",
+        "-an", "-fps_mode", "passthrough", "-c:v", "libx264", "-preset", "veryfast", "-crf", "17", "-g", "15", "-keyint_min", "15",
         "-sc_threshold", "0", "-movflags", "+faststart", out]
     r = subprocess.run(args, capture_output=True, text=True)
     if r.returncode != 0:

@@ -4,7 +4,8 @@ usage: python -I -X utf8 build3.py   (from anywhere)"""
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import edl3 as E
-from edl import W, cut, N, VO_OFFSET, NEWS_DUR, TOTAL, NEWS_IN
+from edl import W, cut, N, VO_OFFSET, NEWS_DUR, NEWS_IN
+TOTAL = E.TOTAL
 
 P = E.PROJ
 os.makedirs(os.path.join(P, "compositions"), exist_ok=True)

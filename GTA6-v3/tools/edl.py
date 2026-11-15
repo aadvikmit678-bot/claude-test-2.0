@@ -10,7 +10,7 @@ PROJ = os.path.join(ROOT, "gta6-edit")
 FPS = 30
 VO_OFFSET = 7.34
 NEWS_IN, NEWS_DUR = 0.55, 4.87          # the reporter's line: news.mp4 0.55 -> 5.42
-TOTAL = 107.6
+TOTAL = 106.5                           # v2 ends here (the date card 105.2 -> 106.5); v3 sets its own
 
 _W = json.load(open(os.path.join(PROJ, "words.json"), encoding="utf-8"))
 _N = json.load(open(os.path.join(PROJ, "words_news.json"), encoding="utf-8"))
