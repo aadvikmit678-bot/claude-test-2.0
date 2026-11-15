@@ -182,7 +182,7 @@ def build_captions():
         ([165, 166, 167, 168, 169], {"texts": {166: "owning"}, "kinds": {169: "bloom"}}),
         ([170, 171, 172, 173, 174], {}), ([175, 176, 177, 178], {"end": E.HERO["t0"] - 0.02}),     # "the hero," is the big BE THE HERO
         ([181, 182, 183, 184, 185], {"texts": {181: "But"}, "y": 880}), ([186, 187], {"mode": "tight", "kinds": {187: "scale"}, "y": 880}),
-        ([188, 189, 190, 191, 192, 193, 194], {"kinds": {194: "bloom"}, "y": 880}),
+        ([188, 189, 190, 191, 192, 193, 194], {"kinds": {194: "bloom"}}),
         ([195, 196, 197, 198], {}), ([199, 200, 201, 202], {}),
         ([203, 204, 205, 206, 207], {"y": 880}), ([208, 209, 210, 211], {"y": 880}), ([212], {"kinds": {212: "bloom"}}),
         ([213, 214, 215, 216], {}), ([217, 218, 219, 220, 221], {"kinds": {221: "bloom"}, "end": E.SPAN["pb"][0] - 0.02}),
@@ -617,7 +617,8 @@ def build_scenes():
     section("sl")
     quad_scene()
     clip_scene("gp", "gp")                               # And while every other game asks you to be
-    clip_scene("hero", "hero")                           # the hero, But GTA lets you be the problem. It lets you be the bad guy
+    clip_scene("hero", "hero")                           # the hero, But GTA lets you be the problem.
+    section("sm1")                                       # It lets you be the bad guy (v2's B-roll)
     section("sm2")
     section("sn")
     pb_scene()                                           # back to the world they once dreamed of living in.

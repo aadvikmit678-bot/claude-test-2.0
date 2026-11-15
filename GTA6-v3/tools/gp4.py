@@ -2,10 +2,9 @@
 can do to a founder"), from its first zoom on.
 
 A wall of GTA clip tiles with thin dark seams, seen through a strong barrel (fisheye) curve with a vignette, RGB
-fringes and soft edges. It opens already zoomed on one tile, drifting slowly, then makes three whip-pans -- right, down
-and left, up and right -- each a one-to-two-frame move smeared by motion blur, landing between two tiles and holding
-(~0.3-0.5 s, as the reference at 30 fps: zoom at frame 36, pans at 46, 56, 66). One tile flashes white during the
-third hold (the reference's frame 64). The pans land on the words "other", "asks" and "you".
+fringes and soft edges. It opens zoomed on one tile (the reference after its first zoom), then three pans 10 frames apart,
+each as measured on the reference frame by frame: most of the way in one smeared frame, then easing out over ~7
+frames as the blur fades (CAMERA below).
 Writes gta6-edit/assets/clips/gp.mp4.   usage: python -I tools/gp4.py
 """
 import os, subprocess, sys
@@ -29,10 +28,15 @@ GRADE = "eq=contrast=1.04:saturation=1.03"
 t0, t1 = E.SPAN["gp"]
 DUR = t1 - t0
 N = int(round(DUR * FPS)) + 5
-PANS = [E.cut(173) - t0, E.cut(175) - t0, E.cut(176) - t0]           # "other", "asks", "you"
-VIEWS = [(0.0, 0.0), (1.5 * P, -0.04), (-0.5 * P, 1.0 * Q), (2.5 * P, -0.08)]
-DRIFT = (0.055, -0.018)      # wall units per second during the holds
-FLASH = ((0, 1), PANS[2] + 0.12, 2)                                    # tile, time, frames
+# reference 3, measured frame by frame (30 fps): the view starts zoomed on one tile; every 10 frames a pan of about
+# 1.3 tiles -- right, then down-left, then up-right -- that covers ~47% of its way in the first frame (smeared), ~80%
+# in the second, then eases out over ~6 more frames as the blur fades; still between pans. One tile flashes white for
+# two frames just before the third pan.
+PANS_F = [9, 19, 29]                                                   # pan starts, in frames (the reference's f45/55/65)
+EASE = [0.0, 0.47, 0.80, 0.885, 0.93, 0.955, 0.975, 0.99, 1.0]        # per frame after a pan starts (measured)
+VIEWS = [(0.0, 0.0), (1.27 * P, -0.05 * Q), (0.17 * P, 0.95 * Q), (1.67 * P, -0.05 * Q)]
+FLASH = ((1, 2), 27, 2)                                                # tile, first frame, frames
+PANS = [f / FPS for f in PANS_F]
 
 # the clips on the wall: (src, in) -- faces and scenes from the trailers, Vice City and San Andreas
 CLIPS = [("t2", 67.0), ("t1", 11.5), ("vcde", 44.4), ("t1", 33.2), ("launch", 66.6), ("t2", 98.6),
@@ -82,24 +86,24 @@ VIG = (1 - 0.6 * np.clip((R - 0.5) / 0.75, 0, 1) ** 1.6)[..., None].astype(np.fl
 SOFT = np.clip((R - 0.62) / 0.5, 0, 1)[..., None].astype(np.float32)        # the edges go soft
 
 
-def camera(t):
-    """camera centre at time t: holds drift; each pan moves to the next view in ~2 frames (smoothstep)"""
-    k = sum(1 for p in PANS if t >= p + 1 / FPS)
-    for n, p in enumerate(PANS):
-        if p - 1 / FPS <= t < p + 1 / FPS:
-            u = (t - (p - 1 / FPS)) * FPS / 2
-            u = u * u * (3 - 2 * u)
-            a = hold(n, p - 1 / FPS)
-            b = hold(n + 1, p + 1 / FPS)
-            return a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u
-    return hold(k, t)
+def ease(u):
+    if u <= 0:
+        return 0.0
+    if u >= len(EASE) - 1:
+        return 1.0
+    i = int(u)
+    return EASE[i] + (EASE[i + 1] - EASE[i]) * (u - i)
 
 
-def hold(n, t):
-    start = 0.0 if n == 0 else PANS[n - 1] + 1 / FPS
-    d = t - start
-    v = VIEWS[n]
-    return v[0] + DRIFT[0] * d, v[1] + DRIFT[1] * d
+def camera(f):
+    """the view centre at (fractional) frame f"""
+    x, y = VIEWS[0]
+    for n, pf in enumerate(PANS_F):
+        if f >= pf:
+            e = ease(f - pf)
+            a, b = VIEWS[n], VIEWS[n + 1]
+            x, y = a[0] + (b[0] - a[0]) * e, a[1] + (b[1] - a[1]) * e
+    return x, y
 
 
 def render(cx, cy, tiles, flash_on):
@@ -132,15 +136,17 @@ enc = subprocess.Popen(["ffmpeg", "-nostdin", "-v", "error", "-y", "-f", "rawvid
                         "-keyint_min", "15", "-sc_threshold", "0", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
                         os.path.join(E.PROJ, "assets", "clips", "gp.mp4")], stdin=subprocess.PIPE)
 for n in range(N):
-    t = n / FPS
     tiles = [d.next() for d in DEC]
-    flash_on = FLASH[1] <= t < FLASH[1] + FLASH[2] / FPS
-    moving = any(p - 1 / FPS - 1 / FPS < t < p + 1 / FPS for p in PANS)
-    subs = 10 if moving else 1
+    flash_on = FLASH[1] <= n < FLASH[1] + FLASH[2]
+    # motion blur as the reference's: the frame integrates the last half of the move since the last frame (180-degree shutter)
+    x0, y0 = camera(n - 0.5)
+    x1, y1 = camera(n)
+    dist = np.hypot(x1 - x0, y1 - y0) * PX
+    subs = int(min(28, max(1, dist / 9)))
     acc = np.zeros((OH, OW, 3), np.float32)
-    for s in range(subs):
-        cx, cy = camera(t + (s + 0.5) / subs / FPS if subs > 1 else t)
-        acc += render(cx, cy, tiles, flash_on)
+    for s_ in range(subs):
+        f = n - 0.5 + 0.5 * (s_ + 1) / subs if subs > 1 else n
+        acc += render(*camera(f), tiles, flash_on)
     img = acc / subs
     blur = cv2.GaussianBlur(img, (0, 0), 5.0)
     img = img * (1 - SOFT) + blur * SOFT
@@ -150,4 +156,4 @@ enc.stdin.close()
 assert enc.wait() == 0
 for d in DEC:
     d.p.kill()
-print(f"gp: {N} frames ({DUR:.3f} s + handle) | pans at {[round(p, 3) for p in PANS]} s | tile {TPW}x{TPH} px")
+print(f"gp: {N} frames ({DUR:.3f} s + handle) | pans at frames {PANS_F} | tile {TPW}x{TPH} px")

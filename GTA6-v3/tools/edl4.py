@@ -98,19 +98,21 @@ SECTIONS = [
     ]),
     # "nb": With cheat codes like aspirin and panzer  (the user's notebook clip; build4.nb_scene, tools/nb4.py)
     ("sk", [                                                                         # v2's shots (the user: "fine")
-        B(128, 134, [("panzer", 121.0), ("vc10", 44.3)], at=[134]),                  # the tank through "back of your" (the zooming boat shot out), | notebook.
+        B(128, 134, [("panzer", 121.0)]),                                             # the tank through "notebook." (the user: no other shot here)
         B(135, 137, [("kidlake", 0.5)]),                                             # For a kid,
         B(138, 142, [("vc10", 28.25), ("vcde", 15.3)], at=[142]),                    # it wasn't just a | game.
         B(143, 147, [("escape", 2.75, DIM), ("escape", 7.35)], at=[147]),            # It was a psychological | escape,
     ]),
     # "ar": an alternate reality.  (the user's chasing-dreams clip over a Vice City zoom-out; build4.ar_scene)
     ("sl", [                                                                         # v2's shots (the user: "good")
-        B(151, 153, [("t1", 37.6)]),                                                 # It was everything
-        B(154, 158, [("launch", 66.5), ("vcde", 52.7), ("launch", 9.4)], at=[156, 157]),   # you imagined | adulthood | would be. (v2, approved)
+        B(151, 153, [("ajit", 12.0)]),                                               # It was everything -- madebyajit from 12 s (the kiss)
+        B(154, 158, [("ajit", 13.2), ("ajit", 14.8), ("vcde", 52.7)], at=[156, 157]),     # you imagined (its car) | adulthood (the embrace) |
+                                                                                      # would be. (Tommy & Lance with the guns, at the end)
     ]),
     # "q4": Driving supercars, firing guns, flying planes, and owning an entire city.  (build4.quad_scene)
     # "gp": And while every other game asks you to be  (reference 3's tile wall; tools/gp4.py)
     # "hero": the hero, But GTA lets you be the problem. It lets you be the bad guy  (tools/hero4.py)
+    ("sm1", [B(188, 194, [("t1", 68.8), ("montage", 7.6)], at=v2_at("sm", 4))]),                     # It lets you be the bad guy -- v2's B-roll
     ("sm2", [B(195, 202, [("t1", 27.6), ("nlook", 2.1), ("t1", 21.9)], at=v2_at("sm", 5))]),          # in a world that looks just like yours.
     ("sn", [                                                                                         # v2 (the user: correct)
         B(203, 207, [("goodbye", 2.4, {"grade": "nolabel"}), ("oldchars", 11.8)], at=v2_at("sn", 0)), # the "2013" painted out
@@ -145,11 +147,11 @@ SECTIONS = [
 SPAN = {"sa": (cut(3), cut(22)), "r7": (cut(22), cut(55)), "se": (cut(55), cut(73)), "sf": (cut(73), cut(82)),
         "sg": (cut(82), cut(90)), "sh": (cut(90), cut(91)), "si": (cut(91), cut(94)), "sj": (cut(104), cut(121)),
         "nb": (cut(121), cut(128)), "sk": (cut(128), cut(148)), "ar": (cut(148), cut(151)), "sl": (cut(151), cut(159)),
-        "q4": (cut(159), cut(170)), "gp": (cut(170), cut(179)), "hero": (cut(179), cut(195)), "sm2": (cut(195), cut(203)),
+        "q4": (cut(159), cut(170)), "gp": (cut(170), cut(179)), "hero": (cut(179), cut(188)), "sm1": (cut(188), cut(195)), "sm2": (cut(195), cut(203)),
         "sn": (cut(203), cut(222)), "pb": (cut(222), cut(232)), "so": (cut(232), cut(249)), "sp": (cut(249), cut(268)),
         "tv2": (cut(268), cut(273)), "sq": (cut(273), END_V), "end": (END_V, TOTAL)}
 TV2 = {"t0": cut(268), "tc": cut(271), "t1": cut(273)}             # full screen on "Because that 10-year-old,", the card on "playing GTA"
-HERO = {"t0": cut(179), "tx": cut(186), "t1": cut(195)}          # the hero -> (at "the problem.") the bad guys
+HERO = {"t0": cut(179), "tx": cut(186), "t1": cut(188)}          # the hero -> (at "the problem.") the bad guys, to "It"
 TV = (cut(94), cut(104))                         # "10 years old, sitting in front of the family computer," (tools/tv4.py)
 TCARD = cut(97)                                  # the picture becomes a card on "sitting"
 
