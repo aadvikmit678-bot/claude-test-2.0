@@ -673,7 +673,12 @@ def build_fx():
     for k, t in enumerate(hard):
         body.append(f'<div class="clip" id="hf{k}" data-start="{r3(fr(t) - 2 * F)}" data-duration="{r3(2 * F)}" style="position:absolute;inset:0;z-index:50;background:#fff"></div>')
     n = 0
-    for i, t in enumerate(cuts):
+    # cuts the user had removed (33.01 s: the VICE letters on "playing") still count, so every other cut keeps the box
+    # flash it had when the user reviewed the video
+    GHOST = [33.01]
+    for i, t in enumerate(sorted(set(cuts) | set(GHOST))):
+        if t in GHOST:
+            continue
         # three cuts in four, as before; none on the lines the user named (skip, above)
         if any(a <= t <= b for a, b in skip) or any(abs(t - f) < 0.3 for f in flashes) or i % 4 == 3:
             continue

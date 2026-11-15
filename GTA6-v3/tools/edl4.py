@@ -92,8 +92,12 @@ SECTIONS = [
         B(91, 93, [("vc10", 18.2)]),                                                 # "Back to being": the Vice City car
     ]),
     ("sj", [
-        B(104, 106, [("beatdrop", 14.45), ("vc10", 23.5)]),                          # "playing Vice City": the VICE letters, then Vice City
-        B(107, 114, [("vc10", 29.4), ("vcde", 13.8), ("panzer", 30.0)]),               # the Cheetah past its "ROCKSTAR NORTH" credit
+        B(104, 106, [("vc10", 23.433, {"speed": 0.70})]),                           # "playing Vice City": the street at sunset, one shot
+                                                                                      # (the user: no VICE letters); its first frame to just
+                                                                                      # before the source cuts to a dark street (24.10 s),
+                                                                                      # at 0.70x so it fills the beat
+        B(107, 114, [("vc10", 29.4), ("vcde", 13.8), ("panzer", 30.0)], at=[110, 112], t0=round(W(107), 3)),
+        # ^ the ship comes in with the "with the volume" caption, not 2 frames before it (the user); v2's cuts kept               # the Cheetah past its "ROCKSTAR NORTH" credit
         B(115, 120, [("vc10", 36.9), ("vcde", 37.75), ("vcde", 48.9)], at=[118, 120]),     # v2's cuts: "hear", "gunshots."
     ]),
     # "nb": With cheat codes like aspirin and panzer  (the user's notebook clip; build4.nb_scene, tools/nb4.py)
@@ -193,8 +197,9 @@ GRID = None
 for cid, beats in SECTIONS:
     s0, s1 = SPAN[cid]
     for bi, bt in enumerate(beats):
-        t0 = s0 if bi == 0 else cut(bt["a"])
-        t1 = cut(beats[bi + 1]["a"]) if bi + 1 < len(beats) else s1
+        bstart = lambda b: b.get("t0") or cut(b["a"])          # a beat may start on its own time ("t0")
+        t0 = s0 if bi == 0 else bstart(bt)
+        t1 = bstart(beats[bi + 1]) if bi + 1 < len(beats) else s1
         if bt["shots"] == "GRID":
             GRID = (t0, t1)
             for k, (src, sin, opt) in enumerate(GRID_CELLS):
