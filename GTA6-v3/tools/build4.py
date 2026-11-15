@@ -658,8 +658,7 @@ def build_fx():
             (cut(195) - 0.2, cut(203) + 0.1),                    # nor on "in a world that looks just like yours." (the user)
             (cut(243) - 0.2, cut(249) + 0.1),                    # nor on "the city where it all started." (the user)
             (cut(266) - 0.2, cut(268) + 0.1),                    # nor on "Drive slow." (the user)
-            (cut(284) - 0.2, cut(288) + 0.1),                    # nor on "to feel that freedom" at the end (the user)
-            (cut(55) - 0.2, cut(58) + 0.1)]                      # nor on "But why" (the face with the goggles; the user)
+            (cut(284) - 0.2, cut(288) + 0.1)]                    # nor on "to feel that freedom" at the end (the user)
     cuts = sorted({s["start"] for s in E.SHOTS if 0.5 < s["start"] < TOTAL - 0.3 and not s["id"].startswith(("grid", "r7t"))}
                   | {E.R7["t0"], E.TV[0]})
     flashes = [NEWS_DUR, cut(90), cut(212), E.END_V]                # + v2's "Today,", the ending
