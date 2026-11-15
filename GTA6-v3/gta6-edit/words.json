@@ -1,0 +1,2025 @@
+[
+ {
+  "id": "w0",
+  "text": "That's",
+  "start": 0.11,
+  "how": "whisper",
+  "end": 0.38
+ },
+ {
+  "id": "w1",
+  "text": "exactly",
+  "start": 0.38,
+  "how": "whisper",
+  "end": 0.83
+ },
+ {
+  "id": "w2",
+  "text": "how",
+  "start": 0.83,
+  "how": "whisper",
+  "end": 1.02
+ },
+ {
+  "id": "w3",
+  "text": "millions",
+  "start": 1.02,
+  "how": "whisper",
+  "end": 1.53
+ },
+ {
+  "id": "w4",
+  "text": "of",
+  "start": 1.53,
+  "how": "whisper",
+  "end": 1.66
+ },
+ {
+  "id": "w5",
+  "text": "adults",
+  "start": 1.66,
+  "how": "whisper",
+  "end": 2.09
+ },
+ {
+  "id": "w6",
+  "text": "are",
+  "start": 2.09,
+  "how": "whisper",
+  "end": 2.16
+ },
+ {
+  "id": "w7",
+  "text": "going",
+  "start": 2.16,
+  "how": "whisper",
+  "end": 2.34
+ },
+ {
+  "id": "w8",
+  "text": "to",
+  "start": 2.34,
+  "how": "whisper",
+  "end": 2.44
+ },
+ {
+  "id": "w9",
+  "text": "feel",
+  "start": 2.44,
+  "how": "whisper",
+  "end": 2.5
+ },
+ {
+  "id": "w10",
+  "text": "on",
+  "start": 2.76,
+  "how": "whisper",
+  "end": 2.88
+ },
+ {
+  "id": "w11",
+  "text": "November",
+  "start": 2.88,
+  "how": "whisper",
+  "end": 3.28
+ },
+ {
+  "id": "w12",
+  "text": "19th",
+  "start": 3.28,
+  "how": "whisper",
+  "end": 3.885
+ },
+ {
+  "id": "w13",
+  "text": "when",
+  "start": 4.002,
+  "how": "pause",
+  "end": 4.08
+ },
+ {
+  "id": "w14",
+  "text": "they",
+  "start": 4.08,
+  "how": "whisper",
+  "end": 4.16
+ },
+ {
+  "id": "w15",
+  "text": "play",
+  "start": 4.16,
+  "how": "whisper",
+  "end": 4.4
+ },
+ {
+  "id": "w16",
+  "text": "GTA",
+  "start": 4.4,
+  "how": "whisper",
+  "end": 5.04
+ },
+ {
+  "id": "w17",
+  "text": "6",
+  "start": 5.04,
+  "how": "parakeet",
+  "end": 5.36
+ },
+ {
+  "id": "w18",
+  "text": "for",
+  "start": 5.36,
+  "how": "parakeet",
+  "end": 5.52
+ },
+ {
+  "id": "w19",
+  "text": "the",
+  "start": 5.52,
+  "how": "mono",
+  "end": 5.6
+ },
+ {
+  "id": "w20",
+  "text": "first",
+  "start": 5.6,
+  "how": "whisper",
+  "end": 5.93
+ },
+ {
+  "id": "w21",
+  "text": "time.",
+  "start": 5.93,
+  "how": "whisper",
+  "end": 6.112
+ },
+ {
+  "id": "w22",
+  "text": "GTA",
+  "start": 6.732,
+  "how": "pause",
+  "end": 7.2
+ },
+ {
+  "id": "w23",
+  "text": "6",
+  "start": 7.2,
+  "how": "parakeet",
+  "end": 7.52
+ },
+ {
+  "id": "w24",
+  "text": "took",
+  "start": 7.52,
+  "how": "parakeet",
+  "end": 7.84
+ },
+ {
+  "id": "w25",
+  "text": "13",
+  "start": 7.84,
+  "how": "parakeet",
+  "end": 8.32
+ },
+ {
+  "id": "w26",
+  "text": "years",
+  "start": 8.32,
+  "how": "parakeet",
+  "end": 8.72
+ },
+ {
+  "id": "w27",
+  "text": "and",
+  "start": 8.72,
+  "how": "parakeet",
+  "end": 8.96
+ },
+ {
+  "id": "w28",
+  "text": "2",
+  "start": 8.96,
+  "how": "parakeet",
+  "end": 9.328
+ },
+ {
+  "id": "w29",
+  "text": "billion",
+  "start": 9.436,
+  "how": "pause",
+  "end": 9.84
+ },
+ {
+  "id": "w30",
+  "text": "dollars",
+  "start": 9.84,
+  "how": "parakeet",
+  "end": 10.31
+ },
+ {
+  "id": "w31",
+  "text": "to",
+  "start": 10.31,
+  "how": "whisper",
+  "end": 10.62
+ },
+ {
+  "id": "w32",
+  "text": "make.",
+  "start": 10.62,
+  "how": "whisper",
+  "end": 10.68
+ },
+ {
+  "id": "w33",
+  "text": "The",
+  "start": 11.245,
+  "how": "pause",
+  "end": 11.34
+ },
+ {
+  "id": "w34",
+  "text": "release",
+  "start": 11.34,
+  "how": "whisper",
+  "end": 11.6
+ },
+ {
+  "id": "w35",
+  "text": "got",
+  "start": 11.6,
+  "how": "parakeet",
+  "end": 11.76
+ },
+ {
+  "id": "w36",
+  "text": "pushed",
+  "start": 11.76,
+  "how": "parakeet",
+  "end": 12.16
+ },
+ {
+  "id": "w37",
+  "text": "from",
+  "start": 12.16,
+  "how": "parakeet",
+  "end": 12.4
+ },
+ {
+  "id": "w38",
+  "text": "2025",
+  "start": 12.4,
+  "how": "parakeet",
+  "end": 13.2
+ },
+ {
+  "id": "w39",
+  "text": "to",
+  "start": 13.2,
+  "how": "parakeet",
+  "end": 13.36
+ },
+ {
+  "id": "w40",
+  "text": "May",
+  "start": 13.36,
+  "how": "parakeet",
+  "end": 13.68
+ },
+ {
+  "id": "w41",
+  "text": "2026,",
+  "start": 13.68,
+  "how": "parakeet",
+  "end": 14.645
+ },
+ {
+  "id": "w42",
+  "text": "and",
+  "start": 14.86,
+  "how": "pause",
+  "end": 15.14
+ },
+ {
+  "id": "w43",
+  "text": "then",
+  "start": 15.14,
+  "how": "mono",
+  "end": 15.43
+ },
+ {
+  "id": "w44",
+  "text": "again",
+  "start": 15.43,
+  "how": "mono",
+  "end": 15.8
+ },
+ {
+  "id": "w45",
+  "text": "to",
+  "start": 15.8,
+  "how": "mono",
+  "end": 15.95
+ },
+ {
+  "id": "w46",
+  "text": "November.",
+  "start": 15.95,
+  "how": "mono",
+  "end": 16.086
+ },
+ {
+  "id": "w47",
+  "text": "And",
+  "start": 16.674,
+  "how": "pause",
+  "end": 16.82
+ },
+ {
+  "id": "w48",
+  "text": "yet",
+  "start": 16.82,
+  "how": "whisper",
+  "end": 16.958
+ },
+ {
+  "id": "w49",
+  "text": "nobody",
+  "start": 17.16,
+  "how": "whisper",
+  "end": 17.6
+ },
+ {
+  "id": "w50",
+  "text": "seems",
+  "start": 17.6,
+  "how": "whisper",
+  "end": 17.97
+ },
+ {
+  "id": "w51",
+  "text": "to",
+  "start": 17.97,
+  "how": "whisper",
+  "end": 18.11
+ },
+ {
+  "id": "w52",
+  "text": "have",
+  "start": 18.11,
+  "how": "whisper",
+  "end": 18.24
+ },
+ {
+  "id": "w53",
+  "text": "moved",
+  "start": 18.24,
+  "how": "parakeet",
+  "end": 18.72
+ },
+ {
+  "id": "w54",
+  "text": "on.",
+  "start": 18.79,
+  "how": "whisper",
+  "end": 19.316
+ },
+ {
+  "id": "w55",
+  "text": "But",
+  "start": 19.316,
+  "how": "pause",
+  "end": 19.59
+ },
+ {
+  "id": "w56",
+  "text": "why?",
+  "start": 19.59,
+  "how": "whisper",
+  "end": 19.822
+ },
+ {
+  "id": "w57",
+  "text": "Why",
+  "start": 20.479,
+  "how": "pause",
+  "end": 20.58
+ },
+ {
+  "id": "w58",
+  "text": "are",
+  "start": 20.58,
+  "how": "whisper",
+  "end": 20.78
+ },
+ {
+  "id": "w59",
+  "text": "grown",
+  "start": 20.78,
+  "how": "whisper",
+  "end": 21.18
+ },
+ {
+  "id": "w60",
+  "text": "adults",
+  "start": 21.18,
+  "how": "whisper",
+  "end": 21.68
+ },
+ {
+  "id": "w61",
+  "text": "waiting",
+  "start": 21.68,
+  "how": "parakeet",
+  "end": 21.925
+ },
+ {
+  "id": "w62",
+  "text": "13",
+  "start": 22.055,
+  "how": "pause",
+  "end": 22.56
+ },
+ {
+  "id": "w63",
+  "text": "years",
+  "start": 22.56,
+  "how": "parakeet",
+  "end": 22.7
+ },
+ {
+  "id": "w64",
+  "text": "for",
+  "start": 22.7,
+  "how": "whisper",
+  "end": 22.95
+ },
+ {
+  "id": "w65",
+  "text": "a",
+  "start": 22.95,
+  "how": "whisper",
+  "end": 23.04
+ },
+ {
+  "id": "w66",
+  "text": "game",
+  "start": 23.04,
+  "how": "mono",
+  "end": 23.22
+ },
+ {
+  "id": "w67",
+  "text": "that's",
+  "start": 23.22,
+  "how": "whisper",
+  "end": 23.61
+ },
+ {
+  "id": "w68",
+  "text": "supposedly",
+  "start": 23.61,
+  "how": "whisper",
+  "end": 24.38
+ },
+ {
+  "id": "w69",
+  "text": "just",
+  "start": 24.38,
+  "how": "whisper",
+  "end": 24.53
+ },
+ {
+  "id": "w70",
+  "text": "about",
+  "start": 24.53,
+  "how": "whisper",
+  "end": 24.64
+ },
+ {
+  "id": "w71",
+  "text": "stealing",
+  "start": 24.64,
+  "how": "parakeet",
+  "end": 25.12
+ },
+ {
+  "id": "w72",
+  "text": "cars?",
+  "start": 25.12,
+  "how": "parakeet",
+  "end": 25.475
+ },
+ {
+  "id": "w73",
+  "text": "Because",
+  "start": 26.043,
+  "how": "pause",
+  "end": 26.24
+ },
+ {
+  "id": "w74",
+  "text": "GTA",
+  "start": 26.24,
+  "how": "parakeet",
+  "end": 26.96
+ },
+ {
+  "id": "w75",
+  "text": "was",
+  "start": 26.96,
+  "how": "parakeet",
+  "end": 27.12
+ },
+ {
+  "id": "w76",
+  "text": "never",
+  "start": 27.12,
+  "how": "parakeet",
+  "end": 27.44
+ },
+ {
+  "id": "w77",
+  "text": "just",
+  "start": 27.44,
+  "how": "parakeet",
+  "end": 27.59
+ },
+ {
+  "id": "w78",
+  "text": "about",
+  "start": 27.59,
+  "how": "whisper",
+  "end": 27.97
+ },
+ {
+  "id": "w79",
+  "text": "cars",
+  "start": 27.97,
+  "how": "whisper",
+  "end": 28.27
+ },
+ {
+  "id": "w80",
+  "text": "and",
+  "start": 28.27,
+  "how": "whisper",
+  "end": 28.51
+ },
+ {
+  "id": "w81",
+  "text": "guns.",
+  "start": 28.51,
+  "how": "whisper",
+  "end": 28.72
+ },
+ {
+  "id": "w82",
+  "text": "It",
+  "start": 29.173,
+  "how": "pause",
+  "end": 29.253
+ },
+ {
+  "id": "w83",
+  "text": "was",
+  "start": 29.253,
+  "how": "mono",
+  "end": 29.39
+ },
+ {
+  "id": "w84",
+  "text": "about",
+  "start": 29.39,
+  "how": "whisper",
+  "end": 29.73
+ },
+ {
+  "id": "w85",
+  "text": "what",
+  "start": 29.73,
+  "how": "whisper",
+  "end": 30.0
+ },
+ {
+  "id": "w86",
+  "text": "it",
+  "start": 30.0,
+  "how": "mono",
+  "end": 30.13
+ },
+ {
+  "id": "w87",
+  "text": "really",
+  "start": 30.13,
+  "how": "whisper",
+  "end": 30.24
+ },
+ {
+  "id": "w88",
+  "text": "gave",
+  "start": 30.24,
+  "how": "parakeet",
+  "end": 30.56
+ },
+ {
+  "id": "w89",
+  "text": "you.",
+  "start": 30.56,
+  "how": "parakeet",
+  "end": 30.62
+ },
+ {
+  "id": "w90",
+  "text": "Freedom.",
+  "start": 31.23,
+  "how": "pause",
+  "end": 31.683
+ },
+ {
+  "id": "w91",
+  "text": "Back",
+  "start": 32.328,
+  "how": "pause",
+  "end": 32.47
+ },
+ {
+  "id": "w92",
+  "text": "to",
+  "start": 32.47,
+  "how": "whisper",
+  "end": 32.56
+ },
+ {
+  "id": "w93",
+  "text": "being",
+  "start": 32.56,
+  "how": "whisper",
+  "end": 32.84
+ },
+ {
+  "id": "w94",
+  "text": "10",
+  "start": 32.84,
+  "how": "whisper",
+  "end": 33.18
+ },
+ {
+  "id": "w95",
+  "text": "years",
+  "start": 33.18,
+  "how": "whisper",
+  "end": 33.46
+ },
+ {
+  "id": "w96",
+  "text": "old,",
+  "start": 33.46,
+  "how": "whisper",
+  "end": 33.613
+ },
+ {
+  "id": "w97",
+  "text": "sitting",
+  "start": 33.843,
+  "how": "pause",
+  "end": 34.15
+ },
+ {
+  "id": "w98",
+  "text": "in",
+  "start": 34.15,
+  "how": "whisper",
+  "end": 34.25
+ },
+ {
+  "id": "w99",
+  "text": "front",
+  "start": 34.25,
+  "how": "whisper",
+  "end": 34.51
+ },
+ {
+  "id": "w100",
+  "text": "of",
+  "start": 34.51,
+  "how": "whisper",
+  "end": 34.61
+ },
+ {
+  "id": "w101",
+  "text": "the",
+  "start": 34.61,
+  "how": "whisper",
+  "end": 34.79
+ },
+ {
+  "id": "w102",
+  "text": "family",
+  "start": 34.79,
+  "how": "mono",
+  "end": 35.08
+ },
+ {
+  "id": "w103",
+  "text": "computer,",
+  "start": 35.08,
+  "how": "whisper",
+  "end": 35.455
+ },
+ {
+  "id": "w104",
+  "text": "playing",
+  "start": 35.589,
+  "how": "pause",
+  "end": 35.76
+ },
+ {
+  "id": "w105",
+  "text": "Vice",
+  "start": 35.76,
+  "how": "parakeet",
+  "end": 36.22
+ },
+ {
+  "id": "w106",
+  "text": "City",
+  "start": 36.22,
+  "how": "whisper",
+  "end": 36.4
+ },
+ {
+  "id": "w107",
+  "text": "with",
+  "start": 36.4,
+  "how": "whisper",
+  "end": 36.51
+ },
+ {
+  "id": "w108",
+  "text": "the",
+  "start": 36.51,
+  "how": "whisper",
+  "end": 36.71
+ },
+ {
+  "id": "w109",
+  "text": "volume",
+  "start": 36.71,
+  "how": "whisper",
+  "end": 36.98
+ },
+ {
+  "id": "w110",
+  "text": "turned",
+  "start": 36.98,
+  "how": "whisper",
+  "end": 37.306
+ },
+ {
+  "id": "w111",
+  "text": "all",
+  "start": 37.441,
+  "how": "pause",
+  "end": 37.54
+ },
+ {
+  "id": "w112",
+  "text": "the",
+  "start": 37.54,
+  "how": "whisper",
+  "end": 37.81
+ },
+ {
+  "id": "w113",
+  "text": "way",
+  "start": 37.81,
+  "how": "whisper",
+  "end": 37.91
+ },
+ {
+  "id": "w114",
+  "text": "down",
+  "start": 37.91,
+  "how": "whisper",
+  "end": 38.18
+ },
+ {
+  "id": "w115",
+  "text": "so",
+  "start": 38.18,
+  "how": "whisper",
+  "end": 38.33
+ },
+ {
+  "id": "w116",
+  "text": "nobody",
+  "start": 38.33,
+  "how": "whisper",
+  "end": 38.8
+ },
+ {
+  "id": "w117",
+  "text": "could",
+  "start": 38.8,
+  "how": "parakeet",
+  "end": 38.96
+ },
+ {
+  "id": "w118",
+  "text": "hear",
+  "start": 38.96,
+  "how": "parakeet",
+  "end": 39.2
+ },
+ {
+  "id": "w119",
+  "text": "the",
+  "start": 39.2,
+  "how": "parakeet",
+  "end": 39.28
+ },
+ {
+  "id": "w120",
+  "text": "gunshots.",
+  "start": 39.28,
+  "how": "parakeet",
+  "end": 39.855
+ },
+ {
+  "id": "w121",
+  "text": "With",
+  "start": 40.473,
+  "how": "pause",
+  "end": 40.61
+ },
+ {
+  "id": "w122",
+  "text": "cheat",
+  "start": 40.61,
+  "how": "whisper",
+  "end": 40.9
+ },
+ {
+  "id": "w123",
+  "text": "codes",
+  "start": 40.9,
+  "how": "whisper",
+  "end": 41.2
+ },
+ {
+  "id": "w124",
+  "text": "like",
+  "start": 41.2,
+  "how": "whisper",
+  "end": 41.28
+ },
+ {
+  "id": "w125",
+  "text": "aspirin",
+  "start": 41.28,
+  "how": "parakeet",
+  "end": 41.86
+ },
+ {
+  "id": "w126",
+  "text": "and",
+  "start": 41.86,
+  "how": "whisper",
+  "end": 42.04
+ },
+ {
+  "id": "w127",
+  "text": "panzer",
+  "start": 42.04,
+  "how": "whisper",
+  "end": 42.45
+ },
+ {
+  "id": "w128",
+  "text": "scribbled",
+  "start": 42.45,
+  "how": "whisper",
+  "end": 42.94
+ },
+ {
+  "id": "w129",
+  "text": "at",
+  "start": 42.94,
+  "how": "whisper",
+  "end": 43.06
+ },
+ {
+  "id": "w130",
+  "text": "the",
+  "start": 43.06,
+  "how": "whisper",
+  "end": 43.24
+ },
+ {
+  "id": "w131",
+  "text": "back",
+  "start": 43.24,
+  "how": "whisper",
+  "end": 43.48
+ },
+ {
+  "id": "w132",
+  "text": "of",
+  "start": 43.48,
+  "how": "whisper",
+  "end": 43.6
+ },
+ {
+  "id": "w133",
+  "text": "your",
+  "start": 43.6,
+  "how": "mono",
+  "end": 43.84
+ },
+ {
+  "id": "w134",
+  "text": "notebook.",
+  "start": 43.84,
+  "how": "mono",
+  "end": 43.959
+ },
+ {
+  "id": "w135",
+  "text": "For",
+  "start": 44.63,
+  "how": "pause",
+  "end": 44.77
+ },
+ {
+  "id": "w136",
+  "text": "a",
+  "start": 44.77,
+  "how": "whisper",
+  "end": 44.85
+ },
+ {
+  "id": "w137",
+  "text": "kid,",
+  "start": 44.85,
+  "how": "mono",
+  "end": 45.233
+ },
+ {
+  "id": "w138",
+  "text": "it",
+  "start": 45.36,
+  "how": "parakeet",
+  "end": 45.457
+ },
+ {
+  "id": "w139",
+  "text": "wasn't",
+  "start": 45.457,
+  "how": "pause",
+  "end": 45.76
+ },
+ {
+  "id": "w140",
+  "text": "just",
+  "start": 45.76,
+  "how": "whisper",
+  "end": 46.05
+ },
+ {
+  "id": "w141",
+  "text": "a",
+  "start": 46.05,
+  "how": "whisper",
+  "end": 46.13
+ },
+ {
+  "id": "w142",
+  "text": "game.",
+  "start": 46.13,
+  "how": "whisper",
+  "end": 46.422
+ },
+ {
+  "id": "w143",
+  "text": "It",
+  "start": 46.839,
+  "how": "pause",
+  "end": 46.919
+ },
+ {
+  "id": "w144",
+  "text": "was",
+  "start": 46.919,
+  "how": "mono",
+  "end": 47.03
+ },
+ {
+  "id": "w145",
+  "text": "a",
+  "start": 47.03,
+  "how": "whisper",
+  "end": 47.09
+ },
+ {
+  "id": "w146",
+  "text": "psychological",
+  "start": 47.09,
+  "how": "whisper",
+  "end": 47.96
+ },
+ {
+  "id": "w147",
+  "text": "escape,",
+  "start": 47.96,
+  "how": "whisper",
+  "end": 48.236
+ },
+ {
+  "id": "w148",
+  "text": "an",
+  "start": 48.703,
+  "how": "pause",
+  "end": 48.8
+ },
+ {
+  "id": "w149",
+  "text": "alternate",
+  "start": 48.8,
+  "how": "mono",
+  "end": 49.48
+ },
+ {
+  "id": "w150",
+  "text": "reality.",
+  "start": 49.48,
+  "how": "whisper",
+  "end": 49.757
+ },
+ {
+  "id": "w151",
+  "text": "It",
+  "start": 50.427,
+  "how": "pause",
+  "end": 50.507
+ },
+ {
+  "id": "w152",
+  "text": "was",
+  "start": 50.507,
+  "how": "mono",
+  "end": 50.62
+ },
+ {
+  "id": "w153",
+  "text": "everything",
+  "start": 50.62,
+  "how": "whisper",
+  "end": 51.04
+ },
+ {
+  "id": "w154",
+  "text": "you",
+  "start": 51.04,
+  "how": "parakeet",
+  "end": 51.42
+ },
+ {
+  "id": "w155",
+  "text": "imagined",
+  "start": 51.42,
+  "how": "whisper",
+  "end": 51.91
+ },
+ {
+  "id": "w156",
+  "text": "adulthood",
+  "start": 51.91,
+  "how": "whisper",
+  "end": 52.46
+ },
+ {
+  "id": "w157",
+  "text": "would",
+  "start": 52.46,
+  "how": "whisper",
+  "end": 52.633
+ },
+ {
+  "id": "w158",
+  "text": "be.",
+  "start": 52.64,
+  "how": "parakeet",
+  "end": 53.226
+ },
+ {
+  "id": "w159",
+  "text": "Driving",
+  "start": 53.226,
+  "how": "pause",
+  "end": 53.67
+ },
+ {
+  "id": "w160",
+  "text": "supercars,",
+  "start": 53.67,
+  "how": "whisper",
+  "end": 54.396
+ },
+ {
+  "id": "w161",
+  "text": "firing",
+  "start": 54.543,
+  "how": "pause",
+  "end": 54.99
+ },
+ {
+  "id": "w162",
+  "text": "guns,",
+  "start": 54.99,
+  "how": "whisper",
+  "end": 55.433
+ },
+ {
+  "id": "w163",
+  "text": "flying",
+  "start": 55.45,
+  "how": "whisper",
+  "end": 55.92
+ },
+ {
+  "id": "w164",
+  "text": "planes,",
+  "start": 55.92,
+  "how": "whisper",
+  "end": 56.54
+ },
+ {
+  "id": "w165",
+  "text": "and",
+  "start": 56.54,
+  "how": "whisper",
+  "end": 56.77
+ },
+ {
+  "id": "w166",
+  "text": "owing",
+  "start": 56.77,
+  "how": "mono",
+  "end": 56.96
+ },
+ {
+  "id": "w167",
+  "text": "an",
+  "start": 56.96,
+  "how": "parakeet",
+  "end": 57.12
+ },
+ {
+  "id": "w168",
+  "text": "entire",
+  "start": 57.12,
+  "how": "parakeet",
+  "end": 57.6
+ },
+ {
+  "id": "w169",
+  "text": "city.",
+  "start": 57.6,
+  "how": "parakeet",
+  "end": 57.861
+ },
+ {
+  "id": "w170",
+  "text": "And",
+  "start": 58.636,
+  "how": "pause",
+  "end": 58.73
+ },
+ {
+  "id": "w171",
+  "text": "while",
+  "start": 58.73,
+  "how": "mono",
+  "end": 58.88
+ },
+ {
+  "id": "w172",
+  "text": "every",
+  "start": 58.88,
+  "how": "parakeet",
+  "end": 59.12
+ },
+ {
+  "id": "w173",
+  "text": "other",
+  "start": 59.12,
+  "how": "parakeet",
+  "end": 59.28
+ },
+ {
+  "id": "w174",
+  "text": "game",
+  "start": 59.28,
+  "how": "parakeet",
+  "end": 59.6
+ },
+ {
+  "id": "w175",
+  "text": "asks",
+  "start": 59.6,
+  "how": "parakeet",
+  "end": 59.92
+ },
+ {
+  "id": "w176",
+  "text": "you",
+  "start": 59.92,
+  "how": "parakeet",
+  "end": 60.08
+ },
+ {
+  "id": "w177",
+  "text": "to",
+  "start": 60.08,
+  "how": "parakeet",
+  "end": 60.16
+ },
+ {
+  "id": "w178",
+  "text": "be",
+  "start": 60.16,
+  "how": "parakeet",
+  "end": 60.32
+ },
+ {
+  "id": "w179",
+  "text": "the",
+  "start": 60.32,
+  "how": "parakeet",
+  "end": 60.4
+ },
+ {
+  "id": "w180",
+  "text": "hero,",
+  "start": 60.4,
+  "how": "parakeet",
+  "end": 60.896
+ },
+ {
+  "id": "w181",
+  "text": "But",
+  "start": 61.297,
+  "how": "pause",
+  "end": 61.51
+ },
+ {
+  "id": "w182",
+  "text": "GTA",
+  "start": 61.51,
+  "how": "whisper",
+  "end": 62.062
+ },
+ {
+  "id": "w183",
+  "text": "lets",
+  "start": 62.259,
+  "how": "pause",
+  "end": 62.43
+ },
+ {
+  "id": "w184",
+  "text": "you",
+  "start": 62.43,
+  "how": "parakeet",
+  "end": 62.54
+ },
+ {
+  "id": "w185",
+  "text": "be",
+  "start": 62.54,
+  "how": "whisper",
+  "end": 62.75
+ },
+ {
+  "id": "w186",
+  "text": "the",
+  "start": 62.75,
+  "how": "parakeet",
+  "end": 62.86
+ },
+ {
+  "id": "w187",
+  "text": "problem.",
+  "start": 62.86,
+  "how": "whisper",
+  "end": 63.22
+ },
+ {
+  "id": "w188",
+  "text": "It",
+  "start": 63.823,
+  "how": "pause",
+  "end": 63.89
+ },
+ {
+  "id": "w189",
+  "text": "lets",
+  "start": 63.89,
+  "how": "whisper",
+  "end": 64.16
+ },
+ {
+  "id": "w190",
+  "text": "you",
+  "start": 64.16,
+  "how": "whisper",
+  "end": 64.36
+ },
+ {
+  "id": "w191",
+  "text": "be",
+  "start": 64.36,
+  "how": "mono",
+  "end": 64.56
+ },
+ {
+  "id": "w192",
+  "text": "the",
+  "start": 64.56,
+  "how": "mono",
+  "end": 64.69
+ },
+ {
+  "id": "w193",
+  "text": "bad",
+  "start": 64.69,
+  "how": "mono",
+  "end": 64.89
+ },
+ {
+  "id": "w194",
+  "text": "guy",
+  "start": 64.89,
+  "how": "whisper",
+  "end": 65.09
+ },
+ {
+  "id": "w195",
+  "text": "in",
+  "start": 65.09,
+  "how": "whisper",
+  "end": 65.22
+ },
+ {
+  "id": "w196",
+  "text": "a",
+  "start": 65.22,
+  "how": "whisper",
+  "end": 65.28
+ },
+ {
+  "id": "w197",
+  "text": "world",
+  "start": 65.28,
+  "how": "whisper",
+  "end": 65.62
+ },
+ {
+  "id": "w198",
+  "text": "that",
+  "start": 65.62,
+  "how": "whisper",
+  "end": 65.71
+ },
+ {
+  "id": "w199",
+  "text": "looks",
+  "start": 65.71,
+  "how": "parakeet",
+  "end": 66.03
+ },
+ {
+  "id": "w200",
+  "text": "just",
+  "start": 66.03,
+  "how": "parakeet",
+  "end": 66.27
+ },
+ {
+  "id": "w201",
+  "text": "like",
+  "start": 66.27,
+  "how": "parakeet",
+  "end": 66.51
+ },
+ {
+  "id": "w202",
+  "text": "yours.",
+  "start": 66.51,
+  "how": "parakeet",
+  "end": 66.875
+ },
+ {
+  "id": "w203",
+  "text": "And",
+  "start": 67.483,
+  "how": "pause",
+  "end": 67.63
+ },
+ {
+  "id": "w204",
+  "text": "somewhere",
+  "start": 67.63,
+  "how": "mono",
+  "end": 67.95
+ },
+ {
+  "id": "w205",
+  "text": "along",
+  "start": 67.95,
+  "how": "parakeet",
+  "end": 68.27
+ },
+ {
+  "id": "w206",
+  "text": "the",
+  "start": 68.27,
+  "how": "parakeet",
+  "end": 68.35
+ },
+ {
+  "id": "w207",
+  "text": "way,",
+  "start": 68.35,
+  "how": "parakeet",
+  "end": 68.608
+ },
+ {
+  "id": "w208",
+  "text": "those",
+  "start": 68.931,
+  "how": "pause",
+  "end": 69.07
+ },
+ {
+  "id": "w209",
+  "text": "kids",
+  "start": 69.07,
+  "how": "parakeet",
+  "end": 69.39
+ },
+ {
+  "id": "w210",
+  "text": "grew",
+  "start": 69.39,
+  "how": "parakeet",
+  "end": 69.79
+ },
+ {
+  "id": "w211",
+  "text": "up.",
+  "start": 69.79,
+  "how": "parakeet",
+  "end": 69.85
+ },
+ {
+  "id": "w212",
+  "text": "Today,",
+  "start": 70.483,
+  "how": "pause",
+  "end": 70.871
+ },
+ {
+  "id": "w213",
+  "text": "it's",
+  "start": 70.96,
+  "how": "whisper",
+  "end": 71.25
+ },
+ {
+  "id": "w214",
+  "text": "the",
+  "start": 71.25,
+  "how": "whisper",
+  "end": 71.48
+ },
+ {
+  "id": "w215",
+  "text": "exact",
+  "start": 71.48,
+  "how": "whisper",
+  "end": 71.86
+ },
+ {
+  "id": "w216",
+  "text": "opposite.",
+  "start": 71.86,
+  "how": "whisper",
+  "end": 72.314
+ },
+ {
+  "id": "w217",
+  "text": "It's",
+  "start": 72.809,
+  "how": "pause",
+  "end": 72.98
+ },
+ {
+  "id": "w218",
+  "text": "an",
+  "start": 72.98,
+  "how": "whisper",
+  "end": 73.11
+ },
+ {
+  "id": "w219",
+  "text": "escape",
+  "start": 73.11,
+  "how": "whisper",
+  "end": 73.51
+ },
+ {
+  "id": "w220",
+  "text": "from",
+  "start": 73.51,
+  "how": "whisper",
+  "end": 73.77
+ },
+ {
+  "id": "w221",
+  "text": "adulthood,",
+  "start": 73.77,
+  "how": "whisper",
+  "end": 74.141
+ },
+ {
+  "id": "w222",
+  "text": "back",
+  "start": 74.5,
+  "how": "whisper",
+  "end": 74.81
+ },
+ {
+  "id": "w223",
+  "text": "to",
+  "start": 74.81,
+  "how": "whisper",
+  "end": 74.88
+ },
+ {
+  "id": "w224",
+  "text": "the",
+  "start": 74.88,
+  "how": "whisper",
+  "end": 75.09
+ },
+ {
+  "id": "w225",
+  "text": "world",
+  "start": 75.09,
+  "how": "whisper",
+  "end": 75.42
+ },
+ {
+  "id": "w226",
+  "text": "they",
+  "start": 75.42,
+  "how": "whisper",
+  "end": 75.68
+ },
+ {
+  "id": "w227",
+  "text": "once",
+  "start": 75.68,
+  "how": "whisper",
+  "end": 75.94
+ },
+ {
+  "id": "w228",
+  "text": "dreamed",
+  "start": 75.94,
+  "how": "whisper",
+  "end": 76.19
+ },
+ {
+  "id": "w229",
+  "text": "of",
+  "start": 76.19,
+  "how": "parakeet",
+  "end": 76.35
+ },
+ {
+  "id": "w230",
+  "text": "living",
+  "start": 76.35,
+  "how": "parakeet",
+  "end": 76.67
+ },
+ {
+  "id": "w231",
+  "text": "in.",
+  "start": 76.67,
+  "how": "parakeet",
+  "end": 76.745
+ },
+ {
+  "id": "w232",
+  "text": "And",
+  "start": 77.449,
+  "how": "pause",
+  "end": 77.56
+ },
+ {
+  "id": "w233",
+  "text": "on",
+  "start": 77.56,
+  "how": "mono",
+  "end": 77.69
+ },
+ {
+  "id": "w234",
+  "text": "November",
+  "start": 77.69,
+  "how": "whisper",
+  "end": 78.03
+ },
+ {
+  "id": "w235",
+  "text": "19th,",
+  "start": 78.03,
+  "how": "parakeet",
+  "end": 78.548
+ },
+ {
+  "id": "w236",
+  "text": "Rockstar",
+  "start": 78.937,
+  "how": "pause",
+  "end": 79.44
+ },
+ {
+  "id": "w237",
+  "text": "takes",
+  "start": 79.44,
+  "how": "whisper",
+  "end": 79.79
+ },
+ {
+  "id": "w238",
+  "text": "you",
+  "start": 79.79,
+  "how": "whisper",
+  "end": 79.99
+ },
+ {
+  "id": "w239",
+  "text": "back",
+  "start": 79.99,
+  "how": "mono",
+  "end": 80.26
+ },
+ {
+  "id": "w240",
+  "text": "to",
+  "start": 80.26,
+  "how": "mono",
+  "end": 80.41
+ },
+ {
+  "id": "w241",
+  "text": "Vice",
+  "start": 80.41,
+  "how": "mono",
+  "end": 80.66
+ },
+ {
+  "id": "w242",
+  "text": "City,",
+  "start": 80.66,
+  "how": "whisper",
+  "end": 80.72
+ },
+ {
+  "id": "w243",
+  "text": "the",
+  "start": 81.06,
+  "how": "whisper",
+  "end": 81.174
+ },
+ {
+  "id": "w244",
+  "text": "city",
+  "start": 81.174,
+  "how": "pause",
+  "end": 81.53
+ },
+ {
+  "id": "w245",
+  "text": "where",
+  "start": 81.53,
+  "how": "whisper",
+  "end": 81.87
+ },
+ {
+  "id": "w246",
+  "text": "it",
+  "start": 81.87,
+  "how": "whisper",
+  "end": 82.02
+ },
+ {
+  "id": "w247",
+  "text": "all",
+  "start": 82.02,
+  "how": "whisper",
+  "end": 82.2
+ },
+ {
+  "id": "w248",
+  "text": "started.",
+  "start": 82.2,
+  "how": "whisper",
+  "end": 82.478
+ },
+ {
+  "id": "w249",
+  "text": "So",
+  "start": 83.163,
+  "how": "pause",
+  "end": 83.243
+ },
+ {
+  "id": "w250",
+  "text": "if",
+  "start": 83.243,
+  "how": "mono",
+  "end": 83.33
+ },
+ {
+  "id": "w251",
+  "text": "you're",
+  "start": 83.33,
+  "how": "whisper",
+  "end": 83.47
+ },
+ {
+  "id": "w252",
+  "text": "still",
+  "start": 83.47,
+  "how": "parakeet",
+  "end": 83.71
+ },
+ {
+  "id": "w253",
+  "text": "lost",
+  "start": 83.71,
+  "how": "parakeet",
+  "end": 83.95
+ },
+ {
+  "id": "w254",
+  "text": "in",
+  "start": 83.95,
+  "how": "parakeet",
+  "end": 84.11
+ },
+ {
+  "id": "w255",
+  "text": "Los",
+  "start": 84.11,
+  "how": "parakeet",
+  "end": 84.35
+ },
+ {
+  "id": "w256",
+  "text": "Santos",
+  "start": 84.35,
+  "how": "parakeet",
+  "end": 84.94
+ },
+ {
+  "id": "w257",
+  "text": "this",
+  "start": 84.94,
+  "how": "whisper",
+  "end": 85.17
+ },
+ {
+  "id": "w258",
+  "text": "week,",
+  "start": 85.17,
+  "how": "whisper",
+  "end": 85.253
+ },
+ {
+  "id": "w259",
+  "text": "don't",
+  "start": 85.672,
+  "how": "pause",
+  "end": 86.01
+ },
+ {
+  "id": "w260",
+  "text": "rush.",
+  "start": 86.01,
+  "how": "whisper",
+  "end": 86.244
+ },
+ {
+  "id": "w261",
+  "text": "Take",
+  "start": 86.708,
+  "how": "pause",
+  "end": 86.83
+ },
+ {
+  "id": "w262",
+  "text": "the",
+  "start": 86.83,
+  "how": "parakeet",
+  "end": 86.99
+ },
+ {
+  "id": "w263",
+  "text": "long",
+  "start": 86.99,
+  "how": "parakeet",
+  "end": 87.23
+ },
+ {
+  "id": "w264",
+  "text": "way",
+  "start": 87.23,
+  "how": "parakeet",
+  "end": 87.47
+ },
+ {
+  "id": "w265",
+  "text": "home.",
+  "start": 87.47,
+  "how": "parakeet",
+  "end": 87.634
+ },
+ {
+  "id": "w266",
+  "text": "Drive",
+  "start": 88.185,
+  "how": "pause",
+  "end": 88.51
+ },
+ {
+  "id": "w267",
+  "text": "slow.",
+  "start": 88.51,
+  "how": "parakeet",
+  "end": 88.859
+ },
+ {
+  "id": "w268",
+  "text": "Because",
+  "start": 89.488,
+  "how": "pause",
+  "end": 89.55
+ },
+ {
+  "id": "w269",
+  "text": "that",
+  "start": 89.55,
+  "how": "parakeet",
+  "end": 89.71
+ },
+ {
+  "id": "w270",
+  "text": "10-year-old",
+  "start": 89.71,
+  "how": "parakeet",
+  "end": 90.43
+ },
+ {
+  "id": "w271",
+  "text": "playing",
+  "start": 90.43,
+  "how": "parakeet",
+  "end": 90.67
+ },
+ {
+  "id": "w272",
+  "text": "GTA",
+  "start": 90.67,
+  "how": "parakeet",
+  "end": 91.23
+ },
+ {
+  "id": "w273",
+  "text": "Vice",
+  "start": 91.23,
+  "how": "parakeet",
+  "end": 91.63
+ },
+ {
+  "id": "w274",
+  "text": "City",
+  "start": 91.63,
+  "how": "parakeet",
+  "end": 92.13
+ },
+ {
+  "id": "w275",
+  "text": "never",
+  "start": 92.13,
+  "how": "whisper",
+  "end": 92.27
+ },
+ {
+  "id": "w276",
+  "text": "really",
+  "start": 92.27,
+  "how": "parakeet",
+  "end": 92.51
+ },
+ {
+  "id": "w277",
+  "text": "left.",
+  "start": 92.51,
+  "how": "parakeet",
+  "end": 92.643
+ },
+ {
+  "id": "w278",
+  "text": "He's",
+  "start": 93.384,
+  "how": "pause",
+  "end": 93.5
+ },
+ {
+  "id": "w279",
+  "text": "just",
+  "start": 93.5,
+  "how": "whisper",
+  "end": 93.71
+ },
+ {
+  "id": "w280",
+  "text": "been",
+  "start": 93.71,
+  "how": "whisper",
+  "end": 93.92
+ },
+ {
+  "id": "w281",
+  "text": "waiting",
+  "start": 93.92,
+  "how": "whisper",
+  "end": 94.3
+ },
+ {
+  "id": "w282",
+  "text": "13",
+  "start": 94.3,
+  "how": "whisper",
+  "end": 94.62
+ },
+ {
+  "id": "w283",
+  "text": "years",
+  "start": 94.62,
+  "how": "whisper",
+  "end": 94.89
+ },
+ {
+  "id": "w284",
+  "text": "to",
+  "start": 94.89,
+  "how": "whisper",
+  "end": 95.15
+ },
+ {
+  "id": "w285",
+  "text": "feel",
+  "start": 95.15,
+  "how": "parakeet",
+  "end": 95.39
+ },
+ {
+  "id": "w286",
+  "text": "that",
+  "start": 95.39,
+  "how": "parakeet",
+  "end": 95.55
+ },
+ {
+  "id": "w287",
+  "text": "freedom",
+  "start": 95.55,
+  "how": "parakeet",
+  "end": 95.87
+ },
+ {
+  "id": "w288",
+  "text": "again.",
+  "start": 95.87,
+  "how": "whisper",
+  "end": 96.182
+ }
+]
