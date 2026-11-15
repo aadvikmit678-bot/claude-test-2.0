@@ -659,7 +659,8 @@ def build_fx():
             (cut(278) - 0.2, cut(284) + 0.1),
             (cut(79) - 0.2, cut(82) + 0.1),                      # nor on "cars and guns" (the user)
             (cut(111) - 0.2, cut(115) + 0.1),                    # nor on "all the way down" (the user)
-            (cut(128) - 0.2, cut(135) + 0.1)]                    # nor on "scribbled at the back of your notebook." (the user)
+            (cut(128) - 0.2, cut(135) + 0.1),                    # nor on "scribbled at the back of your notebook." (the user)
+            (cut(195) - 0.2, cut(203) + 0.1)]                    # nor on "in a world that looks just like yours." (the user)
     cuts = sorted({s["start"] for s in E.SHOTS if 0.5 < s["start"] < TOTAL - 0.3 and not s["id"].startswith(("grid", "r7t"))}
                   | {E.R7["t0"], E.TV[0]})
     flashes = [NEWS_DUR, cut(90), cut(212), E.END_V]                # + v2's "Today,", the ending
