@@ -674,8 +674,8 @@ def build_fx():
         body.append(f'<div class="clip" id="hf{k}" data-start="{r3(fr(t) - 2 * F)}" data-duration="{r3(2 * F)}" style="position:absolute;inset:0;z-index:50;background:#fff"></div>')
     n = 0
     for i, t in enumerate(cuts):
-        # the user: too many, coming again and again -- one cut in four now (was three in four)
-        if any(a <= t <= b for a, b in skip) or any(abs(t - f) < 0.3 for f in flashes) or i % 4 != 1:
+        # three cuts in four, as before; none on the lines the user named (skip, above)
+        if any(a <= t <= b for a, b in skip) or any(abs(t - f) < 0.3 for f in flashes) or i % 4 == 3:
             continue
         seq = SEQ[(i * 5) % len(SEQ)]
         tc = fr(t)
