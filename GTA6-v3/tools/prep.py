@@ -21,6 +21,7 @@ GRADE = {
     "blur": "gblur=sigma=16,eq=contrast=1.04:saturation=1.03",
     "nolabel": "delogo=x=884:y=512:w=152:h=62,eq=contrast=1.04:saturation=1.03",      # gta5bye's "2013"
     "bwhi": "hue=s=0,eq=contrast=1.35:brightness=-0.02",
+    "nopreorder": "delogo=x=650:y=548:w=622:h=60,delogo=x=204:y=933:w=1510:h=48,eq=contrast=1.04:saturation=1.03",   # the date card: the date only
     "poster": "format=gray,eq=contrast=1.5,format=rgb24,lutrgb=r='if(lt(val,85),205,255)':g='if(lt(val,85),18,if(lt(val,175),214,244))':b='if(lt(val,85),12,if(lt(val,175),0,190))'",
 }
 
@@ -33,6 +34,8 @@ def build(s):
     dur = s["end"] - s["start"] + HANDLE
     sdur = dur * s["speed"]
     pre = []
+    if s.get("rot"):                                    # v4: a source stored sideways
+        pre.append({"ccw": "transpose=2", "cw": "transpose=1"}[s["rot"]])
     if s["crop"]:
         x, y, w, h = s["crop"]
         pre.append(f"crop={w}:{h}:{x}:{y}")

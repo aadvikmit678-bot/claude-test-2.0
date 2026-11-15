@@ -1,4 +1,4 @@
-"""v4 builder, part 1 (to "... sitting in front of the family computer,"): v2's cut with the user's notes.
+"""v4 builder (now to "...and owning an entire city."): v2's cut with the user's notes.
 Writes gta6-edit/index.html and compositions/*.html from tools/edl4.py.   usage: python -I -X utf8 tools/build4.py
 
 Type: v2's, exactly (Inter variable, 76 px, weight 540, v2's glow and word entrances: soft, pop, bloom, scale, streak;
@@ -172,12 +172,34 @@ def build_captions():
         ([91, 92, 93], {"end": cut(94)}),
         ([94, 95, 96], {"mode": "tight", "kinds": {94: "scale"}, "end": E.TCARD - 3 * F}),
         ([104, 105, 106], {"kinds": {105: "bloom", 106: "bloom"}}), ([107, 108, 109, 110], {}), ([111, 112, 113, 114], {}),
-        ([115, 116, 117, 118], {}), ([119, 120], {"kinds": {120: "streak"}, "end": TOTAL}),
+        ([115, 116, 117, 118], {}), ([119, 120], {"kinds": {120: "streak"}}),
+        ([121, 122, 123, 124], {}), ([125, 126, 127], {"texts": {125: "ASPIRINE", 127: "PANZER"}, "kinds": {125: "bloom", 127: "scale"}, "y": 880}),   # below the notebook's writing (v2's low line)
+        ([128, 129, 130, 131], {}), ([132, 133, 134], {}),
+        ([135, 136, 137], {}), ([138, 139, 140, 141, 142], {}), ([143, 144, 145, 146, 147], {"kinds": {146: "bloom", 147: "pop"}}),
+        ([148, 149, 150], {"kinds": {150: "bloom"}}),
+        ([151, 152, 153], {}), ([154, 155, 156, 157, 158], {}),
+        ([159, 160], {"kinds": {160: "scale"}}), ([161, 162], {"kinds": {162: "scale"}}), ([163, 164], {"kinds": {164: "scale"}}),
+        ([165, 166, 167, 168, 169], {"texts": {166: "owning"}, "kinds": {169: "bloom"}}),
+        ([170, 171, 172, 173, 174], {}), ([175, 176, 177, 178], {"end": E.HERO["t0"] - 0.02}),     # "the hero," is the big BE THE HERO
+        ([181, 182, 183, 184, 185], {"texts": {181: "But"}, "y": 880}), ([186, 187], {"mode": "tight", "kinds": {187: "scale"}, "y": 880}),
+        ([188, 189, 190, 191, 192, 193, 194], {"kinds": {194: "bloom"}, "y": 880}),
+        ([195, 196, 197, 198], {}), ([199, 200, 201, 202], {}),
+        ([203, 204, 205, 206, 207], {"y": 880}), ([208, 209, 210, 211], {"y": 880}), ([212], {"kinds": {212: "bloom"}}),
+        ([213, 214, 215, 216], {}), ([217, 218, 219, 220, 221], {"kinds": {221: "bloom"}, "end": E.SPAN["pb"][0] - 0.02}),
+        # "back to the world they once dreamed of living in." -- black, on the pin board (build4.pb_scene)
+        ([232, 233, 234, 235], {"mode": "tight", "cls": {235: "card"}, "kinds": {235: "card", 234: "bloom"}}),
+        ([236, 237, 238, 239, 240], {"kinds": {236: "bloom"}, "y": 900, "end": W(241) - 0.04}),   # "Vice City," is the logo itself         ([243, 244, 245, 246, 247, 248], {}),
+        ([249, 250, 251, 252, 253], {}), ([254, 255, 256, 257, 258], {"kinds": {255: "bloom", 256: "bloom"}}), ([259, 260], {}),
+        ([261, 262, 263, 264, 265], {}), ([266, 267], {"kinds": {267: "bloom"}}),
+        ([268, 269, 270], {"mode": "tight", "end": E.TV2["tc"] - 3 * F}),                          # then "playing" | "GTA" either side of the card
+        ([273, 274], {"kinds": {273: "bloom", 274: "bloom"}}), ([275, 276, 277], {}), ([278, 279, 280, 281], {}),
+        ([282, 283], {"mode": "tight", "kinds": {282: "scale"}}), ([284, 285, 286], {"end": cut(287) - 0.02}),     # "freedom": the big title
+        ([288], {"y": 880, "end": E.END_V - 0.05}),
     ]
     for k, (idx, o) in enumerate(V):
         nxt = W(V[k + 1][0][0]) - 0.04 if k + 1 < len(V) else TOTAL
         L.append(VL(idx, mode=o.get("mode", "wide"), end=o.get("end", nxt), texts=o.get("texts"), kinds=o.get("kinds"),
-                    cls=o.get("cls")))
+                    cls=o.get("cls"), y=o.get("y", 540)))
     for li, ln in enumerate(L):
         body.append(line_html(ln, f"cap{li:02d}", js))
     open(os.path.join(P, "compositions", "captions.html"), "w", encoding="utf-8").write(comp("captions", TOTAL, "\n".join(body), "".join(js)))
@@ -199,7 +221,7 @@ def push_js(s, t0):
 
 
 SCENES = []
-SKIP = ("grid", "r7t", "news", "cj", "nmoney", "bd")
+SKIP = ("grid", "r7t", "news", "cj", "nmoney", "bd", "nbdesk", "nbbg", "arcity", "ardream", "q", "tv2c", "tv2v")
 
 
 def section(cid, extra_body="", extra_js="", extra_css=""):
@@ -357,15 +379,15 @@ def r7_scene():
 
 
 # ------------------------------------------------------------------ "freedom": big, white, glowing, centred (v2's type)
-def freedom_title(t0):
-    t = r3(W(90) - t0)
-    body = '<div class="hero" id="fh"><div class="hw" id="fhw"><span class="ht" id="fht">freedom</span></div></div>'
+def freedom_title(t0, word=90, p="fh"):
+    t = r3(W(word) - t0)
+    body = f'<div class="hero" id="{p}"><div class="hw" id="{p}w"><span class="ht" id="{p}t">freedom</span></div></div>'
     glow = "0 0 46px rgba(255,255,255,0.75), 0 0 14px rgba(255,255,255,0.7), 0 4px 30px rgba(0,0,0,0.55)"
-    js = (f'  tl.set("#fhw",{{opacity:0}},0);\n'
-          f'  tl.set("#fhw",{{opacity:1,scale:1.05}},{t});\n'
-          f'  tl.set("#fht",{{fontWeight:900,filter:"blur(1.2px) brightness(1.9)",textShadow:"{BLOOM}"}},{t});\n'
-          f'  tl.to("#fht",{{fontWeight:540,filter:"blur(0px) brightness(1)",textShadow:"{glow}",duration:0.2,ease:"expo.out"}},{r3(t + 0.034)});\n'
-          f'  tl.to("#fhw",{{scale:1,duration:0.2,ease:"expo.out"}},{r3(t + 0.034)});\n')
+    js = (f'  tl.set("#{p}w",{{opacity:0}},0);\n'
+          f'  tl.set("#{p}w",{{opacity:1,scale:1.05}},{t});\n'
+          f'  tl.set("#{p}t",{{fontWeight:900,filter:"blur(1.2px) brightness(1.9)",textShadow:"{BLOOM}"}},{t});\n'
+          f'  tl.to("#{p}t",{{fontWeight:540,filter:"blur(0px) brightness(1)",textShadow:"{glow}",duration:0.2,ease:"expo.out"}},{r3(t + 0.034)});\n'
+          f'  tl.to("#{p}w",{{scale:1,duration:0.2,ease:"expo.out"}},{r3(t + 0.034)});\n')
     css = """
 .hero{position:absolute;left:0;right:0;top:300px;height:400px;display:flex;align-items:center;justify-content:center;z-index:50;}
 .hw{position:relative;font-family:"InterV",sans-serif;font-size:240px;letter-spacing:-0.04em;line-height:1;}
@@ -375,21 +397,23 @@ def freedom_title(t0):
 
 
 # ------------------------------------------------------------------ "10 years old, sitting in front of the family computer,"
-def tv_scene():
+def tv_scene(cid="tv", span=None, tcard=None, clip="tv10", left_idx=(97, 98, 99, 100), right_idx=(101, 102, 103), card_clip=None):
     """the kid at the TV (Vice City on the screen) full screen with "10 years old,"; then reference 1's move: a bright
     frame, two negative frames, the picture as a card with a glowing border, a white card, and the picture in the card
-    with the words written in glow either side of it"""
-    t0, t1 = E.TV
+    with the words written in glow either side of it.  (Also "Because that 10-year-old, playing GTA": cid "tv2".)"""
+    t0, t1 = span or E.TV
     dur = r3(t1 - t0)
-    tc = r3(fr(E.TCARD) - t0)
+    tc = r3(fr(tcard or E.TCARD) - t0)
     js = []
     cw, ch, cx, cy = 520, 860, 700, 110                        # the card
     iw, ih = 1670, 940                                         # the picture inside it, 0.87x
-    body = [f'<div class="tvf" id="tvf"><video id="v-tvf" class="clip" src="assets/clips/tv10.mp4" data-start="0" data-duration="{dur}" muted playsinline></video></div>',
+    body = [f'<div class="tvf" id="tvf"><video id="v-tvf" class="clip" src="assets/clips/{clip}.mp4" data-start="0" data-duration="{dur}" muted playsinline></video></div>',
             '<div class="tvglow" id="tvg"></div><div class="tvinv" id="tvi"></div><div class="tvbg" id="tvb"></div>',
             f'<div class="tvc" id="tvc" style="left:{cx}px;top:{cy}px;width:{cw}px;height:{ch}px">'
-            f'<video id="v-tvc" class="clip" src="assets/clips/tv10.mp4" data-start="0" data-duration="{dur}" muted playsinline style="left:{(cw - iw) // 2 - 40}px;top:{(ch - ih) // 2 + 30}px;width:{iw}px;height:{ih}px"></video>'
-            '<div class="tvw" id="tvw"></div></div>']
+            + (f'<video id="v-tvc" class="clip" src="assets/clips/{card_clip}.mp4" data-start="0" data-duration="{dur}" muted playsinline style="left:0;top:0;width:{cw}px;height:{ch}px"></video>'
+               if card_clip else
+               f'<video id="v-tvc" class="clip" src="assets/clips/{clip}.mp4" data-start="0" data-duration="{dur}" muted playsinline style="left:{(cw - iw) // 2 - 40}px;top:{(ch - ih) // 2 + 30}px;width:{iw}px;height:{ih}px"></video>')
+            + '<div class="tvw" id="tvw"></div></div>']
     a = lambda n: r3(tc + n * F)
     body.append(f'<div class="tvsq" id="tvsq" style="left:{cx}px;top:{cy}px;width:{cw}px;height:{ch}px"></div>')
     js.append(f'  tl.set("#tvg",{{opacity:0.62}},{a(-6)});\n'
@@ -400,8 +424,8 @@ def tv_scene():
               f'  tl.set("#tvw",{{opacity:1}},{a(-1)});\n  tl.set("#tvw",{{opacity:0}},{a(0)});\n'
               f'  tl.to("#tvc",{{boxShadow:"0 0 0 3px rgba(255,255,255,0.85), 0 0 34px rgba(255,255,255,0.45)",duration:0.25,ease:"power2.out"}},{a(0)});\n'
               f'  tl.fromTo("#tvc",{{scale:1}},{{scale:0.965,duration:{r3(dur - tc)},ease:"none"}},{a(0)});\n')
-    left = VL([97, 98, 99, 100], mode="tight", end=t1, shift=t0, size="side")
-    right = VL([101, 102, 103], mode="tight", end=t1, shift=t0, size="side")
+    left = VL(list(left_idx), mode="tight", end=t1, shift=t0, size="side")
+    right = VL(list(right_idx), mode="tight", end=t1, shift=t0, size="side")
     for L in (left, right):
         L.words[0] = (L.words[0][0], max(L.words[0][1], tc), L.words[0][2], L.words[0][3])
     lh = line_html(left, "tvl", js).replace('style="top:540px"', f'style="top:540px;left:0;right:{1920 - cx + 34}px;justify-content:flex-end;z-index:20"')
@@ -418,7 +442,140 @@ def tv_scene():
 .tvw{position:absolute;inset:0;background:#fff;opacity:0;}
 .tvsq{position:absolute;background:#fff;opacity:0;z-index:8;transform-origin:50% 50%;box-shadow:0 0 50px rgba(255,255,255,0.95);}
 """
-    SCENES.append(("tv", t0, t1, "\n".join(body), "".join(js), css))
+    SCENES.append((cid, t0, t1, "\n".join(body), "".join(js), css))
+
+
+# ------------------------------------------------------------------ "With cheat codes like aspirin and panzer"
+def nb_scene():
+    """the user's notebook clip: the desk (the polaroids light up, the notebook opens), then straight to the page
+    (tools/nb4.py: cut out and see-through over v2's footage for "aspirin and" / "panzer", the highlight drawn faster)"""
+    t0, t1 = E.SPAN["nb"]
+    tp = E.NB["tp"]
+    body = (vid(SH["nbdesk"], t0, 1) + "\n" +
+            f'<div class="shot" id="nbpage-w" style="z-index:2"><video id="v-nbpage" class="clip" src="assets/clips/nbpage.mp4" '
+            f'data-start="{r3(tp - t0)}" data-duration="{r3(t1 - tp)}" muted playsinline></video></div>')
+    SCENES.append(("nb", t0, t1, body, "", ""))
+
+
+# ------------------------------------------------------------------ "an alternate reality."
+def ar_scene():
+    """the user's chasing-dreams clip from its start, see-through, over the city (the Vice City skyline) zooming out"""
+    t0, t1 = E.SPAN["ar"]
+    body = (vid(SH["arcity"], t0, 1) + "\n" +
+            vid(SH["ardream"], t0, 2).replace('style="z-index:2"', f'style="z-index:2;opacity:{E.AR_DREAM}"'))
+    js = f'  tl.fromTo("#arcity-w",{{scale:1.35}},{{scale:1.04,duration:{r3(t1 - t0)},ease:"power2.out"}},0);\n'
+    SCENES.append(("ar", t0, t1, body, js, ""))
+
+
+# ------------------------------------------------------------------ "Driving supercars, firing guns, flying planes, and owning an entire city."
+def quad_scene():
+    """the screen in four: on each phrase's first word its clip comes in as a cut-out panel -- a white flash inside it
+    and a short scale-in -- and stays; the four join edge to edge with no gap, no outline and no glow, floating on black
+    (the user's note); at the end all four (supercars, guns, planes, the city)"""
+    t0, t1 = E.SPAN["q4"]
+    Q = E.QUAD
+    body, js = ['<div class="qbg"></div>'], []
+    for k, ids in enumerate(Q["shots"]):
+        x, y = Q["xy"][k]
+        vids = "".join(
+            f'<div class="qv" id="{sid}-w"><video id="v-{sid}" class="clip" src="assets/clips/{sid}.mp4" '
+            f'data-start="{r3(SH[sid]["start"] - t0)}" data-duration="{r3(SH[sid]["end"] - SH[sid]["start"])}" muted playsinline></video></div>'
+            for sid in ids)
+        body.append(f'<div class="qp" id="qp{k}" style="left:{x}px;top:{y}px;width:{E.QW}px;height:{E.QH}px;z-index:{10 + k}">'
+                    f'{vids}<div class="qf" id="qp{k}f"></div></div>')
+        ti = r3(fr(Q["ins"][k]) - t0)
+        js.append(f'  tl.set("#qp{k}",{{opacity:1}},{ti});\n'                       # no scale-in (the user: no zoom)
+                  f'  tl.set("#qp{k}f",{{opacity:0.9}},{ti});\n'
+                  f'  tl.to("#qp{k}f",{{opacity:0,duration:0.24,ease:"power2.out"}},{r3(ti + 0.034)});\n')
+    css = """
+.qbg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%, #0d0d0d 0%, #000 100%);}
+.qp{position:absolute;overflow:hidden;opacity:0;transform-origin:50% 50%;}
+.qv{position:absolute;inset:0;}
+.qv video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
+.qf{position:absolute;inset:0;background:#fff;opacity:0;z-index:5;}
+"""
+    SCENES.append(("q4", t0, t1, "\n".join(body), "".join(js), css))
+
+
+# ------------------------------------------------------------------ "And while every other game asks you to be" / "the hero ... the bad guy"
+def clip_scene(cid, clip):
+    """a scene that is one pre-rendered clip (tools/gp4.py, tools/hero4.py)"""
+    t0, t1 = E.SPAN[cid]
+    body = (f'<div class="shot" id="{cid}-w" style="z-index:1"><video id="v-{cid}" class="clip" src="assets/clips/{clip}.mp4" '
+            f'data-start="0" data-duration="{r3(t1 - t0)}" muted playsinline></video></div>')
+    SCENES.append((cid, t0, t1, body, "", ""))
+
+
+# ------------------------------------------------------------------ "back to the world they once dreamed of living in."
+def pb_scene():
+    """the Ackman reel's pin board (17 s on): a light page, a window photo of Vice City at sunset, the GTA pictures
+    swapping in front of it every four frames (taped), a "Rockstar Confirms GTA VI" clipping and the VI card pinned with
+    purple pins and string, a paperclip; then a tilted collage of three, the board pushing in slowly throughout"""
+    t0, t1 = E.SPAN["pb"]
+    D = r3(t1 - t0)
+    js = []
+    wx, wy, ww, wh = 330, 205, 1260, 650
+    bars = "".join(f'<div class="mull" style="left:{int(ww * k / 6) - 7}px;top:0;width:14px;height:{wh}px"></div>' for k in (1, 2, 4, 5)) + \
+           f'<div class="mull" style="left:{ww // 2 - 16}px;top:0;width:32px;height:{wh}px"></div>' + \
+           "".join(f'<div class="mull" style="left:0;top:{int(wh * k / 3) - 7}px;width:{ww}px;height:14px"></div>' for k in (1, 2))
+    win = f'<div class="pbwin" style="left:{wx}px;top:{wy}px;width:{ww}px;height:{wh}px"><img src="assets/img/pb/window.jpg" alt="Vice City at sunset" />{bars}<div class="wframe"></div></div>'
+    imgs = "".join(f'<img class="pm" id="pm{k}" src="assets/img/pb/m{k:02d}.jpg" alt="GTA picture {k + 1}" />' for k in range(12))
+    photo = f'<div class="pbphoto" id="pbp" style="left:700px;top:282px">{imgs}<div class="tape"></div></div>'
+    coll = "".join(f'<div class="pbc" id="pbc{k}" style="left:{x}px;top:{y}px;transform:rotate({r}deg)"><img src="assets/img/pb/m{m:02d}.jpg" alt="" /></div>'
+                   for k, (x, y, r, m) in enumerate([(610, 300, -7, 2), (800, 270, 5, 0), (705, 330, -2, 4)]))
+    news = ('<div class="pbnews"><div class="nb">R*</div><div class="nh">Rockstar Confirms<br/>GTA VI</div>'
+            '<img src="assets/img/pb/news.jpg" alt="" />' + "".join(f'<div class="nl" style="width:{w}px"></div>' for w in (210, 190, 205, 170, 198, 150)) + '</div>')
+    vi = '<div class="pbvi"><img src="assets/img/gta6_logo.png" alt="GTA VI" /></div>'
+    pins = [(232, 392), (530, 678), (150, 858), (1232, 893), (1494, 570)]
+    lines = [(0, 1), (1, 3), (3, 4), (0, 2)]
+    svg = ('<svg class="pbstr" width="1920" height="1080" viewBox="0 0 1920 1080">' +
+           "".join(f'<line x1="{pins[a][0]}" y1="{pins[a][1]}" x2="{pins[b][0]}" y2="{pins[b][1]}" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" />' for a, b in lines) +
+           '</svg>')
+    pinh = "".join(f'<div class="pin" style="left:{x - 19}px;top:{y - 19}px"></div>' for x, y in pins)
+    clip = ('<svg class="pclip" width="70" height="150" viewBox="0 0 70 150"><path d="M22 140 V30 a14 14 0 0 1 28 0 V118 a8 8 0 0 1 -16 0 V40" '
+            'fill="none" stroke="#c9ccd2" stroke-width="5" stroke-linecap="round"/></svg>')
+    body = ['<div class="pbbg"></div>', f'<div class="pbz" id="pbz">{win}{photo}{coll}{news}{vi}{svg}{pinh}{clip}</div>']
+    js.append(f'  tl.fromTo("#pbz",{{scale:1}},{{scale:1.045,duration:{D},ease:"none"}},0);\n')
+    step = 4 * F
+    for k in range(12):                                   # the montage: a new picture every four frames
+        ta = r3(k * step)
+        js.append(f'  tl.set("#pm{k}",{{opacity:1}},{ta});\n')
+        if k < 11:
+            js.append(f'  tl.set("#pm{k}",{{opacity:0}},{r3(ta + step)});\n')
+    tcol = r3(12 * step)
+    js.append(f'  tl.set("#pbp",{{opacity:0}},{tcol});\n')
+    for k in range(3):                                    # the collage, one card a frame or two apart
+        js.append(f'  tl.set("#pbc{k}",{{opacity:1}},{r3(tcol + k * 2 * F)});\n')
+    css = """
+.pbbg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 45%, #f3f3f4 0%, #e5e5e7 60%, #d5d5d8 100%);}
+.pbz{position:absolute;inset:0;transform-origin:50% 52%;}
+.pbwin{position:absolute;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.2);}
+.pbwin img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.mull{position:absolute;background:#f4f4f2;box-shadow:0 0 4px rgba(0,0,0,0.25);}
+.wframe{position:absolute;inset:0;border:16px solid #f4f4f2;}
+.pbphoto{position:absolute;width:520px;height:580px;background:#fff;box-shadow:0 16px 36px rgba(0,0,0,0.38);}
+.pm{position:absolute;left:10px;top:10px;width:500px;height:560px;object-fit:cover;opacity:0;}
+.tape{position:absolute;left:165px;top:-24px;width:190px;height:46px;background:rgba(88,52,36,0.92);transform:rotate(-1.5deg);}
+.pbc{position:absolute;width:480px;height:520px;background:#fff;padding:10px;opacity:0;box-shadow:0 18px 40px rgba(0,0,0,0.4);}
+.pbc img{width:460px;height:500px;object-fit:cover;display:block;}
+.pbnews{position:absolute;left:36px;top:168px;width:270px;height:350px;background:#ede6d6;transform:rotate(-4deg);box-shadow:0 12px 26px rgba(0,0,0,0.3);padding:16px;box-sizing:border-box;font-family:"InterV",sans-serif;color:#151515;}
+.pbnews .nb{display:inline-block;background:#111;color:#fff;font-weight:800;font-size:18px;padding:3px 7px;border-radius:3px;}
+.pbnews .nh{font-weight:800;font-size:31px;line-height:1.02;letter-spacing:-0.03em;margin:10px 0 10px;}
+.pbnews img{width:236px;height:100px;object-fit:cover;display:block;margin-bottom:10px;}
+.pbnews .nl{height:6px;background:#9d978a;margin:0 0 7px;border-radius:2px;}
+.pbvi{position:absolute;left:1598px;top:600px;width:232px;height:200px;background:#e8e1d0;transform:rotate(6deg);box-shadow:0 12px 26px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;}
+.pbvi img{width:170px;height:auto;}
+.pbstr{position:absolute;left:0;top:0;filter:drop-shadow(2px 4px 3px rgba(0,0,0,0.3));}
+.pin{position:absolute;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 34% 30%, #e3c4ff 0%, #a55ae6 32%, #5a1d99 100%);box-shadow:3px 7px 9px rgba(0,0,0,0.38);}
+.pclip{position:absolute;left:1548px;top:150px;transform:rotate(14deg);filter:drop-shadow(2px 3px 2px rgba(0,0,0,0.35));}
+"""
+    # the words in black on the page, left of the picture, a line at a time (the reel's "his entire career.")
+    caps = [VL([222, 223, 224, 225], mode="tight", end=W(226) - 0.04, shift=t0, ink=True, halo=True),
+            VL([226, 227, 228], mode="tight", end=W(229) - 0.04, shift=t0, ink=True, halo=True),
+            VL([229, 230, 231], mode="tight", end=t1, shift=t0, ink=True, halo=True)]
+    for k, ln in enumerate(caps):
+        body.append(line_html(ln, f"pbl{k}", js).replace('style="top:540px"', 'style="top:770px;left:0;right:1250px;justify-content:flex-end;z-index:40"'))
+    SCENES.append(("pb", t0, t1, "\n".join(body), "".join(js), css))
 
 
 def build_scenes():
@@ -438,6 +595,22 @@ def build_scenes():
     section("si")
     tv_scene()
     section("sj")
+    nb_scene()
+    section("sk")
+    ar_scene()
+    section("sl")
+    quad_scene()
+    clip_scene("gp", "gp")                               # And while every other game asks you to be
+    clip_scene("hero", "hero")                           # the hero, But GTA lets you be the problem. It lets you be the bad guy
+    section("sm2")
+    section("sn")
+    pb_scene()                                           # back to the world they once dreamed of living in.
+    section("so")
+    section("sp")
+    tv_scene("tv2", E.SPAN["tv2"], E.TV2["tc"], "tv2c", (271,), (272,), card_clip="tv2v")   # Because that 10-year-old, | playing | GTA
+    fb, fj, fc = freedom_title(E.SPAN["sq"][0], 287, "fh2")                 # "freedom" again, the same title
+    section("sq", fb, fj, fc)
+    section("end")
     for cid, a, b, body, js, css in SCENES:
         open(os.path.join(P, "compositions", cid + ".html"), "w", encoding="utf-8").write(comp(cid, b - a, body, js, css))
 
@@ -457,10 +630,15 @@ STY = {"inv": "background:#fff;mix-blend-mode:difference;", "card": "background:
 
 
 def build_fx():
-    skip = [(E.R7["t0"] - 0.05, E.R7["t1"] + 0.05), (E.SPAN["sg"][0] + 0.05, E.SPAN["sg"][1] - 0.05), (E.TV[0] + 0.05, E.TV[1] - 0.05)]
+    skip = [(E.R7["t0"] - 0.05, E.R7["t1"] + 0.05), (E.SPAN["sg"][0] + 0.05, E.SPAN["sg"][1] - 0.05), (E.TV[0] + 0.05, E.TV[1] - 0.05),
+            (E.SPAN["q4"][0] + 0.05, E.SPAN["q4"][1] - 0.05),    # no square flashes inside the four panels,
+            (E.SPAN["gp"][0] + 0.05, E.SPAN["hero"][1] - 0.05),  # the tile wall, the hero / bad guys,
+            (E.SPAN["pb"][0] - 0.05, E.SPAN["pb"][1] - 0.05),    # the pin board (a white flash brings it in),
+            (E.SPAN["tv2"][0] + 0.05, E.SPAN["tv2"][1] - 0.05),  # the second card,
+            (E.END_V - 0.3, TOTAL)]                              # and the ending
     cuts = sorted({s["start"] for s in E.SHOTS if 0.5 < s["start"] < TOTAL - 0.3 and not s["id"].startswith(("grid", "r7t"))}
                   | {E.R7["t0"], E.TV[0]})
-    flashes = [NEWS_DUR, cut(90)]
+    flashes = [NEWS_DUR, cut(90), cut(212), cut(222), E.END_V]      # + v2's "Today,", the pin board, the ending
     body, js = [], []
     for k, t in enumerate(flashes):
         fid = f"fl{k}"

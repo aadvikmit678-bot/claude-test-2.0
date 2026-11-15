@@ -1,0 +1,105 @@
+<template>
+<style>
+@font-face{font-family:"InterV";src:url("assets/fonts/InterVar-latin.woff2") format("woff2");font-weight:100 900;font-style:normal;}
+
+#root{position:absolute;inset:0;overflow:hidden;}
+.shot{position:absolute;inset:0;overflow:hidden;}
+.shot video{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;}
+.cell{position:absolute;overflow:hidden;opacity:0;}
+.cell video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
+.box{position:absolute;background:#fff;}
+.cl{position:absolute;left:0;right:0;height:300px;margin-top:-150px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.row{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterV",sans-serif;font-size:76px;line-height:1.2;letter-spacing:-0.03em;color:#F2F2F0;}
+.row.wide{column-gap:1.1em;} .row.tight{column-gap:0.26em;}
+.row.side{font-size:64px;}
+.row.ink{color:#141414;}
+.w{position:relative;display:inline-block;}
+.gh{visibility:hidden;font-weight:540;}
+.ik{position:absolute;left:-60%;right:-60%;top:0;bottom:0;display:flex;justify-content:center;align-items:flex-start;z-index:1;}
+.tx{display:inline-block;font-weight:540;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72);}
+.row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
+.w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
+.selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
+
+.pbbg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 45%, #f3f3f4 0%, #e5e5e7 60%, #d5d5d8 100%);}
+.pbz{position:absolute;inset:0;transform-origin:50% 52%;}
+.pbwin{position:absolute;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.2);}
+.pbwin img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.mull{position:absolute;background:#f4f4f2;box-shadow:0 0 4px rgba(0,0,0,0.25);}
+.wframe{position:absolute;inset:0;border:16px solid #f4f4f2;}
+.pbphoto{position:absolute;width:520px;height:580px;background:#fff;box-shadow:0 16px 36px rgba(0,0,0,0.38);}
+.pm{position:absolute;left:10px;top:10px;width:500px;height:560px;object-fit:cover;opacity:0;}
+.tape{position:absolute;left:165px;top:-24px;width:190px;height:46px;background:rgba(88,52,36,0.92);transform:rotate(-1.5deg);}
+.pbc{position:absolute;width:480px;height:520px;background:#fff;padding:10px;opacity:0;box-shadow:0 18px 40px rgba(0,0,0,0.4);}
+.pbc img{width:460px;height:500px;object-fit:cover;display:block;}
+.pbnews{position:absolute;left:36px;top:168px;width:270px;height:350px;background:#ede6d6;transform:rotate(-4deg);box-shadow:0 12px 26px rgba(0,0,0,0.3);padding:16px;box-sizing:border-box;font-family:"InterV",sans-serif;color:#151515;}
+.pbnews .nb{display:inline-block;background:#111;color:#fff;font-weight:800;font-size:18px;padding:3px 7px;border-radius:3px;}
+.pbnews .nh{font-weight:800;font-size:31px;line-height:1.02;letter-spacing:-0.03em;margin:10px 0 10px;}
+.pbnews img{width:236px;height:100px;object-fit:cover;display:block;margin-bottom:10px;}
+.pbnews .nl{height:6px;background:#9d978a;margin:0 0 7px;border-radius:2px;}
+.pbvi{position:absolute;left:1598px;top:600px;width:232px;height:200px;background:#e8e1d0;transform:rotate(6deg);box-shadow:0 12px 26px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;}
+.pbvi img{width:170px;height:auto;}
+.pbstr{position:absolute;left:0;top:0;filter:drop-shadow(2px 4px 3px rgba(0,0,0,0.3));}
+.pin{position:absolute;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 34% 30%, #e3c4ff 0%, #a55ae6 32%, #5a1d99 100%);box-shadow:3px 7px 9px rgba(0,0,0,0.38);}
+.pclip{position:absolute;left:1548px;top:150px;transform:rotate(14deg);filter:drop-shadow(2px 3px 2px rgba(0,0,0,0.35));}
+</style>
+<div id="root" data-composition-id="pb" data-width="1920" data-height="1080" data-duration="2.51">
+<div class="pbbg"></div>
+<div class="pbz" id="pbz"><div class="pbwin" style="left:330px;top:205px;width:1260px;height:650px"><img src="assets/img/pb/window.jpg" alt="Vice City at sunset" /><div class="mull" style="left:203px;top:0;width:14px;height:650px"></div><div class="mull" style="left:413px;top:0;width:14px;height:650px"></div><div class="mull" style="left:833px;top:0;width:14px;height:650px"></div><div class="mull" style="left:1043px;top:0;width:14px;height:650px"></div><div class="mull" style="left:614px;top:0;width:32px;height:650px"></div><div class="mull" style="left:0;top:209px;width:1260px;height:14px"></div><div class="mull" style="left:0;top:426px;width:1260px;height:14px"></div><div class="wframe"></div></div><div class="pbphoto" id="pbp" style="left:700px;top:282px"><img class="pm" id="pm0" src="assets/img/pb/m00.jpg" alt="GTA picture 1" /><img class="pm" id="pm1" src="assets/img/pb/m01.jpg" alt="GTA picture 2" /><img class="pm" id="pm2" src="assets/img/pb/m02.jpg" alt="GTA picture 3" /><img class="pm" id="pm3" src="assets/img/pb/m03.jpg" alt="GTA picture 4" /><img class="pm" id="pm4" src="assets/img/pb/m04.jpg" alt="GTA picture 5" /><img class="pm" id="pm5" src="assets/img/pb/m05.jpg" alt="GTA picture 6" /><img class="pm" id="pm6" src="assets/img/pb/m06.jpg" alt="GTA picture 7" /><img class="pm" id="pm7" src="assets/img/pb/m07.jpg" alt="GTA picture 8" /><img class="pm" id="pm8" src="assets/img/pb/m08.jpg" alt="GTA picture 9" /><img class="pm" id="pm9" src="assets/img/pb/m09.jpg" alt="GTA picture 10" /><img class="pm" id="pm10" src="assets/img/pb/m10.jpg" alt="GTA picture 11" /><img class="pm" id="pm11" src="assets/img/pb/m11.jpg" alt="GTA picture 12" /><div class="tape"></div></div><div class="pbc" id="pbc0" style="left:610px;top:300px;transform:rotate(-7deg)"><img src="assets/img/pb/m02.jpg" alt="" /></div><div class="pbc" id="pbc1" style="left:800px;top:270px;transform:rotate(5deg)"><img src="assets/img/pb/m00.jpg" alt="" /></div><div class="pbc" id="pbc2" style="left:705px;top:330px;transform:rotate(-2deg)"><img src="assets/img/pb/m04.jpg" alt="" /></div><div class="pbnews"><div class="nb">R*</div><div class="nh">Rockstar Confirms<br/>GTA VI</div><img src="assets/img/pb/news.jpg" alt="" /><div class="nl" style="width:210px"></div><div class="nl" style="width:190px"></div><div class="nl" style="width:205px"></div><div class="nl" style="width:170px"></div><div class="nl" style="width:198px"></div><div class="nl" style="width:150px"></div></div><div class="pbvi"><img src="assets/img/gta6_logo.png" alt="GTA VI" /></div><svg class="pbstr" width="1920" height="1080" viewBox="0 0 1920 1080"><line x1="232" y1="392" x2="530" y2="678" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /><line x1="530" y1="678" x2="1232" y2="893" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /><line x1="1232" y1="893" x2="1494" y2="570" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /><line x1="232" y1="392" x2="150" y2="858" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /></svg><div class="pin" style="left:213px;top:373px"></div><div class="pin" style="left:511px;top:659px"></div><div class="pin" style="left:131px;top:839px"></div><div class="pin" style="left:1213px;top:874px"></div><div class="pin" style="left:1475px;top:551px"></div><svg class="pclip" width="70" height="150" viewBox="0 0 70 150"><path d="M22 140 V30 a14 14 0 0 1 28 0 V118 a8 8 0 0 1 -16 0 V40" fill="none" stroke="#c9ccd2" stroke-width="5" stroke-linecap="round"/></svg></div>
+<div id="pbl0" class="clip cl" data-start="0.03" data-duration="0.91" data-track-index="0" style="top:770px;left:0;right:1250px;justify-content:flex-end;z-index:40"><div class="row tight ink halo" id="pbl0r"><span class="w "><span class="gh">back</span><span class="ik"><span class="tx" id="pbl0w0">back</span></span></span><span class="w "><span class="gh">to</span><span class="ik"><span class="tx" id="pbl0w1">to</span></span></span><span class="w "><span class="gh">the</span><span class="ik"><span class="tx" id="pbl0w2">the</span></span></span><span class="w "><span class="gh">world</span><span class="ik"><span class="tx" id="pbl0w3">world</span></span></span></div></div>
+<div id="pbl1" class="clip cl" data-start="0.95" data-duration="0.76" data-track-index="0" style="top:770px;left:0;right:1250px;justify-content:flex-end;z-index:40"><div class="row tight ink halo" id="pbl1r"><span class="w "><span class="gh">they</span><span class="ik"><span class="tx" id="pbl1w0">they</span></span></span><span class="w "><span class="gh">once</span><span class="ik"><span class="tx" id="pbl1w1">once</span></span></span><span class="w "><span class="gh">dreamed</span><span class="ik"><span class="tx" id="pbl1w2">dreamed</span></span></span></div></div>
+<div id="pbl2" class="clip cl" data-start="1.72" data-duration="0.79" data-track-index="0" style="top:770px;left:0;right:1250px;justify-content:flex-end;z-index:40"><div class="row tight ink halo" id="pbl2r"><span class="w "><span class="gh">of</span><span class="ik"><span class="tx" id="pbl2w0">of</span></span></span><span class="w "><span class="gh">living</span><span class="ik"><span class="tx" id="pbl2w1">living</span></span></span><span class="w "><span class="gh">in.</span><span class="ik"><span class="tx" id="pbl2w2">in.</span></span></span></div></div>
+</div>
+<script>
+(function(){
+  const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#pbz",{scale:1},{scale:1.045,duration:2.51,ease:"none"},0);
+  tl.set("#pm0",{opacity:1},0.0);
+  tl.set("#pm0",{opacity:0},0.133);
+  tl.set("#pm1",{opacity:1},0.133);
+  tl.set("#pm1",{opacity:0},0.266);
+  tl.set("#pm2",{opacity:1},0.267);
+  tl.set("#pm2",{opacity:0},0.4);
+  tl.set("#pm3",{opacity:1},0.4);
+  tl.set("#pm3",{opacity:0},0.533);
+  tl.set("#pm4",{opacity:1},0.533);
+  tl.set("#pm4",{opacity:0},0.666);
+  tl.set("#pm5",{opacity:1},0.667);
+  tl.set("#pm5",{opacity:0},0.8);
+  tl.set("#pm6",{opacity:1},0.8);
+  tl.set("#pm6",{opacity:0},0.933);
+  tl.set("#pm7",{opacity:1},0.933);
+  tl.set("#pm7",{opacity:0},1.066);
+  tl.set("#pm8",{opacity:1},1.067);
+  tl.set("#pm8",{opacity:0},1.2);
+  tl.set("#pm9",{opacity:1},1.2);
+  tl.set("#pm9",{opacity:0},1.333);
+  tl.set("#pm10",{opacity:1},1.333);
+  tl.set("#pm10",{opacity:0},1.466);
+  tl.set("#pm11",{opacity:1},1.467);
+  tl.set("#pbp",{opacity:0},1.6);
+  tl.set("#pbc0",{opacity:1},1.6);
+  tl.set("#pbc1",{opacity:1},1.667);
+  tl.set("#pbc2",{opacity:1},1.733);
+  tl.set("#pbl0w0",{opacity:1,scale:1.03,filter:"blur(0.6px) brightness(1.55)",textShadow:"0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0)"},0.06);
+  tl.to("#pbl0w0",{scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9)",duration:0.13,ease:"expo.out"},0.094);
+  tl.fromTo("#pbl0w1",{opacity:0},{opacity:1,duration:0.05,ease:"none"},0.37);
+  tl.fromTo("#pbl0w2",{opacity:0},{opacity:1,duration:0.05,ease:"none"},0.44);
+  tl.set("#pbl0w3",{opacity:1,scale:1.03,filter:"blur(0.6px) brightness(1.55)",textShadow:"0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0)"},0.65);
+  tl.to("#pbl0w3",{scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9)",duration:0.13,ease:"expo.out"},0.684);
+  tl.fromTo("#pbl1w0",{opacity:0},{opacity:1,duration:0.05,ease:"none"},0.98);
+  tl.set("#pbl1w1",{opacity:1,scale:1.03,filter:"blur(0.6px) brightness(1.55)",textShadow:"0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0)"},1.24);
+  tl.to("#pbl1w1",{scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9)",duration:0.13,ease:"expo.out"},1.274);
+  tl.set("#pbl1w2",{opacity:1,fontWeight:900,scale:1.05,filter:"blur(1.2px) brightness(1.9)",textShadow:"0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0)"},1.5);
+  tl.to("#pbl1w2",{fontWeight:540,scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9)",duration:0.2,ease:"expo.out"},1.534);
+  tl.fromTo("#pbl2w0",{opacity:0},{opacity:1,duration:0.05,ease:"none"},1.75);
+  tl.set("#pbl2w1",{opacity:1,scale:1.03,filter:"blur(0.6px) brightness(1.55)",textShadow:"0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0)"},1.91);
+  tl.to("#pbl2w1",{scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9)",duration:0.13,ease:"expo.out"},1.944);
+  tl.fromTo("#pbl2w2",{opacity:0},{opacity:1,duration:0.05,ease:"none"},2.23);
+
+  window.__timelines["pb"] = tl;
+})();
+</script>
+</template>

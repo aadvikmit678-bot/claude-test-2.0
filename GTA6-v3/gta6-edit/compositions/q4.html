@@ -1,0 +1,58 @@
+<template>
+<style>
+@font-face{font-family:"InterV";src:url("assets/fonts/InterVar-latin.woff2") format("woff2");font-weight:100 900;font-style:normal;}
+
+#root{position:absolute;inset:0;overflow:hidden;}
+.shot{position:absolute;inset:0;overflow:hidden;}
+.shot video{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;}
+.cell{position:absolute;overflow:hidden;opacity:0;}
+.cell video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
+.box{position:absolute;background:#fff;}
+.cl{position:absolute;left:0;right:0;height:300px;margin-top:-150px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.row{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterV",sans-serif;font-size:76px;line-height:1.2;letter-spacing:-0.03em;color:#F2F2F0;}
+.row.wide{column-gap:1.1em;} .row.tight{column-gap:0.26em;}
+.row.side{font-size:64px;}
+.row.ink{color:#141414;}
+.w{position:relative;display:inline-block;}
+.gh{visibility:hidden;font-weight:540;}
+.ik{position:absolute;left:-60%;right:-60%;top:0;bottom:0;display:flex;justify-content:center;align-items:flex-start;z-index:1;}
+.tx{display:inline-block;font-weight:540;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72);}
+.row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
+.w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
+.selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
+
+.qbg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%, #0d0d0d 0%, #000 100%);}
+.qp{position:absolute;overflow:hidden;opacity:0;transform-origin:50% 50%;}
+.qv{position:absolute;inset:0;}
+.qv video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
+.qf{position:absolute;inset:0;background:#fff;opacity:0;z-index:5;}
+</style>
+<div id="root" data-composition-id="q4" data-width="1920" data-height="1080" data-duration="5.072">
+<div class="qbg"></div>
+<div class="qp" id="qp0" style="left:54px;top:54px;width:906px;height:486px;z-index:10"><div class="qv" id="q0a-w"><video id="v-q0a" class="clip" src="assets/clips/q0a.mp4" data-start="0.0" data-duration="1.643" muted playsinline></video></div><div class="qv" id="q0b-w"><video id="v-q0b" class="clip" src="assets/clips/q0b.mp4" data-start="1.643" data-duration="1.186" muted playsinline></video></div><div class="qv" id="q0c-w"><video id="v-q0c" class="clip" src="assets/clips/q0c.mp4" data-start="2.829" data-duration="2.243" muted playsinline></video></div><div class="qf" id="qp0f"></div></div>
+<div class="qp" id="qp1" style="left:960px;top:54px;width:906px;height:486px;z-index:11"><div class="qv" id="q1a-w"><video id="v-q1a" class="clip" src="assets/clips/q1a.mp4" data-start="1.317" data-duration="1.03" muted playsinline></video></div><div class="qv" id="q1b-w"><video id="v-q1b" class="clip" src="assets/clips/q1b.mp4" data-start="2.347" data-duration="0.83" muted playsinline></video></div><div class="qv" id="q1c-w"><video id="v-q1c" class="clip" src="assets/clips/q1c.mp4" data-start="3.177" data-duration="0.7" muted playsinline></video></div><div class="qv" id="q1d-w"><video id="v-q1d" class="clip" src="assets/clips/q1d.mp4" data-start="3.877" data-duration="1.195" muted playsinline></video></div><div class="qf" id="qp1f"></div></div>
+<div class="qp" id="qp2" style="left:54px;top:540px;width:906px;height:486px;z-index:12"><div class="qv" id="q2a-w"><video id="v-q2a" class="clip" src="assets/clips/q2a.mp4" data-start="2.224" data-duration="1.9" muted playsinline></video></div><div class="qv" id="q2b-w"><video id="v-q2b" class="clip" src="assets/clips/q2b.mp4" data-start="4.124" data-duration="0.948" muted playsinline></video></div><div class="qf" id="qp2f"></div></div>
+<div class="qp" id="qp3" style="left:960px;top:540px;width:906px;height:486px;z-index:13"><div class="qv" id="q3a-w"><video id="v-q3a" class="clip" src="assets/clips/q3a.mp4" data-start="3.314" data-duration="1.758" muted playsinline></video></div><div class="qf" id="qp3f"></div></div>
+</div>
+<script>
+(function(){
+  const tl = gsap.timeline({ paused: true });
+  tl.set("#qp0",{opacity:1},-0.002);
+  tl.set("#qp0f",{opacity:0.9},-0.002);
+  tl.to("#qp0f",{opacity:0,duration:0.24,ease:"power2.out"},0.032);
+  tl.set("#qp1",{opacity:1},1.331);
+  tl.set("#qp1f",{opacity:0.9},1.331);
+  tl.to("#qp1f",{opacity:0,duration:0.24,ease:"power2.out"},1.365);
+  tl.set("#qp2",{opacity:1},2.231);
+  tl.set("#qp2f",{opacity:0.9},2.231);
+  tl.to("#qp2f",{opacity:0,duration:0.24,ease:"power2.out"},2.265);
+  tl.set("#qp3",{opacity:1},3.298);
+  tl.set("#qp3f",{opacity:0.9},3.298);
+  tl.to("#qp3f",{opacity:0,duration:0.24,ease:"power2.out"},3.332);
+
+  window.__timelines["q4"] = tl;
+})();
+</script>
+</template>

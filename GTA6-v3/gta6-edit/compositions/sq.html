@@ -1,0 +1,52 @@
+<template>
+<style>
+@font-face{font-family:"InterV";src:url("assets/fonts/InterVar-latin.woff2") format("woff2");font-weight:100 900;font-style:normal;}
+
+#root{position:absolute;inset:0;overflow:hidden;}
+.shot{position:absolute;inset:0;overflow:hidden;}
+.shot video{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;}
+.cell{position:absolute;overflow:hidden;opacity:0;}
+.cell video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
+.box{position:absolute;background:#fff;}
+.cl{position:absolute;left:0;right:0;height:300px;margin-top:-150px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.row{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterV",sans-serif;font-size:76px;line-height:1.2;letter-spacing:-0.03em;color:#F2F2F0;}
+.row.wide{column-gap:1.1em;} .row.tight{column-gap:0.26em;}
+.row.side{font-size:64px;}
+.row.ink{color:#141414;}
+.w{position:relative;display:inline-block;}
+.gh{visibility:hidden;font-weight:540;}
+.ik{position:absolute;left:-60%;right:-60%;top:0;bottom:0;display:flex;justify-content:center;align-items:flex-start;z-index:1;}
+.tx{display:inline-block;font-weight:540;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72);}
+.row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
+.w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
+.selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
+
+.hero{position:absolute;left:0;right:0;top:300px;height:400px;display:flex;align-items:center;justify-content:center;z-index:50;}
+.hw{position:relative;font-family:"InterV",sans-serif;font-size:240px;letter-spacing:-0.04em;line-height:1;}
+.ht{position:relative;display:block;color:#fff;font-weight:540;}
+</style>
+<div id="root" data-composition-id="sq" data-width="1920" data-height="1080" data-duration="5.027">
+<div class="shot" id="sq0a-w" style="z-index:1"><video id="v-sq0a" class="clip" src="assets/clips/sq0a.mp4" data-start="0.0" data-duration="0.4" muted playsinline></video></div>
+<div class="shot" id="sq0b-w" style="z-index:2"><video id="v-sq0b" class="clip" src="assets/clips/sq0b.mp4" data-start="0.4" data-duration="0.5" muted playsinline></video></div>
+<div class="shot" id="sq1a-w" style="z-index:3"><video id="v-sq1a" class="clip" src="assets/clips/sq1a.mp4" data-start="0.9" data-duration="0.939" muted playsinline></video></div>
+<div class="shot" id="sq2a-w" style="z-index:4"><video id="v-sq2a" class="clip" src="assets/clips/sq2a.mp4" data-start="1.839" data-duration="0.916" muted playsinline></video></div>
+<div class="shot" id="sq3a-w" style="z-index:5"><video id="v-sq3a" class="clip" src="assets/clips/sq3a.mp4" data-start="2.755" data-duration="0.59" muted playsinline></video></div>
+<div class="shot" id="sq4a-w" style="z-index:6"><video id="v-sq4a" class="clip" src="assets/clips/sq4a.mp4" data-start="3.345" data-duration="0.66" muted playsinline></video></div>
+<div class="shot" id="sq4b-w" style="z-index:7"><video id="v-sq4b" class="clip" src="assets/clips/sq4b.mp4" data-start="4.005" data-duration="1.022" muted playsinline></video></div>
+<div class="hero" id="fh2"><div class="hw" id="fh2w"><span class="ht" id="fh2t">freedom</span></div></div>
+</div>
+<script>
+(function(){
+  const tl = gsap.timeline({ paused: true });
+  tl.set("#fh2w",{opacity:0},0);
+  tl.set("#fh2w",{opacity:1,scale:1.05},4.065);
+  tl.set("#fh2t",{fontWeight:900,filter:"blur(1.2px) brightness(1.9)",textShadow:"0 0 34px rgba(255,255,255,1), 0 0 10px rgba(255,255,255,1), 0 2px 16px rgba(0,0,0,0)"},4.065);
+  tl.to("#fh2t",{fontWeight:540,filter:"blur(0px) brightness(1)",textShadow:"0 0 46px rgba(255,255,255,0.75), 0 0 14px rgba(255,255,255,0.7), 0 4px 30px rgba(0,0,0,0.55)",duration:0.2,ease:"expo.out"},4.099);
+  tl.to("#fh2w",{scale:1,duration:0.2,ease:"expo.out"},4.099);
+
+  window.__timelines["sq"] = tl;
+})();
+</script>
+</template>

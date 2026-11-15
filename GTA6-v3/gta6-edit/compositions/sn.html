@@ -1,0 +1,45 @@
+<template>
+<style>
+@font-face{font-family:"InterV";src:url("assets/fonts/InterVar-latin.woff2") format("woff2");font-weight:100 900;font-style:normal;}
+
+#root{position:absolute;inset:0;overflow:hidden;}
+.shot{position:absolute;inset:0;overflow:hidden;}
+.shot video{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;}
+.cell{position:absolute;overflow:hidden;opacity:0;}
+.cell video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
+.box{position:absolute;background:#fff;}
+.cl{position:absolute;left:0;right:0;height:300px;margin-top:-150px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.row{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterV",sans-serif;font-size:76px;line-height:1.2;letter-spacing:-0.03em;color:#F2F2F0;}
+.row.wide{column-gap:1.1em;} .row.tight{column-gap:0.26em;}
+.row.side{font-size:64px;}
+.row.ink{color:#141414;}
+.w{position:relative;display:inline-block;}
+.gh{visibility:hidden;font-weight:540;}
+.ik{position:absolute;left:-60%;right:-60%;top:0;bottom:0;display:flex;justify-content:center;align-items:flex-start;z-index:1;}
+.tx{display:inline-block;font-weight:540;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72);}
+.row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
+.w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
+.selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
+</style>
+<div id="root" data-composition-id="sn" data-width="1920" data-height="1080" data-duration="6.165">
+<div class="shot" id="sn0a-w" style="z-index:1"><video id="v-sn0a" class="clip" src="assets/clips/sn0a.mp4" data-start="0.0" data-duration="0.787" muted playsinline></video></div>
+<div class="shot" id="sn0b-w" style="z-index:2"><video id="v-sn0b" class="clip" src="assets/clips/sn0b.mp4" data-start="0.787" data-duration="0.661" muted playsinline></video></div>
+<div class="shot" id="sn1a-w" style="z-index:3"><video id="v-sn1a" class="clip" src="assets/clips/sn1a.mp4" data-start="1.448" data-duration="0.859" muted playsinline></video></div>
+<div class="shot" id="sn1b-w" style="z-index:4"><video id="v-sn1b" class="clip" src="assets/clips/sn1b.mp4" data-start="2.307" data-duration="0.326" muted playsinline></video></div>
+<div class="shot" id="sn2a-w" style="z-index:5"><video id="v-sn2a" class="clip" src="assets/clips/sn2a.mp4" data-start="2.633" data-duration="0.477" muted playsinline></video></div>
+<div class="shot" id="sn3a-w" style="z-index:6"><video id="v-sn3a" class="clip" src="assets/clips/sn3a.mp4" data-start="3.11" data-duration="0.9" muted playsinline></video></div>
+<div class="shot" id="sn3b-w" style="z-index:7"><video id="v-sn3b" class="clip" src="assets/clips/sn3b.mp4" data-start="4.01" data-duration="0.667" muted playsinline></video></div>
+<div class="shot" id="sn4a-w" style="z-index:8"><video id="v-sn4a" class="clip" src="assets/clips/sn4a.mp4" data-start="4.677" data-duration="0.961" muted playsinline></video></div>
+<div class="shot" id="sn4b-w" style="z-index:9"><video id="v-sn4b" class="clip" src="assets/clips/sn4b.mp4" data-start="5.638" data-duration="0.527" muted playsinline></video></div>
+
+</div>
+<script>
+(function(){
+  const tl = gsap.timeline({ paused: true });
+
+  window.__timelines["sn"] = tl;
+})();
+</script>
+</template>

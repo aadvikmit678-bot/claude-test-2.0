@@ -1,8 +1,15 @@
-"""v4 voiceover: the user's cut-down script, up to "... so nobody could hear the gunshots.".
+"""v4 voiceover: the user's cut-down script, the whole of it (to "... to feel that freedom again.").
 
     GTA 6 took 13 years [and 2 billion dollars] to make.  [The release got pushed ... to November.]
     And yet, nobody seems to have moved on. But [why?] Why are grown adults waiting 13 years ...
     ... It was about what it really gave you. Freedom. Back to being 10 years old, sitting in front of the family computer,
+    ... With cheat codes like aspirin and panzer scribbled at the back of your notebook. For a kid, it wasn't just a
+    game. It was a psychological escape, an alternate reality. It was everything you imagined adulthood would be.
+    Driving supercars, firing guns, flying planes, and owning an entire city. And while every other game asks you to be
+    the hero, But GTA lets you be the problem. It lets you be the bad guy in a world that looks just like yours. And
+    somewhere along the way, those kids grew up. Today, it's the exact opposite. It's an escape from adulthood,
+    back to the world they once dreamed of living in. And on November 19th, Rockstar takes you back to Vice City ...
+    ... He's just been waiting 13 years to feel that freedom again.
 
 Then every silence longer than 0.30 s is cut down to 0.20 s (the user: "reduce the gaps so the video feels faster").
 Every join sits on a quiet point with a 12 ms equal-power crossfade.
@@ -16,7 +23,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.join(os.path.dirname(HERE), "gta6-edit")
 SR = 48000
 W = json.load(open(os.path.join(PROJ, "words.json"), encoding="utf-8"))
-LAST = 120                              # "gunshots."
+LAST = 288                              # "again." -- the whole script
 MAXP, KEEPP = 0.30, 0.20                # pauses longer than MAXP keep KEEPP
 
 
@@ -55,7 +62,7 @@ cut_b1 = speech_end(s(32) + 0.12) + 0.10                   # just after "make." 
 cut_b2 = quiet(s(47) - 0.14, s(47) - 0.04)                 # just before "And"
 cut_c1 = quiet(s(55) + 0.085, s(55) + 0.125)               # "But" ends here: the first "why?" rises from ~+0.16 s
 cut_c2 = s(57) - 0.09                                      # in the silence just before the second "Why"
-end = speech_end(s(LAST) + 0.25) + 0.12                    # after "computer,"
+end = speech_end(s(LAST) + 0.25) + 0.12                    # after "again."
 KEEP = [(0.0, cut_a1), (cut_a2, cut_b1), (cut_b2, cut_c1), (cut_c2, end)]
 
 # tighten the long pauses inside each kept piece
