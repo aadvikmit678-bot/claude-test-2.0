@@ -22,8 +22,10 @@ LOCAL = {   # SRC alias -> file in this repository
     "em6": "editm6.mp4", "edits": "edits.mp4", "blade": "blade.mp4", "oldchars": "oldchars.mp4", "metav3rse": "metav3rse.mp4",
 }
 EXTRA = {"money": os.path.join(REPO, "dimon-src", "_pin", "p07_Try_these_11_Classy_side_hus.mp4")}
-LOCAL.update({"ajit": "madebyajit.mp4", "leno": "lenojoga.mp4"})        # v4 (tools/edl4.py)
-SRC = dict(edl.SRC, ajit="Video by madebyajit [0-29s].mp4", leno="Video by lenojoga [0-15s].mp4")
+LOCAL.update({"ajit": "madebyajit.mp4", "leno": "lenojoga.mp4", "pinA": "pin/pin1084.mp4", "pinB": "pin/pin1092.mp4"})   # v4
+EXTRA["beatdrop"] = os.path.join(REPO, "gta6-src", "v4ref", "beatdrop.mp4")
+SRC = dict(edl.SRC, ajit="Video by madebyajit [0-29s].mp4", leno="Video by lenojoga [0-15s].mp4", beatdrop="beat drop reference.mp4",
+           pinA="Pinterest video #1084804629023881773 [0-9.4s].mp4", pinB="Pinterest video #1092122978546016645 [0-6s].mp4")
 missing = []
 for alias, name in SRC.items():
     target = EXTRA.get(alias) or os.path.join(D, LOCAL.get(alias, "?"))

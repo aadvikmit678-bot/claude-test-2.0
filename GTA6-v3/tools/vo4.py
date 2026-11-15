@@ -1,20 +1,23 @@
-"""v4 voiceover: the user's cut-down script, up to "Freedom."
+"""v4 voiceover: the user's cut-down script, up to "... so nobody could hear the gunshots.".
 
     GTA 6 took 13 years [and 2 billion dollars] to make.  [The release got pushed ... to November.]
     And yet, nobody seems to have moved on. But [why?] Why are grown adults waiting 13 years ...
-    ... It was about what it really gave you. Freedom.
+    ... It was about what it really gave you. Freedom. Back to being 10 years old, sitting in front of the family computer,
 
-Every join sits on the quietest 10 ms inside a short window at the word boundary, with a 12 ms equal-power crossfade.
+Then every silence longer than 0.30 s is cut down to 0.20 s (the user: "reduce the gaps so the video feels faster").
+Every join sits on a quiet point with a 12 ms equal-power crossfade.
 Writes gta6-edit/assets/audio/vo4.wav and gta6-edit/words4.json (kept words with their new VO-local times, keyed by
 the original word index).   usage: python -I tools/vo4.py
 """
-import json, os, subprocess, sys
+import json, os, subprocess
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.join(os.path.dirname(HERE), "gta6-edit")
 SR = 48000
 W = json.load(open(os.path.join(PROJ, "words.json"), encoding="utf-8"))
+LAST = 120                              # "gunshots."
+MAXP, KEEPP = 0.30, 0.20                # pauses longer than MAXP keep KEEPP
 
 
 def load(path):
@@ -24,32 +27,63 @@ def load(path):
 
 
 vo = load(os.path.join(PROJ, "assets", "audio", "vo.wav"))
-env = np.sqrt(np.convolve(vo ** 2, np.ones(int(0.010 * SR)) / int(0.010 * SR), mode="same"))   # 10 ms RMS
+win = int(0.010 * SR)
+env = np.sqrt(np.convolve(vo ** 2, np.ones(win) / win, mode="same"))       # 10 ms RMS
+THR = np.percentile(env, 95) * 10 ** (-36 / 20)                              # silence: 36 dB under the speech level
+silent = env < THR
 
 
 def quiet(t0, t1):
-    """time (s) of the quietest point between t0 and t1"""
     a, b = int(t0 * SR), int(t1 * SR)
     return (a + int(np.argmin(env[a:b]))) / SR
 
 
+def speech_end(t):
+    """the start of the first silence of at least 80 ms after t"""
+    i = int(t * SR); n = int(0.08 * SR)
+    while i < len(silent) - n:
+        if silent[i] and silent[i:i + n].all():
+            return i / SR
+        i += win // 2
+    return t
+
+
 s, e = (lambda i: W[i]["start"]), (lambda i: W[i]["end"])
-# (keep_from, keep_to) on the VO's own clock
-cut_a1 = quiet(e(26) - 0.10, e(26) + 0.06)          # after "years"
-cut_a2 = quiet(s(31) - 0.10, s(31) + 0.02)          # before "to"
-cut_b1 = quiet(e(32) + 0.18, e(32) + 0.42)          # in the pause after "make."
-cut_b2 = quiet(s(47) - 0.36, s(47) - 0.16)          # in the pause before "And"
-cut_c1 = quiet(e(55) - 0.06, e(55) + 0.05)          # after "But"
-cut_c2 = quiet(s(57) - 0.12, s(57) + 0.01)          # before "Why"
-end = quiet(s(91) - 0.20, s(91) - 0.03)             # before "Back": the cut ends after "Freedom."
+cut_a1 = quiet(e(26) - 0.10, e(26) + 0.06)                 # after "years"
+cut_a2 = quiet(s(31) - 0.10, s(31) + 0.02)                 # before "to"
+cut_b1 = speech_end(s(32) + 0.12) + 0.10                   # just after "make." really ends
+cut_b2 = quiet(s(47) - 0.14, s(47) - 0.04)                 # just before "And"
+cut_c1 = quiet(s(55) + 0.085, s(55) + 0.125)               # "But" ends here: the first "why?" rises from ~+0.16 s
+cut_c2 = s(57) - 0.09                                      # in the silence just before the second "Why"
+end = speech_end(s(LAST) + 0.25) + 0.12                    # after "computer,"
 KEEP = [(0.0, cut_a1), (cut_a2, cut_b1), (cut_b2, cut_c1), (cut_c2, end)]
+
+# tighten the long pauses inside each kept piece
+pieces = []
+for a, b in KEEP:
+    ia, ib = int(a * SR), int(b * SR)
+    sil = silent[ia:ib]
+    runs, i = [], 0
+    while i < len(sil):
+        if sil[i]:
+            j = i
+            while j < len(sil) and sil[j]:
+                j += 1
+            runs.append(((ia + i) / SR, (ia + j) / SR)); i = j
+        else:
+            i += 1
+    cur = a
+    for r0, r1 in runs:
+        if r1 - r0 > MAXP and r0 > a + 0.05 and r1 < b - 0.05:
+            pieces.append((cur, r0 + KEEPP / 2)); cur = r1 - KEEPP / 2
+    pieces.append((cur, b))
 
 XF = int(0.012 * SR)
 out = np.zeros(0, np.float32)
 segs = []
-for k, (a, b) in enumerate(KEEP):
+for k, (a, b) in enumerate(pieces):
     piece = vo[int(a * SR):int(b * SR)].copy()
-    if k == len(KEEP) - 1:                               # 60 ms fade at the very end
+    if k == len(pieces) - 1:
         n = int(0.06 * SR); piece[-n:] *= np.cos(np.linspace(0, np.pi / 2, n)) ** 2
     if len(out) == 0:
         segs.append((a, b, 0.0)); out = piece; continue
@@ -67,15 +101,12 @@ def remap(t):
 
 
 words4 = []
-for i, w in enumerate(W):
-    ns, ne = remap(w["start"]), remap(min(w["end"], w["start"] + 2.0))
+for i, w in enumerate(W[:LAST + 1]):
+    ns = remap(w["start"])
     if ns is None:
         continue
-    if ne is None:          # a word whose tail was trimmed at a join
-        ne = round(ns + 0.05, 3)
-    words4.append({"i": i, "text": w["text"], "start": ns, "end": ne})
-    if i >= 90:
-        break
+    ne = remap(min(w["end"], w["start"] + 2.0))
+    words4.append({"i": i, "text": w["text"], "start": ns, "end": ne if ne is not None else round(ns + 0.05, 3)})
 
 path = os.path.join(PROJ, "assets", "audio", "vo4.wav")
 pcm = (np.clip(out, -1, 1) * 32767).astype("<i2").tobytes()
@@ -84,5 +115,6 @@ subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-y", "-f", "s16le", "-ar",
 json.dump({"segments": [{"from": round(a, 4), "to": round(b, 4), "at": round(d, 4)} for a, b, d in segs],
            "duration": round(len(out) / SR, 3), "words": words4},
           open(os.path.join(PROJ, "words4.json"), "w", encoding="utf-8"), indent=1)
-print(f"vo4: {len(out) / SR:.2f} s from {len(vo) / SR:.2f} s;", " | ".join(f"{a:.3f}-{b:.3f}->{d:.3f}" for a, b, d in segs))
+saved = sum(b - a for a, b in KEEP) - len(out) / SR
+print(f"vo4: {len(out) / SR:.2f} s ({len(segs)} pieces; {saved:.2f} s of pauses removed)")
 print(" ".join(f"{w['i']}:{w['text']}@{w['start']:.2f}" for w in words4))

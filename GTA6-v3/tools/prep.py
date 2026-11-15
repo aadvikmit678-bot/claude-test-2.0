@@ -19,6 +19,7 @@ GRADE = {
     "cool": "eq=contrast=1.05,colorbalance=bs=0.05:rs=-0.03",
     # v4
     "blur": "gblur=sigma=16,eq=contrast=1.04:saturation=1.03",
+    "nolabel": "delogo=x=884:y=512:w=152:h=62,eq=contrast=1.04:saturation=1.03",      # gta5bye's "2013"
     "bwhi": "hue=s=0,eq=contrast=1.35:brightness=-0.02",
     "poster": "format=gray,eq=contrast=1.5,format=rgb24,lutrgb=r='if(lt(val,85),205,255)':g='if(lt(val,85),18,if(lt(val,175),214,244))':b='if(lt(val,85),12,if(lt(val,175),0,190))'",
 }

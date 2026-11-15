@@ -1,7 +1,6 @@
 <template>
 <style>
-@font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Regular.otf") format("opentype");font-weight:400;font-style:normal;}
-@font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
+@font-face{font-family:"InterV";src:url("assets/fonts/InterVar-latin.woff2") format("woff2");font-weight:100 900;font-style:normal;}
 
 #root{position:absolute;inset:0;overflow:hidden;}
 .shot{position:absolute;inset:0;overflow:hidden;}
@@ -10,89 +9,87 @@
 .cell video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
 .box{position:absolute;background:#fff;}
 .cl{position:absolute;left:0;right:0;height:300px;margin-top:-150px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
-.row{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"Heros",sans-serif;font-size:64px;line-height:1.2;letter-spacing:-0.012em;color:#F4F4F2;}
-.row.big{font-size:74px;} .row.r7{font-size:68px;}
-.row.wide{column-gap:1.22em;} .row.tight{column-gap:0.27em;} .row.spread{column-gap:3.1em;}
-.row.ink{color:#151515;}
+.row{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterV",sans-serif;font-size:76px;line-height:1.2;letter-spacing:-0.03em;color:#F2F2F0;}
+.row.wide{column-gap:1.1em;} .row.tight{column-gap:0.26em;}
+.row.side{font-size:64px;}
+.row.ink{color:#141414;}
 .w{position:relative;display:inline-block;}
-.gh{visibility:hidden;font-weight:400;}
+.gh{visibility:hidden;font-weight:540;}
 .ik{position:absolute;left:-60%;right:-60%;top:0;bottom:0;display:flex;justify-content:center;align-items:flex-start;z-index:1;}
-.tx{display:inline-block;font-weight:400;-webkit-text-stroke:0.024em currentColor;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.40), 0 0 5px rgba(255,255,255,0.28), 0 2px 16px rgba(0,0,0,0.70);}
+.tx{display:inline-block;font-weight:540;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72);}
 .row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
 .row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
 .w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
 .cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
 .selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
 </style>
-<div id="root" data-composition-id="sa" data-width="1920" data-height="1080" data-duration="6.672">
-<div class="shot" id="sa0a-w" style="z-index:1"><video id="v-sa0a" class="clip" src="assets/clips/sa0a.mp4" data-start="0.0" data-duration="0.32" muted playsinline></video></div>
-<div class="shot" id="sa0b-w" style="z-index:2"><video id="v-sa0b" class="clip" src="assets/clips/sa0b.mp4" data-start="0.32" data-duration="0.64" muted playsinline></video></div>
-<div class="shot" id="sa2a-w" style="z-index:3"><video id="v-sa2a" class="clip" src="assets/clips/sa2a.mp4" data-start="2.03" data-duration="0.35" muted playsinline></video></div>
-<div class="shot" id="sa2b-w" style="z-index:4"><video id="v-sa2b" class="clip" src="assets/clips/sa2b.mp4" data-start="2.38" data-duration="0.32" muted playsinline></video></div>
-<div class="shot" id="sa3a-w" style="z-index:5"><video id="v-sa3a" class="clip" src="assets/clips/sa3a.mp4" data-start="2.7" data-duration="0.52" muted playsinline></video></div>
-<div class="shot" id="sa3b-w" style="z-index:6"><video id="v-sa3b" class="clip" src="assets/clips/sa3b.mp4" data-start="3.22" data-duration="0.722" muted playsinline></video></div>
-<div class="shot" id="sa4a-w" style="z-index:7"><video id="v-sa4a" class="clip" src="assets/clips/sa4a.mp4" data-start="3.942" data-duration="0.398" muted playsinline></video></div>
-<div class="shot" id="sa4b-w" style="z-index:8"><video id="v-sa4b" class="clip" src="assets/clips/sa4b.mp4" data-start="4.34" data-duration="0.96" muted playsinline></video></div>
-<div class="shot" id="sa5a-w" style="z-index:9"><video id="v-sa5a" class="clip" src="assets/clips/sa5a.mp4" data-start="5.3" data-duration="0.57" muted playsinline></video></div>
-<div class="shot" id="sa5b-w" style="z-index:10"><video id="v-sa5b" class="clip" src="assets/clips/sa5b.mp4" data-start="5.87" data-duration="0.802" muted playsinline></video></div>
-<div class="cell" id="grid0-w" style="left:0px;top:0px;width:640px;height:360px;z-index:40"><video id="v-grid0" class="clip" src="assets/clips/grid0.mp4" data-start="0.96" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid0-f" style="left:0px;top:0px;width:640px;height:360px;z-index:41;opacity:0"></div>
-<div class="cell" id="grid1-w" style="left:640px;top:0px;width:640px;height:360px;z-index:40"><video id="v-grid1" class="clip" src="assets/clips/grid1.mp4" data-start="0.96" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid1-f" style="left:640px;top:0px;width:640px;height:360px;z-index:41;opacity:0"></div>
-<div class="cell" id="grid2-w" style="left:1280px;top:0px;width:640px;height:360px;z-index:40"><video id="v-grid2" class="clip" src="assets/clips/grid2.mp4" data-start="0.96" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid2-f" style="left:1280px;top:0px;width:640px;height:360px;z-index:41;opacity:0"></div>
-<div class="cell" id="grid3-w" style="left:0px;top:360px;width:640px;height:360px;z-index:40"><video id="v-grid3" class="clip" src="assets/clips/grid3.mp4" data-start="0.96" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid3-f" style="left:0px;top:360px;width:640px;height:360px;z-index:41;opacity:0"></div>
-<div class="cell" id="grid4-w" style="left:640px;top:360px;width:640px;height:360px;z-index:40"><video id="v-grid4" class="clip" src="assets/clips/grid4.mp4" data-start="0.96" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid4-f" style="left:640px;top:360px;width:640px;height:360px;z-index:41;opacity:0"></div>
-<div class="cell" id="grid5-w" style="left:1280px;top:360px;width:640px;height:360px;z-index:40"><video id="v-grid5" class="clip" src="assets/clips/grid5.mp4" data-start="0.96" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid5-f" style="left:1280px;top:360px;width:640px;height:360px;z-index:41;opacity:0"></div>
-<div class="cell" id="grid6-w" style="left:0px;top:720px;width:640px;height:360px;z-index:40"><video id="v-grid6" class="clip" src="assets/clips/grid6.mp4" data-start="0.96" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid6-f" style="left:0px;top:720px;width:640px;height:360px;z-index:41;opacity:0"></div>
-<div class="cell" id="grid7-w" style="left:640px;top:720px;width:640px;height:360px;z-index:40"><video id="v-grid7" class="clip" src="assets/clips/grid7.mp4" data-start="0.96" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid7-f" style="left:640px;top:720px;width:640px;height:360px;z-index:41;opacity:0"></div>
-<div class="cell" id="grid8-w" style="left:1280px;top:720px;width:640px;height:360px;z-index:40"><video id="v-grid8" class="clip" src="assets/clips/grid8.mp4" data-start="0.96" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid8-f" style="left:1280px;top:720px;width:640px;height:360px;z-index:41;opacity:0"></div>
+<div id="root" data-composition-id="sa" data-width="1920" data-height="1080" data-duration="5.375">
+<div class="shot" id="sa1a-w" style="z-index:1"><video id="v-sa1a" class="clip" src="assets/clips/sa1a.mp4" data-start="1.07" data-duration="0.35" muted playsinline></video></div>
+<div class="shot" id="sa1b-w" style="z-index:2"><video id="v-sa1b" class="clip" src="assets/clips/sa1b.mp4" data-start="1.42" data-duration="0.32" muted playsinline></video></div>
+<div class="shot" id="sa2a-w" style="z-index:3"><video id="v-sa2a" class="clip" src="assets/clips/sa2a.mp4" data-start="1.74" data-duration="0.52" muted playsinline></video></div>
+<div class="shot" id="sa2b-w" style="z-index:4"><video id="v-sa2b" class="clip" src="assets/clips/sa2b.mp4" data-start="2.26" data-duration="0.722" muted playsinline></video></div>
+<div class="shot" id="sa3a-w" style="z-index:5"><video id="v-sa3a" class="clip" src="assets/clips/sa3a.mp4" data-start="2.982" data-duration="0.398" muted playsinline></video></div>
+<div class="shot" id="sa3b-w" style="z-index:6"><video id="v-sa3b" class="clip" src="assets/clips/sa3b.mp4" data-start="3.38" data-duration="0.96" muted playsinline></video></div>
+<div class="shot" id="sa4a-w" style="z-index:7"><video id="v-sa4a" class="clip" src="assets/clips/sa4a.mp4" data-start="4.34" data-duration="0.57" muted playsinline></video></div>
+<div class="shot" id="sa4b-w" style="z-index:8"><video id="v-sa4b" class="clip" src="assets/clips/sa4b.mp4" data-start="4.91" data-duration="0.465" muted playsinline></video></div>
+<div class="cell" id="grid0-w" style="left:0px;top:0px;width:640px;height:360px;z-index:40"><video id="v-grid0" class="clip" src="assets/clips/grid0.mp4" data-start="0.0" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid0-f" style="left:0px;top:0px;width:640px;height:360px;z-index:41;opacity:0"></div>
+<div class="cell" id="grid1-w" style="left:640px;top:0px;width:640px;height:360px;z-index:40"><video id="v-grid1" class="clip" src="assets/clips/grid1.mp4" data-start="0.0" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid1-f" style="left:640px;top:0px;width:640px;height:360px;z-index:41;opacity:0"></div>
+<div class="cell" id="grid2-w" style="left:1280px;top:0px;width:640px;height:360px;z-index:40"><video id="v-grid2" class="clip" src="assets/clips/grid2.mp4" data-start="0.0" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid2-f" style="left:1280px;top:0px;width:640px;height:360px;z-index:41;opacity:0"></div>
+<div class="cell" id="grid3-w" style="left:0px;top:360px;width:640px;height:360px;z-index:40"><video id="v-grid3" class="clip" src="assets/clips/grid3.mp4" data-start="0.0" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid3-f" style="left:0px;top:360px;width:640px;height:360px;z-index:41;opacity:0"></div>
+<div class="cell" id="grid4-w" style="left:640px;top:360px;width:640px;height:360px;z-index:40"><video id="v-grid4" class="clip" src="assets/clips/grid4.mp4" data-start="0.0" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid4-f" style="left:640px;top:360px;width:640px;height:360px;z-index:41;opacity:0"></div>
+<div class="cell" id="grid5-w" style="left:1280px;top:360px;width:640px;height:360px;z-index:40"><video id="v-grid5" class="clip" src="assets/clips/grid5.mp4" data-start="0.0" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid5-f" style="left:1280px;top:360px;width:640px;height:360px;z-index:41;opacity:0"></div>
+<div class="cell" id="grid6-w" style="left:0px;top:720px;width:640px;height:360px;z-index:40"><video id="v-grid6" class="clip" src="assets/clips/grid6.mp4" data-start="0.0" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid6-f" style="left:0px;top:720px;width:640px;height:360px;z-index:41;opacity:0"></div>
+<div class="cell" id="grid7-w" style="left:640px;top:720px;width:640px;height:360px;z-index:40"><video id="v-grid7" class="clip" src="assets/clips/grid7.mp4" data-start="0.0" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid7-f" style="left:640px;top:720px;width:640px;height:360px;z-index:41;opacity:0"></div>
+<div class="cell" id="grid8-w" style="left:1280px;top:720px;width:640px;height:360px;z-index:40"><video id="v-grid8" class="clip" src="assets/clips/grid8.mp4" data-start="0.0" data-duration="1.07" muted playsinline></video></div><div class="box" id="grid8-f" style="left:1280px;top:720px;width:640px;height:360px;z-index:41;opacity:0"></div>
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
-  tl.set("#grid0-f",{opacity:0.9},0.96);
-  tl.set("#grid0-f",{opacity:0},0.994);
-  tl.set("#grid0-w",{opacity:1},0.96);
-  tl.fromTo("#grid0-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.96);
-  tl.set("#grid0-w",{opacity:0},2.03);
-  tl.set("#grid1-f",{opacity:0.9},1.028);
-  tl.set("#grid1-f",{opacity:0},1.062);
-  tl.set("#grid1-w",{opacity:1},1.028);
-  tl.fromTo("#grid1-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},1.028);
-  tl.set("#grid1-w",{opacity:0},2.03);
-  tl.set("#grid2-f",{opacity:0.9},0.994);
-  tl.set("#grid2-f",{opacity:0},1.028);
-  tl.set("#grid2-w",{opacity:1},0.994);
-  tl.fromTo("#grid2-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.994);
-  tl.set("#grid2-w",{opacity:0},2.03);
-  tl.set("#grid3-f",{opacity:0.9},1.062);
-  tl.set("#grid3-f",{opacity:0},1.096);
-  tl.set("#grid3-w",{opacity:1},1.062);
-  tl.fromTo("#grid3-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},1.062);
-  tl.set("#grid3-w",{opacity:0},2.03);
-  tl.set("#grid4-f",{opacity:0.9},0.96);
-  tl.set("#grid4-f",{opacity:0},0.994);
-  tl.set("#grid4-w",{opacity:1},0.96);
-  tl.fromTo("#grid4-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.96);
-  tl.set("#grid4-w",{opacity:0},2.03);
-  tl.set("#grid5-f",{opacity:0.9},1.062);
-  tl.set("#grid5-f",{opacity:0},1.096);
-  tl.set("#grid5-w",{opacity:1},1.062);
-  tl.fromTo("#grid5-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},1.062);
-  tl.set("#grid5-w",{opacity:0},2.03);
-  tl.set("#grid6-f",{opacity:0.9},0.994);
-  tl.set("#grid6-f",{opacity:0},1.028);
-  tl.set("#grid6-w",{opacity:1},0.994);
-  tl.fromTo("#grid6-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.994);
-  tl.set("#grid6-w",{opacity:0},2.03);
-  tl.set("#grid7-f",{opacity:0.9},1.028);
-  tl.set("#grid7-f",{opacity:0},1.062);
-  tl.set("#grid7-w",{opacity:1},1.028);
-  tl.fromTo("#grid7-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},1.028);
-  tl.set("#grid7-w",{opacity:0},2.03);
-  tl.set("#grid8-f",{opacity:0.9},0.96);
-  tl.set("#grid8-f",{opacity:0},0.994);
-  tl.set("#grid8-w",{opacity:1},0.96);
-  tl.fromTo("#grid8-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.96);
-  tl.set("#grid8-w",{opacity:0},2.03);
+  tl.set("#grid0-f",{opacity:0.9},0.0);
+  tl.set("#grid0-f",{opacity:0},0.034);
+  tl.set("#grid0-w",{opacity:1},0.0);
+  tl.fromTo("#grid0-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.0);
+  tl.set("#grid0-w",{opacity:0},1.07);
+  tl.set("#grid1-f",{opacity:0.9},0.068);
+  tl.set("#grid1-f",{opacity:0},0.102);
+  tl.set("#grid1-w",{opacity:1},0.068);
+  tl.fromTo("#grid1-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.068);
+  tl.set("#grid1-w",{opacity:0},1.07);
+  tl.set("#grid2-f",{opacity:0.9},0.034);
+  tl.set("#grid2-f",{opacity:0},0.068);
+  tl.set("#grid2-w",{opacity:1},0.034);
+  tl.fromTo("#grid2-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.034);
+  tl.set("#grid2-w",{opacity:0},1.07);
+  tl.set("#grid3-f",{opacity:0.9},0.102);
+  tl.set("#grid3-f",{opacity:0},0.136);
+  tl.set("#grid3-w",{opacity:1},0.102);
+  tl.fromTo("#grid3-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.102);
+  tl.set("#grid3-w",{opacity:0},1.07);
+  tl.set("#grid4-f",{opacity:0.9},0.0);
+  tl.set("#grid4-f",{opacity:0},0.034);
+  tl.set("#grid4-w",{opacity:1},0.0);
+  tl.fromTo("#grid4-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.0);
+  tl.set("#grid4-w",{opacity:0},1.07);
+  tl.set("#grid5-f",{opacity:0.9},0.102);
+  tl.set("#grid5-f",{opacity:0},0.136);
+  tl.set("#grid5-w",{opacity:1},0.102);
+  tl.fromTo("#grid5-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.102);
+  tl.set("#grid5-w",{opacity:0},1.07);
+  tl.set("#grid6-f",{opacity:0.9},0.034);
+  tl.set("#grid6-f",{opacity:0},0.068);
+  tl.set("#grid6-w",{opacity:1},0.034);
+  tl.fromTo("#grid6-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.034);
+  tl.set("#grid6-w",{opacity:0},1.07);
+  tl.set("#grid7-f",{opacity:0.9},0.068);
+  tl.set("#grid7-f",{opacity:0},0.102);
+  tl.set("#grid7-w",{opacity:1},0.068);
+  tl.fromTo("#grid7-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.068);
+  tl.set("#grid7-w",{opacity:0},1.07);
+  tl.set("#grid8-f",{opacity:0.9},0.0);
+  tl.set("#grid8-f",{opacity:0},0.034);
+  tl.set("#grid8-w",{opacity:1},0.0);
+  tl.fromTo("#grid8-w",{scale:1.06},{scale:1,duration:0.3,ease:"expo.out"},0.0);
+  tl.set("#grid8-w",{opacity:0},1.07);
 
   window.__timelines["sa"] = tl;
 })();
