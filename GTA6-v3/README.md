@@ -6,7 +6,9 @@ This is separate from the `gta6/` folder on this branch, which is a different se
 
 ## Watch
 
-`gta6-edit/renders/gta6_v3_preview720.mp4`. This is a 720p preview; the 1080p render (206 MB) is over GitHub's 100 MB file limit.
+`gta6-edit/renders/gta6_v3_preview720.mp4`. This is a 720p preview; the 1080p render (206 MB) is over GitHub's 100 MB file limit. `renders/` is gitignored, so the preview is added with `git add -f`.
+
+The cloud session now renders this project too: its render matches the desktop render on every one of the 3,228 frames (mean difference 0.45 of 255; the audio matches). The one change needed was in the curved wall: each panel's 2 px dark edge is now drawn inside the panel (`.wp::after`), not as an outer `box-shadow`. With the outer shadow, Chrome on Linux dropped the wall's leftmost column; the picture is otherwise the same.
 
 ## Open / render
 
@@ -27,12 +29,19 @@ npx hyperframes@0.9.46 render --fps 30 --quality looks --output renders/gta6_v3.
 
 The source trailers and clips aren't committed. To rebuild:
 
-1. Put them next to `tools/`, using the file names listed in `tools/edl.py` (`SRC`).
-2. Recut the clips:
+1. Put them next to `tools/`, using the file names listed in `tools/edl.py` (`SRC`). In this repository they are already downloaded to `gta6-src/_drive/` (and `dimon-src/` for the money clip); link them in once per machine:
+
+   ```bash
+   python -I GTA6-v3/tools/link_sources.py
+   ```
+
+2. Recut the clips (from `GTA6-v3/`):
 
    ```bash
    EDL=edl3 python -I tools/prep.py
    ```
+
+   `assets/clips/_spec.json` records the spec each committed clip was cut from, so this recuts only the shots whose spec changed (`prep.py <id> …` forces those). A recut on another ffmpeg build can start one frame earlier than the committed clip on sources that begin at 0.033 s; leave unchanged shots alone.
 
 3. Write the HTML:
 

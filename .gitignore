@@ -40,3 +40,7 @@ gta6/renders/
 gta6/assets/audio/
 gta6/assets/img/
 gta6/.hyperframes/
+
+# GTA 6 v3 (GTA6-v3/): the source footage is linked in under its Drive names by tools/link_sources.py
+GTA6-v3/*.mp4
+GTA6-v3/_dl/

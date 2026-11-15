@@ -42,7 +42,8 @@ CSS = FONTS + """
 .dimov{position:absolute;inset:0;background:rgba(0,0,0,0.62);}
 .wall{position:absolute;inset:0;perspective:1500px;background:#030303;}
 .ring{position:absolute;left:960px;top:540px;width:0;height:0;transform-style:preserve-3d;}
-.wp{position:absolute;width:600px;height:338px;left:-300px;top:-169px;overflow:hidden;opacity:0;box-shadow:0 0 0 2px rgba(0,0,0,0.6);}
+.wp{position:absolute;width:600px;height:338px;left:-300px;top:-169px;overflow:hidden;opacity:0;}
+.wp::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 2px rgba(0,0,0,0.6);}
 .osd{position:absolute;left:190px;bottom:150px;font-family:"InterV",sans-serif;font-weight:800;color:#F2F2F0;letter-spacing:0.12em;
   text-shadow:0 0 16px rgba(255,255,255,0.85);opacity:0;}
 .osd .bars{display:flex;gap:10px;margin-top:14px;}
