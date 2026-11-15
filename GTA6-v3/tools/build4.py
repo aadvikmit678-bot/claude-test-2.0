@@ -514,7 +514,7 @@ def pb_scene():
     """the Ackman reel's pin board (from 17 s), frame for frame: two white frames, then the board seen close on the
     window photo (Vice City at sunset through a window) and zooming out to the whole board -- the clipping, the
     paperclip, the VI card, purple pins and string -- quickly at first, then easing (x2.0 -> x1.0 in 1.35 s, power1.out
-    as measured on the reel, then a slow drift); on it the GTA pictures come one a frame in runs, in different sizes,
+    as measured on the reel, then a slow drift); on it the GTA pictures come three frames each in runs, in different sizes,
     most taped at the top, now and then one landing on top of the one before, the bare window between runs; then tilted
     prints land on "they", "dreamed" and "living" and stay"""
     t0, t1 = E.SPAN["pb"]
@@ -527,12 +527,12 @@ def pb_scene():
     win = f'<div class="pbwin" style="left:{wx}px;top:{wy}px;width:{ww}px;height:{wh}px"><img src="assets/img/pb/window.jpg" alt="Vice City at sunset" />{bars}<div class="wframe"></div></div>'
     ft = lambda i: int(round((cut(i) - t0) * 30))
     T = [ft(226), ft(228), ft(230)]                       # the tilted prints: "they", "dreamed", "living"
-    # the runs, as the reel: (photo, first frame, end frame); the bare window at frames 2, 9, 16; "on" = lands on the one before
-    RUN = [(0, 3, 4), (1, 4, 5), (2, 5, 6), (3, 6, 7), (4, 7, 9), (5, 8, 9),
-           (6, 10, 11), (7, 11, 12), (8, 12, 13), (9, 13, 16), (10, 14, 15), (11, 15, 16),
-           (12, 17, 18), (13, 18, 19), (14, 19, 20), (15, 20, 22), (16, 21, 22),
-           (17, 22, 23), (18, 23, 24), (19, 24, 26), (20, 25, 26), (21, 26, T[0])]
-    ON = {5, 10, 11, 16, 20}
+    # the runs: (photo, first frame, end frame) -- three frames a picture (the user: one a frame was far too fast), the
+    # bare window between runs (frames 2-4 and 13); "on" = lands on the one before for its last frame
+    RUN = [(0, 4, 7), (2, 7, 10), (3, 10, 13), (5, 12, 13),
+           (7, 14, 17), (8, 17, 20), (9, 20, 23), (11, 22, 23),
+           (12, 23, 26), (15, 26, T[0])]
+    ON = {5, 11}
     JIT = [(0, 40), (20, 10), (60, 30), (-50, 40), (0, 20), (30, -10), (-20, 30), (10, 0), (50, 20), (-40, 30), (40, -5),
            (25, -20), (-10, 35), (15, 5), (45, 25), (-35, 20), (30, -15), (-15, 25), (20, 5), (35, 30), (-25, 0), (5, 15)]
     cx0, cy0 = 960, 530
