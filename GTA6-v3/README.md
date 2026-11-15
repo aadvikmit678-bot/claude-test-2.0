@@ -48,9 +48,11 @@ The `gta6/` folder on this branch is a different session's edit.
   jagged outline and glitch strips, then on "the problem." inverted squares, blur and a ghost into the user's bad-guys
   art, both through a soft-edged, colour-fringed lens.
 - **"in a world that looks just like yours." ... "It's an escape from adulthood,"**: v2 (the "2013" painted out).
-- **"back to the world they once dreamed of living in."**: the Ackman reel's pin board: a window photo of Vice City
-  at sunset, GTA pictures swapping every four frames, a clipping, the VI card, purple pins and string, then a collage;
-  the words in black on the page.
+- **"back to the world they once dreamed of living in."**: the Ackman reel's pin board, frame for frame (`tools/pb4.py`
+  grabs the pictures): two white frames, the board seen close on the window photo (Vice City at sunset) zooming out to
+  the whole board (x2.0 -> x1.0 in 1.35 s, as measured on the reel), 22 GTA pictures one a frame in runs (different
+  sizes, taped, some landing on the one before, the bare window between runs), then tilted prints on "they",
+  "dreamed", "living"; the words in black on the page.
 - **"And on November 19th,"**: v2. **"Rockstar takes you back to Vice City,"**: the Vice City Definitive Edition intro
   (Rockstar Games presents, the logo forming on "Vice"). Then v2 to "Drive slow."
 - **"Because that 10-year-old, playing GTA"**: the user's "real people waiting for GTA 5" (the people showing GTA V)
@@ -80,6 +82,7 @@ python -I tools/tv4.py                          # the green-screen kid with Vice
 EDL=edl4 python -I tools/prep.py                # cuts only the shots whose spec changed (assets/clips/_spec.json)
 python -I tools/nb4.py 0.55                     # the see-through notebook page over its footage (after prep)
 python -I tools/gp4.py                          # the tile wall
+python -I tools/pb4.py                          # the pin-board pictures
 python -I tools/mask4.py && node tools/text4.cjs && python -I tools/hero4.py   # the cut-out, BE THE HERO, the hero / bad guy clip
 python -I -X utf8 tools/build4.py               # writes index.html and compositions/
 ```

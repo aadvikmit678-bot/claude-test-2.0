@@ -24,16 +24,16 @@
 .selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
 
 .pbbg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 45%, #f3f3f4 0%, #e5e5e7 60%, #d5d5d8 100%);}
-.pbz{position:absolute;inset:0;transform-origin:50% 52%;}
+.pbz{position:absolute;inset:0;transform-origin:960px 530px;}
 .pbwin{position:absolute;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.2);}
 .pbwin img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .mull{position:absolute;background:#f4f4f2;box-shadow:0 0 4px rgba(0,0,0,0.25);}
 .wframe{position:absolute;inset:0;border:16px solid #f4f4f2;}
-.pbphoto{position:absolute;width:520px;height:580px;background:#fff;box-shadow:0 16px 36px rgba(0,0,0,0.38);}
-.pm{position:absolute;left:10px;top:10px;width:500px;height:560px;object-fit:cover;opacity:0;}
-.tape{position:absolute;left:165px;top:-24px;width:190px;height:46px;background:rgba(88,52,36,0.92);transform:rotate(-1.5deg);}
-.pbc{position:absolute;width:480px;height:520px;background:#fff;padding:10px;opacity:0;box-shadow:0 18px 40px rgba(0,0,0,0.4);}
-.pbc img{width:460px;height:500px;object-fit:cover;display:block;}
+.pp{position:absolute;opacity:0;box-shadow:0 10px 26px rgba(0,0,0,0.34);}
+.pp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.ptape{position:absolute;top:-16px;height:36px;background:rgba(74,44,32,0.94);transform:rotate(-1deg);}
+.pt{position:absolute;opacity:0;background:#fff;padding:9px;box-sizing:border-box;box-shadow:0 18px 40px rgba(0,0,0,0.42);}
+.pt img{width:100%;height:100%;object-fit:cover;display:block;}
 .pbnews{position:absolute;left:36px;top:168px;width:270px;height:350px;background:#ede6d6;transform:rotate(-4deg);box-shadow:0 12px 26px rgba(0,0,0,0.3);padding:16px;box-sizing:border-box;font-family:"InterV",sans-serif;color:#151515;}
 .pbnews .nb{display:inline-block;background:#111;color:#fff;font-weight:800;font-size:18px;padding:3px 7px;border-radius:3px;}
 .pbnews .nh{font-weight:800;font-size:31px;line-height:1.02;letter-spacing:-0.03em;margin:10px 0 10px;}
@@ -41,13 +41,13 @@
 .pbnews .nl{height:6px;background:#9d978a;margin:0 0 7px;border-radius:2px;}
 .pbvi{position:absolute;left:1598px;top:600px;width:232px;height:200px;background:#e8e1d0;transform:rotate(6deg);box-shadow:0 12px 26px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;}
 .pbvi img{width:170px;height:auto;}
-.pbstr{position:absolute;left:0;top:0;filter:drop-shadow(2px 4px 3px rgba(0,0,0,0.3));}
-.pin{position:absolute;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 34% 30%, #e3c4ff 0%, #a55ae6 32%, #5a1d99 100%);box-shadow:3px 7px 9px rgba(0,0,0,0.38);}
-.pclip{position:absolute;left:1548px;top:150px;transform:rotate(14deg);filter:drop-shadow(2px 3px 2px rgba(0,0,0,0.35));}
+.pbstr{position:absolute;left:0;top:0;z-index:90;filter:drop-shadow(2px 4px 3px rgba(0,0,0,0.3));}
+.pin{position:absolute;z-index:91;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 34% 30%, #e3c4ff 0%, #a55ae6 32%, #5a1d99 100%);box-shadow:3px 7px 9px rgba(0,0,0,0.38);}
+.pclip{position:absolute;left:1548px;top:150px;z-index:92;transform:rotate(14deg);filter:drop-shadow(2px 3px 2px rgba(0,0,0,0.35));}
 </style>
 <div id="root" data-composition-id="pb" data-width="1920" data-height="1080" data-duration="2.51">
 <div class="pbbg"></div>
-<div class="pbz" id="pbz"><div class="pbwin" style="left:330px;top:205px;width:1260px;height:650px"><img src="assets/img/pb/window.jpg" alt="Vice City at sunset" /><div class="mull" style="left:203px;top:0;width:14px;height:650px"></div><div class="mull" style="left:413px;top:0;width:14px;height:650px"></div><div class="mull" style="left:833px;top:0;width:14px;height:650px"></div><div class="mull" style="left:1043px;top:0;width:14px;height:650px"></div><div class="mull" style="left:614px;top:0;width:32px;height:650px"></div><div class="mull" style="left:0;top:209px;width:1260px;height:14px"></div><div class="mull" style="left:0;top:426px;width:1260px;height:14px"></div><div class="wframe"></div></div><div class="pbphoto" id="pbp" style="left:700px;top:282px"><img class="pm" id="pm0" src="assets/img/pb/m00.jpg" alt="GTA picture 1" /><img class="pm" id="pm1" src="assets/img/pb/m01.jpg" alt="GTA picture 2" /><img class="pm" id="pm2" src="assets/img/pb/m02.jpg" alt="GTA picture 3" /><img class="pm" id="pm3" src="assets/img/pb/m03.jpg" alt="GTA picture 4" /><img class="pm" id="pm4" src="assets/img/pb/m04.jpg" alt="GTA picture 5" /><img class="pm" id="pm5" src="assets/img/pb/m05.jpg" alt="GTA picture 6" /><img class="pm" id="pm6" src="assets/img/pb/m06.jpg" alt="GTA picture 7" /><img class="pm" id="pm7" src="assets/img/pb/m07.jpg" alt="GTA picture 8" /><img class="pm" id="pm8" src="assets/img/pb/m08.jpg" alt="GTA picture 9" /><img class="pm" id="pm9" src="assets/img/pb/m09.jpg" alt="GTA picture 10" /><img class="pm" id="pm10" src="assets/img/pb/m10.jpg" alt="GTA picture 11" /><img class="pm" id="pm11" src="assets/img/pb/m11.jpg" alt="GTA picture 12" /><div class="tape"></div></div><div class="pbc" id="pbc0" style="left:610px;top:300px;transform:rotate(-7deg)"><img src="assets/img/pb/m02.jpg" alt="" /></div><div class="pbc" id="pbc1" style="left:800px;top:270px;transform:rotate(5deg)"><img src="assets/img/pb/m00.jpg" alt="" /></div><div class="pbc" id="pbc2" style="left:705px;top:330px;transform:rotate(-2deg)"><img src="assets/img/pb/m04.jpg" alt="" /></div><div class="pbnews"><div class="nb">R*</div><div class="nh">Rockstar Confirms<br/>GTA VI</div><img src="assets/img/pb/news.jpg" alt="" /><div class="nl" style="width:210px"></div><div class="nl" style="width:190px"></div><div class="nl" style="width:205px"></div><div class="nl" style="width:170px"></div><div class="nl" style="width:198px"></div><div class="nl" style="width:150px"></div></div><div class="pbvi"><img src="assets/img/gta6_logo.png" alt="GTA VI" /></div><svg class="pbstr" width="1920" height="1080" viewBox="0 0 1920 1080"><line x1="232" y1="392" x2="530" y2="678" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /><line x1="530" y1="678" x2="1232" y2="893" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /><line x1="1232" y1="893" x2="1494" y2="570" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /><line x1="232" y1="392" x2="150" y2="858" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /></svg><div class="pin" style="left:213px;top:373px"></div><div class="pin" style="left:511px;top:659px"></div><div class="pin" style="left:131px;top:839px"></div><div class="pin" style="left:1213px;top:874px"></div><div class="pin" style="left:1475px;top:551px"></div><svg class="pclip" width="70" height="150" viewBox="0 0 70 150"><path d="M22 140 V30 a14 14 0 0 1 28 0 V118 a8 8 0 0 1 -16 0 V40" fill="none" stroke="#c9ccd2" stroke-width="5" stroke-linecap="round"/></svg></div>
+<div class="pbz" id="pbz"><div class="pbwin" style="left:330px;top:205px;width:1260px;height:650px"><img src="assets/img/pb/window.jpg" alt="Vice City at sunset" /><div class="mull" style="left:203px;top:0;width:14px;height:650px"></div><div class="mull" style="left:413px;top:0;width:14px;height:650px"></div><div class="mull" style="left:833px;top:0;width:14px;height:650px"></div><div class="mull" style="left:1043px;top:0;width:14px;height:650px"></div><div class="mull" style="left:614px;top:0;width:32px;height:650px"></div><div class="mull" style="left:0;top:209px;width:1260px;height:14px"></div><div class="mull" style="left:0;top:426px;width:1260px;height:14px"></div><div class="wframe"></div></div><div class="pp" id="pp0" style="left:830px;top:410px;width:260px;height:320px;z-index:20"><img src="assets/img/pb/r00.jpg" alt="" /></div><div class="pp" id="pp1" style="left:830px;top:340px;width:300px;height:400px;z-index:21"><img src="assets/img/pb/r01.jpg" alt="" /><div class="ptape" style="left:93px;width:114px"></div></div><div class="pp" id="pp2" style="left:785px;top:370px;width:470px;height:380px;z-index:22"><img src="assets/img/pb/r02.jpg" alt="" /><div class="ptape" style="left:145px;width:178px"></div></div><div class="pp" id="pp3" style="left:640px;top:400px;width:540px;height:340px;z-index:23"><img src="assets/img/pb/r03.jpg" alt="" /><div class="ptape" style="left:167px;width:205px"></div></div><div class="pp" id="pp4" style="left:720px;top:385px;width:480px;height:330px;z-index:24"><img src="assets/img/pb/r04.jpg" alt="" /><div class="ptape" style="left:148px;width:182px"></div></div><div class="pp" id="pp5" style="left:770px;top:385px;width:440px;height:270px;z-index:55"><img src="assets/img/pb/r05.jpg" alt="" /><div class="ptape" style="left:136px;width:167px"></div></div><div class="pp" id="pp6" style="left:815px;top:410px;width:250px;height:300px;z-index:26"><img src="assets/img/pb/r06.jpg" alt="" /></div><div class="pp" id="pp7" style="left:820px;top:330px;width:300px;height:400px;z-index:27"><img src="assets/img/pb/r07.jpg" alt="" /><div class="ptape" style="left:93px;width:114px"></div></div><div class="pp" id="pp8" style="left:775px;top:360px;width:470px;height:380px;z-index:28"><img src="assets/img/pb/r08.jpg" alt="" /><div class="ptape" style="left:145px;width:178px"></div></div><div class="pp" id="pp9" style="left:650px;top:390px;width:540px;height:340px;z-index:29"><img src="assets/img/pb/r09.jpg" alt="" /><div class="ptape" style="left:167px;width:205px"></div></div><div class="pp" id="pp10" style="left:860px;top:345px;width:280px;height:360px;z-index:60"><img src="assets/img/pb/r10.jpg" alt="" /><div class="ptape" style="left:86px;width:106px"></div></div><div class="pp" id="pp11" style="left:875px;top:380px;width:220px;height:260px;z-index:61"><img src="assets/img/pb/r11.jpg" alt="" /></div><div class="pp" id="pp12" style="left:700px;top:405px;width:500px;height:320px;z-index:32"><img src="assets/img/pb/r12.jpg" alt="" /><div class="ptape" style="left:155px;width:190px"></div></div><div class="pp" id="pp13" style="left:825px;top:335px;width:300px;height:400px;z-index:33"><img src="assets/img/pb/r13.jpg" alt="" /><div class="ptape" style="left:93px;width:114px"></div></div><div class="pp" id="pp14" style="left:770px;top:375px;width:470px;height:360px;z-index:34"><img src="assets/img/pb/r14.jpg" alt="" /><div class="ptape" style="left:145px;width:178px"></div></div><div class="pp" id="pp15" style="left:665px;top:385px;width:520px;height:330px;z-index:35"><img src="assets/img/pb/r15.jpg" alt="" /><div class="ptape" style="left:161px;width:197px"></div></div><div class="pp" id="pp16" style="left:860px;top:355px;width:260px;height:320px;z-index:66"><img src="assets/img/pb/r16.jpg" alt="" /></div><div class="pp" id="pp17" style="left:795px;top:365px;width:300px;height:380px;z-index:37"><img src="assets/img/pb/r17.jpg" alt="" /><div class="ptape" style="left:93px;width:114px"></div></div><div class="pp" id="pp18" style="left:720px;top:365px;width:520px;height:340px;z-index:38"><img src="assets/img/pb/r18.jpg" alt="" /><div class="ptape" style="left:161px;width:197px"></div></div><div class="pp" id="pp19" style="left:765px;top:410px;width:460px;height:300px;z-index:39"><img src="assets/img/pb/r19.jpg" alt="" /><div class="ptape" style="left:142px;width:174px"></div></div><div class="pp" id="pp20" style="left:795px;top:350px;width:280px;height:360px;z-index:70"><img src="assets/img/pb/r20.jpg" alt="" /><div class="ptape" style="left:86px;width:106px"></div></div><div class="pp" id="pp21" style="left:715px;top:385px;width:500px;height:320px;z-index:41"><img src="assets/img/pb/r21.jpg" alt="" /><div class="ptape" style="left:155px;width:190px"></div></div><div class="pt" id="pt0" style="left:590px;top:320px;width:620px;height:400px;transform:rotate(-12deg);z-index:80"><img src="assets/img/pb/t0.jpg" alt="" /></div><div class="pt" id="pt1" style="left:720px;top:370px;width:560px;height:380px;transform:rotate(-5deg);z-index:81"><img src="assets/img/pb/t1.jpg" alt="" /></div><div class="pt" id="pt2" style="left:680px;top:430px;width:520px;height:340px;transform:rotate(7deg);z-index:82"><img src="assets/img/pb/t2.jpg" alt="" /></div><div class="pbnews"><div class="nb">R*</div><div class="nh">Rockstar Confirms<br/>GTA VI</div><img src="assets/img/pb/news.jpg" alt="" /><div class="nl" style="width:210px"></div><div class="nl" style="width:190px"></div><div class="nl" style="width:205px"></div><div class="nl" style="width:170px"></div><div class="nl" style="width:198px"></div><div class="nl" style="width:150px"></div></div><div class="pbvi"><img src="assets/img/gta6_logo.png" alt="GTA VI" /></div><svg class="pbstr" width="1920" height="1080" viewBox="0 0 1920 1080"><line x1="232" y1="392" x2="530" y2="678" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /><line x1="530" y1="678" x2="1232" y2="893" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /><line x1="1232" y1="893" x2="1494" y2="570" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /><line x1="232" y1="392" x2="150" y2="858" stroke="#7b3cc6" stroke-width="3.5" stroke-linecap="round" /></svg><div class="pin" style="left:213px;top:373px"></div><div class="pin" style="left:511px;top:659px"></div><div class="pin" style="left:131px;top:839px"></div><div class="pin" style="left:1213px;top:874px"></div><div class="pin" style="left:1475px;top:551px"></div><svg class="pclip" width="70" height="150" viewBox="0 0 70 150"><path d="M22 140 V30 a14 14 0 0 1 28 0 V118 a8 8 0 0 1 -16 0 V40" fill="none" stroke="#c9ccd2" stroke-width="5" stroke-linecap="round"/></svg></div>
 <div id="pbl0" class="clip cl" data-start="0.03" data-duration="0.91" data-track-index="0" style="top:770px;left:0;right:1250px;justify-content:flex-end;z-index:40"><div class="row tight ink halo" id="pbl0r"><span class="w "><span class="gh">back</span><span class="ik"><span class="tx" id="pbl0w0">back</span></span></span><span class="w "><span class="gh">to</span><span class="ik"><span class="tx" id="pbl0w1">to</span></span></span><span class="w "><span class="gh">the</span><span class="ik"><span class="tx" id="pbl0w2">the</span></span></span><span class="w "><span class="gh">world</span><span class="ik"><span class="tx" id="pbl0w3">world</span></span></span></div></div>
 <div id="pbl1" class="clip cl" data-start="0.95" data-duration="0.76" data-track-index="0" style="top:770px;left:0;right:1250px;justify-content:flex-end;z-index:40"><div class="row tight ink halo" id="pbl1r"><span class="w "><span class="gh">they</span><span class="ik"><span class="tx" id="pbl1w0">they</span></span></span><span class="w "><span class="gh">once</span><span class="ik"><span class="tx" id="pbl1w1">once</span></span></span><span class="w "><span class="gh">dreamed</span><span class="ik"><span class="tx" id="pbl1w2">dreamed</span></span></span></div></div>
 <div id="pbl2" class="clip cl" data-start="1.72" data-duration="0.79" data-track-index="0" style="top:770px;left:0;right:1250px;justify-content:flex-end;z-index:40"><div class="row tight ink halo" id="pbl2r"><span class="w "><span class="gh">of</span><span class="ik"><span class="tx" id="pbl2w0">of</span></span></span><span class="w "><span class="gh">living</span><span class="ik"><span class="tx" id="pbl2w1">living</span></span></span><span class="w "><span class="gh">in.</span><span class="ik"><span class="tx" id="pbl2w2">in.</span></span></span></div></div>
@@ -55,34 +55,55 @@
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
-  tl.fromTo("#pbz",{scale:1},{scale:1.045,duration:2.51,ease:"none"},0);
-  tl.set("#pm0",{opacity:1},0.0);
-  tl.set("#pm0",{opacity:0},0.133);
-  tl.set("#pm1",{opacity:1},0.133);
-  tl.set("#pm1",{opacity:0},0.266);
-  tl.set("#pm2",{opacity:1},0.267);
-  tl.set("#pm2",{opacity:0},0.4);
-  tl.set("#pm3",{opacity:1},0.4);
-  tl.set("#pm3",{opacity:0},0.533);
-  tl.set("#pm4",{opacity:1},0.533);
-  tl.set("#pm4",{opacity:0},0.666);
-  tl.set("#pm5",{opacity:1},0.667);
-  tl.set("#pm5",{opacity:0},0.8);
-  tl.set("#pm6",{opacity:1},0.8);
-  tl.set("#pm6",{opacity:0},0.933);
-  tl.set("#pm7",{opacity:1},0.933);
-  tl.set("#pm7",{opacity:0},1.066);
-  tl.set("#pm8",{opacity:1},1.067);
-  tl.set("#pm8",{opacity:0},1.2);
-  tl.set("#pm9",{opacity:1},1.2);
-  tl.set("#pm9",{opacity:0},1.333);
-  tl.set("#pm10",{opacity:1},1.333);
-  tl.set("#pm10",{opacity:0},1.466);
-  tl.set("#pm11",{opacity:1},1.467);
-  tl.set("#pbp",{opacity:0},1.6);
-  tl.set("#pbc0",{opacity:1},1.6);
-  tl.set("#pbc1",{opacity:1},1.667);
-  tl.set("#pbc2",{opacity:1},1.733);
+  tl.set("#pp0",{opacity:1},0.1);
+  tl.set("#pp0",{opacity:0},0.133);
+  tl.set("#pp1",{opacity:1},0.133);
+  tl.set("#pp1",{opacity:0},0.167);
+  tl.set("#pp2",{opacity:1},0.167);
+  tl.set("#pp2",{opacity:0},0.2);
+  tl.set("#pp3",{opacity:1},0.2);
+  tl.set("#pp3",{opacity:0},0.233);
+  tl.set("#pp4",{opacity:1},0.233);
+  tl.set("#pp4",{opacity:0},0.3);
+  tl.set("#pp5",{opacity:1},0.267);
+  tl.set("#pp5",{opacity:0},0.3);
+  tl.set("#pp6",{opacity:1},0.333);
+  tl.set("#pp6",{opacity:0},0.367);
+  tl.set("#pp7",{opacity:1},0.367);
+  tl.set("#pp7",{opacity:0},0.4);
+  tl.set("#pp8",{opacity:1},0.4);
+  tl.set("#pp8",{opacity:0},0.433);
+  tl.set("#pp9",{opacity:1},0.433);
+  tl.set("#pp9",{opacity:0},0.533);
+  tl.set("#pp10",{opacity:1},0.467);
+  tl.set("#pp10",{opacity:0},0.5);
+  tl.set("#pp11",{opacity:1},0.5);
+  tl.set("#pp11",{opacity:0},0.533);
+  tl.set("#pp12",{opacity:1},0.567);
+  tl.set("#pp12",{opacity:0},0.6);
+  tl.set("#pp13",{opacity:1},0.6);
+  tl.set("#pp13",{opacity:0},0.633);
+  tl.set("#pp14",{opacity:1},0.633);
+  tl.set("#pp14",{opacity:0},0.667);
+  tl.set("#pp15",{opacity:1},0.667);
+  tl.set("#pp15",{opacity:0},0.733);
+  tl.set("#pp16",{opacity:1},0.7);
+  tl.set("#pp16",{opacity:0},0.733);
+  tl.set("#pp17",{opacity:1},0.733);
+  tl.set("#pp17",{opacity:0},0.767);
+  tl.set("#pp18",{opacity:1},0.767);
+  tl.set("#pp18",{opacity:0},0.8);
+  tl.set("#pp19",{opacity:1},0.8);
+  tl.set("#pp19",{opacity:0},0.867);
+  tl.set("#pp20",{opacity:1},0.833);
+  tl.set("#pp20",{opacity:0},0.867);
+  tl.set("#pp21",{opacity:1},0.867);
+  tl.set("#pp21",{opacity:0},0.933);
+  tl.set("#pt0",{opacity:1},0.933);
+  tl.set("#pt1",{opacity:1},1.433);
+  tl.set("#pt2",{opacity:1},1.867);
+  tl.fromTo("#pbz",{scale:2.0},{scale:1.0,duration:1.35,ease:"power1.out"},0);
+  tl.to("#pbz",{scale:0.97,duration:1.16,ease:"none"},1.35);
   tl.set("#pbl0w0",{opacity:1,scale:1.03,filter:"blur(0.6px) brightness(1.55)",textShadow:"0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0)"},0.06);
   tl.to("#pbl0w0",{scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9)",duration:0.13,ease:"expo.out"},0.094);
   tl.fromTo("#pbl0w1",{opacity:0},{opacity:1,duration:0.05,ease:"none"},0.37);

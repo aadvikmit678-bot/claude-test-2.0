@@ -508,9 +508,12 @@ def clip_scene(cid, clip):
 
 # ------------------------------------------------------------------ "back to the world they once dreamed of living in."
 def pb_scene():
-    """the Ackman reel's pin board (17 s on): a light page, a window photo of Vice City at sunset, the GTA pictures
-    swapping in front of it every four frames (taped), a "Rockstar Confirms GTA VI" clipping and the VI card pinned with
-    purple pins and string, a paperclip; then a tilted collage of three, the board pushing in slowly throughout"""
+    """the Ackman reel's pin board (from 17 s), frame for frame: two white frames, then the board seen close on the
+    window photo (Vice City at sunset through a window) and zooming out to the whole board -- the clipping, the
+    paperclip, the VI card, purple pins and string -- quickly at first, then easing (x2.0 -> x1.0 in 1.35 s, power1.out
+    as measured on the reel, then a slow drift); on it the GTA pictures come one a frame in runs, in different sizes,
+    most taped at the top, now and then one landing on top of the one before, the bare window between runs; then tilted
+    prints land on "they", "dreamed" and "living" and stay"""
     t0, t1 = E.SPAN["pb"]
     D = r3(t1 - t0)
     js = []
@@ -519,10 +522,32 @@ def pb_scene():
            f'<div class="mull" style="left:{ww // 2 - 16}px;top:0;width:32px;height:{wh}px"></div>' + \
            "".join(f'<div class="mull" style="left:0;top:{int(wh * k / 3) - 7}px;width:{ww}px;height:14px"></div>' for k in (1, 2))
     win = f'<div class="pbwin" style="left:{wx}px;top:{wy}px;width:{ww}px;height:{wh}px"><img src="assets/img/pb/window.jpg" alt="Vice City at sunset" />{bars}<div class="wframe"></div></div>'
-    imgs = "".join(f'<img class="pm" id="pm{k}" src="assets/img/pb/m{k:02d}.jpg" alt="GTA picture {k + 1}" />' for k in range(12))
-    photo = f'<div class="pbphoto" id="pbp" style="left:700px;top:282px">{imgs}<div class="tape"></div></div>'
-    coll = "".join(f'<div class="pbc" id="pbc{k}" style="left:{x}px;top:{y}px;transform:rotate({r}deg)"><img src="assets/img/pb/m{m:02d}.jpg" alt="" /></div>'
-                   for k, (x, y, r, m) in enumerate([(610, 300, -7, 2), (800, 270, 5, 0), (705, 330, -2, 4)]))
+    ft = lambda i: int(round((cut(i) - t0) * 30))
+    T = [ft(226), ft(228), ft(230)]                       # the tilted prints: "they", "dreamed", "living"
+    # the runs, as the reel: (photo, first frame, end frame); the bare window at frames 2, 9, 16; "on" = lands on the one before
+    RUN = [(0, 3, 4), (1, 4, 5), (2, 5, 6), (3, 6, 7), (4, 7, 9), (5, 8, 9),
+           (6, 10, 11), (7, 11, 12), (8, 12, 13), (9, 13, 16), (10, 14, 15), (11, 15, 16),
+           (12, 17, 18), (13, 18, 19), (14, 19, 20), (15, 20, 22), (16, 21, 22),
+           (17, 22, 23), (18, 23, 24), (19, 24, 26), (20, 25, 26), (21, 26, T[0])]
+    ON = {5, 10, 11, 16, 20}
+    JIT = [(0, 40), (20, 10), (60, 30), (-50, 40), (0, 20), (30, -10), (-20, 30), (10, 0), (50, 20), (-40, 30), (40, -5),
+           (25, -20), (-10, 35), (15, 5), (45, 25), (-35, 20), (30, -15), (-15, 25), (20, 5), (35, 30), (-25, 0), (5, 15)]
+    cx0, cy0 = 960, 530
+    photos = []
+    for (k, fa, fb) in RUN:
+        src, _t, w, h = E.PB_RAPID[k]
+        dx, dy = JIT[k]
+        x, y = cx0 + dx - w // 2, cy0 + dy - h // 2
+        tape = f'<div class="ptape" style="left:{int(w * 0.31)}px;width:{int(w * 0.38)}px"></div>' if w >= 280 else ""
+        photos.append(f'<div class="pp" id="pp{k}" style="left:{x}px;top:{y}px;width:{w}px;height:{h}px;z-index:{20 + (30 if k in ON else 0) + k}">'
+                      f'<img src="assets/img/pb/r{k:02d}.jpg" alt="" />{tape}</div>')
+        js.append(f'  tl.set("#pp{k}",{{opacity:1}},{r3(fa * F)});\n  tl.set("#pp{k}",{{opacity:0}},{r3(fb * F)});\n')
+    TPOS = [(900, 520), (1000, 560), (940, 600)]
+    for k, (src, _t, w, h, rot) in enumerate(E.PB_TILT):
+        cx, cy = TPOS[k]
+        photos.append(f'<div class="pt" id="pt{k}" style="left:{cx - w // 2}px;top:{cy - h // 2}px;width:{w}px;height:{h}px;transform:rotate({rot}deg);z-index:{80 + k}">'
+                      f'<img src="assets/img/pb/t{k}.jpg" alt="" /></div>')
+        js.append(f'  tl.set("#pt{k}",{{opacity:1}},{r3(T[k] * F)});\n')
     news = ('<div class="pbnews"><div class="nb">R*</div><div class="nh">Rockstar Confirms<br/>GTA VI</div>'
             '<img src="assets/img/pb/news.jpg" alt="" />' + "".join(f'<div class="nl" style="width:{w}px"></div>' for w in (210, 190, 205, 170, 198, 150)) + '</div>')
     vi = '<div class="pbvi"><img src="assets/img/gta6_logo.png" alt="GTA VI" /></div>'
@@ -534,30 +559,21 @@ def pb_scene():
     pinh = "".join(f'<div class="pin" style="left:{x - 19}px;top:{y - 19}px"></div>' for x, y in pins)
     clip = ('<svg class="pclip" width="70" height="150" viewBox="0 0 70 150"><path d="M22 140 V30 a14 14 0 0 1 28 0 V118 a8 8 0 0 1 -16 0 V40" '
             'fill="none" stroke="#c9ccd2" stroke-width="5" stroke-linecap="round"/></svg>')
-    body = ['<div class="pbbg"></div>', f'<div class="pbz" id="pbz">{win}{photo}{coll}{news}{vi}{svg}{pinh}{clip}</div>']
-    js.append(f'  tl.fromTo("#pbz",{{scale:1}},{{scale:1.045,duration:{D},ease:"none"}},0);\n')
-    step = 4 * F
-    for k in range(12):                                   # the montage: a new picture every four frames
-        ta = r3(k * step)
-        js.append(f'  tl.set("#pm{k}",{{opacity:1}},{ta});\n')
-        if k < 11:
-            js.append(f'  tl.set("#pm{k}",{{opacity:0}},{r3(ta + step)});\n')
-    tcol = r3(12 * step)
-    js.append(f'  tl.set("#pbp",{{opacity:0}},{tcol});\n')
-    for k in range(3):                                    # the collage, one card a frame or two apart
-        js.append(f'  tl.set("#pbc{k}",{{opacity:1}},{r3(tcol + k * 2 * F)});\n')
+    body = ['<div class="pbbg"></div>', f'<div class="pbz" id="pbz">{win}{"".join(photos)}{news}{vi}{svg}{pinh}{clip}</div>']
+    js.append(f'  tl.fromTo("#pbz",{{scale:2.0}},{{scale:1.0,duration:1.35,ease:"power1.out"}},0);\n'
+              f'  tl.to("#pbz",{{scale:0.97,duration:{r3(D - 1.35)},ease:"none"}},1.35);\n')
     css = """
 .pbbg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 45%, #f3f3f4 0%, #e5e5e7 60%, #d5d5d8 100%);}
-.pbz{position:absolute;inset:0;transform-origin:50% 52%;}
+.pbz{position:absolute;inset:0;transform-origin:960px 530px;}
 .pbwin{position:absolute;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.2);}
 .pbwin img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .mull{position:absolute;background:#f4f4f2;box-shadow:0 0 4px rgba(0,0,0,0.25);}
 .wframe{position:absolute;inset:0;border:16px solid #f4f4f2;}
-.pbphoto{position:absolute;width:520px;height:580px;background:#fff;box-shadow:0 16px 36px rgba(0,0,0,0.38);}
-.pm{position:absolute;left:10px;top:10px;width:500px;height:560px;object-fit:cover;opacity:0;}
-.tape{position:absolute;left:165px;top:-24px;width:190px;height:46px;background:rgba(88,52,36,0.92);transform:rotate(-1.5deg);}
-.pbc{position:absolute;width:480px;height:520px;background:#fff;padding:10px;opacity:0;box-shadow:0 18px 40px rgba(0,0,0,0.4);}
-.pbc img{width:460px;height:500px;object-fit:cover;display:block;}
+.pp{position:absolute;opacity:0;box-shadow:0 10px 26px rgba(0,0,0,0.34);}
+.pp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.ptape{position:absolute;top:-16px;height:36px;background:rgba(74,44,32,0.94);transform:rotate(-1deg);}
+.pt{position:absolute;opacity:0;background:#fff;padding:9px;box-sizing:border-box;box-shadow:0 18px 40px rgba(0,0,0,0.42);}
+.pt img{width:100%;height:100%;object-fit:cover;display:block;}
 .pbnews{position:absolute;left:36px;top:168px;width:270px;height:350px;background:#ede6d6;transform:rotate(-4deg);box-shadow:0 12px 26px rgba(0,0,0,0.3);padding:16px;box-sizing:border-box;font-family:"InterV",sans-serif;color:#151515;}
 .pbnews .nb{display:inline-block;background:#111;color:#fff;font-weight:800;font-size:18px;padding:3px 7px;border-radius:3px;}
 .pbnews .nh{font-weight:800;font-size:31px;line-height:1.02;letter-spacing:-0.03em;margin:10px 0 10px;}
@@ -565,9 +581,9 @@ def pb_scene():
 .pbnews .nl{height:6px;background:#9d978a;margin:0 0 7px;border-radius:2px;}
 .pbvi{position:absolute;left:1598px;top:600px;width:232px;height:200px;background:#e8e1d0;transform:rotate(6deg);box-shadow:0 12px 26px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;}
 .pbvi img{width:170px;height:auto;}
-.pbstr{position:absolute;left:0;top:0;filter:drop-shadow(2px 4px 3px rgba(0,0,0,0.3));}
-.pin{position:absolute;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 34% 30%, #e3c4ff 0%, #a55ae6 32%, #5a1d99 100%);box-shadow:3px 7px 9px rgba(0,0,0,0.38);}
-.pclip{position:absolute;left:1548px;top:150px;transform:rotate(14deg);filter:drop-shadow(2px 3px 2px rgba(0,0,0,0.35));}
+.pbstr{position:absolute;left:0;top:0;z-index:90;filter:drop-shadow(2px 4px 3px rgba(0,0,0,0.3));}
+.pin{position:absolute;z-index:91;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 34% 30%, #e3c4ff 0%, #a55ae6 32%, #5a1d99 100%);box-shadow:3px 7px 9px rgba(0,0,0,0.38);}
+.pclip{position:absolute;left:1548px;top:150px;z-index:92;transform:rotate(14deg);filter:drop-shadow(2px 3px 2px rgba(0,0,0,0.35));}
 """
     # the words in black on the page, left of the picture, a line at a time (the reel's "his entire career.")
     caps = [VL([222, 223, 224, 225], mode="tight", end=W(226) - 0.04, shift=t0, ink=True, halo=True),
@@ -638,7 +654,8 @@ def build_fx():
             (E.END_V - 0.3, TOTAL)]                              # and the ending
     cuts = sorted({s["start"] for s in E.SHOTS if 0.5 < s["start"] < TOTAL - 0.3 and not s["id"].startswith(("grid", "r7t"))}
                   | {E.R7["t0"], E.TV[0]})
-    flashes = [NEWS_DUR, cut(90), cut(212), cut(222), E.END_V]      # + v2's "Today,", the pin board, the ending
+    flashes = [NEWS_DUR, cut(90), cut(212), E.END_V]                # + v2's "Today,", the ending
+    hard = [E.SPAN["pb"][0]]                                        # two pure white frames into the pin board (the reel)
     body, js = [], []
     for k, t in enumerate(flashes):
         fid = f"fl{k}"
@@ -646,6 +663,8 @@ def build_fx():
         js.append(f'  tl.fromTo("#{fid}i",{{opacity:0}},{{opacity:0.85,duration:0.1,ease:"power2.in"}},{r3(t - 0.1)});\n'
                   f'  tl.set("#{fid}i",{{opacity:1}},{r3(t)});\n'
                   f'  tl.to("#{fid}i",{{opacity:0,duration:0.3,ease:"power2.out"}},{r3(t + 0.034)});\n')
+    for k, t in enumerate(hard):
+        body.append(f'<div class="clip" id="hf{k}" data-start="{r3(fr(t) - 2 * F)}" data-duration="{r3(2 * F)}" style="position:absolute;inset:0;z-index:50;background:#fff"></div>')
     n = 0
     for i, t in enumerate(cuts):
         if any(a <= t <= b for a, b in skip) or any(abs(t - f) < 0.3 for f in flashes) or i % 4 == 3:

@@ -239,6 +239,16 @@ SHOTS += [S4("nbbg0", "vc10", 53.95, _e[0], _e[1]), S4("nbbg1", "vcde", 44.4, _e
 AR_DREAM = 0.5
 SHOTS += [S4("arcity", "city", 0.0, *SPAN["ar"], crop=None, rot="ccw"), S4("ardream", "dreams", 0.0, *SPAN["ar"])]
 
+# "back to the world they once dreamed of living in." -- the Ackman reel's pin board (tools/pb4.py grabs these,
+# build4.pb_scene lays them out): (src, time, w, h) in board pixels; one photo a frame, in runs, sizes varying
+PB_RAPID = [("t2", 117.6, 260, 320), ("vcde", 52.9, 300, 400), ("t2", 119.4, 470, 380), ("launch", 46.6, 540, 340),
+            ("t1", 69.6, 480, 330), ("t2", 106.6, 440, 270), ("launch", 71.6, 250, 300), ("kidtalk", 9.6, 300, 400),
+            ("nostalgia", 17.2, 470, 380), ("launch", 59.5, 540, 340), ("t2", 67.2, 280, 360), ("vcde", 44.6, 220, 260),
+            ("t1", 33.4, 500, 320), ("launch", 72.3, 300, 400), ("launch", 64.8, 470, 360), ("oldchars", 12.0, 520, 330),
+            ("launch", 25.9, 260, 320), ("kidtalk", 4.4, 300, 380), ("t2", 125.4, 520, 340), ("launch", 63.5, 460, 300),
+            ("t1", 22.4, 280, 360), ("launch", 66.8, 500, 320)]
+PB_TILT = [("hero2", None, 620, 400, -12), ("hero1b", None, 560, 380, -5), ("launch", 54.7, 520, 340, 7)]
+
 # v2's ending: the GTA VI logo builds, then the date card
 SHOTS += [S4("end1", "preload", 6.75, END_V, END_V + 1.35), S4("end2", "next", 1597.2, END_V + 1.35, TOTAL, grade="nopreorder")]
 SHOTS.append(S4("tv2c", "wait5", 4.55, TV2["t0"], TV2["t1"], crop=(0, 600, 1080, 608)))  # the user: the people showing GTA V, not the line
