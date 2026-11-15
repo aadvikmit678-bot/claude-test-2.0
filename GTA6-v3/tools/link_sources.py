@@ -22,8 +22,10 @@ LOCAL = {   # SRC alias -> file in this repository
     "em6": "editm6.mp4", "edits": "edits.mp4", "blade": "blade.mp4", "oldchars": "oldchars.mp4", "metav3rse": "metav3rse.mp4",
 }
 EXTRA = {"money": os.path.join(REPO, "dimon-src", "_pin", "p07_Try_these_11_Classy_side_hus.mp4")}
+LOCAL.update({"ajit": "madebyajit.mp4", "leno": "lenojoga.mp4"})        # v4 (tools/edl4.py)
+SRC = dict(edl.SRC, ajit="Video by madebyajit [0-29s].mp4", leno="Video by lenojoga [0-15s].mp4")
 missing = []
-for alias, name in edl.SRC.items():
+for alias, name in SRC.items():
     target = EXTRA.get(alias) or os.path.join(D, LOCAL.get(alias, "?"))
     link = os.path.join(ROOT, name)
     if not os.path.exists(target):
@@ -32,4 +34,4 @@ for alias, name in edl.SRC.items():
     if os.path.islink(link) or os.path.exists(link):
         continue
     os.symlink(os.path.relpath(target, os.path.dirname(link)), link)
-print(f"linked {len(edl.SRC) - len(missing)} sources under {ROOT}" + (f"; missing: {missing}" if missing else ""))
+print(f"linked {len(SRC) - len(missing)} sources under {ROOT}" + (f"; missing: {missing}" if missing else ""))

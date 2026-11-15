@@ -17,6 +17,10 @@ GRADE = {
     "dim": "eq=contrast=1.05:brightness=-0.10:saturation=0.85",
     "warm": "eq=contrast=1.05:saturation=1.08,colorbalance=rs=0.04:bs=-0.04",
     "cool": "eq=contrast=1.05,colorbalance=bs=0.05:rs=-0.03",
+    # v4
+    "blur": "gblur=sigma=16,eq=contrast=1.04:saturation=1.03",
+    "bwhi": "hue=s=0,eq=contrast=1.35:brightness=-0.02",
+    "poster": "format=gray,eq=contrast=1.5,format=rgb24,lutrgb=r='if(lt(val,85),205,255)':g='if(lt(val,85),18,if(lt(val,175),214,244))':b='if(lt(val,85),12,if(lt(val,175),0,190))'",
 }
 
 

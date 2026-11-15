@@ -1,0 +1,50 @@
+<template>
+<style>
+@font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Regular.otf") format("opentype");font-weight:400;font-style:normal;}
+@font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
+
+#root{position:absolute;inset:0;overflow:hidden;}
+.shot{position:absolute;inset:0;overflow:hidden;}
+.shot video{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;}
+.cell{position:absolute;overflow:hidden;opacity:0;}
+.cell video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
+.box{position:absolute;background:#fff;}
+.cl{position:absolute;left:0;right:0;height:300px;margin-top:-150px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.row{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"Heros",sans-serif;font-size:64px;line-height:1.2;letter-spacing:-0.012em;color:#F4F4F2;}
+.row.big{font-size:74px;} .row.r7{font-size:68px;}
+.row.wide{column-gap:1.22em;} .row.tight{column-gap:0.27em;} .row.spread{column-gap:3.1em;}
+.row.ink{color:#151515;}
+.w{position:relative;display:inline-block;}
+.gh{visibility:hidden;font-weight:400;}
+.ik{position:absolute;left:-60%;right:-60%;top:0;bottom:0;display:flex;justify-content:center;align-items:flex-start;z-index:1;}
+.tx{display:inline-block;font-weight:400;-webkit-text-stroke:0.024em currentColor;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.40), 0 0 5px rgba(255,255,255,0.28), 0 2px 16px rgba(0,0,0,0.70);}
+.row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
+.w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
+.selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
+
+.hero{position:absolute;left:0;right:0;top:300px;height:400px;display:flex;align-items:center;justify-content:center;z-index:50;}
+.hw{position:relative;font-family:"Heros",sans-serif;font-size:250px;letter-spacing:-0.045em;line-height:1;}
+.ht{position:relative;display:block;color:#fff;font-weight:700;-webkit-text-stroke:0.014em #fff;}
+</style>
+<div id="root" data-composition-id="sh" data-width="1920" data-height="1080" data-duration="1.945">
+<div class="shot" id="fr-w" style="z-index:1"><video id="v-fr" class="clip" src="assets/clips/fr.mp4" data-start="0.0" data-duration="1.945" muted playsinline></video></div>
+<div class="hero" id="fh"><div class="hw" id="fhw"><span class="ht" id="fht">freedom</span></div></div>
+</div>
+<script>
+(function(){
+  const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#fr-w",{scale:1.0},{scale:1.05,duration:1.945,ease:"none"},0.0);
+  tl.set("#fhw",{opacity:0,scale:1.32},0);
+  tl.set("#fhw",{opacity:1},0.067);
+  tl.set("#fht",{WebkitTextStrokeWidth:"0.05em",textShadow:"0 0 30px rgba(255,255,255,0.95), 0 0 9px rgba(255,255,255,0.9), 0 2px 16px rgba(0,0,0,0)",filter:"brightness(1.25)"},0.067);
+  tl.set("#fhw",{scale:1.14,filter:"blur(1.6px)"},0.1);
+  tl.set("#fht",{WebkitTextStrokeWidth:"0.014em",textShadow:"0 0 46px rgba(255,255,255,0.75), 0 0 14px rgba(255,255,255,0.7), 0 4px 30px rgba(0,0,0,0.55)",filter:"brightness(1)"},0.133);
+  tl.fromTo("#fhw",{scale:1.1,filter:"blur(0px)"},{scale:1.0,duration:0.7,ease:"expo.out"},0.133);
+  tl.to("#fhw",{scale:0.965,duration:1.095,ease:"none"},0.85);
+
+  window.__timelines["sh"] = tl;
+})();
+</script>
+</template>

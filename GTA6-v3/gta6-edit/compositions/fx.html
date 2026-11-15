@@ -1,6 +1,7 @@
 <template>
 <style>
-@font-face{font-family:"InterV";src:url("assets/fonts/InterVar-latin.woff2") format("woff2");font-weight:100 900;font-style:normal;}
+@font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Regular.otf") format("opentype");font-weight:400;font-style:normal;}
+@font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
 
 #root{position:absolute;inset:0;overflow:hidden;}
 .shot{position:absolute;inset:0;overflow:hidden;}
@@ -9,12 +10,16 @@
 .cell video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
 .box{position:absolute;background:#fff;}
 .cl{position:absolute;left:0;right:0;height:300px;margin-top:-150px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
-.row{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterV",sans-serif;font-size:76px;line-height:1.2;letter-spacing:-0.03em;color:#F2F2F0;}
-.row.wide{column-gap:1.1em;} .row.tight{column-gap:0.26em;}
+.row{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"Heros",sans-serif;font-size:64px;line-height:1.2;letter-spacing:-0.012em;color:#F4F4F2;}
+.row.big{font-size:74px;} .row.r7{font-size:68px;}
+.row.wide{column-gap:1.22em;} .row.tight{column-gap:0.27em;} .row.spread{column-gap:3.1em;}
+.row.ink{color:#151515;}
 .w{position:relative;display:inline-block;}
-.gh{visibility:hidden;font-weight:540;}
+.gh{visibility:hidden;font-weight:400;}
 .ik{position:absolute;left:-60%;right:-60%;top:0;bottom:0;display:flex;justify-content:center;align-items:flex-start;z-index:1;}
-.tx{display:inline-block;font-weight:540;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72);}
+.tx{display:inline-block;font-weight:400;-webkit-text-stroke:0.024em currentColor;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.40), 0 0 5px rgba(255,255,255,0.28), 0 2px 16px rgba(0,0,0,0.70);}
+.row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
+.row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
 .w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
 .cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
 .selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
@@ -23,73 +28,23 @@
 .gb{position:absolute;}
 .grain{position:absolute;left:-200px;top:-200px;width:2320px;height:1480px;background:url("assets/tex/grain.png");opacity:0.07;mix-blend-mode:overlay;}
 .vig{position:absolute;inset:0;background:radial-gradient(ellipse 75% 70% at 50% 50%, rgba(0,0,0,0) 58%, rgba(0,0,0,0.42) 100%);}
+.tex{position:absolute;inset:0;width:1920px;height:1080px;object-fit:cover;}
 </style>
-<div id="root" data-composition-id="fx" data-width="1920" data-height="1080" data-duration="106.5">
+<div id="root" data-composition-id="fx" data-width="1920" data-height="1080" data-duration="32.55">
 <div class="clip" id="fl0" data-start="4.77" data-duration="0.45" style="position:absolute;inset:0;z-index:50"><div class="fl" id="fl0i"></div></div>
-<div class="clip" id="fl1" data-start="38.41" data-duration="0.45" style="position:absolute;inset:0;z-index:50"><div class="fl" id="fl1i"></div></div>
-<div class="clip" id="fl2" data-start="39.508" data-duration="0.45" style="position:absolute;inset:0;z-index:50"><div class="fl" id="fl2i"></div></div>
-<div class="clip" id="fl3" data-start="77.663" data-duration="0.45" style="position:absolute;inset:0;z-index:50"><div class="fl" id="fl3i"></div></div>
-<div class="clip" id="fl4" data-start="81.68" data-duration="0.45" style="position:absolute;inset:0;z-index:50"><div class="fl" id="fl4i"></div></div>
-<div class="clip" id="fl5" data-start="87.59" data-duration="0.45" style="position:absolute;inset:0;z-index:50"><div class="fl" id="fl5i"></div></div>
-<div class="clip" id="fl6" data-start="103.75" data-duration="0.45" style="position:absolute;inset:0;z-index:50"><div class="fl" id="fl6i"></div></div>
+<div class="clip" id="fl1" data-start="30.505" data-duration="0.45" style="position:absolute;inset:0;z-index:50"><div class="fl" id="fl1i"></div></div>
 <div class="clip" id="sq003" data-start="9.336" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:240px;top:120px;width:760px;height:520px;background:rgba(255,255,255,0.24);"></div><div class="gb" style="left:1180px;top:560px;width:420px;height:300px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq005" data-start="10.006" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:560px;top:180px;width:90px;height:720px;background:rgba(255,255,255,0.95);"></div><div class="gb" style="left:900px;top:470px;width:600px;height:140px;background:rgba(255,255,255,0.24);"></div></div>
+<div class="clip" id="sq005" data-start="10.006" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:560px;top:180px;width:90px;height:720px;background:rgba(255,255,255,0.95);"></div><div class="gb" style="left:900px;top:470px;width:600px;height:140px;background:rgba(128,128,128,0.75);"></div></div>
 <div class="clip" id="sq008" data-start="11.646" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:520px;top:300px;width:980px;height:420px;background:#fff;mix-blend-mode:difference;"></div></div>
 <div class="clip" id="sq010" data-start="13.176" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:120px;top:620px;width:860px;height:300px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq013" data-start="15.086" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:560px;top:180px;width:90px;height:720px;background:rgba(255,255,255,0.95);"></div><div class="gb" style="left:900px;top:470px;width:600px;height:140px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq015" data-start="15.966" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:700px;top:330px;width:560px;height:420px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq018" data-start="17.866" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:120px;top:620px;width:860px;height:300px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq020" data-start="19.006" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:0px;top:0px;width:1920px;height:380px;background:#fff;mix-blend-mode:difference;"></div><div class="gb" style="left:1320px;top:640px;width:600px;height:440px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq023" data-start="20.926" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:700px;top:330px;width:560px;height:420px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq025" data-start="22.106" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:430px;top:455px;width:1060px;height:170px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq028" data-start="23.92" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:0px;top:0px;width:1920px;height:380px;background:#fff;mix-blend-mode:difference;"></div><div class="gb" style="left:1320px;top:640px;width:600px;height:440px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq030" data-start="25.216" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:1090px;top:260px;width:70px;height:560px;background:rgba(255,255,255,0.95);"></div></div>
-<div class="clip" id="sq033" data-start="26.836" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:430px;top:455px;width:1060px;height:170px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq035" data-start="28.426" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:240px;top:120px;width:760px;height:520px;background:rgba(255,255,255,0.24);"></div><div class="gb" style="left:1180px;top:560px;width:420px;height:300px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq038" data-start="29.946" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:1090px;top:260px;width:70px;height:560px;background:rgba(255,255,255,0.95);"></div></div>
-<div class="clip" id="sq040" data-start="30.856" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:520px;top:300px;width:980px;height:420px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq043" data-start="32.735" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:240px;top:120px;width:760px;height:520px;background:rgba(255,255,255,0.24);"></div><div class="gb" style="left:1180px;top:560px;width:420px;height:300px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq045" data-start="34.206" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:560px;top:180px;width:90px;height:720px;background:rgba(255,255,255,0.95);"></div><div class="gb" style="left:900px;top:470px;width:600px;height:140px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq048" data-start="35.516" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:520px;top:300px;width:980px;height:420px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq050" data-start="36.419" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:120px;top:620px;width:860px;height:300px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq055" data-start="40.086" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:700px;top:330px;width:560px;height:420px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq058" data-start="42.835" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:120px;top:620px;width:860px;height:300px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq060" data-start="43.646" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:0px;top:0px;width:1920px;height:380px;background:#fff;mix-blend-mode:difference;"></div><div class="gb" style="left:1320px;top:640px;width:600px;height:440px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq063" data-start="45.426" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:700px;top:330px;width:560px;height:420px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq065" data-start="46.526" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:430px;top:455px;width:1060px;height:170px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq068" data-start="48.906" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:0px;top:0px;width:1920px;height:380px;background:#fff;mix-blend-mode:difference;"></div><div class="gb" style="left:1320px;top:640px;width:600px;height:440px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq070" data-start="49.696" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:1090px;top:260px;width:70px;height:560px;background:rgba(255,255,255,0.95);"></div></div>
-<div class="clip" id="sq073" data-start="51.876" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:430px;top:455px;width:1060px;height:170px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq075" data-start="53.376" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:240px;top:120px;width:760px;height:520px;background:rgba(255,255,255,0.24);"></div><div class="gb" style="left:1180px;top:560px;width:420px;height:300px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq078" data-start="55.949" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:1090px;top:260px;width:70px;height:560px;background:rgba(255,255,255,0.95);"></div></div>
-<div class="clip" id="sq080" data-start="57.673" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:520px;top:300px;width:980px;height:420px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq083" data-start="59.706" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:240px;top:120px;width:760px;height:520px;background:rgba(255,255,255,0.24);"></div><div class="gb" style="left:1180px;top:560px;width:420px;height:300px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq085" data-start="60.916" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:560px;top:180px;width:90px;height:720px;background:rgba(255,255,255,0.95);"></div><div class="gb" style="left:900px;top:470px;width:600px;height:140px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq088" data-start="62.696" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:520px;top:300px;width:980px;height:420px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq090" data-start="63.786" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:120px;top:620px;width:860px;height:300px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq093" data-start="65.882" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:560px;top:180px;width:90px;height:720px;background:rgba(255,255,255,0.95);"></div><div class="gb" style="left:900px;top:470px;width:600px;height:140px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq095" data-start="67.646" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:700px;top:330px;width:560px;height:420px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq098" data-start="69.996" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:120px;top:620px;width:860px;height:300px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq100" data-start="71.069" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:0px;top:0px;width:1920px;height:380px;background:#fff;mix-blend-mode:difference;"></div><div class="gb" style="left:1320px;top:640px;width:600px;height:440px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq103" data-start="73.276" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:700px;top:330px;width:560px;height:420px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq105" data-start="74.729" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:430px;top:455px;width:1060px;height:170px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq108" data-start="77.036" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:0px;top:0px;width:1920px;height:380px;background:#fff;mix-blend-mode:difference;"></div><div class="gb" style="left:1320px;top:640px;width:600px;height:440px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq110" data-start="78.206" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:1090px;top:260px;width:70px;height:560px;background:rgba(255,255,255,0.95);"></div></div>
-<div class="clip" id="sq113" data-start="81.016" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:430px;top:455px;width:1060px;height:170px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq115" data-start="82.666" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:240px;top:120px;width:760px;height:520px;background:rgba(255,255,255,0.24);"></div><div class="gb" style="left:1180px;top:560px;width:420px;height:300px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq118" data-start="85.276" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:1090px;top:260px;width:70px;height:560px;background:rgba(255,255,255,0.95);"></div></div>
-<div class="clip" id="sq120" data-start="87.036" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:520px;top:300px;width:980px;height:420px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq123" data-start="89.116" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:240px;top:120px;width:760px;height:520px;background:rgba(255,255,255,0.24);"></div><div class="gb" style="left:1180px;top:560px;width:420px;height:300px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq125" data-start="90.409" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:560px;top:180px;width:90px;height:720px;background:rgba(255,255,255,0.95);"></div><div class="gb" style="left:900px;top:470px;width:600px;height:140px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq128" data-start="92.186" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:520px;top:300px;width:980px;height:420px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq130" data-start="93.954" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:120px;top:620px;width:860px;height:300px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq133" data-start="95.756" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:560px;top:180px;width:90px;height:720px;background:rgba(255,255,255,0.95);"></div><div class="gb" style="left:900px;top:470px;width:600px;height:140px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="clip" id="sq135" data-start="97.676" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:700px;top:330px;width:560px;height:420px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq138" data-start="99.376" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:120px;top:620px;width:860px;height:300px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq140" data-start="100.63" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:0px;top:0px;width:1920px;height:380px;background:#fff;mix-blend-mode:difference;"></div><div class="gb" style="left:1320px;top:640px;width:600px;height:440px;background:#fff;mix-blend-mode:difference;"></div></div>
-<div class="clip" id="sq143" data-start="101.866" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:700px;top:330px;width:560px;height:420px;background:rgba(236,236,232,0.92);"></div></div>
-<div class="clip" id="sq145" data-start="103.116" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:430px;top:455px;width:1060px;height:170px;background:rgba(255,255,255,0.24);"></div></div>
-<div class="vig" id="fx-vig"></div><div class="grain" id="fx-grain"></div>
+<div class="clip" id="sq013" data-start="20.521" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:560px;top:180px;width:90px;height:720px;background:rgba(255,255,255,0.95);"></div><div class="gb" style="left:900px;top:470px;width:600px;height:140px;background:rgba(128,128,128,0.75);"></div></div>
+<div class="clip" id="sq015" data-start="21.396" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:700px;top:330px;width:560px;height:420px;background:rgba(236,236,232,0.92);"></div></div>
+<div class="clip" id="sq018" data-start="22.561" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:120px;top:620px;width:860px;height:300px;background:#fff;mix-blend-mode:difference;"></div></div>
+<div class="clip" id="sq020" data-start="23.721" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:0px;top:0px;width:1920px;height:380px;background:#fff;mix-blend-mode:difference;"></div><div class="gb" style="left:1320px;top:640px;width:600px;height:440px;background:#fff;mix-blend-mode:difference;"></div></div>
+<div class="clip" id="sq023" data-start="25.384" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:700px;top:330px;width:560px;height:420px;background:rgba(236,236,232,0.92);"></div></div>
+<div class="clip" id="sq025" data-start="26.781" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:430px;top:455px;width:1060px;height:170px;background:rgba(128,128,128,0.75);"></div></div>
+<div class="clip" id="sq028" data-start="28.062" data-duration="0.067" style="position:absolute;inset:0;z-index:49"><div class="gb" style="left:0px;top:0px;width:1920px;height:380px;background:#fff;mix-blend-mode:difference;"></div><div class="gb" style="left:1320px;top:640px;width:600px;height:440px;background:#fff;mix-blend-mode:difference;"></div></div>
+<div class="vig" id="fx-vig"></div><div class="grain" id="fx-grain"></div><img class="tex" id="tx1" src="assets/tex/ht_grunge.jpg" alt="" style="mix-blend-mode:overlay;opacity:0.08" /><img class="tex" id="tx2" src="assets/tex/ht_paper.jpg" alt="" style="mix-blend-mode:soft-light;opacity:0.05" /><img class="tex" id="tx3" src="assets/tex/ht_dots.jpg" alt="" style="mix-blend-mode:overlay;opacity:0.12" />
 </div>
 <script>
 (function(){
@@ -97,25 +52,10 @@
   tl.fromTo("#fl0i",{opacity:0},{opacity:0.85,duration:0.1,ease:"power2.in"},4.77);
   tl.set("#fl0i",{opacity:1},4.87);
   tl.to("#fl0i",{opacity:0,duration:0.3,ease:"power2.out"},4.904);
-  tl.fromTo("#fl1i",{opacity:0},{opacity:0.85,duration:0.1,ease:"power2.in"},38.41);
-  tl.set("#fl1i",{opacity:1},38.51);
-  tl.to("#fl1i",{opacity:0,duration:0.3,ease:"power2.out"},38.544);
-  tl.fromTo("#fl2i",{opacity:0},{opacity:0.85,duration:0.1,ease:"power2.in"},39.508);
-  tl.set("#fl2i",{opacity:1},39.608);
-  tl.to("#fl2i",{opacity:0,duration:0.3,ease:"power2.out"},39.642);
-  tl.fromTo("#fl3i",{opacity:0},{opacity:0.85,duration:0.1,ease:"power2.in"},77.663);
-  tl.set("#fl3i",{opacity:1},77.763);
-  tl.to("#fl3i",{opacity:0,duration:0.3,ease:"power2.out"},77.797);
-  tl.fromTo("#fl4i",{opacity:0},{opacity:0.85,duration:0.1,ease:"power2.in"},81.68);
-  tl.set("#fl4i",{opacity:1},81.78);
-  tl.to("#fl4i",{opacity:0,duration:0.3,ease:"power2.out"},81.814);
-  tl.fromTo("#fl5i",{opacity:0},{opacity:0.85,duration:0.1,ease:"power2.in"},87.59);
-  tl.set("#fl5i",{opacity:1},87.69);
-  tl.to("#fl5i",{opacity:0,duration:0.3,ease:"power2.out"},87.724);
-  tl.fromTo("#fl6i",{opacity:0},{opacity:0.85,duration:0.1,ease:"power2.in"},103.75);
-  tl.set("#fl6i",{opacity:1},103.85);
-  tl.to("#fl6i",{opacity:0,duration:0.3,ease:"power2.out"},103.884);
-  tl.fromTo("#fx-grain",{x:0,y:0},{x:-180,y:-140,duration:106.5,ease:"steps(1597)"},0);
+  tl.fromTo("#fl1i",{opacity:0},{opacity:0.85,duration:0.1,ease:"power2.in"},30.505);
+  tl.set("#fl1i",{opacity:1},30.605);
+  tl.to("#fl1i",{opacity:0,duration:0.3,ease:"power2.out"},30.639);
+  tl.fromTo("#fx-grain",{x:0,y:0},{x:-180,y:-140,duration:32.55,ease:"steps(488)"},0);
 
   window.__timelines["fx"] = tl;
 })();
