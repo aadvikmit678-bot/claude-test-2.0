@@ -404,7 +404,8 @@ def build_captions():
         ([55, 57, 58, 59, 60], {"texts": {57: "why"}, "kinds": {57: "scale"}}),
         ([61, 62, 63], {"kinds": {62: "scale"}}), ([64, 65, 66, 67, 68], {}),
         ([69, 70, 71, 72], {"kinds": {71: "bloom", 72: "scale"}}),
-        ([73, 74], {"kinds": {74: "dhero"}, "cls": {74: "sfw"}}),      # Because | GTA in Instrument Serif (the user) ([75, 76, 77, 78], {}), ([79, 80, 81], {"kinds": {79: "scale", 81: "scale"}}),
+        ([73, 74], {"kinds": {74: "dhero"}, "cls": {74: "sfw"}}),      # Because | GTA in Instrument Serif (the user)
+        ([75, 76, 77, 78], {}), ([79, 80, 81], {"kinds": {79: "scale", 81: "scale"}}),       # was never just about | cars and guns.
         ([82, 83, 84, 85], {}), ([86, 87, 88, 89], {"end": cut(90)}),
         ([91, 92, 93], {"end": cut(94)}),
         ([94, 95, 96], {"mode": "tight", "kinds": {94: "scale"}, "end": E.TCARD - 3 * F}),

@@ -37,18 +37,27 @@ wipes; highlight boxes.
 - **Instrument Serif as in the Dario video** (the Dimon edit's recipe, `dario_js`): a glowing white square marks each
   small word's place for two frames, the word comes in dim and soft for a frame, then sits in its glow; the big word
   comes in blown out and settles crisp over four frames; the words leave in the order they came, a frame apart. White
-  glow only, no dark shadow -- "For a kid" (no comma), "it wasn't just a **game.**", "It was a psychological
-  ***escape,***" (a soft dark oval behind it, the Dimon edit's scrim, because white on its white clouds can't read),
-  "an alternate ***reality.***", "the city where it all **started.**", "Drive ***slow.***", "never really ***left.***",
-  and "*home.*" under "Take the long way".
-- **Giant words** (Inter Display ExtraBold, white, wide glow), never repeated in a small line: "a" | "**billion**" |
-  "dollars"; "**millions**" | "of adults"; "**Ah shit,**" behind CJ (cut out, `assets/clips/cj_fg.webm`); "**gunshots.**"
-  behind Tommy and Lance with the Instinct flicker and the muzzle flash; "**bad guy**" behind Lucia; "**Today,**";
-  "**13 years**" behind the man in the suit.
+  glow only, no dark shadow, and no commas or full stops on these lines (the user: "For a kid" and "started"):
+  "For a **kid**", "it wasn't just a **game**", "It was a psychological ***escape***" (a soft dark oval behind it,
+  the Dimon edit's scrim, because white on its white clouds can't read), "an alternate ***reality***", "And somewhere
+  along the way" / "those kids ***grew up***", "Rockstar takes you back to" (centred, just under the Vice City logo,
+  which fills the middle), "the city where it all **started**", "Drive ***slow***" (a gentler, longer entrance),
+  "never really ***left***", and "Because **GTA**" (GTA alone in serif, blown out then crisp).
+- **"But GTA lets you be"**: the Palmer Luckey reel's "John Wick" serif -- each word in blurred, sharp four frames
+  later -- then BE THE PROBLEM behind the bad guys is the rest of the line (no caption repeats it).
+- **Giant words** (Inter Display ExtraBold, white, wide glow), never repeated in a small line: "**billion dollars**" on
+  one line; "**millions**" | "of adults"; "**Ah shit**" behind CJ (cut out, `assets/clips/cj_fg.webm`), then "here we
+  go again." a size up; "**gunshots.**" behind Tommy and Lance with the Instinct flicker and the muzzle flash; "**bad
+  guy**" behind Lucia; "**Today,**"; "**13 years**" behind the man in the suit.
+- **Reference 7** (the Tesla Roadster reel): "GTA" | logo | "VI" already in place on the zoom, one dim frame, then
+  "took 13 years to make." spread across the frame in difference blend (white over the light card reads dark), "moved
+  on." heavy for two frames and then set, as the reel's "misunderstanding.".
 - **Single words** (Tesla), each replacing the last, all in directly: "with / the / volume / turned / all / the / way /
-  down", "don't / rush.".
-- **Typed box**: "**Los Santos**" (the "G-mail" move). **Two-line block**: "Take the long way" / "*home.*".
-- **Gone** (the user): the giant "cars" and the giant "guns." behind the man with the shotgun; the "ASPIRINE and
-  PANZER" caption under the notebook (the page shows the words).
+  down". **The slow part** (the user): "don't / rush" each rise in softly (0.34 s, from a 6 px blur), "Take the long
+  way" / "*home*" centred, each word rising in softly and "home" as the slow serif big word.
+- **Typed box**: "**Los Santos**" (the "G-mail" move).
+- **Gone** (the user): the giant "cars" and the giant "guns." behind the man with the shotgun ("cars and guns." is v2's
+  line again); the "ASPIRINE and PANZER" caption under the notebook (the page shows the words); the commas after
+  supercars / guns / planes.
 - **White only**: the "19th" highlight is white on a dark card, and the date card's date is white (`datewhite` in
   `tools/prep.py`). The only dark type is on reference 7's light cards, as the user chose. Logos keep their colours.
