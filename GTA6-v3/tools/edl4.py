@@ -263,7 +263,7 @@ PB_RAPID = [("t2", 117.6, 260, 320), ("vcde", 52.9, 300, 400), ("t2", 119.4, 470
 PB_TILT = [("hero2", None, 620, 400, -12), ("hero1b", None, 560, 380, -5), ("launch", 54.7, 520, 340, 7)]
 
 # v2's ending: the GTA VI logo builds, then the date card
-SHOTS += [S4("end1", "preload", 6.75, END_V, END_V + 1.35), S4("end2", "next", 1597.2, END_V + 1.35, TOTAL, grade="nopreorder")]
+SHOTS += [S4("end1", "preload", 6.75, END_V, END_V + 1.35), S4("end2", "next", 1597.2, END_V + 1.35, TOTAL, grade="datewhite")]
 SHOTS.append(S4("tv2c", "wait5", 4.55, TV2["t0"], TV2["t1"], crop=(0, 600, 1080, 608)))  # the user: the people showing GTA V, not the line
 SHOTS.append(S4("tv2v", "wait5", 4.55, TV2["t0"], TV2["t1"], crop=(177, 120, 726, 1200), card=(520, 860)))   # the same, upright, for the card
 

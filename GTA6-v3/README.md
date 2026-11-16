@@ -11,8 +11,13 @@ The `gta6/` folder on this branch is a different session's edit.
 
 ## What v4 does (the user's notes)
 
-- **Type: v2's, exactly** (Inter variable, 76 px, weight 540, v2's glow and word entrances). Captions do not slide.
-  Black type on the light cards. No textures (v2's grain and vignette only). No sound effects.
+- **Type** (`TYPE.md`, measured on the Sequoia and Tesla reels): v2's Inter (variable, 76 px, weight 540, v2's glow)
+  landing in 1-3 frames with varied entrances; Instrument Serif lines with one big word; giant Inter Display words,
+  four of them behind people (cut-outs from `hyperframes remove-background`) with the "Instinct" flicker on
+  "gunshots."; Tesla-style single words; "Los Santos" typed in the "G-mail" box; "Take the long way / home." as the
+  two-line block. **White type only**, except the black words on reference 7's light cards (the user's choice); the
+  "19th" card is dark and the date card's date white. Captions do not slide. No textures (v2's grain and vignette
+  only). No sound effects.
 - **Voiceover** (`tools/vo4.py` → `assets/audio/vo4.wav`, `words4.json`): "and 2 billion dollars", the release line
   and the first "why?" cut ("But" ends on its own dip, before any of that "why"); every silence over 0.3 s cut to 0.2 s.
 - **Cold open**: the frame zooms onto the "U.S. economy" highlight (corner blur), then cuts to the money clip on
@@ -73,7 +78,7 @@ The `gta6/` folder on this branch is a different session's edit.
 cd GTA6-v3/gta6-edit
 npx hyperframes@0.9.46 preview      # Studio
 npx hyperframes@0.9.46 render --fps 30 --quality delivery --output renders/gta6_v4_full.mp4
-npx hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 --output renders/gta6_v4_60fps.mp4   # highest quality, 60 fps
+npx hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 --output renders/gta6_v4_type_60fps.mp4   # highest quality, 60 fps
 ```
 
 ## Rebuild
@@ -89,6 +94,8 @@ python -I tools/nb4.py 0.55                     # the see-through notebook page 
 python -I tools/gp4.py                          # the tile wall
 python -I tools/pb4.py                          # the pin-board pictures
 python -I tools/mask4.py && node tools/text4.cjs && python -I tools/hero4.py   # the cut-out, BE THE HERO, the hero / bad guy clip
+cd gta6-edit && for id in sj2c sf3b sm10b sq3a; do   # the people in front of the giant words (VP9 alpha WebM, after prep)
+  npx hyperframes@0.9.46 remove-background assets/clips/$id.mp4 -o assets/clips/${id}_fg.webm --quality best; done; cd ..
 python -I -X utf8 tools/build4.py               # writes index.html and compositions/
 ```
 

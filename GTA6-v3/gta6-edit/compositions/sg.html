@@ -1,6 +1,10 @@
 <template>
 <style>
 @font-face{font-family:"InterV";src:url("assets/fonts/InterVar-latin.woff2") format("woff2");font-weight:100 900;font-style:normal;}
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");font-weight:400;font-style:normal;}
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2");font-weight:400;font-style:italic;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-ExtraBold.otf") format("opentype");font-weight:800;font-style:normal;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
 
 #root{position:absolute;inset:0;overflow:hidden;}
 .shot{position:absolute;inset:0;overflow:hidden;}
@@ -19,30 +23,37 @@
 .tx{display:inline-block;font-weight:540;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72);}
 .row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
 .row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
-.w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
-.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
+.w.card .tx{color:#F2F2F0;text-shadow:0 0 14px rgba(255,255,255,0.32);}
+.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#0b0b0c;z-index:0;opacity:0;box-shadow:0 8px 30px rgba(0,0,0,0.45);}
 .selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
+.row.serif{font-family:"ISerif",serif;font-size:86px;letter-spacing:0;column-gap:0.26em;transform-origin:0% 50%;}
+.row.serif .gh,.row.serif .tx{font-weight:400;}
+.row.serif .tx{text-shadow:0 0 18px rgba(255,255,255,0.28), 0 2px 20px rgba(0,0,0,0.9), 0 0 9px rgba(0,0,0,0.55);}
+.w.sb{font-size:2.05em;} .w.si{font-style:italic;}
+.gw{position:absolute;left:0;right:0;height:1080px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.gwr{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterD","InterV",sans-serif;font-weight:800;letter-spacing:-0.045em;line-height:1;color:#fff;}
+.gx{display:inline-block;opacity:0;text-shadow:0 0 64px rgba(255,255,255,0.42), 0 0 18px rgba(255,255,255,0.38), 0 10px 48px rgba(0,0,0,0.42);}
 </style>
 <div id="root" data-composition-id="sg" data-width="1920" data-height="1080" data-duration="1.764">
-<div class="shot" id="g00-w" style="z-index:1"><video id="v-g00" class="clip" src="assets/clips/g00.mp4" data-start="0.0" data-duration="0.067" muted playsinline></video></div>
-<div class="shot" id="g01-w" style="z-index:2"><video id="v-g01" class="clip" src="assets/clips/g01.mp4" data-start="0.067" data-duration="0.1" muted playsinline></video></div>
-<div class="shot" id="g02-w" style="z-index:3"><video id="v-g02" class="clip" src="assets/clips/g02.mp4" data-start="0.167" data-duration="0.066" muted playsinline></video></div>
-<div class="shot" id="g03-w" style="z-index:4"><video id="v-g03" class="clip" src="assets/clips/g03.mp4" data-start="0.233" data-duration="0.1" muted playsinline></video></div>
-<div class="shot" id="g04-w" style="z-index:5"><video id="v-g04" class="clip" src="assets/clips/g04.mp4" data-start="0.333" data-duration="0.034" muted playsinline></video></div>
-<div class="shot" id="g05-w" style="z-index:6"><video id="v-g05" class="clip" src="assets/clips/g05.mp4" data-start="0.367" data-duration="0.066" muted playsinline></video></div>
-<div class="shot" id="g06-w" style="z-index:7"><video id="v-g06" class="clip" src="assets/clips/g06.mp4" data-start="0.433" data-duration="0.1" muted playsinline></video></div>
-<div class="shot" id="g07-w" style="z-index:8"><video id="v-g07" class="clip" src="assets/clips/g07.mp4" data-start="0.533" data-duration="0.067" muted playsinline></video></div>
-<div class="shot" id="g08-w" style="z-index:9"><video id="v-g08" class="clip" src="assets/clips/g08.mp4" data-start="0.6" data-duration="0.1" muted playsinline></video></div>
-<div class="shot" id="g09-w" style="z-index:10"><video id="v-g09" class="clip" src="assets/clips/g09.mp4" data-start="0.7" data-duration="0.067" muted playsinline></video></div>
-<div class="shot" id="g10-w" style="z-index:11"><video id="v-g10" class="clip" src="assets/clips/g10.mp4" data-start="0.767" data-duration="0.033" muted playsinline></video></div>
-<div class="shot" id="g11-w" style="z-index:12"><video id="v-g11" class="clip" src="assets/clips/g11.mp4" data-start="0.8" data-duration="0.1" muted playsinline></video></div>
-<div class="shot" id="g12-w" style="z-index:13"><video id="v-g12" class="clip" src="assets/clips/g12.mp4" data-start="0.9" data-duration="0.067" muted playsinline></video></div>
-<div class="shot" id="g13-w" style="z-index:14"><video id="v-g13" class="clip" src="assets/clips/g13.mp4" data-start="0.967" data-duration="0.1" muted playsinline></video></div>
-<div class="shot" id="g14-w" style="z-index:15"><video id="v-g14" class="clip" src="assets/clips/g14.mp4" data-start="1.067" data-duration="0.067" muted playsinline></video></div>
-<div class="shot" id="g15-w" style="z-index:16"><video id="v-g15" class="clip" src="assets/clips/g15.mp4" data-start="1.134" data-duration="0.099" muted playsinline></video></div>
-<div class="shot" id="g16-w" style="z-index:17"><video id="v-g16" class="clip" src="assets/clips/g16.mp4" data-start="1.233" data-duration="0.034" muted playsinline></video></div>
-<div class="shot" id="g17-w" style="z-index:18"><video id="v-g17" class="clip" src="assets/clips/g17.mp4" data-start="1.267" data-duration="0.1" muted playsinline></video></div>
-<div class="shot" id="g99-w" style="z-index:19"><video id="v-g99" class="clip" src="assets/clips/g99.mp4" data-start="1.367" data-duration="0.397" muted playsinline></video></div>
+<div class="shot" id="g00-w" style="z-index:10"><video id="v-g00" class="clip" src="assets/clips/g00.mp4" data-start="0.0" data-duration="0.067" muted playsinline></video></div>
+<div class="shot" id="g01-w" style="z-index:20"><video id="v-g01" class="clip" src="assets/clips/g01.mp4" data-start="0.067" data-duration="0.1" muted playsinline></video></div>
+<div class="shot" id="g02-w" style="z-index:30"><video id="v-g02" class="clip" src="assets/clips/g02.mp4" data-start="0.167" data-duration="0.066" muted playsinline></video></div>
+<div class="shot" id="g03-w" style="z-index:40"><video id="v-g03" class="clip" src="assets/clips/g03.mp4" data-start="0.233" data-duration="0.1" muted playsinline></video></div>
+<div class="shot" id="g04-w" style="z-index:50"><video id="v-g04" class="clip" src="assets/clips/g04.mp4" data-start="0.333" data-duration="0.034" muted playsinline></video></div>
+<div class="shot" id="g05-w" style="z-index:60"><video id="v-g05" class="clip" src="assets/clips/g05.mp4" data-start="0.367" data-duration="0.066" muted playsinline></video></div>
+<div class="shot" id="g06-w" style="z-index:70"><video id="v-g06" class="clip" src="assets/clips/g06.mp4" data-start="0.433" data-duration="0.1" muted playsinline></video></div>
+<div class="shot" id="g07-w" style="z-index:80"><video id="v-g07" class="clip" src="assets/clips/g07.mp4" data-start="0.533" data-duration="0.067" muted playsinline></video></div>
+<div class="shot" id="g08-w" style="z-index:90"><video id="v-g08" class="clip" src="assets/clips/g08.mp4" data-start="0.6" data-duration="0.1" muted playsinline></video></div>
+<div class="shot" id="g09-w" style="z-index:100"><video id="v-g09" class="clip" src="assets/clips/g09.mp4" data-start="0.7" data-duration="0.067" muted playsinline></video></div>
+<div class="shot" id="g10-w" style="z-index:110"><video id="v-g10" class="clip" src="assets/clips/g10.mp4" data-start="0.767" data-duration="0.033" muted playsinline></video></div>
+<div class="shot" id="g11-w" style="z-index:120"><video id="v-g11" class="clip" src="assets/clips/g11.mp4" data-start="0.8" data-duration="0.1" muted playsinline></video></div>
+<div class="shot" id="g12-w" style="z-index:130"><video id="v-g12" class="clip" src="assets/clips/g12.mp4" data-start="0.9" data-duration="0.067" muted playsinline></video></div>
+<div class="shot" id="g13-w" style="z-index:140"><video id="v-g13" class="clip" src="assets/clips/g13.mp4" data-start="0.967" data-duration="0.1" muted playsinline></video></div>
+<div class="shot" id="g14-w" style="z-index:150"><video id="v-g14" class="clip" src="assets/clips/g14.mp4" data-start="1.067" data-duration="0.067" muted playsinline></video></div>
+<div class="shot" id="g15-w" style="z-index:160"><video id="v-g15" class="clip" src="assets/clips/g15.mp4" data-start="1.134" data-duration="0.099" muted playsinline></video></div>
+<div class="shot" id="g16-w" style="z-index:170"><video id="v-g16" class="clip" src="assets/clips/g16.mp4" data-start="1.233" data-duration="0.034" muted playsinline></video></div>
+<div class="shot" id="g17-w" style="z-index:180"><video id="v-g17" class="clip" src="assets/clips/g17.mp4" data-start="1.267" data-duration="0.1" muted playsinline></video></div>
+<div class="shot" id="g99-w" style="z-index:190"><video id="v-g99" class="clip" src="assets/clips/g99.mp4" data-start="1.367" data-duration="0.397" muted playsinline></video></div>
 
 </div>
 <script>

@@ -22,6 +22,13 @@ GRADE = {
     "nolabel": "delogo=x=884:y=512:w=152:h=62,eq=contrast=1.04:saturation=1.03",      # gta5bye's "2013"
     "bwhi": "hue=s=0,eq=contrast=1.35:brightness=-0.02",
     "nopreorder": "delogo=x=650:y=548:w=622:h=60,delogo=x=204:y=933:w=1510:h=48,eq=contrast=1.04:saturation=1.03",   # the date card: the date only
+    # the date card with its date in white (the user: white type only): every pixel in the date's box is unmixed into
+    # the card (22,26,34), the white letters and their magenta drop shadow (215,5,221) from G and (R+B)/2; the shadow's
+    # part is taken out, so the letters stay white with clean edges and the card is untouched
+    "datewhite": "delogo=x=650:y=548:w=622:h=60,delogo=x=204:y=933:w=1510:h=48,eq=contrast=1.04:saturation=1.03,format=gbrp,"
+                 "geq=r='st(0,clip(((r(X,Y)+b(X,Y))/2-g(X,Y)-4)/209,0,1));st(1,clip((g(X,Y)-28+21*ld(0))/229,0,1));st(2,between(X,460,1462)*between(Y,466,556));clip(r(X,Y)-ld(2)*(193*ld(0)+10*ld(1)),0,255)':"
+                 "g='st(0,clip(((r(X,Y)+b(X,Y))/2-g(X,Y)-4)/209,0,1));st(1,clip((g(X,Y)-28+21*ld(0))/229,0,1));st(2,between(X,460,1462)*between(Y,466,556));clip(g(X,Y)-ld(2)*(10*ld(1)-21*ld(0)),0,255)':"
+                 "b='st(0,clip(((r(X,Y)+b(X,Y))/2-g(X,Y)-4)/209,0,1));st(1,clip((g(X,Y)-28+21*ld(0))/229,0,1));st(2,between(X,460,1462)*between(Y,466,556));clip(b(X,Y)-ld(2)*(187*ld(0)+10*ld(1)),0,255)'",
     "poster": "format=gray,eq=contrast=1.5,format=rgb24,lutrgb=r='if(lt(val,85),205,255)':g='if(lt(val,85),18,if(lt(val,175),214,244))':b='if(lt(val,85),12,if(lt(val,175),0,190))'",
 }
 

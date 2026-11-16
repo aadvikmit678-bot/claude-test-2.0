@@ -1,6 +1,10 @@
 <template>
 <style>
 @font-face{font-family:"InterV";src:url("assets/fonts/InterVar-latin.woff2") format("woff2");font-weight:100 900;font-style:normal;}
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");font-weight:400;font-style:normal;}
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2");font-weight:400;font-style:italic;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-ExtraBold.otf") format("opentype");font-weight:800;font-style:normal;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
 
 #root{position:absolute;inset:0;overflow:hidden;}
 .shot{position:absolute;inset:0;overflow:hidden;}
@@ -19,9 +23,16 @@
 .tx{display:inline-block;font-weight:540;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72);}
 .row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
 .row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
-.w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
-.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
+.w.card .tx{color:#F2F2F0;text-shadow:0 0 14px rgba(255,255,255,0.32);}
+.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#0b0b0c;z-index:0;opacity:0;box-shadow:0 8px 30px rgba(0,0,0,0.45);}
 .selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
+.row.serif{font-family:"ISerif",serif;font-size:86px;letter-spacing:0;column-gap:0.26em;transform-origin:0% 50%;}
+.row.serif .gh,.row.serif .tx{font-weight:400;}
+.row.serif .tx{text-shadow:0 0 18px rgba(255,255,255,0.28), 0 2px 20px rgba(0,0,0,0.9), 0 0 9px rgba(0,0,0,0.55);}
+.w.sb{font-size:2.05em;} .w.si{font-style:italic;}
+.gw{position:absolute;left:0;right:0;height:1080px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.gwr{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterD","InterV",sans-serif;font-weight:800;letter-spacing:-0.045em;line-height:1;color:#fff;}
+.gx{display:inline-block;opacity:0;text-shadow:0 0 64px rgba(255,255,255,0.42), 0 0 18px rgba(255,255,255,0.38), 0 10px 48px rgba(0,0,0,0.42);}
 
 .tvf{position:absolute;inset:0;}
 .tvf video{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;}
@@ -57,17 +68,20 @@
   tl.set("#tvw",{opacity:0},1.011);
   tl.to("#tvc",{boxShadow:"0 0 0 3px rgba(255,255,255,0.85), 0 0 34px rgba(255,255,255,0.45)",duration:0.25,ease:"power2.out"},1.011);
   tl.fromTo("#tvc",{scale:1},{scale:0.965,duration:1.738,ease:"none"},1.011);
-  tl.set("#tvlw0",{opacity:1,scale:1.03,filter:"blur(0.6px) brightness(1.55)",textShadow:"0 0 26px rgba(255,255,255,0.85), 0 0 7px rgba(255,255,255,0.85), 0 2px 16px rgba(0,0,0,0.30)"},1.063);
-  tl.to("#tvlw0",{scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72)",duration:0.13,ease:"expo.out"},1.097);
-  tl.fromTo("#tvlw1",{opacity:0},{opacity:1,duration:0.05,ease:"none"},1.37);
-  tl.set("#tvlw2",{opacity:1,scale:1.03,filter:"blur(0.6px) brightness(1.55)",textShadow:"0 0 26px rgba(255,255,255,0.85), 0 0 7px rgba(255,255,255,0.85), 0 2px 16px rgba(0,0,0,0.30)"},1.47);
-  tl.to("#tvlw2",{scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72)",duration:0.13,ease:"expo.out"},1.504);
-  tl.fromTo("#tvlw3",{opacity:0},{opacity:1,duration:0.05,ease:"none"},1.73);
-  tl.fromTo("#tvrw0",{opacity:0},{opacity:1,duration:0.05,ease:"none"},1.83);
-  tl.set("#tvrw1",{opacity:1,scale:1.03,filter:"blur(0.6px) brightness(1.55)",textShadow:"0 0 26px rgba(255,255,255,0.85), 0 0 7px rgba(255,255,255,0.85), 0 2px 16px rgba(0,0,0,0.30)"},2.01);
-  tl.to("#tvrw1",{scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72)",duration:0.13,ease:"expo.out"},2.044);
-  tl.set("#tvrw2",{opacity:0.9,scaleY:2.8,scaleX:0.94,filter:"blur(2.2px) brightness(1.7)"},2.3);
-  tl.to("#tvrw2",{scaleY:1,scaleX:1,opacity:1,filter:"blur(0px) brightness(1)",duration:0.12,ease:"power3.out"},2.334);
+  tl.set("#tvlw0",{opacity:1,filter:"brightness(1.35)",textShadow:"0 0 26px rgba(255,255,255,0.85), 0 0 7px rgba(255,255,255,0.85), 0 2px 16px rgba(0,0,0,0.30)"},1.063);
+  tl.set("#tvlw0",{filter:"brightness(1)",textShadow:"0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72)"},1.097);
+  tl.set("#tvlw1",{opacity:1,filter:"brightness(1.35)",textShadow:"0 0 26px rgba(255,255,255,0.85), 0 0 7px rgba(255,255,255,0.85), 0 2px 16px rgba(0,0,0,0.30)"},1.37);
+  tl.set("#tvlw1",{filter:"brightness(1)",textShadow:"0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72)"},1.404);
+  tl.set("#tvlw2",{opacity:0.9,scaleY:2.8,scaleX:0.94,filter:"blur(2px) brightness(1.7)"},1.47);
+  tl.to("#tvlw2",{scaleY:1,scaleX:1,opacity:1,filter:"blur(0px) brightness(1)",duration:0.06,ease:"power3.out"},1.504);
+  tl.set("#tvlw3",{opacity:1,filter:"brightness(1.35)",textShadow:"0 0 26px rgba(255,255,255,0.85), 0 0 7px rgba(255,255,255,0.85), 0 2px 16px rgba(0,0,0,0.30)"},1.73);
+  tl.set("#tvlw3",{filter:"brightness(1)",textShadow:"0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72)"},1.764);
+  tl.set("#tvrw0",{opacity:1,filter:"brightness(1.35)",textShadow:"0 0 26px rgba(255,255,255,0.85), 0 0 7px rgba(255,255,255,0.85), 0 2px 16px rgba(0,0,0,0.30)"},1.83);
+  tl.set("#tvrw0",{filter:"brightness(1)",textShadow:"0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72)"},1.864);
+  tl.set("#tvrw1",{opacity:0.9,scaleY:2.8,scaleX:0.94,filter:"blur(2px) brightness(1.7)"},2.01);
+  tl.to("#tvrw1",{scaleY:1,scaleX:1,opacity:1,filter:"blur(0px) brightness(1)",duration:0.06,ease:"power3.out"},2.044);
+  tl.set("#tvrw2",{opacity:1,filter:"brightness(1.35)",textShadow:"0 0 26px rgba(255,255,255,0.85), 0 0 7px rgba(255,255,255,0.85), 0 2px 16px rgba(0,0,0,0.30)"},2.3);
+  tl.set("#tvrw2",{filter:"brightness(1)",textShadow:"0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72)"},2.334);
 
   window.__timelines["tv"] = tl;
 })();

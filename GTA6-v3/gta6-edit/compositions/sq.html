@@ -1,6 +1,10 @@
 <template>
 <style>
 @font-face{font-family:"InterV";src:url("assets/fonts/InterVar-latin.woff2") format("woff2");font-weight:100 900;font-style:normal;}
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");font-weight:400;font-style:normal;}
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2");font-weight:400;font-style:italic;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-ExtraBold.otf") format("opentype");font-weight:800;font-style:normal;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
 
 #root{position:absolute;inset:0;overflow:hidden;}
 .shot{position:absolute;inset:0;overflow:hidden;}
@@ -19,27 +23,38 @@
 .tx{display:inline-block;font-weight:540;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72);}
 .row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
 .row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
-.w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
-.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
+.w.card .tx{color:#F2F2F0;text-shadow:0 0 14px rgba(255,255,255,0.32);}
+.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#0b0b0c;z-index:0;opacity:0;box-shadow:0 8px 30px rgba(0,0,0,0.45);}
 .selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
+.row.serif{font-family:"ISerif",serif;font-size:86px;letter-spacing:0;column-gap:0.26em;transform-origin:0% 50%;}
+.row.serif .gh,.row.serif .tx{font-weight:400;}
+.row.serif .tx{text-shadow:0 0 18px rgba(255,255,255,0.28), 0 2px 20px rgba(0,0,0,0.9), 0 0 9px rgba(0,0,0,0.55);}
+.w.sb{font-size:2.05em;} .w.si{font-style:italic;}
+.gw{position:absolute;left:0;right:0;height:1080px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.gwr{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterD","InterV",sans-serif;font-weight:800;letter-spacing:-0.045em;line-height:1;color:#fff;}
+.gx{display:inline-block;opacity:0;text-shadow:0 0 64px rgba(255,255,255,0.42), 0 0 18px rgba(255,255,255,0.38), 0 10px 48px rgba(0,0,0,0.42);}
 
 .hero{position:absolute;left:0;right:0;top:300px;height:400px;display:flex;align-items:center;justify-content:center;z-index:50;}
 .hw{position:relative;font-family:"InterV",sans-serif;font-size:240px;letter-spacing:-0.04em;line-height:1;}
 .ht{position:relative;display:block;color:#fff;font-weight:540;}
 </style>
 <div id="root" data-composition-id="sq" data-width="1920" data-height="1080" data-duration="5.027">
-<div class="shot" id="sq0a-w" style="z-index:1"><video id="v-sq0a" class="clip" src="assets/clips/sq0a.mp4" data-start="0.0" data-duration="0.4" muted playsinline></video></div>
-<div class="shot" id="sq0b-w" style="z-index:2"><video id="v-sq0b" class="clip" src="assets/clips/sq0b.mp4" data-start="0.4" data-duration="0.5" muted playsinline></video></div>
-<div class="shot" id="sq1a-w" style="z-index:3"><video id="v-sq1a" class="clip" src="assets/clips/sq1a.mp4" data-start="0.9" data-duration="0.939" muted playsinline></video></div>
-<div class="shot" id="sq2a-w" style="z-index:4"><video id="v-sq2a" class="clip" src="assets/clips/sq2a.mp4" data-start="1.839" data-duration="0.916" muted playsinline></video></div>
-<div class="shot" id="sq3a-w" style="z-index:5"><video id="v-sq3a" class="clip" src="assets/clips/sq3a.mp4" data-start="2.755" data-duration="0.59" muted playsinline></video></div>
-<div class="shot" id="sq4a-w" style="z-index:6"><video id="v-sq4a" class="clip" src="assets/clips/sq4a.mp4" data-start="3.345" data-duration="0.66" muted playsinline></video></div>
-<div class="shot" id="sq4b-w" style="z-index:7"><video id="v-sq4b" class="clip" src="assets/clips/sq4b.mp4" data-start="4.005" data-duration="1.022" muted playsinline></video></div>
+<div class="shot" id="sq0a-w" style="z-index:10"><video id="v-sq0a" class="clip" src="assets/clips/sq0a.mp4" data-start="0.0" data-duration="0.4" muted playsinline></video></div>
+<div class="shot" id="sq0b-w" style="z-index:20"><video id="v-sq0b" class="clip" src="assets/clips/sq0b.mp4" data-start="0.4" data-duration="0.5" muted playsinline></video></div>
+<div class="shot" id="sq1a-w" style="z-index:30"><video id="v-sq1a" class="clip" src="assets/clips/sq1a.mp4" data-start="0.9" data-duration="0.939" muted playsinline></video></div>
+<div class="shot" id="sq2a-w" style="z-index:40"><video id="v-sq2a" class="clip" src="assets/clips/sq2a.mp4" data-start="1.839" data-duration="0.916" muted playsinline></video></div>
+<div class="shot" id="sq3a-w" style="z-index:50"><video id="v-sq3a" class="clip" src="assets/clips/sq3a.mp4" data-start="2.755" data-duration="0.59" muted playsinline></video></div>
+<div style="position:absolute;inset:0;z-index:51"><div id="g13" class="clip gw" data-start="2.815" data-duration="0.53" style="top:20px"><div class="gwr" id="g13r" style="font-size:478px;column-gap:0.2em"><span class="gx" id="g13w0">13</span><span class="gx" id="g13w1">years</span></div></div></div>
+<div class="shot" id="sq3afg-w" style="z-index:52"><video id="v-sq3afg" class="clip" src="assets/clips/sq3a_fg.webm" data-start="2.755" data-duration="0.59" muted playsinline></video></div>
+<div class="shot" id="sq4a-w" style="z-index:60"><video id="v-sq4a" class="clip" src="assets/clips/sq4a.mp4" data-start="3.345" data-duration="0.66" muted playsinline></video></div>
+<div class="shot" id="sq4b-w" style="z-index:70"><video id="v-sq4b" class="clip" src="assets/clips/sq4b.mp4" data-start="4.005" data-duration="1.022" muted playsinline></video></div>
 <div class="hero" id="fh2"><div class="hw" id="fh2w"><span class="ht" id="fh2t">freedom</span></div></div>
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#g13w0",{opacity:0.45,scale:1.07,filter:"blur(14px) brightness(1.5)",textShadow:"0 0 90px rgba(255,255,255,0.85), 0 0 26px rgba(255,255,255,0.8), 0 10px 48px rgba(0,0,0,0.3)"},{opacity:1,scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 64px rgba(255,255,255,0.42), 0 0 18px rgba(255,255,255,0.38), 0 10px 48px rgba(0,0,0,0.42)",duration:0.08,ease:"power2.out",immediateRender:false},2.815);
+  tl.fromTo("#g13w1",{opacity:0.45,scale:1.07,filter:"blur(14px) brightness(1.5)",textShadow:"0 0 90px rgba(255,255,255,0.85), 0 0 26px rgba(255,255,255,0.8), 0 10px 48px rgba(0,0,0,0.3)"},{opacity:1,scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 64px rgba(255,255,255,0.42), 0 0 18px rgba(255,255,255,0.38), 0 10px 48px rgba(0,0,0,0.42)",duration:0.08,ease:"power2.out",immediateRender:false},3.135);
   tl.set("#fh2w",{opacity:0},0);
   tl.set("#fh2w",{opacity:1,scale:1.05},4.065);
   tl.set("#fh2t",{fontWeight:900,filter:"blur(1.2px) brightness(1.9)",textShadow:"0 0 34px rgba(255,255,255,1), 0 0 10px rgba(255,255,255,1), 0 2px 16px rgba(0,0,0,0)"},4.065);

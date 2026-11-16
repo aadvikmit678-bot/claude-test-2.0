@@ -1,6 +1,10 @@
 <template>
 <style>
 @font-face{font-family:"InterV";src:url("assets/fonts/InterVar-latin.woff2") format("woff2");font-weight:100 900;font-style:normal;}
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");font-weight:400;font-style:normal;}
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2");font-weight:400;font-style:italic;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-ExtraBold.otf") format("opentype");font-weight:800;font-style:normal;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
 
 #root{position:absolute;inset:0;overflow:hidden;}
 .shot{position:absolute;inset:0;overflow:hidden;}
@@ -19,22 +23,32 @@
 .tx{display:inline-block;font-weight:540;opacity:0;text-shadow:0 0 22px rgba(255,255,255,0.42), 0 0 4px rgba(255,255,255,0.26), 0 2px 18px rgba(0,0,0,0.72);}
 .row.ink .tx{text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
 .row.ink.halo .tx{text-shadow:0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(255,255,255,0.9);}
-.w.card .tx{color:#141414;text-shadow:0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0), 0 0 0px rgba(0,0,0,0);}
-.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#F4F4F2;z-index:0;opacity:0;}
+.w.card .tx{color:#F2F2F0;text-shadow:0 0 14px rgba(255,255,255,0.32);}
+.cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#0b0b0c;z-index:0;opacity:0;box-shadow:0 8px 30px rgba(0,0,0,0.45);}
 .selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
+.row.serif{font-family:"ISerif",serif;font-size:86px;letter-spacing:0;column-gap:0.26em;transform-origin:0% 50%;}
+.row.serif .gh,.row.serif .tx{font-weight:400;}
+.row.serif .tx{text-shadow:0 0 18px rgba(255,255,255,0.28), 0 2px 20px rgba(0,0,0,0.9), 0 0 9px rgba(0,0,0,0.55);}
+.w.sb{font-size:2.05em;} .w.si{font-style:italic;}
+.gw{position:absolute;left:0;right:0;height:1080px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.gwr{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterD","InterV",sans-serif;font-weight:800;letter-spacing:-0.045em;line-height:1;color:#fff;}
+.gx{display:inline-block;opacity:0;text-shadow:0 0 64px rgba(255,255,255,0.42), 0 0 18px rgba(255,255,255,0.38), 0 10px 48px rgba(0,0,0,0.42);}
 </style>
 <div id="root" data-composition-id="sf" data-width="1920" data-height="1080" data-duration="2.935">
-<div class="shot" id="sf0a-w" style="z-index:1"><video id="v-sf0a" class="clip" src="assets/clips/sf0a.mp4" data-start="0.0" data-duration="0.917" muted playsinline></video></div>
-<div class="shot" id="sf1a-w" style="z-index:2"><video id="v-sf1a" class="clip" src="assets/clips/sf1a.mp4" data-start="0.917" data-duration="0.48" muted playsinline></video></div>
-<div class="shot" id="sf1b-w" style="z-index:3"><video id="v-sf1b" class="clip" src="assets/clips/sf1b.mp4" data-start="1.397" data-duration="0.53" muted playsinline></video></div>
-<div class="shot" id="sf2a-w" style="z-index:4"><video id="v-sf2a" class="clip" src="assets/clips/sf2a.mp4" data-start="1.927" data-duration="0.3" muted playsinline></video></div>
-<div class="shot" id="sf3a-w" style="z-index:5"><video id="v-sf3a" class="clip" src="assets/clips/sf3a.mp4" data-start="2.227" data-duration="0.354" muted playsinline></video></div>
-<div class="shot" id="sf3b-w" style="z-index:6"><video id="v-sf3b" class="clip" src="assets/clips/sf3b.mp4" data-start="2.581" data-duration="0.354" muted playsinline></video></div>
+<div class="shot" id="sf0a-w" style="z-index:10"><video id="v-sf0a" class="clip" src="assets/clips/sf0a.mp4" data-start="0.0" data-duration="0.917" muted playsinline></video></div>
+<div class="shot" id="sf1a-w" style="z-index:20"><video id="v-sf1a" class="clip" src="assets/clips/sf1a.mp4" data-start="0.917" data-duration="0.48" muted playsinline></video></div>
+<div class="shot" id="sf1b-w" style="z-index:30"><video id="v-sf1b" class="clip" src="assets/clips/sf1b.mp4" data-start="1.397" data-duration="0.53" muted playsinline></video></div>
+<div class="shot" id="sf2a-w" style="z-index:40"><video id="v-sf2a" class="clip" src="assets/clips/sf2a.mp4" data-start="1.927" data-duration="0.3" muted playsinline></video></div>
+<div class="shot" id="sf3a-w" style="z-index:50"><video id="v-sf3a" class="clip" src="assets/clips/sf3a.mp4" data-start="2.227" data-duration="0.354" muted playsinline></video></div>
+<div class="shot" id="sf3b-w" style="z-index:60"><video id="v-sf3b" class="clip" src="assets/clips/sf3b.mp4" data-start="2.581" data-duration="0.354" muted playsinline></video></div>
+<div style="position:absolute;inset:0;z-index:61"><div id="gguns" class="clip gw" data-start="2.581" data-duration="0.354" style="top:-20px"><div class="gwr" id="ggunsr" style="font-size:546px;column-gap:0.2em"><span class="gx" id="ggunsw0">guns.</span></div></div></div>
+<div class="shot" id="sf3bfg-w" style="z-index:62"><video id="v-sf3bfg" class="clip" src="assets/clips/sf3b_fg.webm" data-start="2.581" data-duration="0.354" muted playsinline></video></div>
 
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#ggunsw0",{opacity:0.45,scale:1.07,filter:"blur(14px) brightness(1.5)",textShadow:"0 0 90px rgba(255,255,255,0.85), 0 0 26px rgba(255,255,255,0.8), 0 10px 48px rgba(0,0,0,0.3)"},{opacity:1,scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 64px rgba(255,255,255,0.42), 0 0 18px rgba(255,255,255,0.38), 0 10px 48px rgba(0,0,0,0.42)",duration:0.08,ease:"power2.out",immediateRender:false},2.581);
 
   window.__timelines["sf"] = tl;
 })();
