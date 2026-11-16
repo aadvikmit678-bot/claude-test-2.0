@@ -6,7 +6,7 @@ the white card behind "19th", the blue box on "U.S. economy"). Captions do not s
 No sound effects, no textures (v2's grain and vignette only). Square flashes before most cuts (reference 7's
 white / grey / white rectangles on consecutive frames).
 """
-import json, os, sys
+import html, json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import edl4 as E
 from edl4 import W, WT, cut, N, VO_OFFSET, NEWS_DUR, TOTAL, has
@@ -55,6 +55,9 @@ CSS = FONTS + """
 .row{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterV",sans-serif;font-size:76px;line-height:1.2;letter-spacing:-0.03em;color:#F2F2F0;}
 .row.wide{column-gap:1.1em;} .row.tight{column-gap:0.26em;}
 .row.side{font-size:64px;}
+.row.hwg{font-size:118px;}
+.w.sfw .gh,.w.sfw .tx{font-family:"ISerif",serif;font-weight:400;font-size:1.55em;letter-spacing:-0.01em;}
+.w.sfw .tx{color:""" + SERIF_INK + """;text-shadow:""" + SERIF_REST + """;transform-origin:50% 72%;}
 .row.ink{color:#141414;}
 .w{position:relative;display:inline-block;}
 .gh{visibility:hidden;font-weight:540;}
@@ -113,6 +116,12 @@ def ent_js(sel, kind, t, rest=SET, pop=POP, bloom=BLOOM):
                 f'  tl.to("{sel}",{{scaleY:1,scaleX:1,opacity:1,filter:"blur(0px) brightness(1)",duration:0.12,ease:"power3.out"}},{a});\n')
     if kind == "soft":
         return f'  tl.fromTo("{sel}",{{opacity:0}},{{opacity:1,duration:0.05,ease:"none"}},{t});\n'
+    if kind == "sfade":                                     # the slow part ("don't rush", "Take the long way"): a soft rise
+        return (f'  tl.fromTo("{sel}",{{opacity:0,filter:"blur(5px)",textShadow:"{rest}"}},'
+                f'{{opacity:1,filter:"blur(0px)",duration:0.34,ease:"power2.out",immediateRender:false}},{t});\n')
+    if kind == "boldin":                                    # the Tesla reel's "misunderstanding.": heavy for two frames, then set
+        return (f'  tl.set("{sel}",{{opacity:1,fontWeight:820}},{t});\n'
+                f'  tl.set("{sel}",{{fontWeight:600}},{r3(t + 2 / 30)});\n')
     # the faster entrances (the Sequoia / Tesla reels): settled within 2-3 frames; "fcut" = in directly, one bright frame
     if kind == "fcut":
         return (f'  tl.set("{sel}",{{opacity:1,filter:"brightness(1.35)",textShadow:"{pop}"}},{t});\n'
@@ -130,6 +139,22 @@ def ent_js(sel, kind, t, rest=SET, pop=POP, bloom=BLOOM):
 
 
 def dario_js(sel, kd, t, t_min, fl=None):
+    if kd == "jw":                                          # "John Wick": in blurred, sharp four frames later
+        a = r3(t)
+        return (f'  tl.set("{sel}",{{opacity:1,filter:"blur(7px)",textShadow:"{SERIF_SOFT}"}},{a});\n'
+                f'  tl.set("{sel}",{{filter:"blur(3.5px)"}},{r3(a + 2 * F)});\n'
+                f'  tl.set("{sel}",{{filter:"blur(1.2px)"}},{r3(a + 3 * F)});\n'
+                f'  tl.set("{sel}",{{filter:"blur(0px)",textShadow:"{SERIF_REST}"}},{r3(a + 4 * F)});\n')
+    if kd in ("dnorm_s", "dhero_s"):                        # the slow part: the same moves, eased and about three times longer
+        a = r3(t)
+        if kd == "dnorm_s":
+            b0 = max(t_min, r3(a - 4 * F25))
+            out = (f'  tl.set("{fl}",{{opacity:0.85}},{r3(b0)});\n  tl.to("{fl}",{{opacity:0,duration:{r3(a - b0)},ease:"power1.in"}},{r3(b0)});\n'
+                   if fl and a - b0 > 0.02 else "")
+            return out + (f'  tl.fromTo("{sel}",{{opacity:0,filter:"blur(5px)",textShadow:"{SERIF_SOFT}"}},'
+                          f'{{opacity:1,filter:"blur(0px)",textShadow:"{SERIF_REST}",duration:0.32,ease:"power2.out",immediateRender:false}},{a});\n')
+        return (f'  tl.fromTo("{sel}",{{opacity:0,scale:1.04,filter:"blur(14px)",textShadow:"{SERIF_BLOOM}"}},'
+                f'{{opacity:1,scale:1,filter:"blur(0px)",textShadow:"{SERIF_REST}",duration:0.5,ease:"power2.out",immediateRender:false}},{a});\n')
     """Instrument Serif as in the Dario video (the Dimon edit's "dn" / "dh", read there frame by frame at 25 fps): a small
     word's place is marked by a glowing white square for two frames, the word comes in dim and soft for a frame, then sits
     in its glow; the big word comes in blown out and settles crisp over four frames"""
@@ -204,8 +229,8 @@ def line_html(L, lid, js):
             js.append(f'  tl.set("#{wid}c",{{opacity:1,scaleY:1.6,scaleX:1.1}},{r3(t)});\n'
                       f'  tl.to("#{wid}c",{{scaleY:1,scaleX:1,duration:0.16,ease:"expo.out"}},{r3(t + 0.034)});\n'
                       f'  tl.set("#{wid}",{{opacity:1}},{r3(t + 0.034)});\n')
-        elif kd in ("dnorm", "dhero"):                      # Instrument Serif, the Dario video's way
-            if kd == "dnorm":
+        elif kd in ("dnorm", "dhero", "dnorm_s", "dhero_s", "jw"):   # Instrument Serif, the Dario video's way
+            if kd in ("dnorm", "dnorm_s"):
                 extra = f'<span class="fl" id="{wid}f"></span>'
             js.append(dario_js("#" + wid, kd, t, t0, f"#{wid}f"))
         else:
@@ -315,14 +340,14 @@ def block(bid, line1, line2, t1, x, y):
     the user wants white type only), set in the shot's open space; the words land directly, the serif word comes in as
     the Dario video's big serif word (blown out, then crisp in its white glow)"""
     js, l1, l2 = [], [], []
-    for k, (w, t) in enumerate(line1):
+    for k, (w, t) in enumerate(line1):                      # the slow part (the user): each word rises in softly
         l1.append(f'<span id="{bid}a{k}">{w}</span>')
-        js.append(f'  tl.set("#{bid}a{k}",{{opacity:1}},{r3(t)});\n')
+        js.append(f'  tl.fromTo("#{bid}a{k}",{{opacity:0,filter:"blur(6px)"}},{{opacity:1,filter:"blur(0px)",duration:0.34,ease:"power2.out",immediateRender:false}},{r3(t)});\n')
     for k, (w, t) in enumerate(line2):
         l2.append(f'<span id="{bid}b{k}">{w}</span>')
-        js.append(dario_js(f"#{bid}b{k}", "dhero", t, t))
+        js.append(dario_js(f"#{bid}b{k}", "dhero_s", t, t))
     t0 = r3(line1[0][1] - 0.03)
-    html = (f'<div id="{bid}" class="clip bk" data-start="{t0}" data-duration="{r3(t1 - t0)}" style="left:{x}px;top:{y}px">'
+    html = (f'<div id="{bid}" class="clip bk" data-start="{t0}" data-duration="{r3(t1 - t0)}" style="left:0;width:1920px;top:{y}px;text-align:center">'
             f'<div class="bk1">{"&nbsp;".join(l1)}</div><div class="bk2">{"&nbsp;".join(l2)}</div></div>')
     return html, "".join(js)
 
@@ -343,19 +368,33 @@ def build_captions():
     """the captions: v2's line (Inter, 76 px, v2's entrances), Instrument Serif lines in the Dario video's style with
     one big word, giant words, the single words of the Tesla reel, the typed box and the two-line block (see TYPE.md)"""
     body, js, css = [], [], TB_CSS + BK_CSS
-    L = [NL([("here", NEWS_DUR + 1.54, "pop"), ("we", NEWS_DUR + 1.66, "soft"), ("go", NEWS_DUR + 1.80, "pop"),   # "Ah shit," is
-             ("again.", NEWS_DUR + 2.00, "bloom")], end=VO_OFFSET)]                                         # big, behind CJ
+    L = [Line([("here", r3(NEWS_DUR + 1.54), "", "pop"), ("we", r3(NEWS_DUR + 1.66), "", "soft"),       # "Ah shit" is big, behind
+               ("go", r3(NEWS_DUR + 1.80), "", "pop"), ("again.", r3(NEWS_DUR + 2.00), "", "bloom")],        # CJ; "here we go again."
+              "wide", end=VO_OFFSET, size="hwg")]                                                         # a size up (the user)
 
     def ser(idx, big, italic=(), bigit=False, **kw):
         """an Instrument Serif line in the Dario video's style (the user): the small words with their glowing squares, the
         big word blown out then crisp, all in a white glow; the words leave in the order they came"""
         cls = {i: "si" for i in italic}
-        cls[big] = "sb si" if bigit else "sb"
-        kinds = {i: "dnorm" for i in idx}
-        kinds[big] = "dhero"
+        texts = kw.pop("texts", {}) or {}
+        for i in idx:                                       # no commas or full stops on the serif lines (the user)
+            texts.setdefault(i, WT(i).rstrip(",.?!"))
+        kw["texts"] = texts
+        slow = kw.pop("slow", False)                        # the slow part ("Drive slow"): a gentler, longer entrance
+        kinds = {i: ("dnorm_s" if slow else "dnorm") for i in idx}
+        if big is not None:
+            cls[big] = "sb si" if bigit else "sb"
+            kinds[big] = "dhero_s" if slow else "dhero"
         return (idx, dict(font="serif", mode="tight", exit="order", cls=cls, kinds=kinds, **kw))
 
     one = r3(2 * F)                                          # the single words are held only until the next one lands
+
+    def jw(idx, **kw):
+        """the Palmer Luckey reel's "John Wick": Instrument Serif in its white glow, each word in blurred, sharp 4 frames later"""
+        texts = kw.pop("texts", {}) or {}
+        for i in idx:
+            texts.setdefault(i, WT(i).rstrip(",.?!"))
+        return (idx, dict(font="serif", mode="tight", kinds={i: "jw" for i in idx}, texts=texts, **kw))
     V = [
         ([0, 1, 2], {"end": W(3) - 0.02}),
         ([4, 5], {"kinds": {5: "scale"}}),                  # "millions" is the giant; then only "of adults" (the user: no repeat)
@@ -365,7 +404,7 @@ def build_captions():
         ([55, 57, 58, 59, 60], {"texts": {57: "why"}, "kinds": {57: "scale"}}),
         ([61, 62, 63], {"kinds": {62: "scale"}}), ([64, 65, 66, 67, 68], {}),
         ([69, 70, 71, 72], {"kinds": {71: "bloom", 72: "scale"}}),
-        ([73, 74], {"kinds": {74: "bloom"}}), ([75, 76, 77, 78], {}), ([79, 80, 81], {"kinds": {79: "scale", 81: "scale"}}),
+        ([73, 74], {"kinds": {74: "dhero"}, "cls": {74: "sfw"}}),      # Because | GTA in Instrument Serif (the user) ([75, 76, 77, 78], {}), ([79, 80, 81], {"kinds": {79: "scale", 81: "scale"}}),
         ([82, 83, 84, 85], {}), ([86, 87, 88, 89], {"end": cut(90)}),
         ([91, 92, 93], {"end": cut(94)}),
         ([94, 95, 96], {"mode": "tight", "kinds": {94: "scale"}, "end": E.TCARD - 3 * F}),
@@ -380,23 +419,29 @@ def build_captions():
         ser([143, 144, 145, 146, 147], 147, bigit=True, scrim=0.42),   # It was a psychological escape, (on white clouds)
         ser([148, 149, 150], 150, italic=(148, 149), bigit=True),   # an alternate reality.
         ([151, 152, 153], {}), ([154, 155, 156, 157, 158], {}),
-        ([159, 160], {"kinds": {160: "scale"}}), ([161, 162], {"kinds": {162: "scale"}}), ([163, 164], {"kinds": {164: "scale"}}),
+        ([159, 160], {"kinds": {160: "scale"}, "texts": {160: "supercars"}}), ([161, 162], {"kinds": {162: "scale"}, "texts": {162: "guns"}}),
+        ([163, 164], {"kinds": {164: "scale"}, "texts": {164: "planes"}}),                     # no commas (the user)
         ([165, 166, 167, 168, 169], {"texts": {166: "owning"}, "kinds": {169: "bloom"}}),
         ([170, 171, 172, 173, 174], {}), ([175, 176, 177, 178], {"end": E.HERO["t0"] - 0.02}),     # "the hero," is the big BE THE HERO
-        ([181, 182, 183, 184, 185], {"texts": {181: "But"}, "y": 880}), ([186, 187], {"mode": "tight", "kinds": {187: "scale"}, "y": 880}),
+        jw([181, 182, 183, 184, 185], texts={181: "But"}, y=880, end=E.HERO["tx"] - 0.02),   # "But GTA lets you be" in
+                                                                    # Instrument Serif as the reel's "John Wick" (the user); "the
+                                                                    # problem" is the big BE THE PROBLEM itself (no repeat, the user)
         ([188, 189, 190, 191, 192], {"end": W(193) - 0.02}),
         ([195, 196, 197, 198], {}), ([199, 200, 201, 202], {}),
-        ([203, 204, 205, 206, 207], {"y": 880}), ([208, 209, 210, 211], {"y": 880, "end": W(212) - 0.02}),
+        ser([203, 204, 205, 206, 207], None, texts={207: "way"}, y=880),                 # And somewhere along the way (serif glow,
+        ser([208, 209, 210, 211], 211, bigit=True, y=880, end=W(212) - 0.02),          # the user) | those kids grew up.
         ([213, 214, 215, 216], {}), ([217, 218, 219, 220, 221], {"kinds": {221: "bloom"}, "end": E.SPAN["pb"][0] - 0.02}),
         ([222, 223, 224, 225], {}), ([226, 227, 228, 229, 230, 231], {}),       # over the pin board: centred, white glow (the user)
         ([232, 233, 234, 235], {"mode": "tight", "cls": {235: "card"}, "kinds": {235: "card", 234: "bloom"}}),
-        ([236, 237, 238, 239, 240], {"kinds": {236: "bloom"}, "y": 900, "end": W(241) - 0.04}),   # "Vice City," is the logo itself
+        ser([236, 237, 238, 239, 240], None, end=W(241) - 0.04, y=820),   # Rockstar takes you back to -- serif, centred (the
+                                                                    # user), just under the Vice City logo, which fills the middle;
+                                                                    # "Vice City," is the logo itself
         ser([243, 244, 245, 246, 247, 248], 248),                   # the city where it all started.
         ([249, 250, 251, 252, 253, 254], {"end": W(255) - 0.07}),
         ([257, 258], {}),
-        ([259], {"kinds": {259: "fcut"}, "end": W(260), "floor": one}),                             # don't | rush.
-        ([260], {"kinds": {260: "fcut"}, "end": W(261) - 0.04, "floor": one}),
-        ser([266, 267], 267, bigit=True),                           # Drive slow.
+        ([259], {"kinds": {259: "sfade"}, "end": W(260), "floor": one}),                            # don't | rush. -- slower
+        ([260], {"kinds": {260: "sfade"}, "end": W(261) - 0.04, "floor": one}),                    # here (the user)
+        ser([266, 267], 267, bigit=True, slow=True),                # Drive slow -- the slow entrance
         ([268, 269, 270], {"mode": "tight", "end": E.TV2["tc"] - 3 * F}),                          # then "playing" | "GTA" either side of the card
         ([273, 274], {"kinds": {273: "bloom", 274: "bloom"}}),
         ser([275, 276, 277], 277, bigit=True),                      # never really left.
@@ -424,8 +469,8 @@ def build_captions():
     h, j = typed_box("tls", [("Los", W(255), 0.045), ("Santos", W(256), 0.05)], W(255) - 2 * F, W(257) - 0.02)
     body.append(h); js.append(j)
     # "Take the long way / home." (the "You text a / phone number." moment), in the sky over the road
-    h, j = block("btk", [(WT(i), W(i)) for i in (261, 262, 263, 264)], [(WT(265), W(265))],
-                 min(SHOT["sp3b"]["end"] - 0.02, W(266) - 0.10), 600, 140)
+    h, j = block("btk", [(WT(i), W(i)) for i in (261, 262, 263, 264)], [(WT(265).rstrip("."), W(265))],
+                 W(266) - 0.10, 0, 412)                           # centred (the user)
     body.append(h); js.append(j)
     open(os.path.join(P, "compositions", "captions.html"), "w", encoding="utf-8").write(comp("captions", TOTAL, "\n".join(body), "".join(js), css))
     return L
@@ -499,14 +544,17 @@ def news_scene():
         NL([("the", N(8), "soft"), ("U.S.&nbsp;economy", N(9), "sel")], mode="tight", end=N(11) - 0.12),
     ]
     caps = "".join(line_html(L, f"ncap{k}", js) for k, L in enumerate(lines))
-    # "a billion dollars": "a", then "billion" giant over the money (the Sequoia reel's "billion"), then only "dollars"
+    # "a billion dollars": "a", then "billion dollars" giant over the money -- one line, "dollars" landing on its word
     mcap = line_html(NL([("a", N(11), "soft")], end=N(12) - 0.02, floor=r3(2 * F)), "ncapa", js)
-    gh, gj = giant("gbil", [("billion", N(12))], N(13) - 0.02, width=1500, exit="blur")
+    gh, gj = giant("gbil", [("billion", N(12)), ("dollars", N(13))], NEWS_DUR - 0.02, width=1640, exit="blur")
     mcap += gh
     js.append(gj)
-    mcap += line_html(NL([("dollars", N(13), "pop")], end=NEWS_DUR - 0.02), "ncapm", js)
-    body = (f'<div class="nz" id="nz">{vid(SH["news"], 0, 1, dur=tm)}</div>'
-            f'<div class="nbm" id="nbm"><div class="nz" id="nzb">{vid(SH["newsblur"], 0, 1, dur=tm)}</div></div>'
+    # the news under faint CRT lines (the user: "some texture ... very low opacity"): HyperFrames' own scanlines treatment
+    # (npx hyperframes media-treatment, scanlines 0.14), its normalized grading kept in tools/news_scanlines.json
+    sl = html.escape(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "news_scanlines.json"), encoding="utf-8").read(), quote=True)
+    crt = lambda h, i: h.replace(f'<video id="v-{i}" ', f'<video data-color-grading="{sl}" id="v-{i}" ', 1)
+    body = (f'<div class="nz" id="nz">{crt(vid(SH["news"], 0, 1, dur=tm), "news")}</div>'
+            f'<div class="nbm" id="nbm"><div class="nz" id="nzb">{crt(vid(SH["newsblur"], 0, 1, dur=tm), "newsblur")}</div></div>'
             f'<div class="nz" id="nzc" style="z-index:60">{caps}</div>'
             f'{vid(SH["nmoney"], 0, 70)}<div style="position:absolute;inset:0;z-index:75">{mcap}</div>')
     cx, cy, s1 = 1015, 548, 1.13
@@ -555,42 +603,48 @@ def r7_scene():
                 '<div class="r7sq" id="r7sq2" style="left:615px;top:350px;width:190px;height:395px;background:rgba(72,72,72,0.92)"></div>')
     js.append(f'  tl.set("#r7sq1,#r7sq2",{{opacity:1}},{r3(L(tz) - F)});\n  tl.set("#r7sq1,#r7sq2",{{opacity:0}},{L(tz)});\n')
     body.append('<img id="r7logo" class="r7logo" src="assets/img/gta6_logo.png" alt="GTA VI logo" />')
-    js.append(f'  tl.set("#r7logo",{{opacity:1,y:26}},{L(tz)});\n  tl.to("#r7logo",{{y:0,duration:{r3(3 * F)},ease:"power2.out"}},{L(tz)});\n')
+    js.append(f'  tl.set("#r7logo",{{opacity:1}},{L(tz)});\n')     # the Tesla reel: the logo is simply there on the zoom
     body.append('<div class="r7sq" id="r7dim" style="left:480px;top:270px;width:960px;height:540px;background:rgba(38,38,38,0.58)"></div>')
     js.append(f'  tl.set("#r7dim",{{opacity:1}},{r3(L(tz) + F)});\n  tl.set("#r7dim",{{opacity:0}},{r3(L(tz) + 2 * F)});\n')
 
-    # "GTA" and "VI" slide apart to either side of the logo
+    # "GTA" and "VI" are already either side of the logo on the zoom (the Tesla reel's "Elon" | logo | "Musk"), and go the
+    # moment "took" lands (no overlap)
     def flank(lid, word, xc, x_from):
-        ln = Line([(word, lt(tz), "", "soft")], "tight", end=lt(W(24) - 0.02), ink=True)
-        html = line_html(ln, lid, js).replace('style="top:540px"', f'style="top:540px;left:{xc - 960}px;right:{960 - xc}px"')
-        js.append(f'  tl.fromTo("#{lid}",{{x:{x_from - xc}}},{{x:0,duration:{r3(6 * F)},ease:"expo.out"}},{L(tz)});\n')
-        return html
+        ln = Line([(word, lt(tz), "", "fcut")], "tight", end=lw(24), ink=True, floor=0.03)
+        return line_html(ln, lid, js).replace('style="top:540px"', f'style="top:540px;left:{xc - 960}px;right:{960 - xc}px"')
     body.append(flank("r7fl", "GTA", 628, 900))
     body.append(flank("r7fr", "VI", 1292, 1036))
-    # "took 13 years to make." -- a normal caption, centred, on top of everything
-    cap = Line([("took", lw(24), "", "soft"), ("13", lw(25), "", "scale"), ("years", lw(26), "", "pop"),
-                ("to", lw(31), "", "soft"), ("make.", lw(32), "", "bloom")], "wide", end=lt(tw), ink=True, halo=True)
-    body.append(line_html(cap, "r7p", js).replace('style="top:540px"', 'style="top:540px;z-index:40"'))
+    # "took 13 years to make." -- the Tesla reel's "just built a flying car": white words in difference blend, spread across
+    # the whole frame (tile | card | the logo | card | tile), each in its place, so they invert whatever they sit on
+    words = [("took", 24, "soft", 288), ("13", 25, "scale", 640), ("years", 26, "pop", 960), ("to", 31, "soft", 1280),
+             ("make.", 32, "bloom", 1632)]
+    slots = []
+    for k, (w, i, kd, x) in enumerate(words):
+        slots.append(f'<div class="r7ds" style="left:{x - 260}px"><span class="r7dw" id="r7dw{k}">{w}</span></div>')
+        js.append(ent_js(f"#r7dw{k}", kd, lw(i), INK, INK, INK))
+    d0 = r3(lw(24) - 0.03)
+    body.append(f'<div id="r7p" class="clip r7d" data-start="{d0}" data-duration="{r3(lt(tw) - d0)}">{"".join(slots)}</div>')
     body.append('<div class="r7sq" id="r7neg" style="left:0;top:0;width:1920px;height:1080px;background:#fff;mix-blend-mode:difference;z-index:70"></div>')
-    jn = L(W(24)) + 2 * F
+    jn = lw(24) + F                                         # the reel's flash: one frame after the first word
     js.append(f'  tl.set("#r7neg",{{opacity:1}},{r3(jn)});\n  tl.set("#r7neg",{{opacity:0}},{r3(jn + F)});\n')
     js.append(f'  tl.set("#r7logo,#r7g",{{opacity:0}},{L(tw)});\n')
     # the white card: the bars start to close right after "And yet" (the reel's per-frame curve), "moved on." in the band
     wbody = ['<div class="r7wbg"></div>']
     run = Line([(("yet," if i == 48 else WT(i)), lw(i), "", "soft") for i in range(47, 53)], "wide", end=r3(lw(53) - 0.01), ink=True)
     wbody.append(line_html(run, "r7b", js))
-    emph = Line([("moved", lw(53), "", "bloom"), ("on.", lw(54), "", "bloom")], "tight", end=lt(t1), ink=True)
+    emph = Line([("moved", lw(53), "", "boldin"), ("on.", lw(54), "", "boldin")], "tight", end=lt(t1), ink=True)   # bold, then set
     wbody.append(line_html(emph, "r7c", js))
     wbody.append('<div class="bar top" id="r7bt"></div><div class="bar bot" id="r7bb"></div>')
-    tb0 = W(48) + 0.16
+    tb0 = W(48) + 0.12
+    BR = 26.5                                               # the bars a touch faster than before (the user), steps per second
     vmax = max(BAR[i + 1] - BAR[i] for i in range(len(BAR) - 1))
     js.append('  tl.set("#r7bt",{y:0},0);\n  tl.set("#r7bb",{y:0},0);\n')
     for i in range(len(BAR) - 1):
-        ta = r3(tb0 + i / 23.976 - t0)
+        ta = r3(tb0 + i / BR - t0)
         v = (BAR[i + 1] - BAR[i]) / vmax
-        bow, blur, y = r3(18 + 104 * v), r3(1.6 + 2.6 * v), r3(BAR[i + 1] * 1.5)
-        js.append(f'  tl.to("#r7bt",{{y:{y},borderBottomLeftRadius:"2500px {bow}px",borderBottomRightRadius:"2500px {bow}px",filter:"blur({blur}px)",duration:{r3(1 / 23.976)},ease:"none"}},{ta});\n'
-                  f'  tl.to("#r7bb",{{y:{-y},borderTopLeftRadius:"2500px {bow}px",borderTopRightRadius:"2500px {bow}px",filter:"blur({blur}px)",duration:{r3(1 / 23.976)},ease:"none"}},{ta});\n')
+        bow, blur, y = r3(5.5 + 5.5 * v), r3(1.6 + 2.6 * v), r3(BAR[i + 1] * 1.5)
+        js.append(f'  tl.to("#r7bt",{{y:{y},borderBottomLeftRadius:"1000px {bow}px",borderBottomRightRadius:"1000px {bow}px",filter:"blur({blur}px)",duration:{r3(1 / BR)},ease:"none"}},{ta});\n'
+                  f'  tl.to("#r7bb",{{y:{-y},borderTopLeftRadius:"1000px {bow}px",borderTopRightRadius:"1000px {bow}px",filter:"blur({blur}px)",duration:{r3(1 / BR)},ease:"none"}},{ta});\n')
     specks = [(312, 410, 3, 2), (1508, 620, 2, 2), (874, 731, 2, 7), (1260, 388, 3, 3), (540, 690, 2, 2), (1702, 452, 5, 1),
               (1066, 575, 2, 2), (402, 520, 2, 5)]
     for k, (x, y, w, h) in enumerate(specks):
@@ -604,6 +658,9 @@ def r7_scene():
     for k, back in ((1, 6), (2, 5), (3, 4)):
         tt = r3(fr(t1) - t0 - back / 23.976)
         js.append(f'  tl.set("#r7f{k}",{{opacity:{0.92 if k == 3 else 1}}},{tt});\n  tl.set("#r7f{k}",{{opacity:0}},{r3(tt + F)});\n')
+    wbody.append('<div class="r7tv" id="r7tv"></div>')
+    for j in range(int((t1 - tw) * 30) + 1):
+        js.append(f'  tl.set("#r7tv",{{x:{-((j * 137) % 200)},y:{-((j * 89) % 200)}}},{r3(L(tw) + j * F)});\n')
     body.append(f'<div class="r7w" id="r7w">{"".join(wbody)}</div>')
     js.append(f'  tl.set("#r7w",{{opacity:1}},{L(tw)});\n')
     css = """
@@ -616,10 +673,14 @@ def r7_scene():
 .r7sq{position:absolute;opacity:0;z-index:60;}
 .r7w{position:absolute;inset:0;opacity:0;z-index:80;overflow:hidden;}
 .r7wbg{position:absolute;inset:0;background:radial-gradient(ellipse 68% 75% at 50% 50%, #ececea 0%, #dededc 45%, #c6c6c4 100%);}
-.bar{position:absolute;left:-1540px;width:5000px;height:1100px;background:#030303;z-index:50;}
-.bar.top{top:-1100px;border-bottom-left-radius:2500px 18px;border-bottom-right-radius:2500px 18px;}
-.bar.bot{top:1080px;border-top-left-radius:2500px 18px;border-top-right-radius:2500px 18px;}
+.bar{position:absolute;left:-40px;width:2000px;height:1100px;background:#030303;z-index:50;}
+.bar.top{top:-1100px;border-bottom-left-radius:1000px 6px;border-bottom-right-radius:1000px 6px;}
+.bar.bot{top:1080px;border-top-left-radius:1000px 6px;border-top-right-radius:1000px 6px;}
 .speck{position:absolute;background:#2a2a2a;border-radius:1px;opacity:0;z-index:5;}
+.r7d{position:absolute;inset:0;z-index:40;mix-blend-mode:difference;pointer-events:none;}
+.r7ds{position:absolute;top:490px;width:520px;height:100px;display:flex;align-items:center;justify-content:center;}
+.r7dw{display:inline-block;opacity:0;color:#fff;font-family:"InterV",sans-serif;font-size:76px;font-weight:540;letter-spacing:-0.03em;white-space:nowrap;}
+.r7tv{position:absolute;left:0;top:0;width:2120px;height:1280px;background:url("assets/tex/grain.png");opacity:0.09;mix-blend-mode:multiply;z-index:60;pointer-events:none;}
 """
     SCENES.append(("r7", t0, t1, "\n".join(body), "".join(js), css))
 
@@ -740,6 +801,9 @@ def quad_scene():
 .qv video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
 .qf{position:absolute;inset:0;background:#fff;opacity:0;z-index:5;}
 """
+    cs = SH["qcity"]                                         # "city." -- the GTA city full screen over the panels (the user)
+    body.append(f'<div class="shot" id="qcity-w" style="z-index:90"><video id="v-qcity" class="clip" src="assets/clips/qcity.mp4" '
+                f'data-start="{r3(cs["start"] - t0)}" data-duration="{r3(cs["end"] - cs["start"])}" muted playsinline></video></div>')
     SCENES.append(("q4", t0, t1, "\n".join(body), "".join(js), css))
 
 
@@ -769,7 +833,7 @@ def pb_scene():
            "".join(f'<div class="mull" style="left:0;top:{int(wh * k / 3) - 7}px;width:{ww}px;height:14px"></div>' for k in (1, 2))
     win = f'<div class="pbwin" style="left:{wx}px;top:{wy}px;width:{ww}px;height:{wh}px"><img src="assets/img/pb/window.jpg" alt="Vice City at sunset" />{bars}<div class="wframe"></div></div>'
     ft = lambda i: int(round((cut(i) - t0) * 30))
-    T = [ft(226), ft(228), ft(230)]                       # the tilted prints: "they", "dreamed", "living"
+    T = [ft(226), ft(228), ft(230), ft(231)]              # the tilted prints: "they", "dreamed", "living", "in" (the user)
     # the runs: (photo, first frame, end frame) -- three frames a picture (the user: one a frame was far too fast), the
     # bare window between runs (frames 2-4 and 13); "on" = lands on the one before for its last frame
     RUN = [(0, 4, 7), (2, 7, 10), (3, 10, 13), (5, 12, 13),
@@ -788,7 +852,7 @@ def pb_scene():
         photos.append(f'<div class="pp" id="pp{k}" style="left:{x}px;top:{y}px;width:{w}px;height:{h}px;z-index:{20 + (30 if k in ON else 0) + k}">'
                       f'<img src="assets/img/pb/r{k:02d}.jpg" alt="" />{tape}</div>')
         js.append(f'  tl.set("#pp{k}",{{opacity:1}},{r3(fa * F)});\n  tl.set("#pp{k}",{{opacity:0}},{r3(fb * F)});\n')
-    TPOS = [(900, 520), (1000, 560), (940, 600)]
+    TPOS = [(900, 520), (1000, 560), (940, 600), (1010, 545)]
     for k, (src, _t, w, h, rot) in enumerate(E.PB_TILT):
         cx, cy = TPOS[k]
         photos.append(f'<div class="pt" id="pt{k}" style="left:{cx - w // 2}px;top:{cy - h // 2}px;width:{w}px;height:{h}px;transform:rotate({rot}deg);z-index:{80 + k}">'
@@ -839,7 +903,7 @@ def build_scenes():
     # "Ah shit," big (the user), behind CJ: the giant words over the clip, CJ cut out of it (assets/clips/cj_fg.webm) on top,
     # both zooming as the clip did
     cd = r3(E.T_BD - NEWS_DUR)
-    gh, gj = giant("gah", [("Ah", NEWS_DUR + 0.04), ("shit,", NEWS_DUR + 0.56)], E.T_BD, local=NEWS_DUR, width=1640, y=520)
+    gh, gj = giant("gah", [("Ah", NEWS_DUR + 0.04), ("shit", NEWS_DUR + 0.56)], E.T_BD, local=NEWS_DUR, width=1640, y=520)
     SCENES.append(("cj", NEWS_DUR, E.T_BD,
                    vid(SH["cj"], NEWS_DUR, 1, dur=cd) + f'\n<div style="position:absolute;inset:0;z-index:2">{gh}</div>\n'
                    f'<div class="shot" id="cjfg-w" style="z-index:3"><video id="v-cjfg" class="clip" src="assets/clips/cj_fg.webm" '
@@ -855,7 +919,6 @@ def build_scenes():
     section("sg")
     hb, hj, hc = freedom_title(E.SPAN["sh"][0])
     section("sh", hb, hj, hc)
-    section("si")
     tv_scene()
     section("sj")
     nb_scene()

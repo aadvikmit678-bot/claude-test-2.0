@@ -29,6 +29,9 @@ GRADE = {
                  "geq=r='st(0,clip(((r(X,Y)+b(X,Y))/2-g(X,Y)-4)/209,0,1));st(1,clip((g(X,Y)-28+21*ld(0))/229,0,1));st(2,between(X,460,1462)*between(Y,466,556));clip(r(X,Y)-ld(2)*(193*ld(0)+10*ld(1)),0,255)':"
                  "g='st(0,clip(((r(X,Y)+b(X,Y))/2-g(X,Y)-4)/209,0,1));st(1,clip((g(X,Y)-28+21*ld(0))/229,0,1));st(2,between(X,460,1462)*between(Y,466,556));clip(g(X,Y)-ld(2)*(10*ld(1)-21*ld(0)),0,255)':"
                  "b='st(0,clip(((r(X,Y)+b(X,Y))/2-g(X,Y)-4)/209,0,1));st(1,clip((g(X,Y)-28+21*ld(0))/229,0,1));st(2,between(X,460,1462)*between(Y,466,556));clip(b(X,Y)-ld(2)*(187*ld(0)+10*ld(1)),0,255)'",
+    # the burst's one-frame textures (the scoopedfriday reel): a horizontal whip smear, a negative
+    "whip": "avgblur=sizeX=64:sizeY=1,eq=contrast=1.05:brightness=0.02:saturation=1.05",
+    "neg": "negate,eq=contrast=1.15:saturation=1.1",
     "poster": "format=gray,eq=contrast=1.5,format=rgb24,lutrgb=r='if(lt(val,85),205,255)':g='if(lt(val,85),18,if(lt(val,175),214,244))':b='if(lt(val,85),12,if(lt(val,175),0,190))'",
 }
 
@@ -51,9 +54,11 @@ def build(s):
         pre.append("reverse")
     if s["speed"] != 1.0:
         pre.append(f"setpts=PTS/{s['speed']}")
+    rate = (f"minterpolate=fps={s.get('fps', edl.FPS)}:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1"   # smooth slow motion
+            if s.get("interp") else f"fps={s.get('fps', edl.FPS)}")
     if s["fit"] == "cover":
         vf = ",".join(pre + ["scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos", "crop=1920:1080",
-                             grade, f"fps={s.get('fps', edl.FPS)}", "format=yuv420p"])
+                             grade, rate, "format=yuv420p"])
         cmd = ["-vf", vf]
     elif s["fit"] == "card":
         cw, ch = s["card"]

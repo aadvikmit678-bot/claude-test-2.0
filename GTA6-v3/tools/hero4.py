@@ -53,13 +53,20 @@ def outline(img):
     return img * (1 - a) + 255 * a
 
 
-# ---- the bad guys: the 700x438 art to the frame's width, heads kept in
-src2 = cv2.imread(os.path.join(SRCD, "hero2.jpg"))[..., ::-1]
-sc = OW / src2.shape[1]
-big = cv2.resize(src2, (OW, int(round(src2.shape[0] * sc))), interpolation=cv2.INTER_LANCZOS4).astype(np.float32)
-big = big[40:40 + OH]
-H2 = np.clip(big * 1.6 - cv2.GaussianBlur(big, (0, 0), 3) * 0.6, 0, 255)          # unsharp after the upscale
-H2 = np.clip((H2 - 128) * 1.06 + 128 - 6, 0, 255)                                  # a touch darker and harder
+# ---- the problem (the user's GTA V art, Franklin and Trevor) with BE THE PROBLEM behind them, written as BE THE HERO is
+# (the user); the art fills the height, cropped from the left so Trevor's face lands where Jason's was (the match cut)
+PSRC = os.path.join(REPO, "gta6-src", "v4ref", "problem")
+art = cv2.imread(os.path.join(PSRC, "problem_art.png"))[..., ::-1].astype(np.float32)
+fgp = cv2.imread(os.path.join(PSRC, "problem_fg.png"), cv2.IMREAD_UNCHANGED)          # hyperframes remove-background
+ps = OH / art.shape[0]
+PW = int(round(art.shape[1] * ps))
+POFF = PW - OW
+A2 = cv2.resize(art, (PW, OH), interpolation=cv2.INTER_LANCZOS4)[:, POFF:POFF + OW]
+M2 = cv2.resize(fgp[..., 3], (PW, OH), interpolation=cv2.INTER_LINEAR)[:, POFF:POFF + OW].astype(np.float32) / 255
+M2f = cv2.GaussianBlur(M2, (0, 0), 1.2)[..., None]
+T2 = cv2.imread(os.path.join(E.PROJ, "assets", "img", "be_the_problem.png"), cv2.IMREAD_UNCHANGED)
+T2_RGB, T2_A = T2[..., 2::-1].astype(np.float32), T2[..., 3:4].astype(np.float32) / 255
+H2 = (A2 * (1 - T2_A) + T2_RGB * T2_A) * (1 - M2f) + A2 * M2f
 
 
 # ---- the reference's lens
@@ -71,7 +78,8 @@ for s in (1.0035, 1.0, 0.9965):                  # R, G, B: the fringes grow tow
     f = (1 + 0.06 * R2) / 1.03 * (1 + (s - 1) * R2)
     MAPS.append((xn * f * (OW / 2) + OW / 2, yn * f * (OW / 2) + OH / 2))
 R = np.sqrt(R2)
-SOFT = np.clip((R - 0.6) / 0.45, 0, 1)[..., None].astype(np.float32)
+SOFT = np.maximum(np.clip((R - 0.6) / 0.45, 0, 1),                  # the reel's soft sides (the John Wick shot): the
+                  np.clip((np.abs(xn) - 0.42) / 0.40, 0, 1) ** 1.1)[..., None].astype(np.float32)   # left and right go out of focus
 VIG = (1 - 0.5 * np.clip((R - 0.55) / 0.7, 0, 1) ** 1.5)[..., None].astype(np.float32)
 
 
@@ -79,7 +87,7 @@ def lens(img):
     out = np.empty_like(img)
     for c in range(3):
         out[..., c] = cv2.remap(img[..., c], MAPS[c][0], MAPS[c][1], cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
-    out = out * (1 - SOFT) + cv2.GaussianBlur(out, (0, 0), 7) * SOFT
+    out = out * (1 - SOFT) + cv2.GaussianBlur(out, (0, 0), 10) * SOFT
     return out * VIG
 
 
@@ -106,6 +114,7 @@ def inv_square(img, x, y, w, h):
 
 EYES_J, EYES_L = (960, 250, 1250, 312), (790, 470, 1010, 520)   # strips across Jason's and Lucia's eyes (1080p)
 FACE_J = (930, 150, 300, 300)                                    # the big square over his face (x, y, w, h)
+FACE_T = (905, 130, 300, 300)                                    # the same square over Trevor's face, after the cut
 SMALL = [(1210, 560, 92, 80), (760, 640, 78, 70), (1050, 470, 70, 64)]
 
 
@@ -126,20 +135,22 @@ def frame(n):
                 img = inv_square(img, *sq)
         if d == 2:
             img = inv_square(inv_square(img, *SMALL[0]), *FACE_J)
-        if d == 1:
-            img = inv_square(cv2.GaussianBlur(img, (0, 0), 9), *FACE_J)
+        if d == 1:                               # the reel's last frame before the cut: soft, the picture darkening
+            img = inv_square(cv2.GaussianBlur(img, (0, 0), 9) * 0.78, *FACE_J)
         return lens(img)
-    m = n - JX                                   # ---- the bad guys
+    m = n - JX                                   # ---- the problem: the reel's John Wick cut, frame for frame
     k = 0.05 * m / max(1, N - JX - 1)
-    img = push(H2, k, 960, 420)
-    if m == 0:
-        img = inv_square(cv2.GaussianBlur(img, (0, 0), 11) * 0.72, *FACE_J)
+    img = push(H2, k, 1050, 330)
+    if m == 0:                                   # the new picture dark and blurred, the square still on the face
+        img = inv_square(cv2.GaussianBlur(img, (0, 0), 11) * 0.72, *FACE_T)
     elif m == 1:
-        img = inv_square(cv2.GaussianBlur(img, (0, 0), 6) * 0.85, *FACE_J)
-    elif m == 2:
-        img = inv_square(inv_square(cv2.GaussianBlur(img, (0, 0), 3), *SMALL[2]), *SMALL[0])
+        img = inv_square(cv2.GaussianBlur(img, (0, 0), 8) * 0.84, *FACE_T)
+    elif m == 2:                                 # out of focus, two small squares
+        img = inv_square(inv_square(cv2.GaussianBlur(img, (0, 0), 6), *SMALL[2]), *SMALL[0])
     elif m == 3:
-        img = img * 0.6 + np.roll(img, 34, axis=1) * 0.4
+        img = inv_square(cv2.GaussianBlur(img, (0, 0), 4.5), *SMALL[2])
+    elif m == 4:                                 # still soft, then sharp
+        img = cv2.GaussianBlur(img, (0, 0), 2.5)
     return lens(img)
 
 
@@ -159,4 +170,4 @@ for n in range(N):
     enc.stdin.write(np.clip(frame(n) + 0.5, 0, 255).astype(np.uint8).tobytes())
 enc.stdin.close()
 assert enc.wait() == 0
-print(f"hero: {N} frames | the bad guys from frame {JX} ({tx - t0:.3f} s) | outline {len(LINE)} points")
+print(f"hero: {N} frames | the problem from frame {JX} ({tx - t0:.3f} s) | outline {len(LINE)} points")

@@ -36,7 +36,9 @@ N = int(round(DUR * OUT)) + 5 * UP
 # two frames just before the third pan.
 PANS_F = [9, 19, 29]                                                   # pan starts, in frames (the reference's f45/55/65)
 EASE = [0.0, 0.47, 0.80, 0.885, 0.93, 0.955, 0.975, 0.99, 1.0]        # per frame after a pan starts (measured)
-VIEWS = [(0.0, 0.0), (1.27 * P, -0.05 * Q), (0.17 * P, 0.95 * Q), (1.67 * P, -0.05 * Q)]
+VIEWS = [(0.0, 0.0), (1.27 * P, -0.05 * Q), (0.17 * P, 0.95 * Q), (2.05 * P, 0.97 * Q)]
+# the user: a triangle -- the water, the two holding hands, then something new (not back to the water): the last
+# pan runs right along the lower row to Jason with the rifle
 FLASH = ((1, 2), 27, 2)                                                # tile, first frame, frames
 PANS = [f / FPS for f in PANS_F]
 
@@ -45,8 +47,8 @@ CLIPS = [("t2", 67.0), ("t1", 11.5), ("vcde", 44.4), ("t1", 33.2), ("launch", 66
          ("t2", 125.2), ("t2", 126.9), ("launch", 25.9), ("launch", 71.5), ("launch", 59.3), ("t2", 92.6),
          ("t2", 102.6), ("vc10", 18.4), ("nostalgia", 15.6), ("t1", 22.2)]
 # wall layout: tile (col, row) -> clip index; the path tiles get the strongest faces
-LAYOUT = {(0, 0): 0, (1, 0): 1, (2, 0): 2, (3, 0): 3, (-1, 1): 4, (0, 1): 5, (1, 1): 6, (2, 1): 7, (-1, 0): 8,
-          (4, 0): 9, (3, 1): 10, (-2, 1): 11, (0, -1): 12, (1, -1): 13, (2, -1): 14, (3, -1): 15}
+LAYOUT = {(0, 0): 0, (1, 0): 1, (2, 0): 2, (3, 0): 3, (-1, 1): 4, (0, 1): 5, (1, 1): 6, (2, 1): 9, (-1, 0): 8,
+          (4, 0): 7, (3, 1): 10, (-2, 1): 11, (0, -1): 12, (1, -1): 13, (2, -1): 14, (3, -1): 15}
 
 
 def clip_index(i, j):

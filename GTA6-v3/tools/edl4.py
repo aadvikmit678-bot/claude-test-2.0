@@ -41,13 +41,16 @@ F = 1 / FPS
 HFR = {"wait5", "goodbye", "em6", "blade", "freedom", "city", "nyc", "waitgta6", "metav3rse"}
 
 
-def S4(id, src, sin, start, end, crop="auto", grade="none", speed=1.0, card=None, push=None, rot=None):
+def S4(id, src, sin, start, end, crop="auto", grade="none", speed=1.0, card=None, push=None, rot=None, interp=False):
     if crop == "auto":
         crop = CROP.get(src)
     d = dict(id=id, src=src, sin=sin, start=round(start, 3), end=round(end, 3), fit="card" if card else "cover",
              crop=crop, grade=grade, speed=speed, reverse=False, card=card, push=push)
     if src in HFR:
         d["fps"] = 60               # a 50/60 fps source keeps its motion in the 60 fps render (prep.py)
+    if interp:
+        d["interp"] = True          # slow motion with motion-interpolated frames, drawn at 60 fps (prep.py)
+        d["fps"] = 60
     if rot:
         d["rot"] = rot              # "ccw": a source stored sideways, turned upright before the crop (prep.py)
     return d
@@ -75,7 +78,7 @@ def v2_at(cid, bi):
 SECTIONS = [
     ("sa", [
         B(3, 5, "GRID"),
-        B(6, 9, [("wait5", 8.05, {"crop": (0, 170, 1080, 608)}), ("eyes", 3.62)]),     # the fan's face, not his neck
+        B(6, 9, [("wait5", 8.05, {"crop": (0, 170, 1080, 608)})]),     # the fan with GTA V, through "feel" (the user: no goggles face)
         B(10, 12, [("next", 1573.0, DIM), ("em6", 10.0)]),
         B(13, 17, [("t1", 24.95), ("preload", 6.15, {"speed": 2.0})]),          # the GTA VI logo, sped up to land on "GTA 6"
         B(18, 21, [("nlook", 16.6), ("launch", 68.0)]),
@@ -84,7 +87,7 @@ SECTIONS = [
     ("se", [
         B(55, 57, [("eyes", 3.62)]),
         B(58, 60, [("goodbye", 0.25, {"grade": "nolabel"}), ("goodbye", 5.6, {"grade": "nolabel"})]),   # the kid handed GTA V; "2013" painted out
-        B(61, 63, [("waitgta6", 9.0), ("wait5", 11.2), ("nostalgia", 15.5)]),        # waiting; the GTA V crew
+        B(61, 63, [("wait5", 11.2), ("nostalgia", 15.5)], at=[0.6667]),           # waiting 13 (the user: no TV room); the GTA V crew
         B(64, 68, [("vox", 3.3), ("blade", 0.05), ("launch", 25.9)]),                # launch 25.9 replaces the split frame
         B(69, 72, [("t2", 9.9), ("next", 492.5), ("nlook", 6.85)]),
     ]),
@@ -94,15 +97,14 @@ SECTIONS = [
         B(79, 79, [("t1", 32.7)]),
         B(80, 81, [("launch", 72.15), ("leno", 11.5)]),                              # "guns": the shotgun from lenojoga
     ]),
-    ("si", [
-        B(91, 93, [("vc10", 18.2)]),                                                 # "Back to being": the Vice City car
-    ]),
     ("sj", [
-        B(104, 106, [("vc10", 23.433, {"speed": 0.70})]),                           # "playing Vice City": the street at sunset, one shot
+        B(104, 106, [("vc10", 23.433, {"speed": 0.4075, "interp": True})]),        # "playing Vice City ... with the volume": the street at
+                                                                                      # sunset, one shot (the user: no ship), 23.433-24.0 s of
+                                                                                      # it at 0.41x, motion-interpolated
                                                                                       # (the user: no VICE letters); its first frame to just
                                                                                       # before the source cuts to a dark street (24.10 s),
                                                                                       # at 0.70x so it fills the beat
-        B(107, 114, [("vc10", 29.4), ("vcde", 13.8), ("panzer", 30.0)], at=[110, 112], t0=round(W(107), 3)),
+        B(110, 114, [("vcde", 13.8), ("panzer", 30.0)], at=[112]),
         # ^ the ship comes in with the "with the volume" caption, not 2 frames before it (the user); v2's cuts kept               # the Cheetah past its "ROCKSTAR NORTH" credit
         B(115, 120, [("vc10", 36.9), ("vcde", 37.75), ("vcde", 48.9)], at=[118, 120]),     # v2's cuts: "hear", "gunshots."
     ]),
@@ -142,12 +144,14 @@ SECTIONS = [
         B(249, 253, [("metav3rse", 3.0), ("nostalgia", 0.1)], at=v2_at("sp", 0)),
         B(254, 258, [("nostalgia", 5.5), ("oldchars", 26.0)], at=v2_at("sp", 1)),
         B(259, 260, [("nostalgia", 27.5, {"speed": 0.6})]),
-        B(261, 265, [("next", 769.0), ("next", 745.0)], at=v2_at("sp", 3)),
-        B(266, 267, [("next", 781.0, {"speed": 0.7}), ("t1", 35.85)], at=v2_at("sp", 4)),
+        B(261, 265, [("next", 769.0)]),                                              # Take the long way home -- one shot (the
+                                                                                      # user: fewer B-rolls, slower here)
+        B(266, 267, [("next", 781.0, {"speed": 0.7})]),                              # Drive slow -- one shot
     ]),
     ("sq", [
         # "tv2": Because that 10-year-old,  (the user's real-people clip from its start, reference 2's card; build4.tv2_scene)
-        B(273, 274, [("ajit", 22.6), ("vc10", 25.2)], at=[274]),                      # "Vice": the VICE letters (madebyajit), "City"
+        B(273, 274, [("oldchars", 8.1)]),                                            # "Vice City": the user's one clip -- Tommy
+                                                                                      # coming in through the door (no VICE letters)
         B(275, 277, [("nostalgia", 16.8, {"crop": (0, 120, 1080, 608)})]),             # never really left. -- the user: the two of them at sunset (~17 s)
         B(278, 281, [("kidtalk", 15.0)]),                                             # He's just been waiting -- the user's clip (~15 s)
         B(282, 283, [("kidtalk", 4.3)]),                                              # 13 years -- them talking to the kid
@@ -155,14 +159,15 @@ SECTIONS = [
     ]),
 ]
 SPAN = {"sa": (cut(3), cut(22)), "r7": (cut(22), cut(55)), "se": (cut(55), cut(73)), "sf": (cut(73), cut(82)),
-        "sg": (cut(82), cut(90)), "sh": (cut(90), cut(91)), "si": (cut(91), cut(94)), "sj": (cut(104), cut(121)),
+        "sg": (cut(82), cut(90)), "sh": (cut(90), cut(91)), "sj": (cut(104), cut(121)),
         "nb": (cut(121), cut(128)), "sk": (cut(128), cut(148)), "ar": (cut(148), cut(151)), "sl": (cut(151), cut(159)),
         "q4": (cut(159), cut(170)), "gp": (cut(170), cut(179)), "hero": (cut(179), cut(188)), "sm1": (cut(188), cut(195)), "sm2": (cut(195), cut(203)),
         "sn": (cut(203), cut(222)), "pb": (cut(222), cut(232)), "so": (cut(232), cut(249)), "sp": (cut(249), cut(268)),
         "tv2": (cut(268), cut(273)), "sq": (cut(273), END_V), "end": (END_V, TOTAL)}
 TV2 = {"t0": cut(268), "tc": cut(271), "t1": cut(273)}             # full screen on "Because that 10-year-old,", the card on "playing GTA"
 HERO = {"t0": cut(179), "tx": cut(186), "t1": cut(188)}          # the hero -> (at "the problem.") the bad guys, to "It"
-TV = (cut(94), cut(104))                         # "10 years old, sitting in front of the family computer," (tools/tv4.py)
+TV = (cut(91), cut(104))                         # "Back to being 10 years old, sitting in front of the family computer," (the
+                                                 # kid at the TV from "Back" -- the user: no Vice City car; tools/tv4.py)
 TCARD = cut(97)                                  # the picture becomes a card on "sitting"
 
 # "millions of adults": 3x3 grid; the centre (wait5 2.15) and Times Square / club / Ocean Drive kept from v2
@@ -173,13 +178,14 @@ GRID_CELLS = [("t1", 34.2, {}), ("nyc", 9.0, {}), ("t1", 27.7, {}), ("t2", 79.8,
 R7_TILES = [("t2", 53.0), ("t1", 11.2), ("t2", 66.3), ("t2", 27.5), ("t2", 129.5), ("t2", 63.14), ("launch", 6.31),
             ("t2", 41.7)]
 
-# "It was about what it really gave you." -- the scoopedfriday burst: 1-4 frame cuts, posterised and B&W flash frames,
-# then one held shot into "Freedom."   (src, in, frames, grade)
-BURST = [("pinB", 0.05, 2, "none"), ("t2", 140.3, 3, "none"), ("pinA", 0.35, 2, "none"), ("launch", 48.6, 3, "none"),
-         ("t1", 25.6, 1, "poster"), ("pinB", 0.7, 2, "none"), ("t1", 25.62, 3, "none"), ("pinA", 2.35, 2, "none"),
-         ("t2", 141.95, 3, "none"), ("pinB", 1.05, 2, "none"), ("t2", 138.3, 1, "bwhi"), ("t1", 36.0, 3, "none"),
-         ("pinA", 4.7, 2, "none"), ("t2", 149.45, 3, "none"), ("pinB", 1.7, 2, "none"), ("launch", 73.6, 3, "none"),
-         ("t2", 153.2, 1, "poster"), ("pinB", 2.3, 3, "none")]
+# "It was about what it really gave you." -- as the scoopedfriday reel cuts (the user: fewer clips, fast, with the
+# transitions and textures, not a frame-by-frame mix): five shots of 5-6 frames, joined by one-frame textures -- a
+# posterised flash, a negative, a horizontal whip smear -- then the held shot into "Freedom."   (src, in, frames, grade)
+BURST = [("t2", 140.3, 5, "none"), ("t2", 140.47, 2, "whip"),
+         ("pinA", 0.35, 1, "poster"), ("pinA", 0.38, 5, "none"),
+         ("launch", 48.6, 1, "neg"), ("launch", 48.63, 5, "none"), ("launch", 48.8, 2, "whip"),
+         ("pinB", 1.05, 1, "poster"), ("pinB", 1.08, 6, "none"),
+         ("t2", 149.45, 1, "neg"), ("t2", 149.48, 5, "none"), ("t2", 149.65, 1, "whip")]
 BURST_HOLD = ("t2", 153.25)
 
 
@@ -231,6 +237,7 @@ for k, (src, sin, nf, grade) in enumerate(BURST):
     t = round(t + nf / FPS, 4)
 SHOTS.append(S4("g99", BURST_HOLD[0], BURST_HOLD[1], t, g1))
 SHOTS.append(S4("fr", "freedom", 0.3, cut(90), cut(91), push=(1.0, 1.04)))
+SHOTS.append(S4("qcity", "city", 40.0, cut(169), SPAN["q4"][1], rot="ccw", speed=0.8))   # "city." -- the user: the GTA city, full screen
 SHOTS.append(S4("nmoney", "money", 0.9, NEWS_TM, NEWS_DUR))
 SHOTS.append(S4("bd", "beatdrop", 0.43, T_BD, cut(3)))
 
@@ -260,7 +267,9 @@ PB_RAPID = [("t2", 117.6, 260, 320), ("vcde", 52.9, 300, 400), ("t2", 119.4, 470
             ("t1", 33.4, 500, 320), ("launch", 72.3, 300, 400), ("launch", 64.8, 470, 360), ("oldchars", 12.0, 520, 330),
             ("launch", 25.9, 260, 320), ("kidtalk", 4.4, 300, 380), ("t2", 125.4, 520, 340), ("launch", 63.5, 460, 300),
             ("t1", 22.4, 280, 360), ("launch", 66.8, 500, 320)]
-PB_TILT = [("hero2", None, 620, 400, -12), ("hero1b", None, 560, 380, -5), ("launch", 54.7, 520, 340, 7)]
+PB_TILT = [("hero2", None, 620, 400, -12), ("t1", 3.0, 560, 380, -5), ("launch", 54.7, 520, 340, 7),
+           ("t1", 38.0, 500, 330, -4)]          # "dreamed": the sunset highway (not the Lucia & Jason art, used for the hero);
+                                                # "in": the girl in the bikini by the pool (the user)
 
 # v2's ending: the GTA VI logo builds, then the date card
 SHOTS += [S4("end1", "preload", 6.75, END_V, END_V + 1.35), S4("end2", "next", 1597.2, END_V + 1.35, TOTAL, grade="datewhite")]

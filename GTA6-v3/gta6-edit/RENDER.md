@@ -5,11 +5,11 @@ The whole video, 1920x1080, 1:30.7. Needs Node.js 22+, FFmpeg and Chrome, and an
 
 Highest quality, 60 fps (from this folder):
 
-    npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 --output renders/gta6_v4_type2_60fps.mp4
+    npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 --output renders/gta6_v4_type3_60fps.mp4
 
 30 fps:
 
-    npx --yes hyperframes@0.9.46 render --fps 30 --quality delivery --output renders/gta6_v4_type2.mp4
+    npx --yes hyperframes@0.9.46 render --fps 30 --quality delivery --output renders/gta6_v4_type3.mp4
 
 Preview / edit in the browser:
 

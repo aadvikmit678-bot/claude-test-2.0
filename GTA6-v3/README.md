@@ -71,13 +71,32 @@ The `gta6/` folder on this branch is a different session's edit.
 - Where the shortened pauses would move v2's cut points, the beat pins v2's cut words (`at=` in `edl4.py`).
 - Square flashes (white / grey / white rectangles on consecutive frames, as in reference 7) before most cuts.
 
+## The notes on the type renders (latest)
+
+- Normal captions are v2's again; the new moves only where asked: "billion dollars" big on one line, "Ah shit" big
+  behind CJ, "millions", "gunshots." (Instinct flicker), "bad guy", "Today,", "13 years", the single words, "Los Santos"
+  typed, "Take the long way / home." (centred, slow). Instrument Serif as in the Dario video (white glow, no
+  punctuation): kid, game, escape, reality, "And somewhere along the way / those kids grew up", "Rockstar takes you
+  back to" (centred under the Vice City logo), started, slow, left; "Because GTA" with GTA in serif; "But GTA lets you
+  be" in the Palmer Luckey reel's "John Wick" serif.
+- Reference 7 (the Tesla Roadster reel) frame for frame: the zoom with "GTA | logo | VI" already in place, one dim frame,
+  "took 13 years to make." spread across the frame in difference blend, the bars a touch faster and curved like the
+  reel's (panoramic pinch), "moved on." bold for two frames, faint TV grain on the card.
+- The hero -> the problem as the reel's John Wick match cut: the user's Franklin & Trevor art (Drive) with BE THE
+  PROBLEM behind them (cut out with `hyperframes remove-background`), the cyan squares, four soft frames, blurred sides.
+- B-roll: no goggles face (the GTA V kid runs on), no TV room on "waiting", the burst rebuilt as scoopedfriday cuts
+  (five shots, one-frame textures), the kid at the TV from "Back to", "playing Vice City" slowed through "with the
+  volume" (no ship), the clip wall's third stop a new tile (a triangle), the GTA city full screen on "city.", one shot
+  each for "Take the long way home" and "Drive slow", Tommy through the door on "Vice City", a fourth pin-board print
+  on "in"; faint CRT scanlines on the news (HyperFrames' scanlines treatment).
+
 ## Open / render
 
 ```bash
 cd GTA6-v3/gta6-edit
 npx hyperframes@0.9.46 preview      # Studio
 npx hyperframes@0.9.46 render --fps 30 --quality delivery --output renders/gta6_v4_full.mp4
-npx hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 --output renders/gta6_v4_type2_60fps.mp4   # highest quality, 60 fps
+npx hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 --output renders/gta6_v4_type3_60fps.mp4   # highest quality, 60 fps
 ```
 
 ## Rebuild
