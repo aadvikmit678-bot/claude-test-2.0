@@ -34,7 +34,13 @@ HALO = "0 0 2px rgba(255,255,255,1), 0 0 7px rgba(255,255,255,1), 0 0 16px rgba(
 # the Sequoia reel's giant words ("$1", "billion", "bet", "flights.", "Instinct."): white, a wide soft glow, a dark under-shadow
 GLOW_G = "0 0 64px rgba(255,255,255,0.42), 0 0 18px rgba(255,255,255,0.38), 0 10px 48px rgba(0,0,0,0.42)"
 GLOW_GP = "0 0 90px rgba(255,255,255,0.85), 0 0 26px rgba(255,255,255,0.8), 0 10px 48px rgba(0,0,0,0.3)"
-SERIF_SET = "0 0 18px rgba(255,255,255,0.28), 0 2px 20px rgba(0,0,0,0.9), 0 0 9px rgba(0,0,0,0.55)"
+# Instrument Serif as in the Dario video (the Dimon edit's glow, which the user asked for here): white glow only, no
+# dark shadow (the user: "a subtle glow effect ... why are there black shadows")
+SERIF_REST = "0 0 14px rgba(255,255,255,0.62), 0 0 42px rgba(255,255,255,0.30), 0 0 90px rgba(255,255,255,0.12)"
+SERIF_SOFT = "0 0 18px rgba(255,255,255,0.85), 0 0 50px rgba(255,255,255,0.45), 0 0 100px rgba(255,255,255,0.18)"
+SERIF_BLOOM = "0 0 22px rgba(255,255,255,1), 0 0 60px rgba(255,255,255,0.95), 0 0 130px rgba(255,255,255,0.7)"
+SERIF_INK = "#FBF8EC"                                      # the Dario serif's white
+F25 = 0.04                                                 # one frame of the Dario reel (25 fps)
 # "You text a / phone number." -- the reel's navy, white here (the user: white type only)
 BK_SET = "0 0 22px rgba(255,255,255,0.40), 0 0 4px rgba(255,255,255,0.24), 0 2px 18px rgba(0,0,0,0.78), 0 0 8px rgba(0,0,0,0.45)"
 
@@ -59,9 +65,11 @@ CSS = FONTS + """
 .w.card .tx{color:#F2F2F0;text-shadow:0 0 14px rgba(255,255,255,0.32);}
 .cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#0b0b0c;z-index:0;opacity:0;box-shadow:0 8px 30px rgba(0,0,0,0.45);}
 .selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
-.row.serif{font-family:"ISerif",serif;font-size:86px;letter-spacing:0;column-gap:0.26em;transform-origin:0% 50%;}
+.row.serif{font-family:"ISerif",serif;font-size:86px;letter-spacing:-0.01em;column-gap:0.42em;}
 .row.serif .gh,.row.serif .tx{font-weight:400;}
-.row.serif .tx{text-shadow:""" + SERIF_SET + """;}
+.cl .scrim{position:absolute;left:calc(50% - 760px);top:calc(50% - 230px);width:1520px;height:460px;pointer-events:none;}
+.row.serif .tx{color:""" + SERIF_INK + """;text-shadow:""" + SERIF_REST + """;transform-origin:50% 72%;}
+.row.serif .fl{position:absolute;left:-0.03em;right:-0.03em;top:0.32em;bottom:0.2em;opacity:0;background:#fff;box-shadow:0 0 16px rgba(255,255,255,0.9), 0 0 44px rgba(255,255,255,0.45);z-index:0;}
 .w.sb{font-size:2.05em;} .w.si{font-style:italic;}
 .gw{position:absolute;left:0;right:0;height:1080px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
 .gwr{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterD","InterV",sans-serif;font-weight:800;letter-spacing:-0.045em;line-height:1;color:#fff;}
@@ -87,30 +95,54 @@ def comp(cid, dur, body, js, extra_css=""):
 
 
 def ent_js(sel, kind, t, rest=SET, pop=POP, bloom=BLOOM):
-    """the word entrances, at the references' speed: everything settles within 2-3 frames (the Sequoia reel's words are
-    full on the frame they land; the Tesla reel's pop for a frame or two). "cut" = in directly, one bright frame."""
+    """v2's word entrances -- every normal caption, as before the type change (the user: "bring back that text font
+    animation that we had throughout the video"). The f-kinds are the faster entrances, kept only where the user liked
+    them: "sitting in front of the family computer" and the single words ("with the volume turned all the way down")."""
     t = r3(t); a = r3(t + 0.034)
-    if kind == "cut":
+    if kind == "pop":
+        return (f'  tl.set("{sel}",{{opacity:1,scale:1.03,filter:"blur(0.6px) brightness(1.55)",textShadow:"{pop}"}},{t});\n'
+                f'  tl.to("{sel}",{{scale:1,filter:"blur(0px) brightness(1)",textShadow:"{rest}",duration:0.13,ease:"expo.out"}},{a});\n')
+    if kind == "bloom":
+        return (f'  tl.set("{sel}",{{opacity:1,fontWeight:900,scale:1.05,filter:"blur(1.2px) brightness(1.9)",textShadow:"{bloom}"}},{t});\n'
+                f'  tl.to("{sel}",{{fontWeight:540,scale:1,filter:"blur(0px) brightness(1)",textShadow:"{rest}",duration:0.2,ease:"expo.out"}},{a});\n')
+    if kind == "scale":
+        return (f'  tl.set("{sel}",{{opacity:1,scale:1.32,fontWeight:760,filter:"blur(1.4px) brightness(1.5)",textShadow:"{bloom}"}},{t});\n'
+                f'  tl.to("{sel}",{{scale:1,fontWeight:540,filter:"blur(0px) brightness(1)",textShadow:"{rest}",duration:0.18,ease:"expo.out"}},{a});\n')
+    if kind == "streak":
+        return (f'  tl.set("{sel}",{{opacity:0.9,scaleY:2.8,scaleX:0.94,filter:"blur(2.2px) brightness(1.7)"}},{t});\n'
+                f'  tl.to("{sel}",{{scaleY:1,scaleX:1,opacity:1,filter:"blur(0px) brightness(1)",duration:0.12,ease:"power3.out"}},{a});\n')
+    if kind == "soft":
+        return f'  tl.fromTo("{sel}",{{opacity:0}},{{opacity:1,duration:0.05,ease:"none"}},{t});\n'
+    # the faster entrances (the Sequoia / Tesla reels): settled within 2-3 frames; "fcut" = in directly, one bright frame
+    if kind == "fcut":
         return (f'  tl.set("{sel}",{{opacity:1,filter:"brightness(1.35)",textShadow:"{pop}"}},{t});\n'
                 f'  tl.set("{sel}",{{filter:"brightness(1)",textShadow:"{rest}"}},{a});\n')
-    if kind == "pop":
+    if kind == "fpop":
         return (f'  tl.set("{sel}",{{opacity:1,scale:1.04,filter:"blur(0.5px) brightness(1.6)",textShadow:"{pop}"}},{t});\n'
                 f'  tl.to("{sel}",{{scale:1,filter:"blur(0px) brightness(1)",textShadow:"{rest}",duration:0.05,ease:"power2.out"}},{a});\n')
-    if kind == "bloom":
+    if kind == "fbloom":
         return (f'  tl.set("{sel}",{{opacity:1,fontWeight:900,scale:1.05,filter:"blur(1px) brightness(1.9)",textShadow:"{bloom}"}},{t});\n'
                 f'  tl.to("{sel}",{{fontWeight:540,scale:1,filter:"blur(0px) brightness(1)",textShadow:"{rest}",duration:0.08,ease:"expo.out"}},{a});\n')
-    if kind == "scale":                                     # the Tesla reel's "Last": in big for two frames, then snapped down
-        return (f'  tl.set("{sel}",{{opacity:1,scale:1.55,fontWeight:760,filter:"blur(1px) brightness(1.5)",textShadow:"{bloom}"}},{t});\n'
-                f'  tl.set("{sel}",{{scale:1,fontWeight:540,filter:"blur(0px) brightness(1)",textShadow:"{rest}"}},{r3(t + 0.067)});\n')
-    if kind == "streak":
+    if kind == "fstreak":
         return (f'  tl.set("{sel}",{{opacity:0.9,scaleY:2.8,scaleX:0.94,filter:"blur(2px) brightness(1.7)"}},{t});\n'
                 f'  tl.to("{sel}",{{scaleY:1,scaleX:1,opacity:1,filter:"blur(0px) brightness(1)",duration:0.06,ease:"power3.out"}},{a});\n')
-    if kind == "soft":
-        return f'  tl.fromTo("{sel}",{{opacity:0}},{{opacity:1,duration:0.033,ease:"none"}},{t});\n'
-    if kind == "sblur":                                     # the serif emphasis word: blurred and grey for two frames, then sharp
-        return (f'  tl.fromTo("{sel}",{{opacity:0.5,scale:1.04,filter:"blur(8px)"}},'
-                f'{{opacity:1,scale:1,filter:"blur(0px)",duration:0.07,ease:"power2.out",immediateRender:false}},{t});\n')
     raise ValueError(kind)
+
+
+def dario_js(sel, kd, t, t_min, fl=None):
+    """Instrument Serif as in the Dario video (the Dimon edit's "dn" / "dh", read there frame by frame at 25 fps): a small
+    word's place is marked by a glowing white square for two frames, the word comes in dim and soft for a frame, then sits
+    in its glow; the big word comes in blown out and settles crisp over four frames"""
+    a = r3(t)
+    if kd == "dnorm":
+        b0 = max(t_min, r3(a - 2 * F25))
+        out = (f'  tl.set("{fl}",{{opacity:1}},{r3(b0)});\n  tl.set("{fl}",{{opacity:0}},{a});\n' if fl and a - b0 > 0.02 else "")
+        return out + (f'  tl.set("{sel}",{{opacity:0.5,filter:"blur(1.5px)",textShadow:"{SERIF_SOFT}"}},{a});\n'
+                      f'  tl.set("{sel}",{{opacity:1,filter:"blur(0px)",textShadow:"{SERIF_REST}"}},{r3(a + F25)});\n')
+    return (f'  tl.set("{sel}",{{opacity:1,scale:1.04,filter:"blur(14px)",textShadow:"{SERIF_BLOOM}"}},{a});\n'
+            f'  tl.set("{sel}",{{scale:1.015,filter:"blur(5px)",textShadow:"{SERIF_SOFT}"}},{r3(a + F)});\n'
+            f'  tl.set("{sel}",{{scale:1.005,filter:"blur(2.5px)"}},{r3(a + 3 * F)});\n'
+            f'  tl.set("{sel}",{{scale:1,filter:"blur(0px)",textShadow:"{SERIF_REST}"}},{r3(a + 4 * F)});\n')
 
 
 SMALL = {"a", "an", "the", "to", "of", "in", "it", "on", "and", "so", "for", "at", "be", "is", "was", "if", "you", "it's",
@@ -118,21 +150,25 @@ SMALL = {"a", "an", "the", "to", "of", "in", "it", "on", "and", "so", "for", "at
 
 
 class Line:
-    def __init__(self, words, mode="wide", end=None, y=540, ink=False, halo=False, size="", font="sans", exit=None, floor=0.2):
+    def __init__(self, words, mode="wide", end=None, y=540, ink=False, halo=False, size="", font="sans", exit=None, floor=0.2,
+                 scrim=None):
+        self.scrim = scrim                                  # a soft dark oval behind the line (the Dimon edit's), on a bright shot
         self.words, self.mode, self.end, self.y, self.ink, self.halo, self.size = words, mode, end, y, ink, halo, size
         self.floor = floor                                  # the shortest a line is held (the single words: 2 frames)
-        self.font, self.exit = font, exit                   # font "serif": Instrument Serif; exit "smear": the founder, smear
+        self.font, self.exit = font, exit                   # font "serif": Instrument Serif; exit "order": Dario's, word by word
 
 
-def kind_for(i, k, txt, kinds):
+def kind_for(i, k, txt, kinds, fast=False):
     if i in kinds:
         return kinds[i], k
     if txt.lower().strip(",.?!") in SMALL:
-        return "cut", k                                     # small words come in directly (both references)
-    return ("pop", "bloom", "cut", "pop", "pop", "cut", "streak")[(i * 5 + k) % 7], k + 1
+        return ("fcut" if fast else "soft"), k
+    if fast:
+        return ("fpop", "fbloom", "fcut", "fpop", "fpop", "fcut", "fstreak")[(i * 5 + k) % 7], k + 1
+    return ("bloom", "pop", "pop", "bloom", "pop", "streak", "pop")[(i * 5 + k) % 7], k + 1
 
 
-def VL(idx, mode="wide", end=None, texts=None, kinds=None, cls=None, shift=0.0, times=None, **kw):
+def VL(idx, mode="wide", end=None, texts=None, kinds=None, cls=None, shift=0.0, times=None, fast=False, **kw):
     """a caption line from VO word indices (times shifted by -shift for scene-local lines; "times" moves a word)"""
     texts, kinds, cls, times = texts or {}, kinds or {}, cls or {}, times or {}
     ws, k = [], 0
@@ -140,17 +176,17 @@ def VL(idx, mode="wide", end=None, texts=None, kinds=None, cls=None, shift=0.0, 
         if not has(i):
             continue
         txt = texts.get(i, WT(i))
-        kd, k = kind_for(i, k, txt, kinds)
+        kd, k = kind_for(i, k, txt, kinds, fast)
         ws.append((txt, r3(times.get(i, W(i)) - shift), cls.get(i, ""), kd))
     return Line(ws, mode, None if end is None else r3(end - shift), **kw)
 
 
 def line_html(L, lid, js):
-    t0 = r3(L.words[0][1] - 0.03)
+    t0 = r3(L.words[0][1] - (2 * F25 + 0.01 if L.font == "serif" else 0.03))   # serif: room for the first word's square
     last = L.words[-1][1]
     t1 = r3(min(L.end, last + 1.3)) if L.end else r3(last + 0.8)
     dur = r3(max(L.floor, t1 - t0))
-    rest = HALO if L.halo else (INK if L.ink else (SERIF_SET if L.font == "serif" else SET))
+    rest = HALO if L.halo else (INK if L.ink else (SERIF_REST if L.font == "serif" else SET))
     pop = INK if L.ink else POP
     bloom = INK if L.ink else BLOOM
     spans = []
@@ -168,15 +204,26 @@ def line_html(L, lid, js):
             js.append(f'  tl.set("#{wid}c",{{opacity:1,scaleY:1.6,scaleX:1.1}},{r3(t)});\n'
                       f'  tl.to("#{wid}c",{{scaleY:1,scaleX:1,duration:0.16,ease:"expo.out"}},{r3(t + 0.034)});\n'
                       f'  tl.set("#{wid}",{{opacity:1}},{r3(t + 0.034)});\n')
+        elif kd in ("dnorm", "dhero"):                      # Instrument Serif, the Dario video's way
+            if kd == "dnorm":
+                extra = f'<span class="fl" id="{wid}f"></span>'
+            js.append(dario_js("#" + wid, kd, t, t0, f"#{wid}f"))
         else:
             js.append(ent_js("#" + wid, kd, t, rest, pop, bloom))
         spans.append(f'<span class="w {cls}">{extra}<span class="gh">{txt}</span><span class="ik"><span class="tx" id="{wid}">{txt}</span></span></span>')
     cls_row = " ".join(x for x in ("row", L.mode, "ink" if L.ink else "", "halo" if L.halo else "", L.size,
                                    "serif" if L.font == "serif" else "") if x)
-    if L.exit == "smear" and dur > 0.3:                     # the Sequoia reel's "the founder," exit: a 3-frame smear to the right
-        js.append(f'  tl.to("#{lid}r",{{x:40,scaleX:1.12,filter:"blur(6px)",opacity:0.3,duration:0.1,ease:"power1.in"}},{r3(t1 - 0.1)});\n')
+    if L.exit == "order":                                   # the Dario video: the words leave in the order they came, a frame apart
+        n = len(L.words)
+        for wi in range(n - 1):
+            js.append(f'  tl.set("#{lid}w{wi}",{{opacity:0}},{r3(max(L.words[wi][1] + 0.2, t1 - (n - 1 - wi) * F25))});\n')
+    scrim = ""
+    if L.scrim:                                             # white type with only its glow can't read on white clouds
+        a_ = L.scrim
+        scrim = (f'<div class="scrim" style="background:radial-gradient(closest-side, rgba(6,5,4,{a_}) 0%, '
+                 f'rgba(6,5,4,{round(a_ * 0.6, 3)}) 50%, rgba(6,5,4,0) 100%)"></div>')
     return (f'<div id="{lid}" class="clip cl" data-start="{t0}" data-duration="{dur}" data-track-index="0" style="top:{L.y}px">'
-            f'<div class="{cls_row}" id="{lid}r">{"".join(spans)}</div></div>')
+            f'{scrim}<div class="{cls_row}" id="{lid}r">{"".join(spans)}</div></div>')
 
 
 def NL(words, mode="wide", end=None, floor=0.2):
@@ -258,21 +305,22 @@ BK_CSS = """
 .bk{position:absolute;pointer-events:none;color:#F2F2F0;}
 .bk1{font-family:"InterD","InterV",sans-serif;font-weight:700;font-size:92px;letter-spacing:-0.02em;line-height:1.05;white-space:nowrap;}
 .bk2{font-family:"ISerif",serif;font-style:italic;font-size:158px;line-height:0.95;white-space:nowrap;margin-left:-6px;}
-.bk1 span,.bk2 span{display:inline-block;opacity:0;text-shadow:""" + BK_SET + """;}
+.bk1 span{display:inline-block;opacity:0;text-shadow:""" + BK_SET + """;}
+.bk2 span{display:inline-block;opacity:0;color:""" + SERIF_INK + """;text-shadow:""" + SERIF_REST + """;transform-origin:50% 72%;}
 """
 
 
 def block(bid, line1, line2, t1, x, y):
     """the Sequoia reel's "You text a / phone number.": a bold sans line with a serif italic line under it, white (the reel's is navy;
-    the user wants white type only), set in the shot's open space; the words land directly, the serif word blurs in"""
+    the user wants white type only), set in the shot's open space; the words land directly, the serif word comes in as
+    the Dario video's big serif word (blown out, then crisp in its white glow)"""
     js, l1, l2 = [], [], []
     for k, (w, t) in enumerate(line1):
         l1.append(f'<span id="{bid}a{k}">{w}</span>')
         js.append(f'  tl.set("#{bid}a{k}",{{opacity:1}},{r3(t)});\n')
     for k, (w, t) in enumerate(line2):
         l2.append(f'<span id="{bid}b{k}">{w}</span>')
-        js.append(f'  tl.fromTo("#{bid}b{k}",{{opacity:0.5,filter:"blur(8px)"}},{{opacity:1,filter:"blur(0px)",duration:0.07,ease:"power2.out",immediateRender:false}},'
-                  f'{r3(t)});\n')
+        js.append(dario_js(f"#{bid}b{k}", "dhero", t, t))
     t0 = r3(line1[0][1] - 0.03)
     html = (f'<div id="{bid}" class="clip bk" data-start="{t0}" data-duration="{r3(t1 - t0)}" style="left:{x}px;top:{y}px">'
             f'<div class="bk1">{"&nbsp;".join(l1)}</div><div class="bk2">{"&nbsp;".join(l2)}</div></div>')
@@ -285,7 +333,6 @@ SHOT = {s["id"]: s for s in E.SHOTS}
 BEHIND = {
     "sj2c": dict(gid="ggun", words=[("gunshots.", W(120))], width=1780, y=430,           # Tommy and Lance against the sky
                  flicker=[(r3(W(120) + 3 * F), r3(W(120) + 7 * F))], flash=True),          # the "Instinct." flicker: a muzzle flash
-    "sf3b": dict(gid="gguns", words=[("guns.", SHOT["sf3b"]["start"])], width=1300, y=520),  # the man with the shotgun
     "sm10b": dict(gid="gbad", words=[("bad", W(193)), ("guy", W(194))], width=1800, y=600),  # Lucia in the bandana
     "sq3a": dict(gid="g13", words=[("13", W(282)), ("years", W(283))], width=1700, y=560),   # the man in the suit
 }
@@ -293,45 +340,44 @@ BEHIND = {
 
 # ------------------------------------------------------------------ captions (VO and CJ; the news lines live in the news scene)
 def build_captions():
-    """the captions: our sans line (Inter, 76 px, faster), Instrument Serif lines with one big word, giant words, the
-    single words of the Tesla reel, the typed box and the two-line block (see TYPE.md)"""
+    """the captions: v2's line (Inter, 76 px, v2's entrances), Instrument Serif lines in the Dario video's style with
+    one big word, giant words, the single words of the Tesla reel, the typed box and the two-line block (see TYPE.md)"""
     body, js, css = [], [], TB_CSS + BK_CSS
-    L = [NL([("Ah", NEWS_DUR + 0.04, "bloom"), ("shit,", NEWS_DUR + 0.56, "scale")], end=NEWS_DUR + 1.48),
-         NL([("here", NEWS_DUR + 1.54, "pop"), ("we", NEWS_DUR + 1.66, "cut"), ("go", NEWS_DUR + 1.80, "pop"),
-             ("again.", NEWS_DUR + 2.00, "bloom")], end=VO_OFFSET)]
+    L = [NL([("here", NEWS_DUR + 1.54, "pop"), ("we", NEWS_DUR + 1.66, "soft"), ("go", NEWS_DUR + 1.80, "pop"),   # "Ah shit," is
+             ("again.", NEWS_DUR + 2.00, "bloom")], end=VO_OFFSET)]                                         # big, behind CJ
 
     def ser(idx, big, italic=(), bigit=False, **kw):
-        """an Instrument Serif line: the small words land directly, the big word blurs in; the line smears out"""
+        """an Instrument Serif line in the Dario video's style (the user): the small words with their glowing squares, the
+        big word blown out then crisp, all in a white glow; the words leave in the order they came"""
         cls = {i: "si" for i in italic}
         cls[big] = "sb si" if bigit else "sb"
-        kinds = {i: "cut" for i in idx}
-        kinds[big] = "sblur"
-        return (idx, dict(font="serif", mode="tight", exit="smear", cls=cls, kinds=kinds, **kw))
+        kinds = {i: "dnorm" for i in idx}
+        kinds[big] = "dhero"
+        return (idx, dict(font="serif", mode="tight", exit="order", cls=cls, kinds=kinds, **kw))
 
-    guns_t0 = SHOT["sf3b"]["start"]
+    one = r3(2 * F)                                          # the single words are held only until the next one lands
     V = [
         ([0, 1, 2], {"end": W(3) - 0.02}),
-        ([3, 4, 5], {"times": {3: W(4)}, "kinds": {3: "cut", 4: "cut", 5: "pop"}}),     # under the giant "millions"
+        ([4, 5], {"kinds": {5: "scale"}}),                  # "millions" is the giant; then only "of adults" (the user: no repeat)
         ([6, 7, 8, 9], {}),
         ([10, 11, 12], {"mode": "tight", "cls": {12: "card"}, "kinds": {12: "card", 11: "bloom"}}),
         ([13, 14, 15], {"end": cut(16) + 0.02}), ([18, 19, 20, 21], {"end": E.R7["t0"] - 0.02}),
         ([55, 57, 58, 59, 60], {"texts": {57: "why"}, "kinds": {57: "scale"}}),
         ([61, 62, 63], {"kinds": {62: "scale"}}), ([64, 65, 66, 67, 68], {}),
         ([69, 70, 71, 72], {"kinds": {71: "bloom", 72: "scale"}}),
-        ([73, 74], {"kinds": {74: "bloom"}}), ([75, 76, 77, 78], {"end": W(79) - 0.02}),
-        ([80], {"kinds": {80: "cut"}, "end": guns_t0 - 0.02}),                          # cars (giant) | and | guns. (giant, behind)
+        ([73, 74], {"kinds": {74: "bloom"}}), ([75, 76, 77, 78], {}), ([79, 80, 81], {"kinds": {79: "scale", 81: "scale"}}),
         ([82, 83, 84, 85], {}), ([86, 87, 88, 89], {"end": cut(90)}),
         ([91, 92, 93], {"end": cut(94)}),
         ([94, 95, 96], {"mode": "tight", "kinds": {94: "scale"}, "end": E.TCARD - 3 * F}),
         ([104, 105, 106], {"kinds": {105: "bloom", 106: "bloom"}}),
-        *[([i], {"kinds": {i: "cut"}, "end": W(i + 1)}) for i in range(107, 114)],   # one word at a time, each replacing the last
-        ([114], {"kinds": {114: "scale"}}),
+        *[([i], {"kinds": {i: "fcut"}, "end": W(i + 1), "floor": one}) for i in range(107, 114)],   # one word at a time,
+        ([114], {"kinds": {114: "fcut"}, "floor": one}),                                              # each replacing the last
         ([115, 116, 117, 118, 119], {"end": W(120) - 0.02}),
-        ([121, 122, 123, 124], {}), ([125, 126, 127], {"texts": {125: "ASPIRINE", 127: "PANZER"}, "kinds": {125: "bloom", 127: "scale"}, "y": 880}),
+        ([121, 122, 123, 124], {"end": W(125) - 0.04}),    # "aspirin and panzer": written on the notebook page, no caption (the user)
         ([128, 129, 130, 131], {}), ([132, 133, 134], {}),
-        ser([135, 136, 137], 137),                                  # For a kid,
+        ser([135, 136, 137], 137, texts={137: "kid"}),              # For a kid (no comma, the user)
         ser([138, 139, 140, 141, 142], 142),                        # it wasn't just a game.
-        ser([143, 144, 145, 146, 147], 147, bigit=True),            # It was a psychological escape,
+        ser([143, 144, 145, 146, 147], 147, bigit=True, scrim=0.42),   # It was a psychological escape, (on white clouds)
         ser([148, 149, 150], 150, italic=(148, 149), bigit=True),   # an alternate reality.
         ([151, 152, 153], {}), ([154, 155, 156, 157, 158], {}),
         ([159, 160], {"kinds": {160: "scale"}}), ([161, 162], {"kinds": {162: "scale"}}), ([163, 164], {"kinds": {164: "scale"}}),
@@ -348,7 +394,8 @@ def build_captions():
         ser([243, 244, 245, 246, 247, 248], 248),                   # the city where it all started.
         ([249, 250, 251, 252, 253, 254], {"end": W(255) - 0.07}),
         ([257, 258], {}),
-        ([259], {"kinds": {259: "cut"}}), ([260], {"kinds": {260: "scale"}, "end": W(261) - 0.04}),   # don't | rush.
+        ([259], {"kinds": {259: "fcut"}, "end": W(260), "floor": one}),                             # don't | rush.
+        ([260], {"kinds": {260: "fcut"}, "end": W(261) - 0.04, "floor": one}),
         ser([266, 267], 267, bigit=True),                           # Drive slow.
         ([268, 269, 270], {"mode": "tight", "end": E.TV2["tc"] - 3 * F}),                          # then "playing" | "GTA" either side of the card
         ([273, 274], {"kinds": {273: "bloom", 274: "bloom"}}),
@@ -358,16 +405,18 @@ def build_captions():
         ([288], {"y": 880, "end": E.END_V - 0.05}),
     ]
     for k, (idx, o) in enumerate(V):
-        nxt = W(V[k + 1][0][0]) - 0.04 if k + 1 < len(V) else TOTAL
+        if k + 1 < len(V):                                  # a serif line comes in 0.09 s early (its first glowing square)
+            nxt = W(V[k + 1][0][0]) - (0.10 if V[k + 1][1].get("font") == "serif" else 0.04)
+        else:
+            nxt = TOTAL
         L.append(VL(idx, mode=o.get("mode", "wide"), end=o.get("end", nxt), texts=o.get("texts"), kinds=o.get("kinds"),
                     cls=o.get("cls"), y=o.get("y", 540), times=o.get("times"), font=o.get("font", "sans"), exit=o.get("exit"),
-                    floor=o.get("floor", r3(2 * F))))
+                    floor=o.get("floor", 0.2), scrim=o.get("scrim")))
     for li, ln in enumerate(L):
         body.append(line_html(ln, f"cap{li:02d}", js))
     # giant words on top of the picture
     sn2a_end = SHOT["sn2a"]["end"] if "sn2a" in SHOT else W(213)
     for gid, words, t1, kw in (("gmil", [("millions", W(3))], W(4) - 0.02, dict(width=1560, exit="blur")),
-                               ("gcar", [("cars", W(79))], SHOT["sf2a"]["end"], dict(width=1250)),
                                ("gtod", [("Today,", W(212))], min(sn2a_end, W(213) - 0.02), dict(width=1500))):
         h, j = giant(gid, words, t1, **kw)
         body.append(h); js.append(j)
@@ -375,7 +424,8 @@ def build_captions():
     h, j = typed_box("tls", [("Los", W(255), 0.045), ("Santos", W(256), 0.05)], W(255) - 2 * F, W(257) - 0.02)
     body.append(h); js.append(j)
     # "Take the long way / home." (the "You text a / phone number." moment), in the sky over the road
-    h, j = block("btk", [(WT(i), W(i)) for i in (261, 262, 263, 264)], [(WT(265), W(265))], SHOT["sp3b"]["end"] - 0.02, 600, 140)
+    h, j = block("btk", [(WT(i), W(i)) for i in (261, 262, 263, 264)], [(WT(265), W(265))],
+                 min(SHOT["sp3b"]["end"] - 0.02, W(266) - 0.10), 600, 140)
     body.append(h); js.append(j)
     open(os.path.join(P, "compositions", "captions.html"), "w", encoding="utf-8").write(comp("captions", TOTAL, "\n".join(body), "".join(js), css))
     return L
@@ -449,13 +499,12 @@ def news_scene():
         NL([("the", N(8), "soft"), ("U.S.&nbsp;economy", N(9), "sel")], mode="tight", end=N(11) - 0.12),
     ]
     caps = "".join(line_html(L, f"ncap{k}", js) for k, L in enumerate(lines))
-    # "a billion dollars" as the Sequoia reel's "$1" / "billion" / "$1 billion": "a", then "billion" giant over the money,
-    # then the small line
-    mcap = line_html(NL([("a", N(11), "cut")], end=N(12) - 0.02, floor=r3(2 * F)), "ncapa", js)
+    # "a billion dollars": "a", then "billion" giant over the money (the Sequoia reel's "billion"), then only "dollars"
+    mcap = line_html(NL([("a", N(11), "soft")], end=N(12) - 0.02, floor=r3(2 * F)), "ncapa", js)
     gh, gj = giant("gbil", [("billion", N(12))], N(13) - 0.02, width=1500, exit="blur")
     mcap += gh
     js.append(gj)
-    mcap += line_html(NL([("a", N(13), "cut"), ("billion", N(13), "cut"), ("dollars", N(13) + 0.034, "pop")], end=NEWS_DUR - 0.02), "ncapm", js)
+    mcap += line_html(NL([("dollars", N(13), "pop")], end=NEWS_DUR - 0.02), "ncapm", js)
     body = (f'<div class="nz" id="nz">{vid(SH["news"], 0, 1, dur=tm)}</div>'
             f'<div class="nbm" id="nbm"><div class="nz" id="nzb">{vid(SH["newsblur"], 0, 1, dur=tm)}</div></div>'
             f'<div class="nz" id="nzc" style="z-index:60">{caps}</div>'
@@ -621,8 +670,8 @@ def tv_scene(cid="tv", span=None, tcard=None, clip="tv10", left_idx=(97, 98, 99,
               f'  tl.set("#tvw",{{opacity:1}},{a(-1)});\n  tl.set("#tvw",{{opacity:0}},{a(0)});\n'
               f'  tl.to("#tvc",{{boxShadow:"0 0 0 3px rgba(255,255,255,0.85), 0 0 34px rgba(255,255,255,0.45)",duration:0.25,ease:"power2.out"}},{a(0)});\n'
               f'  tl.fromTo("#tvc",{{scale:1}},{{scale:0.965,duration:{r3(dur - tc)},ease:"none"}},{a(0)});\n')
-    left = VL(list(left_idx), mode="tight", end=t1, shift=t0, size="side")
-    right = VL(list(right_idx), mode="tight", end=t1, shift=t0, size="side")
+    left = VL(list(left_idx), mode="tight", end=t1, shift=t0, size="side", fast=(cid == "tv"))
+    right = VL(list(right_idx), mode="tight", end=t1, shift=t0, size="side", fast=(cid == "tv"))
     for L in (left, right):
         L.words[0] = (L.words[0][0], max(L.words[0][1], tc), L.words[0][2], L.words[0][3])
     lh = line_html(left, "tvl", js).replace('style="top:540px"', f'style="top:540px;left:0;right:{1920 - cx + 34}px;justify-content:flex-end;z-index:20"')
@@ -787,8 +836,15 @@ def pb_scene():
 
 def build_scenes():
     news_scene()
-    SCENES.append(("cj", NEWS_DUR, E.T_BD, vid(SH["cj"], NEWS_DUR, 1, dur=E.T_BD - NEWS_DUR),
-                   f'  tl.fromTo("#cj-w",{{scale:1.08}},{{scale:1.0,duration:{r3(E.T_BD - NEWS_DUR)},ease:"power2.out"}},0);\n', ""))
+    # "Ah shit," big (the user), behind CJ: the giant words over the clip, CJ cut out of it (assets/clips/cj_fg.webm) on top,
+    # both zooming as the clip did
+    cd = r3(E.T_BD - NEWS_DUR)
+    gh, gj = giant("gah", [("Ah", NEWS_DUR + 0.04), ("shit,", NEWS_DUR + 0.56)], E.T_BD, local=NEWS_DUR, width=1640, y=520)
+    SCENES.append(("cj", NEWS_DUR, E.T_BD,
+                   vid(SH["cj"], NEWS_DUR, 1, dur=cd) + f'\n<div style="position:absolute;inset:0;z-index:2">{gh}</div>\n'
+                   f'<div class="shot" id="cjfg-w" style="z-index:3"><video id="v-cjfg" class="clip" src="assets/clips/cj_fg.webm" '
+                   f'data-start="0" data-duration="{cd}" muted playsinline></video></div>',
+                   f'  tl.fromTo("#cj-w,#cjfg-w",{{scale:1.08}},{{scale:1.0,duration:{cd},ease:"power2.out"}},0);\n' + gj, ""))
     # "here we go again. That's exactly how" -- the beat-drop clip (the user's reference), until "millions"
     SCENES.append(("bd", E.T_BD, E.SPAN["sa"][0], vid(SH["bd"], E.T_BD, 1), "", ""))
     gb, gj = grid_html(E.SPAN["sa"][0])

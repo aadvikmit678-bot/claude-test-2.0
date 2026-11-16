@@ -26,9 +26,11 @@
 .w.card .tx{color:#F2F2F0;text-shadow:0 0 14px rgba(255,255,255,0.32);}
 .cardbox{position:absolute;left:-0.28em;right:-0.28em;top:0.02em;bottom:-0.06em;background:#0b0b0c;z-index:0;opacity:0;box-shadow:0 8px 30px rgba(0,0,0,0.45);}
 .selbox{position:absolute;left:-0.08em;right:-0.08em;top:0.12em;bottom:0.02em;background:rgba(48,96,255,0.88);z-index:0;transform-origin:0 50%;}
-.row.serif{font-family:"ISerif",serif;font-size:86px;letter-spacing:0;column-gap:0.26em;transform-origin:0% 50%;}
+.row.serif{font-family:"ISerif",serif;font-size:86px;letter-spacing:-0.01em;column-gap:0.42em;}
 .row.serif .gh,.row.serif .tx{font-weight:400;}
-.row.serif .tx{text-shadow:0 0 18px rgba(255,255,255,0.28), 0 2px 20px rgba(0,0,0,0.9), 0 0 9px rgba(0,0,0,0.55);}
+.cl .scrim{position:absolute;left:calc(50% - 760px);top:calc(50% - 230px);width:1520px;height:460px;pointer-events:none;}
+.row.serif .tx{color:#FBF8EC;text-shadow:0 0 14px rgba(255,255,255,0.62), 0 0 42px rgba(255,255,255,0.30), 0 0 90px rgba(255,255,255,0.12);transform-origin:50% 72%;}
+.row.serif .fl{position:absolute;left:-0.03em;right:-0.03em;top:0.32em;bottom:0.2em;opacity:0;background:#fff;box-shadow:0 0 16px rgba(255,255,255,0.9), 0 0 44px rgba(255,255,255,0.45);z-index:0;}
 .w.sb{font-size:2.05em;} .w.si{font-style:italic;}
 .gw{position:absolute;left:0;right:0;height:1080px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
 .gwr{display:flex;align-items:baseline;justify-content:center;white-space:nowrap;font-family:"InterD","InterV",sans-serif;font-weight:800;letter-spacing:-0.045em;line-height:1;color:#fff;}
@@ -36,11 +38,15 @@
 </style>
 <div id="root" data-composition-id="cj" data-width="1920" data-height="1080" data-duration="1.48">
 <div class="shot" id="cj-w" style="z-index:1"><video id="v-cj" class="clip" src="assets/clips/cj.mp4" data-start="0.0" data-duration="1.48" muted playsinline></video></div>
+<div style="position:absolute;inset:0;z-index:2"><div id="gah" class="clip gw" data-start="0.04" data-duration="1.44" style="top:-20px"><div class="gwr" id="gahr" style="font-size:501px;column-gap:0.2em"><span class="gx" id="gahw0">Ah</span><span class="gx" id="gahw1">shit,</span></div></div></div>
+<div class="shot" id="cjfg-w" style="z-index:3"><video id="v-cjfg" class="clip" src="assets/clips/cj_fg.webm" data-start="0" data-duration="1.48" muted playsinline></video></div>
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
-  tl.fromTo("#cj-w",{scale:1.08},{scale:1.0,duration:1.48,ease:"power2.out"},0);
+  tl.fromTo("#cj-w,#cjfg-w",{scale:1.08},{scale:1.0,duration:1.48,ease:"power2.out"},0);
+  tl.fromTo("#gahw0",{opacity:0.45,scale:1.07,filter:"blur(14px) brightness(1.5)",textShadow:"0 0 90px rgba(255,255,255,0.85), 0 0 26px rgba(255,255,255,0.8), 0 10px 48px rgba(0,0,0,0.3)"},{opacity:1,scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 64px rgba(255,255,255,0.42), 0 0 18px rgba(255,255,255,0.38), 0 10px 48px rgba(0,0,0,0.42)",duration:0.08,ease:"power2.out",immediateRender:false},0.04);
+  tl.fromTo("#gahw1",{opacity:0.45,scale:1.07,filter:"blur(14px) brightness(1.5)",textShadow:"0 0 90px rgba(255,255,255,0.85), 0 0 26px rgba(255,255,255,0.8), 0 10px 48px rgba(0,0,0,0.3)"},{opacity:1,scale:1,filter:"blur(0px) brightness(1)",textShadow:"0 0 64px rgba(255,255,255,0.42), 0 0 18px rgba(255,255,255,0.38), 0 10px 48px rgba(0,0,0,0.42)",duration:0.08,ease:"power2.out",immediateRender:false},0.56);
 
   window.__timelines["cj"] = tl;
 })();

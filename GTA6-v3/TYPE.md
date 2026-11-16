@@ -26,29 +26,29 @@ user), except the black words on reference 7's light cards (the user's choice).
 you're"); "Last" in big for 2 frames then snapped small; "start" big; serif capitals "THE MONEY." framing a face; box
 wipes; highlight boxes.
 
-## Ours (`tools/build4.py`)
+## Ours (`tools/build4.py`), after the user's notes on the first type render
 
-- **Base line**: Inter variable 76 px, weight 540, v2's glow; every word lands in 1-3 frames. Small words ("a", "the",
-  "it", ...) come in directly (`cut`: one over-bright frame); the others rotate `pop` (0.05 s), `bloom` (0.08 s),
-  `cut`, `streak` (0.06 s), so no two neighbours move the same way.
-- **Serif lines** (Instrument Serif, 86 px): small words in directly, the big word 2.05x blurred-in over 0.07 s, the
-  line smeared out to the right over its last 0.1 s -- "For a **kid,**", "it wasn't just a **game.**", "It was a
-  psychological ***escape,***", "an alternate ***reality.***", "the city where it all **started.**", "Drive ***slow.***",
-  "never really ***left.***".
-- **Giant words** (Inter Display ExtraBold, fitted to the width, white with a wide glow): land blurred and over-bright,
-  sharp 2-3 frames later -- "**billion**" (then the small "a billion dollars"), "**millions**" (then "millions of
-  adults"), "**cars**", "**Today,**".
-- **Behind people** (the subject cut out with `hyperframes remove-background`, `assets/clips/<id>_fg.webm`, laid over
-  the giant word): "**guns.**" behind the man with the shotgun, "**gunshots.**" behind Tommy and Lance -- with the
-  Instinct flicker (gone frames 3-7) and a white muzzle flash in the gap --, "**bad guy**" behind Lucia, "**13
-  years**" behind the man in the suit.
-- **Single words** (Tesla): "with / the / volume / turned / all / the / way / **down**", each replacing the last on its
-  own syllable; "down" and "rush." in big for 2 frames, then snapped down (Tesla's "Last"); "don't".
-- **Typed box** ("G-mail"): "**Los Santos**" typed letter by letter in a black box that is the whole frame for two
-  frames, then zooms out (blurred at first) to a card on white.
-- **Two-line block** ("You text a / phone number."): "Take the long way" bold over "*home.*" in serif italic, set in the
-  shot's open sky -- white with our glow (the reel's is navy; the user wants white type only).
-- **White only**: the "19th" highlight is white on a dark card (was black on a white card), and the date card's pink
-  date is white (`datewhite` in `tools/prep.py` unmixes its magenta drop shadow out). The only dark type left is on
-  reference 7's light cards ("GTA VI", "took 13 years to make.", "And yet, nobody seems to have", "moved on."), as the
-  user chose. Logos (GTA VI, Vice City) keep their colours.
+- **Normal captions: v2's, as before the type change** (the user: "bring back that text font animation that we had
+  throughout the video"): Inter variable 76 px, weight 540, v2's glow and v2's entrances (`pop`, `bloom`, `scale`,
+  `streak`, `soft`), the same line breaks -- including reference 7's "GTA VI took 13 years to make." / "And yet, nobody
+  seems to have moved on.", "It was about what it really gave you." and "cars and guns." (back as one line, no giant
+  words). The faster entrances (`fcut`, `fpop`, `fbloom`, `fstreak`) stay only where the user liked them: "sitting in
+  front of the family computer," and the single words.
+- **Instrument Serif as in the Dario video** (the Dimon edit's recipe, `dario_js`): a glowing white square marks each
+  small word's place for two frames, the word comes in dim and soft for a frame, then sits in its glow; the big word
+  comes in blown out and settles crisp over four frames; the words leave in the order they came, a frame apart. White
+  glow only, no dark shadow -- "For a kid" (no comma), "it wasn't just a **game.**", "It was a psychological
+  ***escape,***" (a soft dark oval behind it, the Dimon edit's scrim, because white on its white clouds can't read),
+  "an alternate ***reality.***", "the city where it all **started.**", "Drive ***slow.***", "never really ***left.***",
+  and "*home.*" under "Take the long way".
+- **Giant words** (Inter Display ExtraBold, white, wide glow), never repeated in a small line: "a" | "**billion**" |
+  "dollars"; "**millions**" | "of adults"; "**Ah shit,**" behind CJ (cut out, `assets/clips/cj_fg.webm`); "**gunshots.**"
+  behind Tommy and Lance with the Instinct flicker and the muzzle flash; "**bad guy**" behind Lucia; "**Today,**";
+  "**13 years**" behind the man in the suit.
+- **Single words** (Tesla), each replacing the last, all in directly: "with / the / volume / turned / all / the / way /
+  down", "don't / rush.".
+- **Typed box**: "**Los Santos**" (the "G-mail" move). **Two-line block**: "Take the long way" / "*home.*".
+- **Gone** (the user): the giant "cars" and the giant "guns." behind the man with the shotgun; the "ASPIRINE and
+  PANZER" caption under the notebook (the page shows the words).
+- **White only**: the "19th" highlight is white on a dark card, and the date card's date is white (`datewhite` in
+  `tools/prep.py`). The only dark type is on reference 7's light cards, as the user chose. Logos keep their colours.
