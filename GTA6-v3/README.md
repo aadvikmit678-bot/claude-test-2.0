@@ -90,13 +90,34 @@ The `gta6/` folder on this branch is a different session's edit.
   each for "Take the long way home" and "Drive slow", Tommy through the door on "Vice City", a fourth pin-board print
   on "in"; faint CRT scanlines on the news (HyperFrames' scanlines treatment).
 
+## The user's final (their "GTA6 final" export, with their own music and SFX)
+
+The user mixed their own music and sound effects onto the type3 render (picture unchanged: every frame matches it) and
+asked for three last changes, nothing else:
+- **The hook** -- "A video game so popular it could cost" -- over other GTA footage: their `_beneg_` clip (Drive
+  1ecRRkJs_-dhJJ3C9U1xkv1WJWaWdj0x9, stored sideways, turned upright), its GTA VI montage from 6.25 s as its creator cut
+  it (palms, the beach crowd, the speedboat, two characters, the lowriders, the city at night), the captions centred as
+  before with a light scrim behind them (the escape line's oval) so the white reads on the beach; then a straight cut to
+  the FOX 2 news on "the U.S. economy", which plays as before. In the project this is the only change (`news.html`).
+- **No pause between "billion dollars" and "Ah shit"**: the 8 frames of CJ's silent lead-in (frames 293-300,
+  4.883-5.0 s at 60 fps) ripple-deleted from picture and sound together, so every other frame and every sound stays
+  exactly where the user had it: 90.567 s, 5434 frames. The project keeps the approved timeline (`GAP_FRAMES` in
+  `edl4.py`); the cut is made on the render (`gta6-edit/RENDER.md`).
+- **The money-counting sound** behind "billion dollars" (in the user's mix, 3.05-4.85 s) taken out; the bass rise
+  under it, which runs on into the drop, kept.
+
+The delivered MP4: this project's render up to frame 292 (the new hook, then the news and the money as before), then
+the user's own final from frame 301 on; its sound is the user's final mix with the money sound taken out (their added
+layer above ~180 Hz, 3.00-4.87 s) and the same 8 frames cut at 4.87 s (10 ms crossfade, in the silence), encoded from
+float so their peaks are kept as they were (`final_mix/gta6_final_mix.m4a`).
+
 ## Open / render
 
 ```bash
 cd GTA6-v3/gta6-edit
 npx hyperframes@0.9.46 preview      # Studio
 npx hyperframes@0.9.46 render --fps 30 --quality delivery --output renders/gta6_v4_full.mp4
-npx hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 --output renders/gta6_v4_type3_60fps.mp4   # highest quality, 60 fps
+npx hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 --output renders/gta6_v4_final_render.mp4   # highest quality, 60 fps
 ```
 
 ## Rebuild

@@ -59,5 +59,7 @@ wipes; highlight boxes.
 - **Gone** (the user): the giant "cars" and the giant "guns." behind the man with the shotgun ("cars and guns." is v2's
   line again); the "ASPIRINE and PANZER" caption under the notebook (the page shows the words); the commas after
   supercars / guns / planes.
+- **The hook** (the user's final): "A video game / so popular / it could cost" as before, centred, now over the user's
+  GTA VI montage, with the escape line's soft dark oval behind each line (lighter, 0.32) so the white reads on the beach.
 - **White only**: the "19th" highlight is white on a dark card, and the date card's date is white (`datewhite` in
   `tools/prep.py`). The only dark type is on reference 7's light cards, as the user chose. Logos keep their colours.

@@ -27,10 +27,11 @@ EXTRA["beatdrop"] = os.path.join(REPO, "gta6-src", "v4ref", "beatdrop.mp4")
 EXTRA["notebook"] = os.path.join(REPO, "gta6-src", "v4ref", "nb", "notebook.mp4")          # Drive 1J3VGBo65slvi37QNViQu-TTA8yf__Cih
 EXTRA["dreams"] = os.path.join(REPO, "gta6-src", "v4ref", "dreams", "dreams.mp4")          # Drive 1GksYhFnYHN8Wxr-7NgCUr1g7U__k_Cqo
 EXTRA["kidtalk"] = os.path.join(REPO, "gta6-src", "v4ref", "kidtalk", "kidtalk.mp4")      # Drive 11N_ePTl31X7yXL7usitaZBPYUDmDNCez
+EXTRA["beneg"] = os.path.join(REPO, "gta6-src", "beneg", "beneg_0-19s.mp4")            # Drive 1ecRRkJs_-dhJJ3C9U1xkv1WJWaWdj0x9
 SRC = dict(edl.SRC, ajit="Video by madebyajit [0-29s].mp4", leno="Video by lenojoga [0-15s].mp4", beatdrop="beat drop reference.mp4",
            pinA="Pinterest video #1084804629023881773 [0-9.4s].mp4", pinB="Pinterest video #1092122978546016645 [0-6s].mp4",
            notebook="Kid_viewing_notebook_cheat_codes_e009eda5_t0-3.9_1080p.mp4", dreams="chasing dreams.mp4",
-           kidtalk="Video by theunknownbrands [0-49s].mp4")
+           kidtalk="Video by theunknownbrands [0-49s].mp4", beneg="Video by _beneg_ [0-19s].mp4")
 missing = []
 for alias, name in SRC.items():
     target = EXTRA.get(alias) or os.path.join(D, LOCAL.get(alias, "?"))

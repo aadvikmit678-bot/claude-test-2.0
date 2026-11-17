@@ -7,6 +7,11 @@ import json, os
 import edl as V2
 from edl import SRC as _SRC, CROP as _CROP, PROJ, ROOT, FPS, VO_OFFSET, NEWS_IN, NEWS_DUR, N, S
 
+# the user's final: no pause between "billion dollars" and "Ah shit" -- the 8 frames of CJ's silent lead-in (frames
+# 293-300 at 60 fps, 4.883-5.0 s) are ripple-deleted from the render afterwards, picture and sound together, so every
+# other frame stays exactly the user's (gta6-edit/RENDER.md). The project keeps the timeline the user approved.
+GAP_FRAMES = (293, 301)
+
 SRC = dict(_SRC)
 SRC.update({"ajit": "Video by madebyajit [0-29s].mp4", "leno": "Video by lenojoga [0-15s].mp4",
             "beatdrop": "beat drop reference.mp4",                                  # the user's "Ah shit" reference
@@ -14,7 +19,8 @@ SRC.update({"ajit": "Video by madebyajit [0-29s].mp4", "leno": "Video by lenojog
             "pinB": "Pinterest video #1092122978546016645 [0-6s].mp4",
             "notebook": "Kid_viewing_notebook_cheat_codes_e009eda5_t0-3.9_1080p.mp4",        # the user's cheat-code notebook
             "dreams": "chasing dreams.mp4",                                                # the user's "chasing dreams" clip
-            "kidtalk": "Video by theunknownbrands [0-49s].mp4"})                           # the user's clip: talking to the kid
+            "kidtalk": "Video by theunknownbrands [0-49s].mp4",                            # the user's clip: talking to the kid
+            "beneg": "Video by _beneg_ [0-19s].mp4"})                                       # the user's final: the hook's GTA VI montage
 CROP = dict(_CROP)
 CROP.update({"ajit": (0, 117, 1500, 844), "leno": (0, 30, 972, 547)})
 
@@ -34,11 +40,13 @@ END_V = round(_W4[288]["end"] + VO_OFFSET + 0.33, 3)   # v2: the last beat runs 
 TOTAL = round(END_V + 2.65, 2)                          # the GTA VI logo (1.35 s) and the date card (1.3 s)
 NEWS_TM = round(N(11) - 0.06, 3)                 # "a billion dollars": cut from the news to the money clip
 T_BD = round(NEWS_DUR + 1.54 - 0.06, 3)          # "here we go again": cut to the beat-drop clip until "millions"
+HOOK_END = round(N(8) - 0.06, 3)                 # the user's final: "A video game so popular it could cost" over the
+                                                 # _beneg_ GTA VI montage, the news from "the U.S. economy"
 F = 1 / FPS
 
 
 # sources shot at 50/60 fps: their shots are cut at 60 fps; everything else is <= 30 fps and is cut at 30
-HFR = {"wait5", "goodbye", "em6", "blade", "freedom", "city", "nyc", "waitgta6", "metav3rse"}
+HFR = {"wait5", "goodbye", "em6", "blade", "freedom", "city", "nyc", "waitgta6", "metav3rse", "beneg"}
 
 
 def S4(id, src, sin, start, end, crop="auto", grade="none", speed=1.0, card=None, push=None, rot=None, interp=False):
@@ -239,6 +247,10 @@ SHOTS.append(S4("g99", BURST_HOLD[0], BURST_HOLD[1], t, g1))
 SHOTS.append(S4("fr", "freedom", 0.3, cut(90), cut(91), push=(1.0, 1.04)))
 SHOTS.append(S4("qcity", "city", 40.0, cut(169), SPAN["q4"][1], rot="ccw", speed=0.8))   # "city." -- the user: the GTA city, full screen
 SHOTS.append(S4("nmoney", "money", 0.9, NEWS_TM, NEWS_DUR))
+# the user's final: the hook ("A video game so popular it could cost") over the _beneg_ clip's montage as its creator cut
+# it -- the palms, the beach crowd, the speedboat, the two guys, the lowriders, the city at night -- stored sideways, turned
+# upright; starts at 0, so it adds no cut to the square-flash count
+SHOTS.append(S4("hook", "beneg", 6.25, 0.0, HOOK_END, rot="ccw"))
 SHOTS.append(S4("bd", "beatdrop", 0.43, T_BD, cut(3)))
 
 # "With cheat codes like aspirin and panzer" -- the user's notebook clip (24 fps, 94 frames). "With cheat codes like": the

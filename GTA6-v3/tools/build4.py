@@ -251,8 +251,8 @@ def line_html(L, lid, js):
             f'{scrim}<div class="{cls_row}" id="{lid}r">{"".join(spans)}</div></div>')
 
 
-def NL(words, mode="wide", end=None, floor=0.2):
-    return Line([(txt, r3(t), "", kd) for txt, t, kd in words], mode, end, floor=floor)
+def NL(words, mode="wide", end=None, floor=0.2, scrim=None):
+    return Line([(txt, r3(t), "", kd) for txt, t, kd in words], mode, end, floor=floor, scrim=scrim)
 
 
 # ------------------------------------------------------------------ the references' type (Sequoia "Instinct" reel, Tesla Roadster reel)
@@ -539,9 +539,10 @@ def news_scene():
     js = []
     tm = E.NEWS_TM
     lines = [
-        NL([("A", N(0), "soft"), ("video", N(1), "bloom"), ("game", N(2), "pop")], end=N(3) - 0.04),
-        NL([("so", N(3), "soft"), ("popular", N(4), "bloom")], end=N(5) - 0.04),
-        NL([("it", N(5), "soft"), ("could", N(6), "pop"), ("cost", N(7), "streak")], end=N(8) - 0.04),
+        # over the bright beach of the user's GTA VI montage: the escape line's soft dark oval, lighter, so the white reads
+        NL([("A", N(0), "soft"), ("video", N(1), "bloom"), ("game", N(2), "pop")], end=N(3) - 0.04, scrim=0.32),
+        NL([("so", N(3), "soft"), ("popular", N(4), "bloom")], end=N(5) - 0.04, scrim=0.32),
+        NL([("it", N(5), "soft"), ("could", N(6), "pop"), ("cost", N(7), "streak")], end=N(8) - 0.04, scrim=0.32),
         NL([("the", N(8), "soft"), ("U.S.&nbsp;economy", N(9), "sel")], mode="tight", end=N(11) - 0.12),
     ]
     caps = "".join(line_html(L, f"ncap{k}", js) for k, L in enumerate(lines))
@@ -554,7 +555,10 @@ def news_scene():
     # (npx hyperframes media-treatment, scanlines 0.14), its normalized grading kept in tools/news_scanlines.json
     sl = html.escape(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "news_scanlines.json"), encoding="utf-8").read(), quote=True)
     crt = lambda h, i: h.replace(f'<video id="v-{i}" ', f'<video data-color-grading="{sl}" id="v-{i}" ', 1)
+    # the user's final: the hook over other GTA footage (their _beneg_ clip, the GTA VI montage), the captions centred over
+    # it as before, then a straight cut to the news on "the U.S. economy"
     body = (f'<div class="nz" id="nz">{crt(vid(SH["news"], 0, 1, dur=tm), "news")}</div>'
+            f'{vid(SH["hook"], 0, 10)}'
             f'<div class="nbm" id="nbm"><div class="nz" id="nzb">{crt(vid(SH["newsblur"], 0, 1, dur=tm), "newsblur")}</div></div>'
             f'<div class="nz" id="nzc" style="z-index:60">{caps}</div>'
             f'{vid(SH["nmoney"], 0, 70)}<div style="position:absolute;inset:0;z-index:75">{mcap}</div>')
