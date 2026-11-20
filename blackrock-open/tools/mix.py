@@ -19,6 +19,7 @@ SFXSRC = "/root/.claude/skills/media-use/audio/assets/sfx"
 SFX = f"{ROOT}/assets/sfx"
 SR = 48000
 N = int(round(TM.TOTAL * SR))
+USE_SFX = False   # the user: "remove all the sfx" -- no hits, clicks, whooshes, glitches, thumps or risers
 os.makedirs(SFX, exist_ok=True)
 
 
@@ -131,6 +132,26 @@ def main():
     env = np.ones(len(d), np.float32)
     env[: int(1.5 * SR)] = np.linspace(0.0, 1.0, int(1.5 * SR))
     place(music, d * env[:, None], 0.0, fade_out=0.06)
+    fx = np.zeros((N, 2), np.float32)
+    if USE_SFX:
+        add_sfx(music, fx, T, B)
+
+    # duck the music and effects under speech a little
+    lvl = np.abs(speech).max(axis=1)
+    win = int(0.08 * SR)
+    sm = np.convolve(lvl, np.ones(win) / win, mode="same")
+    duck = 1.0 - 0.45 * np.clip(sm / 0.05, 0, 1)
+    mix = speech + music * 0.11 * duck[:, None] + fx * (0.75 + 0.25 * duck[:, None])
+    dry = speech.copy()
+    for name, x in (("mix", limit(mix)), ("mix_dry", limit(dry))):
+        peak = np.abs(x).max()
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", "-",
+                        "-c:a", "pcm_s16le", f"{AUD}/{name}.wav"], input=x.astype(np.float32).tobytes(), check=True)
+        print(f"  {name}.wav  {len(x) / SR:.3f}s  peak {20 * np.log10(peak + 1e-9):.1f} dBFS")
+
+
+def add_sfx(music, fx, T, B):
+    """The effects, off by default: the hook's thumps, the risers, the bundled hits and the flipbook clicks."""
     # the hook's pulse: a sub thump every beat (83.3 BPM, Nvidia's tempo) from "These" to "That's"
     beat = 0.72
     t = B["these"][0]
@@ -145,8 +166,6 @@ def main():
     place(music, noise_riser(1.25, 1), T["dimon"] - 1.25, 0.35)
     place(music, noise_riser(1.05, 2), T["guy2"] - 1.05, 0.32)
     place(music, noise_riser(1.4, 3), T["blackrock"] - 1.4, 0.38)
-
-    fx = np.zeros((N, 2), np.float32)
     S = {n: sfx(n) for n in ("impact-bass-1", "impact-bass-2", "whoosh", "whoosh-short", "glitch-1", "glitch-2",
                               "glitch-3", "click-soft", "click", "pop", "sparkle", "whoosh-cinematic")}
     hits = [  # (time, name, gain)
@@ -179,19 +198,6 @@ def main():
         place(fx, S["sparkle"], B["search"][0] + f0 / 60, 0.16)
     for k, f0 in enumerate((10, 13, 16, 19, 22, 25, 28, 31, 34)):
         place(fx, S["click"], B["tiles"][0] + f0 / 60, 0.12)
-
-    # duck the music and effects under speech a little
-    lvl = np.abs(speech).max(axis=1)
-    win = int(0.08 * SR)
-    sm = np.convolve(lvl, np.ones(win) / win, mode="same")
-    duck = 1.0 - 0.45 * np.clip(sm / 0.05, 0, 1)
-    mix = speech + music * 0.11 * duck[:, None] + fx * (0.75 + 0.25 * duck[:, None])
-    dry = speech.copy()
-    for name, x in (("mix", limit(mix)), ("mix_dry", limit(dry))):
-        peak = np.abs(x).max()
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", "-",
-                        "-c:a", "pcm_s16le", f"{AUD}/{name}.wav"], input=x.astype(np.float32).tobytes(), check=True)
-        print(f"  {name}.wav  {len(x) / SR:.3f}s  peak {20 * np.log10(peak + 1e-9):.1f} dBFS")
 
 
 if __name__ == "__main__":

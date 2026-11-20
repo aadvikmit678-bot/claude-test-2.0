@@ -234,13 +234,12 @@ def s_quote():
         sc.js.append(f'tl.fromTo("#{v}",{{scale:{s0}}},{{scale:{s1},duration:{r4(B_dur(a, b))},ease:"none",immediateRender:false}},{sc.at(a)});')
     # a soft dark floor for the caption
     sc.add('<div class="layer" style="z-index:20;background:linear-gradient(to bottom,rgba(0,0,0,0) 55%,rgba(0,0,0,0.55) 100%)"></div>')
-    words = TM.LINE
-    for i0, i1 in [(0, 8), (8, 13), (13, 18), (18, len(words))]:
-        end = words[i1][1] if i1 < len(words) else B["quote"][1]
-        words_line(sc, list(words[i0:i1]), end, 880, "qt", 66,
-                   style="font-family:'ISerif',serif;color:#F7F2E8;",
-                   wstyle="text-shadow:0 0 18px rgba(255,255,255,0.45),0 0 46px rgba(255,255,255,0.18),0 2px 14px rgba(0,0,0,0.7);",
-                   gap="0.24em")
+    # the story's captions in the Jensen Huang reel's style: white Helvetica caps, a short chunk at a time
+    L = TM.LINE
+    items = []
+    for i0, i1 in [(0, 3), (3, 6), (6, 8), (8, 11), (11, 13), (13, 16), (16, 18), (18, 22), (22, 26)]:
+        items.append((" ".join(w for w, _ in L[i0:i1]).replace("'", "’"), L[i0][1]))
+    chunks(sc, items, B["quote"][1] - 2 * FR, blend=None)
     sc.write()
     return sc
 
@@ -250,9 +249,9 @@ def s_hook():
     sc = Scene("s_hook", B["these"][0], B["glow"][1])
     # 1. these are the most
     sc.video("r_these.mp4", *B["these"], z=1)
-    cid = words_line(sc, [("These are the most", T["these"])], B["these"][1], 896, "nv", 66, enter="set", z=30)
-    for a, b in ((T["these"], T["these"] + 2 * FR), (T["these"] + 5 * FR, T["these"] + 7 * FR)):
-        sc.js.append(f'tl.set("#{cid} .nv",{{color:"#000"}},{sc.at(a)});tl.set("#{cid} .nv",{{color:"#fff"}},{sc.at(b)});')
+    cid = caption(sc, "These are the most", T["these"], B["these"][1], blend=None)
+    for a, b in ((T["these"], T["these"] + 2 * FR), (T["these"] + 5 * FR, T["these"] + 7 * FR)):  # inverts with the picture
+        sc.js.append(f'tl.set("#{cid} .hv",{{color:"#0b0b0b"}},{sc.at(a)});tl.set("#{cid} .hv",{{color:"#EEF0F0"}},{sc.at(b)});')
     # 2. the tiles + POWERFUL / PEOPLE
     sc.video("r_tiles.mp4", *B["tiles"], z=1)
     t0 = B["tiles"][0]
@@ -314,14 +313,9 @@ def s_hook():
         sc.js.append(f'tl.fromTo("#{wid}",{{scale:1.06}},{{scale:1.0,duration:0.06,ease:"power2.out",immediateRender:false}},{sc.at(a)});')
     # 6. that owns a piece of everything you touch
     sc.video("r_logos.mp4", *B["logos"], z=1)
-    for text, a, b in (("That owns", T["that"], T["piece"]), ("A piece of", T["piece"], T["everything"]),
-                       ("Everything", T["everything"], T["you"])):
-        words_line(sc, [(text, a)], b, 896, "nv", 70, enter="set", z=30, blend="difference")
+    chunks(sc, [("That owns", T["that"]), ("A piece of", T["piece"]), ("Everything", T["everything"])], T["you"])
     sc.video("r_touch.mp4", *B["touch"], z=1)
-    words_line(sc, [("You", T["you"])], T["touch"], 896, "nv", 70, enter="set", z=30,
-               wstyle="text-shadow:0 2px 18px rgba(0,0,0,0.55);")
-    words_line(sc, [("You touch.", T["touch"])], B["touch"][1] - 2 * FR, 896, "nv", 70, enter="set", z=30,
-               wstyle="text-shadow:0 2px 18px rgba(0,0,0,0.55);")
+    chunks(sc, [("You", T["you"]), ("You touch.", T["touch"])], B["touch"][1] - 2 * FR, blend=None)
     # 7. split second: the panel from above, every seat lighting up
     sc.video("r_glow.mp4", *B["glow"], z=1)
     sc.write()
