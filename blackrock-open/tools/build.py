@@ -314,7 +314,7 @@ BOX_STEPS = [(0.0, 0.885, 0.40), (0.08, 0.945, 0.43), (0.16, 0.980, 0.46), (0.24
 
 def s_fink():
     sc = Scene("s_fink", B["walk"][0], B["brand"][1])
-    sc.video("v2_fink_walk.mp4", *B["walk"], z=1)
+    sc.video("v2_fink_stage.mp4", *B["walk"], z=1)
     sc.video("v2_fink_box.mp4", *B["box"], z=1)
     caption(sc, "The man who runs", T["the3"], T["most"], blend=None, shadow=True)
     # the red square: appears on "most" while the shot plays (not on the cut), settles in steps, stays put
@@ -337,8 +337,10 @@ def s_fink():
         sc.js.append(f'tl.set("#{fill}",{{backgroundColor:"rgba(222,30,44,{al})"}},{sc.at(T["most"] + dt)});')
     sc.js.append(f'tl.set("#{w2}",{{opacity:1}},{sc.at(T["evil"])});')
     # company in the world: BlackRock itself, in plain cuts; "BlackRock.": its letters
-    c = split(*B["company"], 3)
-    cuts(sc, [("v2_br_lobby.mp4", *c[0]), ("v2_br_bldg.mp4", *c[1]), ("v2_br_doors.mp4", *c[2]),
+    # the source edit cuts every 16 frames, so the letters and the flags get their whole shots (0.45 s, 0.5 s)
+    c0, c1 = B["company"]
+    k1, k2 = F(c0 + 0.45), F(c0 + 0.95)
+    cuts(sc, [("v2_br_letters.mp4", c0, k1), ("v2_br_bldg.mp4", k1, k2), ("v2_br_doors.mp4", k2, c1),
               ("v2_br_sign.mp4", *B["brand"])])
     caption(sc, "Company in the world", T["company"], B["company"][1], blend=None, shadow=True)
     caption(sc, "BlackRock.", T["blackrock"], B["brand"][1] - 2 * FR, blend=None, shadow=True)

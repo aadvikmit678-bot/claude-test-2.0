@@ -19,8 +19,8 @@ needs numpy, pillow, opencv-python-headless<5). The references and what was meas
 | 20.98-22.87 | "and the CEO of Goldman Sachs": the panel shot where its own title lands on "CEO" |
 | 22.87-24.37 | the camera circling the table; from "Amongst them" people light up at random, then Fink alone |
 | 24.37-25.28 | "is this guy": Fink's close-up at the panel |
-| 25.28-26.80 | "the man who runs the most evil": Fink walking with his security; the interview, the VC reel's red square on "most" |
-| 26.80-29.37 | "company in the world. BlackRock.": its lobby, building and flags, its doors, the letters on the facade |
+| 25.28-26.80 | "the man who runs the most evil": Fink on stage; the interview, the VC reel's red square on "most" |
+| 26.80-29.37 | "company in the world. BlackRock.": its letters on stone, building and flags, its doors, the steel letters |
 | 29.37-32.10 | Rogan/Musk clip from 12.55 s: Elon's question only, ending before Rogan's answer |
 
 Type: ON EARTH / WEAPONIZED / CAPITAL in League Gothic, POWERFUL / PEOPLE and the "$60 trillion" words in Inter Display,

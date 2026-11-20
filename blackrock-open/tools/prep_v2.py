@@ -493,15 +493,15 @@ SHOTS = [  # (name, source, start s, seconds, crop filter, start given as frame 
     ("ceo", PANEL, 2802.86, 1.95, None, False),
     # "is this guy": Fink's close-up at the panel
     ("fink_pc", PANEL, 1186.20, 0.98, None, False),
-    # "the man who": Fink walking in New York with his security (the clean run between the edit's mattes)
-    ("fink_walk", f"{DL}/m_fink2.mp4", 5.44, 0.50, None, True),
+    # "the man who": Fink on stage, gesturing (real 60 fps video; m_fink2's walking shot is a held still in that edit)
+    ("fink_stage", f"{DL}/lf_interview2.mp4", 4.30, 0.50, None, True),
     # "runs the most evil": the interview, his face steadiest here (the red square lands on it)
     ("fink_box", f"{DL}/fink_interview.mp4", 53.50, 1.12, None, False),
-    # "company in the world": BlackRock's lobby (after the edit's punch-in), its building and flags, its doors;
-    # "BlackRock.": the steel letters on its facade
-    ("br_lobby", f"{DL}/m_finance.mp4", 12.26, 0.64, None, True),
-    ("br_bldg", f"{DL}/blackrock_short.mp4", 10.48, 0.62, None, True),
-    ("br_doors", f"{DL}/blackrock_short.mp4", 4.30, 0.64, None, True),
+    # "company in the world": the BLACKROCK letters on its stone facade, its building and flags, its doors;
+    # "BlackRock.": the steel letters (m_finance's lobby is a held still in that edit, so it is not used)
+    ("br_letters", f"{DL}/blackrock_short.mp4", 6.85, 0.47, None, True),     # its shot: 6.80-7.33 s
+    ("br_bldg", f"{DL}/blackrock_short.mp4", 10.47, 0.49, None, True),       # its shot: 10.47-10.97 s
+    ("br_doors", f"{DL}/blackrock_short.mp4", 4.20, 0.86, None, True),       # its shot: 3.67-5.53 s
     ("br_sign", f"{DL}/blackrock_short.mp4", 0.00, 0.86, None, True),
 ]
 

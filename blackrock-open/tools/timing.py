@@ -71,7 +71,7 @@ B = {
     "ceo": (T["and"], T["sachs_end"]),         # the panel's own title lands on "CEO"
     "search": (T["sachs_end"], T["this"]),     # the camera circling the table; from "Amongst" people light up
     "thisguy": (T["this"], T["the3"]),         # Fink's close-up at the panel
-    "walk": (T["the3"], T["runs"]),            # "the man who": Fink walking
+    "walk": (T["the3"], T["runs"]),            # "the man who": Fink on stage
     "box": (T["runs"], T["company"]),          # "runs the most evil": the interview, the red square on "most"
     "company": (T["company"], T["blackrock"]), # "company in the world": BlackRock's lobby and building
     "brand": (T["blackrock"], F(V0 + VO_END + 0.045)),  # "BlackRock.": the letters on its facade
