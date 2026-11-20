@@ -1,0 +1,1340 @@
+[
+  {
+    "text": "Twelve",
+    "start": 0.06,
+    "end": 0.33,
+    "id": "w0"
+  },
+  {
+    "text": "of",
+    "start": 0.37,
+    "end": 0.49,
+    "id": "w1"
+  },
+  {
+    "text": "the",
+    "start": 0.49,
+    "end": 0.68,
+    "id": "w2"
+  },
+  {
+    "text": "sharpest",
+    "start": 0.68,
+    "end": 1.15,
+    "id": "w3"
+  },
+  {
+    "text": "minds",
+    "start": 1.2,
+    "end": 1.52,
+    "id": "w4"
+  },
+  {
+    "text": "in",
+    "start": 1.52,
+    "end": 1.63,
+    "id": "w5"
+  },
+  {
+    "text": "Silicon",
+    "start": 1.63,
+    "end": 2.04,
+    "id": "w6"
+  },
+  {
+    "text": "Valley",
+    "start": 2.04,
+    "end": 2.4,
+    "id": "w7"
+  },
+  {
+    "text": "sat",
+    "start": 2.4,
+    "end": 2.65,
+    "id": "w8"
+  },
+  {
+    "text": "down",
+    "start": 2.65,
+    "end": 3,
+    "id": "w9"
+  },
+  {
+    "text": "to",
+    "start": 3,
+    "end": 3.08,
+    "id": "w10"
+  },
+  {
+    "text": "play",
+    "start": 3.08,
+    "end": 3.45,
+    "id": "w11"
+  },
+  {
+    "text": "Mafia,",
+    "start": 3.45,
+    "end": 3.99,
+    "id": "w12"
+  },
+  {
+    "text": "the",
+    "start": 4,
+    "end": 4.13,
+    "id": "w13"
+  },
+  {
+    "text": "man",
+    "start": 4.13,
+    "end": 4.28,
+    "id": "w14"
+  },
+  {
+    "text": "behind",
+    "start": 4.28,
+    "end": 4.67,
+    "id": "w15"
+  },
+  {
+    "text": "Open",
+    "start": 4.67,
+    "end": 4.96,
+    "id": "w16"
+  },
+  {
+    "text": "AI,",
+    "start": 5.06,
+    "end": 5.24,
+    "id": "w17"
+  },
+  {
+    "text": "the",
+    "start": 5.24,
+    "end": 5.45,
+    "id": "w18"
+  },
+  {
+    "text": "founder",
+    "start": 5.45,
+    "end": 5.95,
+    "id": "w19"
+  },
+  {
+    "text": "arming",
+    "start": 5.99,
+    "end": 6.39,
+    "id": "w20"
+  },
+  {
+    "text": "the",
+    "start": 6.39,
+    "end": 6.6,
+    "id": "w21"
+  },
+  {
+    "text": "Pentagon,",
+    "start": 6.6,
+    "end": 7.32,
+    "id": "w22"
+  },
+  {
+    "text": "even",
+    "start": 7.32,
+    "end": 7.61,
+    "id": "w23"
+  },
+  {
+    "text": "a",
+    "start": 7.61,
+    "end": 7.68,
+    "id": "w24"
+  },
+  {
+    "text": "professional",
+    "start": 7.68,
+    "end": 8.55,
+    "id": "w25"
+  },
+  {
+    "text": "poker",
+    "start": 8.55,
+    "end": 8.9,
+    "id": "w26"
+  },
+  {
+    "text": "player.",
+    "start": 8.91,
+    "end": 9.64,
+    "id": "w27"
+  },
+  {
+    "text": "And",
+    "start": 9.74,
+    "end": 9.84,
+    "id": "w28"
+  },
+  {
+    "text": "amongst",
+    "start": 9.84,
+    "end": 10.31,
+    "id": "w29"
+  },
+  {
+    "text": "them",
+    "start": 10.31,
+    "end": 10.58,
+    "id": "w30"
+  },
+  {
+    "text": "was",
+    "start": 10.58,
+    "end": 10.78,
+    "id": "w31"
+  },
+  {
+    "text": "Trey",
+    "start": 10.78,
+    "end": 11.05,
+    "id": "w32"
+  },
+  {
+    "text": "Stevens.",
+    "start": 11.05,
+    "end": 11.76,
+    "id": "w33"
+  },
+  {
+    "text": "You",
+    "start": 11.86,
+    "end": 11.93,
+    "id": "w34"
+  },
+  {
+    "text": "probably",
+    "start": 11.93,
+    "end": 12.4,
+    "id": "w35"
+  },
+  {
+    "text": "don't",
+    "start": 12.4,
+    "end": 12.68,
+    "id": "w36"
+  },
+  {
+    "text": "know",
+    "start": 12.68,
+    "end": 12.91,
+    "id": "w37"
+  },
+  {
+    "text": "his",
+    "start": 12.96,
+    "end": 13.08,
+    "id": "w38"
+  },
+  {
+    "text": "name,",
+    "start": 13.08,
+    "end": 13.42,
+    "id": "w39"
+  },
+  {
+    "text": "but",
+    "start": 13.42,
+    "end": 13.59,
+    "id": "w40"
+  },
+  {
+    "text": "watch",
+    "start": 13.59,
+    "end": 13.88,
+    "id": "w41"
+  },
+  {
+    "text": "what",
+    "start": 13.88,
+    "end": 14.11,
+    "id": "w42"
+  },
+  {
+    "text": "he",
+    "start": 14.11,
+    "end": 14.21,
+    "id": "w43"
+  },
+  {
+    "text": "does",
+    "start": 14.22,
+    "end": 14.45,
+    "id": "w44"
+  },
+  {
+    "text": "the",
+    "start": 14.45,
+    "end": 14.62,
+    "id": "w45"
+  },
+  {
+    "text": "entire",
+    "start": 14.62,
+    "end": 14.97,
+    "id": "w46"
+  },
+  {
+    "text": "game.",
+    "start": 14.97,
+    "end": 15.52,
+    "id": "w47"
+  },
+  {
+    "text": "How",
+    "start": 15.62,
+    "end": 15.76,
+    "id": "w48"
+  },
+  {
+    "text": "is",
+    "start": 15.76,
+    "end": 15.85,
+    "id": "w49"
+  },
+  {
+    "text": "it",
+    "start": 15.91,
+    "end": 16.07,
+    "id": "w50"
+  },
+  {
+    "text": "possible",
+    "start": 16.08,
+    "end": 16.67,
+    "id": "w51"
+  },
+  {
+    "text": "that",
+    "start": 16.72,
+    "end": 17.04,
+    "id": "w52"
+  },
+  {
+    "text": "these",
+    "start": 17.04,
+    "end": 17.44,
+    "id": "w53"
+  },
+  {
+    "text": "random",
+    "start": 17.44,
+    "end": 17.92,
+    "id": "w54"
+  },
+  {
+    "text": "people",
+    "start": 17.92,
+    "end": 18.4,
+    "id": "w55"
+  },
+  {
+    "text": "are",
+    "start": 18.4,
+    "end": 18.64,
+    "id": "w56"
+  },
+  {
+    "text": "dying",
+    "start": 18.64,
+    "end": 19.04,
+    "id": "w57"
+  },
+  {
+    "text": "and",
+    "start": 19.04,
+    "end": 19.28,
+    "id": "w58"
+  },
+  {
+    "text": "Moxie",
+    "start": 19.28,
+    "end": 19.68,
+    "id": "w59"
+  },
+  {
+    "text": "doesn't",
+    "start": 19.68,
+    "end": 20.24,
+    "id": "w60"
+  },
+  {
+    "text": "even",
+    "start": 20.24,
+    "end": 20.56,
+    "id": "w61"
+  },
+  {
+    "text": "get",
+    "start": 20.56,
+    "end": 20.81,
+    "id": "w62"
+  },
+  {
+    "text": "nominated?",
+    "start": 20.9,
+    "end": 21.9,
+    "id": "w63"
+  },
+  {
+    "text": "Moxie",
+    "start": 22.06,
+    "end": 22.3,
+    "id": "w64"
+  },
+  {
+    "text": "feels",
+    "start": 22.3,
+    "end": 22.59,
+    "id": "w65"
+  },
+  {
+    "text": "like",
+    "start": 22.6,
+    "end": 22.84,
+    "id": "w66"
+  },
+  {
+    "text": "he's",
+    "start": 22.84,
+    "end": 23.08,
+    "id": "w67"
+  },
+  {
+    "text": "just",
+    "start": 23.08,
+    "end": 23.32,
+    "id": "w68"
+  },
+  {
+    "text": "out",
+    "start": 23.32,
+    "end": 23.5,
+    "id": "w69"
+  },
+  {
+    "text": "playing",
+    "start": 23.5,
+    "end": 23.93,
+    "id": "w70"
+  },
+  {
+    "text": "us.",
+    "start": 23.93,
+    "end": 24.28,
+    "id": "w71"
+  },
+  {
+    "text": "He",
+    "start": 24.38,
+    "end": 24.39,
+    "id": "w72"
+  },
+  {
+    "text": "spends",
+    "start": 24.39,
+    "end": 24.73,
+    "id": "w73"
+  },
+  {
+    "text": "almost",
+    "start": 24.73,
+    "end": 25.07,
+    "id": "w74"
+  },
+  {
+    "text": "the",
+    "start": 25.07,
+    "end": 25.23,
+    "id": "w75"
+  },
+  {
+    "text": "whole",
+    "start": 25.24,
+    "end": 25.52,
+    "id": "w76"
+  },
+  {
+    "text": "night",
+    "start": 25.52,
+    "end": 25.8,
+    "id": "w77"
+  },
+  {
+    "text": "pointing",
+    "start": 25.8,
+    "end": 26.25,
+    "id": "w78"
+  },
+  {
+    "text": "at",
+    "start": 26.25,
+    "end": 26.36,
+    "id": "w79"
+  },
+  {
+    "text": "one",
+    "start": 26.36,
+    "end": 26.53,
+    "id": "w80"
+  },
+  {
+    "text": "man,",
+    "start": 26.53,
+    "end": 26.8,
+    "id": "w81"
+  },
+  {
+    "text": "building",
+    "start": 26.81,
+    "end": 27.26,
+    "id": "w82"
+  },
+  {
+    "text": "his",
+    "start": 27.26,
+    "end": 27.43,
+    "id": "w83"
+  },
+  {
+    "text": "case",
+    "start": 27.43,
+    "end": 27.65,
+    "id": "w84"
+  },
+  {
+    "text": "like",
+    "start": 27.65,
+    "end": 27.87,
+    "id": "w85"
+  },
+  {
+    "text": "an",
+    "start": 27.87,
+    "end": 27.98,
+    "id": "w86"
+  },
+  {
+    "text": "analyst.",
+    "start": 27.98,
+    "end": 28.6,
+    "id": "w87"
+  },
+  {
+    "text": "But",
+    "start": 28.7,
+    "end": 28.8,
+    "id": "w88"
+  },
+  {
+    "text": "there's",
+    "start": 28.8,
+    "end": 29.26,
+    "id": "w89"
+  },
+  {
+    "text": "just",
+    "start": 29.26,
+    "end": 29.52,
+    "id": "w90"
+  },
+  {
+    "text": "one",
+    "start": 29.52,
+    "end": 29.72,
+    "id": "w91"
+  },
+  {
+    "text": "problem,",
+    "start": 29.72,
+    "end": 30.3,
+    "id": "w92"
+  },
+  {
+    "text": "Moxie",
+    "start": 30.31,
+    "end": 30.63,
+    "id": "w93"
+  },
+  {
+    "text": "was",
+    "start": 30.63,
+    "end": 30.83,
+    "id": "w94"
+  },
+  {
+    "text": "innocent.",
+    "start": 30.83,
+    "end": 31.6,
+    "id": "w95"
+  },
+  {
+    "text": "In",
+    "start": 31.7,
+    "end": 31.76,
+    "id": "w96"
+  },
+  {
+    "text": "fact,",
+    "start": 31.76,
+    "end": 32.24,
+    "id": "w97"
+  },
+  {
+    "text": "he",
+    "start": 32.24,
+    "end": 32.4,
+    "id": "w98"
+  },
+  {
+    "text": "was",
+    "start": 32.4,
+    "end": 32.64,
+    "id": "w99"
+  },
+  {
+    "text": "the",
+    "start": 32.64,
+    "end": 32.88,
+    "id": "w100"
+  },
+  {
+    "text": "angel,",
+    "start": 32.88,
+    "end": 33.44,
+    "id": "w101"
+  },
+  {
+    "text": "and",
+    "start": 33.44,
+    "end": 33.68,
+    "id": "w102"
+  },
+  {
+    "text": "Trey",
+    "start": 33.68,
+    "end": 34,
+    "id": "w103"
+  },
+  {
+    "text": "was",
+    "start": 34,
+    "end": 34.24,
+    "id": "w104"
+  },
+  {
+    "text": "the",
+    "start": 34.24,
+    "end": 34.48,
+    "id": "w105"
+  },
+  {
+    "text": "killer",
+    "start": 34.48,
+    "end": 34.96,
+    "id": "w106"
+  },
+  {
+    "text": "the",
+    "start": 34.96,
+    "end": 35.2,
+    "id": "w107"
+  },
+  {
+    "text": "whole",
+    "start": 35.2,
+    "end": 35.59,
+    "id": "w108"
+  },
+  {
+    "text": "time.",
+    "start": 35.6,
+    "end": 36.24,
+    "id": "w109"
+  },
+  {
+    "text": "Now,",
+    "start": 36.34,
+    "end": 36.54,
+    "id": "w110"
+  },
+  {
+    "text": "here's",
+    "start": 36.54,
+    "end": 36.91,
+    "id": "w111"
+  },
+  {
+    "text": "why",
+    "start": 36.91,
+    "end": 37.09,
+    "id": "w112"
+  },
+  {
+    "text": "that",
+    "start": 37.09,
+    "end": 37.34,
+    "id": "w113"
+  },
+  {
+    "text": "matters,",
+    "start": 37.34,
+    "end": 37.89,
+    "id": "w114"
+  },
+  {
+    "text": "because",
+    "start": 37.89,
+    "end": 38.32,
+    "id": "w115"
+  },
+  {
+    "text": "pointing",
+    "start": 38.32,
+    "end": 38.82,
+    "id": "w116"
+  },
+  {
+    "text": "at",
+    "start": 38.82,
+    "end": 38.94,
+    "id": "w117"
+  },
+  {
+    "text": "the",
+    "start": 38.94,
+    "end": 39.12,
+    "id": "w118"
+  },
+  {
+    "text": "threat",
+    "start": 39.12,
+    "end": 39.49,
+    "id": "w119"
+  },
+  {
+    "text": "nobody",
+    "start": 39.49,
+    "end": 39.86,
+    "id": "w120"
+  },
+  {
+    "text": "else",
+    "start": 39.86,
+    "end": 40.11,
+    "id": "w121"
+  },
+  {
+    "text": "can",
+    "start": 40.11,
+    "end": 40.28,
+    "id": "w122"
+  },
+  {
+    "text": "see",
+    "start": 40.29,
+    "end": 40.56,
+    "id": "w123"
+  },
+  {
+    "text": "is",
+    "start": 40.56,
+    "end": 40.64,
+    "id": "w124"
+  },
+  {
+    "text": "the",
+    "start": 40.64,
+    "end": 40.76,
+    "id": "w125"
+  },
+  {
+    "text": "one",
+    "start": 40.76,
+    "end": 41.07,
+    "id": "w126"
+  },
+  {
+    "text": "thing",
+    "start": 41.14,
+    "end": 41.41,
+    "id": "w127"
+  },
+  {
+    "text": "Trey",
+    "start": 41.43,
+    "end": 41.73,
+    "id": "w128"
+  },
+  {
+    "text": "Stevens",
+    "start": 41.73,
+    "end": 42.23,
+    "id": "w129"
+  },
+  {
+    "text": "has",
+    "start": 42.28,
+    "end": 42.46,
+    "id": "w130"
+  },
+  {
+    "text": "done",
+    "start": 42.46,
+    "end": 42.75,
+    "id": "w131"
+  },
+  {
+    "text": "his",
+    "start": 42.75,
+    "end": 42.97,
+    "id": "w132"
+  },
+  {
+    "text": "entire",
+    "start": 42.97,
+    "end": 43.41,
+    "id": "w133"
+  },
+  {
+    "text": "life.",
+    "start": 43.41,
+    "end": 43.96,
+    "id": "w134"
+  },
+  {
+    "text": "His",
+    "start": 44.06,
+    "end": 44.13,
+    "id": "w135"
+  },
+  {
+    "text": "first",
+    "start": 44.13,
+    "end": 44.42,
+    "id": "w136"
+  },
+  {
+    "text": "job,",
+    "start": 44.42,
+    "end": 44.7,
+    "id": "w137"
+  },
+  {
+    "text": "out",
+    "start": 44.7,
+    "end": 44.87,
+    "id": "w138"
+  },
+  {
+    "text": "of",
+    "start": 44.87,
+    "end": 44.97,
+    "id": "w139"
+  },
+  {
+    "text": "college,",
+    "start": 44.99,
+    "end": 45.5,
+    "id": "w140"
+  },
+  {
+    "text": "was",
+    "start": 45.5,
+    "end": 45.66,
+    "id": "w141"
+  },
+  {
+    "text": "in",
+    "start": 45.67,
+    "end": 45.78,
+    "id": "w142"
+  },
+  {
+    "text": "US",
+    "start": 45.78,
+    "end": 45.89,
+    "id": "w143"
+  },
+  {
+    "text": "intelligence,",
+    "start": 45.89,
+    "end": 46.7,
+    "id": "w144"
+  },
+  {
+    "text": "building",
+    "start": 46.71,
+    "end": 47.18,
+    "id": "w145"
+  },
+  {
+    "text": "systems",
+    "start": 47.18,
+    "end": 47.59,
+    "id": "w146"
+  },
+  {
+    "text": "to",
+    "start": 47.59,
+    "end": 47.7,
+    "id": "w147"
+  },
+  {
+    "text": "catch",
+    "start": 47.7,
+    "end": 47.99,
+    "id": "w148"
+  },
+  {
+    "text": "people",
+    "start": 47.99,
+    "end": 48.34,
+    "id": "w149"
+  },
+  {
+    "text": "hiding",
+    "start": 48.34,
+    "end": 48.68,
+    "id": "w150"
+  },
+  {
+    "text": "behind",
+    "start": 48.69,
+    "end": 49.2,
+    "id": "w151"
+  },
+  {
+    "text": "fake",
+    "start": 49.26,
+    "end": 49.53,
+    "id": "w152"
+  },
+  {
+    "text": "names.",
+    "start": 49.53,
+    "end": 50.19,
+    "id": "w153"
+  },
+  {
+    "text": "Then,",
+    "start": 50.3,
+    "end": 50.53,
+    "id": "w154"
+  },
+  {
+    "text": "he",
+    "start": 50.55,
+    "end": 50.67,
+    "id": "w155"
+  },
+  {
+    "text": "spent",
+    "start": 50.68,
+    "end": 50.99,
+    "id": "w156"
+  },
+  {
+    "text": "years",
+    "start": 50.99,
+    "end": 51.3,
+    "id": "w157"
+  },
+  {
+    "text": "warning",
+    "start": 51.3,
+    "end": 51.73,
+    "id": "w158"
+  },
+  {
+    "text": "Silicon",
+    "start": 51.73,
+    "end": 52.15,
+    "id": "w159"
+  },
+  {
+    "text": "Valley",
+    "start": 52.16,
+    "end": 52.53,
+    "id": "w160"
+  },
+  {
+    "text": "that",
+    "start": 52.53,
+    "end": 52.76,
+    "id": "w161"
+  },
+  {
+    "text": "America",
+    "start": 52.77,
+    "end": 53.2,
+    "id": "w162"
+  },
+  {
+    "text": "wasn't",
+    "start": 53.2,
+    "end": 53.56,
+    "id": "w163"
+  },
+  {
+    "text": "ready",
+    "start": 53.56,
+    "end": 53.87,
+    "id": "w164"
+  },
+  {
+    "text": "for",
+    "start": 53.87,
+    "end": 54.05,
+    "id": "w165"
+  },
+  {
+    "text": "the",
+    "start": 54.05,
+    "end": 54.23,
+    "id": "w166"
+  },
+  {
+    "text": "next",
+    "start": 54.23,
+    "end": 54.47,
+    "id": "w167"
+  },
+  {
+    "text": "war.",
+    "start": 54.47,
+    "end": 54.92,
+    "id": "w168"
+  },
+  {
+    "text": "Everyone",
+    "start": 54.98,
+    "end": 55.25,
+    "id": "w169"
+  },
+  {
+    "text": "thought",
+    "start": 55.28,
+    "end": 55.63,
+    "id": "w170"
+  },
+  {
+    "text": "he",
+    "start": 55.63,
+    "end": 55.72,
+    "id": "w171"
+  },
+  {
+    "text": "was",
+    "start": 55.72,
+    "end": 55.86,
+    "id": "w172"
+  },
+  {
+    "text": "crazy.",
+    "start": 55.86,
+    "end": 56.28,
+    "id": "w173"
+  },
+  {
+    "text": "He",
+    "start": 56.38,
+    "end": 56.4,
+    "id": "w174"
+  },
+  {
+    "text": "built",
+    "start": 56.4,
+    "end": 56.7,
+    "id": "w175"
+  },
+  {
+    "text": "the",
+    "start": 56.7,
+    "end": 56.88,
+    "id": "w176"
+  },
+  {
+    "text": "weapons",
+    "start": 56.88,
+    "end": 57.3,
+    "id": "w177"
+  },
+  {
+    "text": "company",
+    "start": 57.31,
+    "end": 57.72,
+    "id": "w178"
+  },
+  {
+    "text": "anyway,",
+    "start": 57.72,
+    "end": 58.2,
+    "id": "w179"
+  },
+  {
+    "text": "which",
+    "start": 58.2,
+    "end": 58.5,
+    "id": "w180"
+  },
+  {
+    "text": "is",
+    "start": 58.5,
+    "end": 58.62,
+    "id": "w181"
+  },
+  {
+    "text": "worth",
+    "start": 58.62,
+    "end": 58.92,
+    "id": "w182"
+  },
+  {
+    "text": "$60",
+    "start": 58.92,
+    "end": 59.34,
+    "id": "w183"
+  },
+  {
+    "text": "billion",
+    "start": 59.34,
+    "end": 59.76,
+    "id": "w184"
+  },
+  {
+    "text": "now.",
+    "start": 59.76,
+    "end": 60.16,
+    "id": "w185"
+  },
+  {
+    "text": "So",
+    "start": 60.26,
+    "end": 60.29,
+    "id": "w186"
+  },
+  {
+    "text": "when",
+    "start": 60.3,
+    "end": 60.59,
+    "id": "w187"
+  },
+  {
+    "text": "he",
+    "start": 60.59,
+    "end": 60.73,
+    "id": "w188"
+  },
+  {
+    "text": "sat",
+    "start": 60.73,
+    "end": 60.95,
+    "id": "w189"
+  },
+  {
+    "text": "at",
+    "start": 60.95,
+    "end": 61.09,
+    "id": "w190"
+  },
+  {
+    "text": "that",
+    "start": 61.09,
+    "end": 61.38,
+    "id": "w191"
+  },
+  {
+    "text": "table,",
+    "start": 61.38,
+    "end": 61.88,
+    "id": "w192"
+  },
+  {
+    "text": "nobody",
+    "start": 61.88,
+    "end": 62.32,
+    "id": "w193"
+  },
+  {
+    "text": "doubted",
+    "start": 62.32,
+    "end": 62.83,
+    "id": "w194"
+  },
+  {
+    "text": "him.",
+    "start": 62.83,
+    "end": 63.31,
+    "id": "w195"
+  },
+  {
+    "text": "That's",
+    "start": 63.42,
+    "end": 63.62,
+    "id": "w196"
+  },
+  {
+    "text": "the",
+    "start": 63.62,
+    "end": 63.77,
+    "id": "w197"
+  },
+  {
+    "text": "trick",
+    "start": 63.77,
+    "end": 64.02,
+    "id": "w198"
+  },
+  {
+    "text": "hiding",
+    "start": 64.02,
+    "end": 64.31,
+    "id": "w199"
+  },
+  {
+    "text": "inside",
+    "start": 64.35,
+    "end": 64.62,
+    "id": "w200"
+  },
+  {
+    "text": "the",
+    "start": 64.62,
+    "end": 64.77,
+    "id": "w201"
+  },
+  {
+    "text": "game.",
+    "start": 64.77,
+    "end": 65.16,
+    "id": "w202"
+  },
+  {
+    "text": "The",
+    "start": 65.26,
+    "end": 65.37,
+    "id": "w203"
+  },
+  {
+    "text": "person",
+    "start": 65.37,
+    "end": 65.78,
+    "id": "w204"
+  },
+  {
+    "text": "a",
+    "start": 65.78,
+    "end": 65.86,
+    "id": "w205"
+  },
+  {
+    "text": "room",
+    "start": 65.86,
+    "end": 66.14,
+    "id": "w206"
+  },
+  {
+    "text": "trusts",
+    "start": 66.19,
+    "end": 66.56,
+    "id": "w207"
+  },
+  {
+    "text": "to",
+    "start": 66.56,
+    "end": 66.7,
+    "id": "w208"
+  },
+  {
+    "text": "find",
+    "start": 66.7,
+    "end": 66.98,
+    "id": "w209"
+  },
+  {
+    "text": "the",
+    "start": 66.98,
+    "end": 67.19,
+    "id": "w210"
+  },
+  {
+    "text": "liar",
+    "start": 67.19,
+    "end": 67.46,
+    "id": "w211"
+  },
+  {
+    "text": "is",
+    "start": 67.46,
+    "end": 67.61,
+    "id": "w212"
+  },
+  {
+    "text": "the",
+    "start": 67.61,
+    "end": 67.82,
+    "id": "w213"
+  },
+  {
+    "text": "one",
+    "start": 67.82,
+    "end": 68.03,
+    "id": "w214"
+  },
+  {
+    "text": "person",
+    "start": 68.03,
+    "end": 68.45,
+    "id": "w215"
+  },
+  {
+    "text": "who",
+    "start": 68.45,
+    "end": 68.66,
+    "id": "w216"
+  },
+  {
+    "text": "can",
+    "start": 68.66,
+    "end": 68.86,
+    "id": "w217"
+  },
+  {
+    "text": "lie",
+    "start": 68.87,
+    "end": 69.08,
+    "id": "w218"
+  },
+  {
+    "text": "to",
+    "start": 69.08,
+    "end": 69.21,
+    "id": "w219"
+  },
+  {
+    "text": "the",
+    "start": 69.22,
+    "end": 69.43,
+    "id": "w220"
+  },
+  {
+    "text": "whole",
+    "start": 69.43,
+    "end": 69.87,
+    "id": "w221"
+  },
+  {
+    "text": "room.",
+    "start": 69.87,
+    "end": 70.17,
+    "id": "w222"
+  }
+]
