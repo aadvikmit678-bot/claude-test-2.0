@@ -61,15 +61,22 @@ B = {
     "money": (T["a"], T["cartel"]),
     "cartel": (T["cartel"], T["weapon"]),
     "weap": (T["weapon"], T["that"]),
-    "logos": (T["that"], T["you"]),
-    "touch": (T["you"], T["touch_end"]),
-    "glow": (T["touch_end"], T["thats"]),
-    "dimon": (T["thats"], T["david"]),
-    "solomon": (T["david"], T["amongst"]),
-    "search": (T["amongst"], T["this"]),       # the panel's orbiting shot, people glowing one by one
-    "thisguy": (T["this"], T["the3"]),         # Fink's own close-up at the panel, lit up
-    "fink": (T["the3"], F(V0 + VO_END + 0.045)),
+    "logos": (T["that"], F(14.25)),
+    "touch": (F(14.25), T["touch_end"]),      # the hands come together from mid "everything", touch on "touch"
+    "glow": (T["touch_end"], T["thats"]),      # split second: the panel from above, people lighting up (X-creative)
+    "dimon": (T["thats"], T["jp"]),            # the tfg page: "That's Jamie Dimon, the guy running"
+    "jpm": (T["jp"], T["david"]),              # "JP Morgan Chase": the bank, in plain cuts
+    "solomon": (T["david"], T["a3"]),          # his speaking clip, then the Hemant flash on him
+    "dj": (T["a3"], T["and"]),                 # "a part-time DJ": the D-Sol video
+    "ceo": (T["and"], T["sachs_end"]),         # the panel's own title lands on "CEO"
+    "search": (T["sachs_end"], T["this"]),     # the camera circling the table; from "Amongst" people light up
+    "thisguy": (T["this"], T["the3"]),         # Fink's close-up at the panel
+    "walk": (T["the3"], T["runs"]),            # "the man who": Fink walking
+    "box": (T["runs"], T["company"]),          # "runs the most evil": the interview, the red square on "most"
+    "company": (T["company"], T["blackrock"]), # "company in the world": BlackRock's lobby and building
+    "brand": (T["blackrock"], F(V0 + VO_END + 0.045)),  # "BlackRock.": the letters on its facade
 }
+B["fink"] = (B["thisguy"][0], B["brand"][1])   # the Fink run as a whole (the Rogan clip follows it)
 B["rogan"] = (B["fink"][1], F(B["fink"][1] + ROGAN_T1 - ROGAN_T0))
 TOTAL = B["rogan"][1]
 

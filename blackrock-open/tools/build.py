@@ -6,7 +6,6 @@ Run: python3 tools/build.py
 """
 import json
 import os
-import random
 
 import timing as TM
 
@@ -130,77 +129,22 @@ class Scene:
 
 # ------------------------------------------------------------------ shared devices
 # ------------------------------------------------------------------ shared devices
-def words_line(sc, words, a_end, y, cls, size, style="", wstyle="", gap="0.28em", blend=None, z=40, enter="blur"):
-    """A line whose words appear on their own times. words: [(text, t)]. Each word is a span animated in."""
-    a = words[0][1]
-    spans, js = [], []
-    for w, t in words:
-        wid = sc.uid("w")
-        spans.append(f'<span id="{wid}" style="display:inline-block;opacity:0;{wstyle}">{w}</span>')
-        if enter == "blur":
-            js.append(f'tl.fromTo("#{wid}",{{opacity:0,y:10,filter:"blur(8px)"}},{{opacity:1,y:0,filter:"blur(0px)",'
-                      f'duration:0.22,ease:"power2.out",immediateRender:false}},{sc.at(t)});')
-        else:  # instant (Nvidia: the chunk appears at once on its syllable)
-            js.append(f'tl.set("#{wid}",{{opacity:1}},{sc.at(t)});')
-    inner = (f'<div class="{cls}" style="display:flex;gap:{gap};align-items:baseline;font-size:{size}px;{style}">'
-             + "".join(spans) + "</div>")
-    st = f"top:{y}px;height:0;" + (f"mix-blend-mode:{blend};" if blend else "")
-    did = sc.div(a, a_end, inner, z=z, cls="cap", style=st)
-    sc.js.extend(js)
-    return did
-
-
 def B_dur(a, b):
     return max(FR, F(b) - F(a))
-
-
-def giant(sc, text, a, b, color, z, size=600, sx=0.47, y=255, rise=None, slam=None, seed=1, push=(1.0, 1.04)):
-    """The tfg reel's giant name behind the person: tall condensed serif caps, letter by letter rising from below
-    with blur and fading in (rise=(t0, t1) window), or all at once (slam=t). Set across the top of the frame, behind
-    the head (the user: higher, at the top behind his head)."""
-    gid = sc.uid("g")
-    letters, js = [], []
-    rnd = random.Random(seed)
-    idx = [i for i, ch in enumerate(text) if ch != " "]
-    order = idx[:]
-    rnd.shuffle(order)
-    for i, ch in enumerate(text):
-        if ch == " ":
-            letters.append('<span style="display:inline-block;width:0.22em"></span>')
-            continue
-        lid = f"{gid}l{i}"
-        letters.append(f'<span id="{lid}" style="display:inline-block;opacity:0">{ch}</span>')
-        if rise:
-            r0, r1 = rise
-            k = order.index(i) / max(1, len(order) - 1)
-            t = r0 + (r1 - r0) * k
-            js.append(f'tl.fromTo("#{lid}",{{opacity:0,y:170,filter:"blur(16px)"}},{{opacity:1,y:0,filter:"blur(0px)",'
-                      f'duration:0.62,ease:"power3.out",immediateRender:false}},{sc.at(t)});')
-        elif slam is not None:
-            js.append(f'tl.set("#{lid}",{{opacity:1}},{sc.at(slam)});')
-        else:
-            js.append(f'tl.set("#{lid}",{{opacity:1}},{sc.at(a)});')
-    inner = (f'<div id="{gid}p" style="position:absolute;left:0;right:0;top:{y}px;height:0;display:flex;justify-content:center;">'
-             f'<div style="transform:translateY(-50%) scaleX({sx});transform-origin:50% 50%;white-space:nowrap;'
-             f'font-family:\'ISerif\',serif;font-size:{size}px;line-height:1;color:{color};letter-spacing:0.01em;">'
-             + "".join(letters) + "</div></div>")
-    sc.div(a, b, inner, z=z, did=gid)
-    js.append(f'tl.fromTo("#{gid}p",{{scale:{push[0]}}},{{scale:{push[1]},duration:{r4(B_dur(a, b))},ease:"none",'
-              f'immediateRender:false}},{sc.at(a)});')
-    if slam is not None:
-        js.append(f'tl.fromTo("#{gid}p",{{scale:1.14}},{{scale:1.0,duration:0.16,ease:"power3.out",immediateRender:false}},{sc.at(slam)});')
-    sc.js.extend(js)
-    return gid
 
 
 CAP_Y, CAP_SIZE = 900, 64   # the Jensen Huang reel's caption: white bold Helvetica caps, ~83 % down, in at once
 
 
-def caption(sc, text, a, b, y=CAP_Y, size=CAP_SIZE, blend="difference", z=40):
+SHADOW = "text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);"
+
+
+def caption(sc, text, a, b, y=CAP_Y, size=CAP_SIZE, blend="difference", z=40, shadow=False):
     """The captions that were small italic labels, now as the Nvidia reel's caption (the user: the Jensen video's
     caption font). Difference blend over the people, so they read on the dark suits and the white shirts alike."""
     st = f"top:{y}px;height:0;" + (f"mix-blend-mode:{blend};" if blend else "")
-    return sc.div(a, b, f'<div class="hv" style="font-size:{size}px;">{text}</div>', z=z, cls="cap", style=st)
+    sh = SHADOW if shadow else ""
+    return sc.div(a, b, f'<div class="hv" style="font-size:{size}px;{sh}">{text}</div>', z=z, cls="cap", style=st)
 
 
 def chunks(sc, items, end, **kw):
@@ -208,19 +152,6 @@ def chunks(sc, items, end, **kw):
     for i, (text, t) in enumerate(items):
         b = items[i + 1][1] if i + 1 < len(items) else end
         caption(sc, text, t, b, **kw)
-
-
-def person(sc, src, a, b, media, z, y0=None, y1=70, rise=None, x=0, scale=0.94):
-    """A speaking cut-out (VP9 + alpha, full frame), optionally rising from the bottom."""
-    vid = sc.video(src, a, b, media=media, z=z, style="transform-origin:50% 100%;")
-    if rise:
-        r0, r1 = rise
-        sc.js.append(f'tl.fromTo("#{vid}",{{x:{x},y:{y0},scale:{scale}}},{{x:{x},y:{y1},scale:{scale},duration:{r4(r1 - r0)},'
-                     f'ease:"power3.out",immediateRender:false}},{sc.at(r0)});')
-        sc.js.append(f'tl.to("#{vid}",{{y:{y1 - 22},duration:{r4(max(FR, b - r1 - FR))},ease:"none"}},{sc.at(r1 + FR)});')
-    else:
-        sc.js.append(f'tl.set("#{vid}",{{x:{x},y:{y1},scale:{scale}}},{sc.at(a)});')
-    return vid
 
 
 # ------------------------------------------------------------------ s_quote: the panel line
@@ -305,16 +236,17 @@ def s_hook():
     # 5. weaponized capital
     sc.video("r_weap.mp4", *B["weap"], z=1)
     cap = T["capital"]
-    for word, a, b in (("WEAPONIZED", B["weap"][0], cap - 2 * FR), ("CAPITAL", cap, cap + 2 * FR),
-                       ("CAPITAL", cap + 4 * FR, B["weap"][1])):
+    for word, a, b in (("WEAPONIZED", B["weap"][0], B["weap"][0] + 0.35),       # once, on its word (the user)
+                       ("CAPITAL", cap, min(cap + 0.42, B["weap"][1] - 2 * FR))):
         wid = sc.uid("wz")
         sc.div(a, b, f'<div id="{wid}" style="font-family:\'LGothic\',sans-serif;font-size:430px;line-height:1;color:#fff;'
                      f'letter-spacing:0.01em;">{word}</div>', z=30, cls="cap", style="top:545px;height:0;mix-blend-mode:difference;")
         sc.js.append(f'tl.fromTo("#{wid}",{{scale:1.06}},{{scale:1.0,duration:0.06,ease:"power2.out",immediateRender:false}},{sc.at(a)});')
     # 6. that owns a piece of everything you touch
     sc.video("r_logos.mp4", *B["logos"], z=1)
-    chunks(sc, [("That owns", T["that"]), ("A piece of", T["piece"]), ("Everything", T["everything"])], T["you"])
+    chunks(sc, [("That owns", T["that"]), ("A piece of", T["piece"]), ("Everything", T["everything"])], B["logos"][1])
     sc.video("r_touch.mp4", *B["touch"], z=1)
+    caption(sc, "Everything", B["touch"][0], T["you"], blend=None)
     chunks(sc, [("You", T["you"]), ("You touch.", T["touch"])], B["touch"][1] - 2 * FR, blend=None)
     # 7. split second: the panel from above, every seat lighting up
     sc.video("r_glow.mp4", *B["glow"], z=1)
@@ -322,124 +254,91 @@ def s_hook():
     return sc
 
 
-# ------------------------------------------------------------------ s_dimon
-PAPER = "paper_warm.jpg"
-LIGHT_GIANT = "rgba(214,64,84,0.60)"
-DARK_BG = "radial-gradient(ellipse at 50% 45%,#34352f 0%,#2a2b27 55%,#1c1d1a 100%)"
-DARK_GIANT = "rgba(86,88,80,0.85)"
+# ------------------------------------------------------------------ v2: plain cuts between real shots
+def cuts(sc, shots, z=1):
+    """[(clip, start, end)]: one video per shot, each cut hard to the next."""
+    for src, a, b in shots:
+        sc.video(src, a, b, z=z)
 
 
+def split(a, b, n):
+    """n plain-cut slots between a and b on the 60 fps grid."""
+    return [(F(a + (b - a) * k / n), F(a + (b - a) * (k + 1) / n)) for k in range(n)]
+
+
+# ------------------------------------------------------------------ s_dimon: the tfg page, then JPMorgan Chase
 def s_dimon():
-    sc = Scene("s_dimon", *B["dimon"])
-    a0 = B["dimon"][0]
-    tl_ = T["dimon"]          # the flash lands on "Dimon"
-    v = sc.video("p_dimon.mp4", a0, tl_, z=1, style="transform-origin:1089px 378px;")
-    sc.js.append(f'tl.fromTo("#{v}",{{scale:1.0}},{{scale:1.55,duration:{r4(B_dur(a0, tl_))},ease:"power2.in",immediateRender:false}},{sc.at(a0)});')
-    sc.flash(tl_, up=0.12, down=0.2)
-    chase = T["chase"]
-    pid = sc.img(PAPER, tl_, chase, z=2)
-    sc.js.append(f'tl.fromTo("#{pid}",{{scale:1.0}},{{scale:1.05,duration:{r4(B_dur(tl_, chase))},ease:"none",immediateRender:false}},{sc.at(tl_)});')
-    giant(sc, "JAMIE DIMON", tl_, chase, LIGHT_GIANT, z=3, rise=(tl_ + 0.04, tl_ + 0.80), seed=3)
-    person(sc, "dimon_cut.webm", tl_, chase, 0.0, z=8, y0=640, y1=96, rise=(tl_, tl_ + 0.78))
-    # the dark page: hard cut on "Chase"
-    sc.div(chase, B["dimon"][1], "", z=2, style=f"background:{DARK_BG};")
-    giant(sc, "JAMIE DIMON", chase, B["dimon"][1], DARK_GIANT, z=3, push=(1.04, 1.06))
-    person(sc, "dimon_bw.webm", chase, B["dimon"][1], round(chase - tl_, 4), z=8, y1=74)
-    caption(sc, "That’s Jamie Dimon", tl_, chase)
-    caption(sc, "The CEO of JPMorgan", chase, B["dimon"][1] - 2 * FR)
+    sc = Scene("s_dimon", B["dimon"][0], B["jpm"][1])
+    sc.video("r_dimon_page.mp4", *B["dimon"], z=1)
+    chunks(sc, [("That’s", T["thats"]), ("Jamie Dimon", T["jamie"]), ("The guy running", T["the1"])], B["dimon"][1])
+    slots = split(*B["jpm"], 4)
+    cuts(sc, [(f"v2_jp{k + 1}.mp4", a, b) for k, (a, b) in enumerate(slots)])
+    caption(sc, "JPMorgan Chase", B["jpm"][0], B["jpm"][1] - 2 * FR, blend=None, shadow=True)
     sc.write()
     return sc
 
 
-# ------------------------------------------------------------------ s_solomon
+# ------------------------------------------------------------------ s_solomon: Hemant flash, D-Sol, the panel title
 def s_solomon():
-    sc = Scene("s_solomon", *B["solomon"])
-    a0, dj, dark, end = B["solomon"][0], T["a3"], T["and"], B["solomon"][1]
-    pid = sc.img(PAPER, a0, dj, z=2)
-    sc.js.append(f'tl.fromTo("#{pid}",{{scale:1.02}},{{scale:1.06,duration:{r4(B_dur(a0, dj))},ease:"none",immediateRender:false}},{sc.at(a0)});')
-    giant(sc, "DAVID SOLOMON", a0, dj, LIGHT_GIANT, z=3, size=560, sx=0.45, rise=(a0 + 0.05, a0 + 0.62), seed=5)
-    person(sc, "solomon_cut.webm", a0, dj, 0.0, z=8, y0=600, y1=110, rise=(a0, a0 + 0.62))
-    # the dark page from Dimon slides off to the left (the tfg reel's wipe)
-    wid = sc.uid("wipe")
-    sc.div(a0, a0 + 0.2, f'<div id="{wid}" class="layer" style="background:{DARK_BG};"></div>', z=20)
-    sc.js.append(f'tl.fromTo("#{wid}",{{x:0}},{{x:-1980,duration:0.18,ease:"power2.in",immediateRender:false}},{sc.at(a0)});')
-    caption(sc, "David Solomon", a0, dj)
-    # a part-time DJ: three club photos, strobes between them
-    third = (dark - dj) / 3
-    for i in range(3):
-        a, b = dj + i * third, dj + (i + 1) * third
-        iid = sc.img(f"dj_{i + 1}.jpg", a, b, z=10)
-        sc.js.append(f'tl.fromTo("#{iid}",{{scale:1.0}},{{scale:1.07,duration:{r4(B_dur(a, b))},ease:"none",immediateRender:false}},{sc.at(a)});')
-        sc.flash(a, peak=0.9, down=0.07, z=40)
-    caption(sc, "A part-time DJ", T["parttime"], dark, blend=None, z=45)
-    # the dark page: CEO, Goldman Sachs
-    sc.div(dark, end, "", z=2, style=f"background:{DARK_BG};")
-    giant(sc, "DAVID SOLOMON", dark, end, DARK_GIANT, z=3, size=560, sx=0.45, push=(1.03, 1.07))
-    person(sc, "solomon_bw.webm", dark, end, 1.70, z=8, y1=88)
-    chunks(sc, [("The CEO of", T["the2"]), ("Goldman Sachs", T["goldman"])], end - 2 * FR)
+    sc = Scene("s_solomon", B["solomon"][0], B["ceo"][1])
+    sc.video("r_solomon.mp4", *B["solomon"], z=1)
+    caption(sc, "David Solomon", T["david"], B["solomon"][1])
+    cuts(sc, [(f"v2_dj{k + 1}.mp4", a, b) for k, (a, b) in enumerate(split(*B["dj"], 3))])
+    caption(sc, "A part-time DJ", B["dj"][0], B["dj"][1], blend=None, shadow=True)
+    sc.video("v2_ceo.mp4", *B["ceo"], z=1)
+    # above the panel's own lower third ("David Solomon -- Chairman & CEO, Goldman Sachs", y 815-1025)
+    chunks(sc, [("And the CEO of", T["and"]), ("Goldman Sachs", T["goldman"])], B["ceo"][1] - 2 * FR, y=745, blend=None, shadow=True)
     sc.write()
     return sc
 
 
-# ------------------------------------------------------------------ amongst them is this guy (the X-creative opening)
+# ------------------------------------------------------------------ s_search: the orbit, people lighting; this guy
 def s_search():
     sc = Scene("s_search", B["search"][0], B["thisguy"][1])
-    sc.video("r_search.mp4", *B["search"], z=1)
-    sc.video("r_thisguy.mp4", *B["thisguy"], z=1)
-    chunks(sc, [("Amongst them", T["amongst"]), ("Is this guy", T["is"])], B["thisguy"][1] - 2 * FR)
+    sc.video("r_orbit.mp4", *B["search"], z=1)
+    sc.video("v2_fink_pc.mp4", *B["thisguy"], z=1)
+    chunks(sc, [("Amongst them", T["amongst"]), ("Is this guy", T["is"])], B["thisguy"][1] - 2 * FR, blend=None, shadow=True)
     sc.write()
     return sc
 
 
-# ------------------------------------------------------------------ s_fink
-FACE = (1186, 398)   # Fink's face centre in the frame (measured on the render: face box 1029,236,322,322 at zoom 1)
-ZO = f"{FACE[0]}px {FACE[1]}px"
+# ------------------------------------------------------------------ s_fink: the man who runs ... BlackRock.
+BOX_FACE = (1332, 396)   # Fink's face centre in v2_fink_box (Haar, mean over the shot; it moves < 2 px a step)
+BOX = 400                # the square, a little wider than his face (345 px)
+# the VC reel's box: cut in at 88.5 % of its size, then held 2 frames at 25 fps per step (12.5 steps a second)
+BOX_STEPS = [(0.0, 0.885, 0.40), (0.08, 0.945, 0.43), (0.16, 0.980, 0.46), (0.24, 0.995, 0.475), (0.32, 1.0, 0.48)]
 
 
 def s_fink():
-    sc = Scene("s_fink", *B["fink"])
-    a0, br, end = B["fink"][0], T["blackrock"], B["fink"][1]
-    zoom = lambda el: (f'tl.fromTo("#{el}",{{scale:1.0}},{{scale:1.2,duration:{r4(B_dur(a0, br))},ease:"sine.inOut",'
-                       f'immediateRender:false}},{sc.at(a0)});')
-    zid = sc.uid("zoom")
-    sc.add(f'<div id="{zid}" class="clip layer" {sc.timed(a0, end)} data-track-index="3" style="z-index:2;transform-origin:{ZO};">'
-           f'<img id="{zid}bg" class="full" src="assets/img/br_bg_ring.jpg" alt="" style="z-index:1" /></div>')
-    sc.js.append(zoom(zid))
-    sc.js.append(f'tl.to("#{zid}",{{scale:1.08,duration:0.16,ease:"power3.out"}},{sc.at(br)});')
-    # giant BLACKROCK slams in behind him on "BlackRock." (higher, behind his head)
-    giant(sc, "BLACKROCK", br, end, "rgba(236,72,92,0.86)", z=3, size=620, sx=0.5, slam=br, push=(1.0, 1.03))
-    # him: colour, then black and white on "BlackRock."
-    fx = -140
-    vc = person(sc, "fink_cut.webm", a0, br, 0.0, z=5, y1=40, x=fx, scale=1.0)
-    vb = person(sc, "fink_bw.webm", br, end, round(br - a0, 4), z=5, y1=40, x=fx, scale=1.0)
-    for v in (vc, vb):  # follow the zoom (same origin, same curve)
-        sc.js.append(f'tl.set("#{v}",{{transformOrigin:"{FACE[0] - fx}px {FACE[1] - 40}px"}},0);')
-        sc.js.append(zoom(v))
-    sc.js.append(f'tl.set("#{vb}",{{scale:1.08}},{sc.at(br)});')
-    # the red square on his face (DdwXUrwtqJO's selection box), see-through so his face shows, "most evil" in it
+    sc = Scene("s_fink", B["walk"][0], B["brand"][1])
+    sc.video("v2_fink_walk.mp4", *B["walk"], z=1)
+    sc.video("v2_fink_box.mp4", *B["box"], z=1)
+    caption(sc, "The man who runs", T["the3"], T["most"], blend=None, shadow=True)
+    # the red square: appears on "most" while the shot plays (not on the cut), settles in steps, stays put
     rb = sc.uid("rb")
-    S_ = 340
-    bx, by = FACE[0] + 20 - S_ // 2, FACE[1] + 14 - S_ // 2   # centred on the whole face (he looks slightly to our left)
-    hs = "".join(f'<div style="position:absolute;left:{x - 9}px;top:{y - 9}px;width:18px;height:18px;background:#111;"></div>'
-                 for x, y in ((0, 0), (S_, 0), (0, S_), (S_, S_)))
-    w1, w2 = sc.uid("t"), sc.uid("t")
-    box = (f'<div id="{rb}" style="position:absolute;left:{bx}px;top:{by}px;width:{S_}px;height:{S_}px;transform-origin:50% 50%;">'
-           f'<div style="position:absolute;inset:0;background:rgba(226,34,48,0.40);border:2px solid rgba(40,6,8,0.85);"></div>'
-           + hs +
-           f'<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;'
-           f'font-family:\'ISerif\',serif;font-size:132px;line-height:0.92;color:#fff;letter-spacing:-0.01em;'
-           f'text-shadow:0 0 14px rgba(255,255,255,0.28);">'
-           f'<span id="{w1}" style="opacity:0">most</span><span id="{w2}" style="opacity:0">evil</span></div></div>')
-    box_a, box_b = T["man"], T["world_end"] + 0.24
-    sc.div(box_a, box_b, box, z=12, style=f"transform-origin:{ZO};", did=f"{rb}w")
-    sc.js += [zoom(f"{rb}w"),
-              f'tl.fromTo("#{rb}",{{scale:1.0}},{{scale:1.05,duration:{r4(B_dur(box_a, box_b - 0.3))},ease:"none",immediateRender:false}},{sc.at(box_a)});',
-              f'tl.set("#{w1}",{{opacity:1}},{sc.at(T["most"])});',
-              f'tl.set("#{w2}",{{opacity:1}},{sc.at(T["evil"])});',
-              f'tl.to("#{rb}",{{x:-1750,filter:"blur(7px)",duration:0.3,ease:"power3.in"}},{sc.at(box_b - 0.3)});']
-    caption(sc, "Company in the world", T["company"], box_b - 0.2)
-    sc.flash(a0, peak=1.0, down=0.16, z=60)
-    sc.flash(br, peak=0.7, down=0.12, z=60)
+    bx, by = BOX_FACE[0] - BOX // 2, BOX_FACE[1] - BOX // 2 - 10
+    hs = "".join(f'<div style="position:absolute;left:{x - 7}px;top:{y - 7}px;width:14px;height:14px;background:#0b0b0b;"></div>'
+                 for x, y in ((0, 0), (BOX, 0), (0, BOX), (BOX, BOX)))
+    w1, w2, fill = sc.uid("t"), sc.uid("t"), sc.uid("f")
+    box = (f'<div id="{rb}" style="position:absolute;left:{bx}px;top:{by}px;width:{BOX}px;height:{BOX}px;'
+           f'transform-origin:50% 50%;">'
+           f'<div id="{fill}" style="position:absolute;inset:0;background:rgba(222,30,44,{BOX_STEPS[0][2]});'
+           f'border:2px solid rgba(36,6,8,0.9);"></div>' + hs +
+           f'<div style="position:absolute;left:0;right:0;top:22px;display:flex;justify-content:center;gap:0.24em;'
+           f'font-family:\'ISerif\',serif;font-size:50px;line-height:1;color:#fff;letter-spacing:0.005em;">'
+           f'<span id="{w1}">most</span><span id="{w2}" style="opacity:0">evil</span></div></div>')
+    sc.div(T["most"], B["box"][1], box, z=12, did=f"{rb}w")
+    sc.js.append(f'tl.set("#{rb}",{{scale:{BOX_STEPS[0][1]}}},0);')
+    for dt, k, al in BOX_STEPS[1:]:
+        sc.js.append(f'tl.set("#{rb}",{{scale:{k}}},{sc.at(T["most"] + dt)});')
+        sc.js.append(f'tl.set("#{fill}",{{backgroundColor:"rgba(222,30,44,{al})"}},{sc.at(T["most"] + dt)});')
+    sc.js.append(f'tl.set("#{w2}",{{opacity:1}},{sc.at(T["evil"])});')
+    # company in the world: BlackRock itself, in plain cuts; "BlackRock.": its letters
+    c = split(*B["company"], 3)
+    cuts(sc, [("v2_br_lobby.mp4", *c[0]), ("v2_br_bldg.mp4", *c[1]), ("v2_br_doors.mp4", *c[2]),
+              ("v2_br_sign.mp4", *B["brand"])])
+    caption(sc, "Company in the world", T["company"], B["company"][1], blend=None, shadow=True)
+    caption(sc, "BlackRock.", T["blackrock"], B["brand"][1] - 2 * FR, blend=None, shadow=True)
     sc.write()
     return sc
 
@@ -448,18 +347,8 @@ def s_fink():
 def s_rogan():
     sc = Scene("s_rogan", *B["rogan"])
     sc.video("rogan.mp4", *B["rogan"], z=1)
-    sc.flash(B["rogan"][0], peak=0.5, down=0.08, z=60)
     sc.write()
     return sc
-
-
-# ------------------------------------------------------------------ the light-leak block, twice
-def leak_copies():
-    src = open(f"{COMP}/organic-light-leak-overlay.html").read()
-    for name in ("leak_dj", "leak_reveal"):
-        s = src.replace('data-composition-id="organic-light-leak-overlay"', f'data-composition-id="{name}"')
-        s = s.replace('id="organic-light-leak-overlay"', f'id="{name}"')
-        open(f"{COMP}/{name}.html", "w").write(s)
 
 
 def index(scenes):
@@ -468,11 +357,6 @@ def index(scenes):
         hosts.append(f'<div id="h-{sc.sid}" data-composition-id="{sc.sid}" data-composition-src="compositions/{sc.sid}.html" '
                      f'data-start="{r4(sc.t0)}" data-duration="{r4(sc.dur)}" data-track-index="1" data-track-kind="graphics" '
                      f'data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:{z}"></div>')
-    leaks = [("leak_dj", T["a3"] - 0.05, T["and"] + 0.1), ("leak_reveal", T["this"] - 0.1, T["the3"] + 0.25)]
-    for name, a, b in leaks:
-        hosts.append(f'<div id="h-{name}" data-composition-id="{name}" data-composition-src="compositions/{name}.html" '
-                     f'data-start="{r4(F(a))}" data-duration="{r4(F(b) - F(a))}" data-track-index="2" data-track-kind="graphics" '
-                     f'data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:50;pointer-events:none"></div>')
     html = f"""<!doctype html>
 <html lang="en">
   <head>
@@ -503,6 +387,5 @@ def index(scenes):
 if __name__ == "__main__":
     os.makedirs(COMP, exist_ok=True)
     scenes = [s_quote(), s_hook(), s_dimon(), s_solomon(), s_search(), s_fink(), s_rogan()]
-    leak_copies()
     index(scenes)
     print("wrote", len(scenes), "scenes; total", TM.TOTAL)

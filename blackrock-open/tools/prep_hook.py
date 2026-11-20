@@ -10,7 +10,8 @@
   r_weap    "weaponized capital"  the opal clip's tank: blueprint pages -> the tank firing -> B&W turret
   r_logos   "that owns a piece of everything"  company / ownership pages, centre focus
   r_touch   "you touch"        the touch clip's painting and pixel hands, the touch burst, white
-  r_glow    (split second)     the panel from above, every seat glowing in turn, before "That's Jamie Dimon"
+
+The split-second glow after "you touch" and everything from "That's Jamie Dimon" on are built by prep_v2.py.
 
 Run: <venv>/bin/python -I tools/prep_hook.py [names...]
 """
@@ -273,6 +274,18 @@ def opal_page(f, k=1.45):
     return page
 
 
+def opal_page_band(f):
+    """The vertical page cropped to a horizontal 16:9 band (720x405) where its drawing is densest, filling the frame
+    (the user: crop the vertical video to horizontal, no white sides)."""
+    p = frame_at(OPAL, f, 30)
+    ink = (p.astype(np.float32).mean(axis=2) < 140).sum(axis=1)
+    top = max(range(0, 1280 - 405, 5), key=lambda y: ink[y:y + 405].sum())
+    band = p[top:top + 405]
+    up = cv2.resize(band, (W, H), interpolation=cv2.INTER_CUBIC).astype(np.float32)
+    blur = cv2.GaussianBlur(up, (0, 0), 1.4)
+    return np.clip(up * 1.6 - blur * 0.6, 0, 255)
+
+
 def opal_band(f, yc):
     p = frame_at(OPAL, f, 30)
     y0 = int(min(max(yc - 202, 0), 1280 - 405))
@@ -289,7 +302,7 @@ def r_weap():
     cap = round(TM.T["capital"] * FPS) - t0     # cut to the turret
     seq = []
     for f in (95, 98, 100, 102, 105):            # blueprint pages (top view, side views, M4A3, Tiger), 3 frames each
-        pg = center_focus(opal_page(f), r0=380, r1=880, zoom=0.012)
+        pg = center_focus(opal_page_band(f), r0=380, r1=880, zoom=0.012)  # a 16:9 band of the page, filling the frame
         seq += [pg] * 3
     seq = seq[:ized] + [seq[-1]] * max(0, ized - len(seq))
     live = []
@@ -316,9 +329,8 @@ def r_weap():
 GE, BV, BR = f"{DL}/good_edit_42s.mp4", f"{DL}/blackrock_video.mp4", f"{DL}/blackrock_reel.mp4"
 LOGO_PAGES = [  # (source, time, kind, band centre y for portrait sources, frames)
     (GE, 34.30, "sq", 0, 6), (GE, 35.10, "sq", 0, 6), (GE, 35.75, "sq", 0, 6), (BV, 0.40, "band", 960, 6),
-    (GE, 36.20, "sq", 0, 6), (GE, 37.75, "sq", 0, 6), (BV, 1.40, "band", 960, 6), (GE, 48.35, "sq", 0, 6),
-    (GE, 48.62, "sq", 0, 6), (GE, 49.10, "sq", 0, 6), (BR, 7.00, "band", 330, 5), (BV, 18.50, "band", 920, 5),
-    (BR, 8.30, "band", 330, 5), (BV, 21.50, "band", 960, 5), (BV, 25.00, "band", 960, 5), (GE, 50.50, "sq", 0, 5),
+    (GE, 36.20, "sq", 0, 6), (GE, 37.75, "sq", 0, 6), (BV, 1.40, "band", 960, 5), (GE, 48.35, "sq", 0, 5),
+    (GE, 49.10, "sq", 0, 5), (BR, 7.00, "band", 330, 6), (BR, 8.30, "band", 330, 6), (BV, 21.50, "band", 960, 5),
     (BR, 13.00, "band", 470, 8),
 ]
 
@@ -353,7 +365,7 @@ def r_logos():
             k = 1.0 + 0.012 * j
             im = affine(page.astype(np.float32), k, W / 2, H / 2, W / 2, H / 2)
             fr = center_focus(im, r0=430, r1=930, zoom=0.012)
-            if pi == 9:
+            if pi == 8:
                 fr = 255 - fr
             wr.write(fr + grain(seed=300 + i, amt=4))
             i += 1
@@ -365,50 +377,47 @@ TOUCH = f"{DL}/touch_rawcanvas.mp4"
 
 
 def r_touch():
-    n = nframes("touch")  # 31
+    """The touch clip's hands (the user: the two hands coming together, then touching; extended): the Creation of
+    Adam pushing in, then the clip's pixel hands sliding together so the fingertips meet exactly on "touch", then
+    the clip's own touch burst, then white. The clip's "A year ago" text frames are not used."""
+    n = nframes("touch")  # 53
+    t0 = round(TM.B["touch"][0] * FPS)
+    k_touch = round(TM.T["touch"] * FPS) - t0              # the frame the fingertips meet
     seq = []
-    paint = cover(frame_at(TOUCH, 1, 24).astype(np.float32))  # frames 1-2: the painting before the clip's text
-    for j in range(10):
-        seq.append(affine(paint, 1.0 + 0.004 * j, 980, 330, 980, 330))
+    paint = cover(frame_at(TOUCH, 1, 24).astype(np.float32))
+    n_paint = 16
+    for j in range(n_paint):
+        seq.append(affine(paint, 1.0 + 0.07 * j / n_paint, 980, 330, 980, 330))
     hands = cover(frame_at(TOUCH, 0, 24).astype(np.float32))
-    seq += [hands] * 5
-    for f, d in ((22, 3), (23, 3), (24, 3), (25, 3), (26, 2)):  # the touch burst, after the text has gone
-        seq += [cover(frame_at(TOUCH, f, 24).astype(np.float32))] * d
-    seq += [np.full((H, W, 3), 252, np.float32)] * 2
+    # a clean plate of the clip's own dark pixel-grid background (the hand-free middle strip, tiled), so the hands
+    # slide over the same texture with no black seam between them
+    strip = hands[:, 922:992]                               # the empty middle (no lit pixels there)
+    plate = np.concatenate([strip] * (W // strip.shape[1] + 1), axis=1)[:, :W]
+    lum = cv2.GaussianBlur(hands.mean(axis=2), (0, 0), 1.2)
+    mask = np.clip((lum - 34) / 40, 0, 1)[..., None]       # the lit pixels of the hands
+    left_m, right_m = mask.copy(), mask.copy()
+    left_m[:, 960:] = 0
+    right_m[:, :960] = 0
+    n_app = k_touch - n_paint
+    for j in range(n_app):
+        u = smooth((j + 1) / n_app)
+        d = 170 - 215 * u                                   # 170 px apart each side -> 45 px past: the tips meet
+        fr = plate.copy()
+        for m, dx in ((left_m, -d), (right_m, d)):
+            M = np.float32([[1, 0, dx], [0, 1, 0]])
+            hs = cv2.warpAffine(hands, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+            ms = cv2.warpAffine(m, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)[..., None]
+            fr = fr * (1 - ms) + hs * ms
+        seq.append(fr)
+    burst = [cover(frame_at(TOUCH, f, 24).astype(np.float32)) for f in (21, 22, 23, 24, 25)]
+    n_burst = n - len(seq) - 4
+    for j in range(n_burst):
+        seq.append(burst[min(len(burst) - 1, j * len(burst) // n_burst)])
+    seq += [np.full((H, W, 3), 252, np.float32)] * 4
     assert len(seq) == n, (len(seq), n)
     wr = Writer(f"{CLIPS}/r_touch.mp4")
     for i, fr in enumerate(seq):
         wr.write(fr + grain(seed=400 + i, amt=4))
-    wr.close()
-
-
-# ---------------------------------------------------------------- glow
-SEATS = [(655, 140), (905, 110), (1112, 128), (1335, 225), (1412, 375), (1400, 600), (1295, 800), (1050, 920),
-         (752, 840), (540, 735), (445, 500), (548, 318)]
-
-
-def r_glow():
-    n = nframes("glow")  # 37
-    fr0 = grab(PANEL, 954.6, n, fps=FPS)
-    order = [5, 0, 9, 3, 7, 11, 1, 6, 10, 2, 8, 4]
-    starts = [3, 5, 8, 10, 12, 15, 17, 19, 22, 24, 26, 29]
-    env = [0.35, 1.0, 0.8, 0.5, 0.28, 0.12, 0.04]
-    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
-    blobs = [np.exp(-(((xx - x) ** 2 + (yy - y) ** 2) / (2 * 75.0 ** 2)))[..., None] for x, y in SEATS]
-    wr = Writer(f"{CLIPS}/r_glow.mp4")
-    for i in range(n):
-        im = affine(fr0[i].astype(np.float32), 1.0 + 0.06 * i / n, W / 2, H / 2, W / 2, H / 2, border=(0, 0, 0))
-        light = np.zeros((H, W, 1), np.float32)
-        for s, st in zip(order, starts):
-            j = i - st
-            if 0 <= j < len(env):
-                light += blobs[s] * env[j]
-        im = im + (255 - im) * np.clip(light * 0.85, 0, 1) + light * 40
-        if i < 10:
-            im = cv2.GaussianBlur(im, (0, 0), max(0.1, 3.5 * (1 - i / 10)))
-        wf = [1.0, 0.72, 0.42, 0.16][i] if i < 4 else 0.0
-        im = im * (1 - wf) + 252 * wf
-        wr.write(im + grain(seed=500 + i, amt=5))
     wr.close()
 
 
@@ -430,81 +439,8 @@ def r_these():
     wr.close()
 
 
-# ---------------------------------------------------------------- amongst them: the orbit, people glowing
-ORBIT_T0 = 6.0           # the panel video opens on a camera circling the table (0.0-10.3 s); played at 2x
-ORBIT_PEOPLE = [(450, 467), (583, 470), (733, 490), (777, 478), (890, 473), (1043, 493), (1083, 473), (1197, 477),
-                (1380, 467), (1447, 473)]  # head centres in the frame at 6.0 s, marked on a grid (the detector misses them)
-ORBIT_GLOWS = [(3, 3), (11, 0), (19, 7), (27, 1), (35, 5), (43, 8)]  # (frame, person): the X-creative reel's random lights
-
-
-def glow_layer(h, w, x, y, sig=36, halo=120):
-    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
-    r2 = (xx - x) ** 2 + (yy - y) ** 2
-    return np.exp(-r2 / (2 * sig ** 2))[..., None], np.exp(-r2 / (2 * halo ** 2))[..., None]
-
-
-def apply_glow(im, core, halo, a):
-    """The X-creative reel's light: the person overexposes to white with a soft bloom around it."""
-    im = im + (255 - im) * np.clip(core * 0.95 * a, 0, 1)
-    return im + 255 * halo * 0.22 * a
-
-
-def r_search():
-    n = nframes("search")  # 53
-    frames = grab(PANEL, ORBIT_T0, n, fps=FPS, vf="setpts=0.5*PTS")
-    gray = [cv2.cvtColor(np.ascontiguousarray(f), cv2.COLOR_RGB2GRAY) for f in frames]
-    pts = np.float32(ORBIT_PEOPLE).reshape(-1, 1, 2)
-    track = [pts.reshape(-1, 2).copy()]
-    for i in range(1, len(gray)):
-        nxt, st, _ = cv2.calcOpticalFlowPyrLK(gray[i - 1], gray[i], pts, None, winSize=(41, 41), maxLevel=3,
-                                              criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 30, 0.01))
-        bad = st.reshape(-1) == 0
-        nxt[bad] = pts[bad]
-        pts = nxt
-        track.append(pts.reshape(-1, 2).copy())
-    env = [0.35, 0.85, 1.0, 0.82, 0.6, 0.42, 0.28, 0.17, 0.09, 0.04]
-    wr = Writer(f"{CLIPS}/r_search.mp4")
-    for i in range(n):
-        im = frames[min(i, len(frames) - 1)].astype(np.float32)
-        im = affine(im, 1.0 + 0.05 * i / n, W / 2, H * 0.47, W / 2, H * 0.47, border=(0, 0, 0))
-        k = 1.0 + 0.05 * i / n
-        for f0, pidx in ORBIT_GLOWS:
-            j = i - f0
-            if 0 <= j < len(env):
-                x, y = track[min(i, len(track) - 1)][pidx]
-                x, y = W / 2 + (x - W / 2) * k, H * 0.47 + (y - H * 0.47) * k
-                core, halo = glow_layer(H, W, x, y + 18)
-                im = apply_glow(im, core, halo, env[j])
-        wr.write(im + grain(seed=700 + i, amt=4))
-    wr.close()
-
-
-def r_thisguy():
-    """"is this guy": a hard cut to Fink's own close-up at the panel, lit up the same way, pushing in."""
-    n = nframes("thisguy")  # 55
-    frames = grab(PANEL, 1186.2, n, fps=FPS)
-    f = face(frames[0], 80) or (900, 250, 200, 200)
-    fx, fy = f[0] + f[2] / 2, f[1] + f[3] / 2
-    t0 = round(TM.B["thisguy"][0] * FPS)
-    guy = round(TM.T["guy2"] * FPS) - t0
-    core, halo = glow_layer(H, W, fx, fy + 30, sig=150, halo=330)
-    wr = Writer(f"{CLIPS}/r_thisguy.mp4")
-    for i in range(n):
-        u = i / max(1, n - 1)
-        k = 1.0 + 0.16 * (1 - (1 - u) ** 2)
-        im = affine(frames[min(i, len(frames) - 1)].astype(np.float32), k, fx, fy, fx, fy, border=(0, 0, 0))
-        a = max(0.0, 0.85 - 0.12 * i) + (max(0.0, 0.7 - 0.09 * (i - guy)) if i >= guy else 0.0)
-        if a > 0:
-            im = apply_glow(im, core, halo, min(1.0, a))
-        if i < 2:
-            im = im * (1 - (0.8 if i == 0 else 0.4)) + 255 * (0.8 if i == 0 else 0.4)
-        wr.write(im + grain(seed=800 + i, amt=4))
-    wr.close()
-    print("   fink face", f)
-
-
-ALL = {"these": r_these, "search": r_search, "thisguy": r_thisguy, "tiles": r_tiles, "money": r_money, "cartel": r_cartel, "weap": r_weap, "logos": r_logos,
-       "touch": r_touch, "glow": r_glow}
+ALL = {"these": r_these, "tiles": r_tiles, "money": r_money, "cartel": r_cartel, "weap": r_weap, "logos": r_logos,
+       "touch": r_touch}
 
 if __name__ == "__main__":
     for name in (sys.argv[1:] or ALL):
