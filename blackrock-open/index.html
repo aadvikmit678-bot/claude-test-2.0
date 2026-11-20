@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="32.1000" data-width="1920" data-height="1080">
+      <div id="bg" style="position:absolute;inset:0;background:#000"></div>
+      <div id="h-s_quote" data-composition-id="s_quote" data-composition-src="compositions/s_quote.html" data-start="0.0000" data-duration="6.7000" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:1"></div>
+      <div id="h-s_hook" data-composition-id="s_hook" data-composition-src="compositions/s_hook.html" data-start="6.7000" data-duration="9.0500" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:2"></div>
+      <div id="h-s_dimon" data-composition-id="s_dimon" data-composition-src="compositions/s_dimon.html" data-start="15.7500" data-duration="3.4000" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:3"></div>
+      <div id="h-s_solomon" data-composition-id="s_solomon" data-composition-src="compositions/s_solomon.html" data-start="19.1500" data-duration="4.3333" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:4"></div>
+      <div id="h-s_search" data-composition-id="s_search" data-composition-src="compositions/s_search.html" data-start="23.4833" data-duration="1.8000" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:5"></div>
+      <div id="h-s_fink" data-composition-id="s_fink" data-composition-src="compositions/s_fink.html" data-start="25.2833" data-duration="4.0834" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:6"></div>
+      <div id="h-s_rogan" data-composition-id="s_rogan" data-composition-src="compositions/s_rogan.html" data-start="29.3667" data-duration="2.7333" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:7"></div>
+      <div id="h-leak_dj" data-composition-id="leak_dj" data-composition-src="compositions/leak_dj.html" data-start="20.0333" data-duration="1.0500" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:50;pointer-events:none"></div>
+      <div id="h-leak_reveal" data-composition-id="leak_reveal" data-composition-src="compositions/leak_reveal.html" data-start="24.2667" data-duration="1.2666" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080" style="position:absolute;inset:0;z-index:50;pointer-events:none"></div>
+      <audio id="a-mix" src="assets/audio/mix.wav" data-start="0" data-duration="32.1000" data-track-index="5" data-volume="1"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

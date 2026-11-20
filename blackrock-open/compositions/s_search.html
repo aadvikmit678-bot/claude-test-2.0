@@ -1,0 +1,38 @@
+<template>
+<style>
+
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");font-weight:400;font-style:normal;}
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2");font-weight:400;font-style:italic;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-Medium.otf") format("opentype");font-weight:500;font-style:normal;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-ExtraBold.otf") format("opentype");font-weight:800;font-style:normal;}
+@font-face{font-family:"LGothic";src:url("assets/fonts/LeagueGothic-latin.woff2") format("woff2");font-weight:400;font-style:normal;}
+@font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
+
+
+#root{position:absolute;inset:0;overflow:hidden;background:#000;}
+.full{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;}
+.layer{position:absolute;inset:0;}
+.cap{position:absolute;left:0;right:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;pointer-events:none;}
+.nv{font-family:"InterD",sans-serif;font-weight:800;letter-spacing:-0.02em;color:#fff;text-transform:uppercase;}
+.hv{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.012em;color:#EEF0F0;text-transform:uppercase;line-height:1;white-space:nowrap;}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;}
+
+#root{background:#000;}
+
+</style>
+<div id="root" data-composition-id="s_search" data-width="1920" data-height="1080" data-duration="1.8000">
+<video id="s_search-v1" class="clip full" src="assets/clips/r_search.mp4" data-start="0.0000" data-duration="0.8834" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
+<video id="s_search-v2" class="clip full" src="assets/clips/r_thisguy.mp4" data-start="0.8834" data-duration="0.9166" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
+<div id="s_search-d3" class="clip cap" data-start="0.0000" data-duration="0.7500" data-track-index="3" style="z-index:40;top:900px;height:0;mix-blend-mode:difference;"><div class="hv" style="font-size:64px;">Amongst them</div></div>
+<div id="s_search-d4" class="clip cap" data-start="0.7500" data-duration="1.0167" data-track-index="3" style="z-index:40;top:900px;height:0;mix-blend-mode:difference;"><div class="hv" style="font-size:64px;">Is this guy</div></div>
+</div>
+<script>
+(function(){
+  const tl = gsap.timeline({ paused: true });
+  tl.set({}, {}, 1.8000);
+  
+  window.__timelines["s_search"] = tl;
+})();
+</script>
+</template>

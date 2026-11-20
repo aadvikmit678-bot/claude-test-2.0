@@ -44,3 +44,12 @@ gta6/.hyperframes/
 # GTA 6 v3 (GTA6-v3/): the source footage is linked in under its Drive names by tools/link_sources.py
 GTA6-v3/*.mp4
 GTA6-v3/_dl/
+blackrock-src/
+
+# BlackRock opening (blackrock-open): Drive downloads, derived media, sound and renders stay local
+blackrock-open/assets/clips/
+blackrock-open/assets/img/
+blackrock-open/assets/audio/
+blackrock-open/assets/sfx/
+blackrock-open/assets/tex/
+blackrock-open/renders/
