@@ -23,9 +23,9 @@
 </style>
 <div id="root" data-composition-id="s_dimon" data-width="1920" data-height="1080" data-duration="3.4000">
 <video id="s_dimon-v1" class="clip full" src="assets/clips/r_dimon_page.mp4" data-start="0.0000" data-duration="1.9667" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
-<div id="s_dimon-d2" class="clip cap" data-start="0.0000" data-duration="0.3167" data-track-index="3" style="z-index:40;top:900px;height:0;mix-blend-mode:difference;"><div class="hv" style="font-size:64px;">That’s</div></div>
-<div id="s_dimon-d3" class="clip cap" data-start="0.3167" data-duration="0.8833" data-track-index="3" style="z-index:40;top:900px;height:0;mix-blend-mode:difference;"><div class="hv" style="font-size:64px;">Jamie Dimon</div></div>
-<div id="s_dimon-d4" class="clip cap" data-start="1.2000" data-duration="0.7667" data-track-index="3" style="z-index:40;top:900px;height:0;mix-blend-mode:difference;"><div class="hv" style="font-size:64px;">The guy running</div></div>
+<div id="s_dimon-d2" class="clip cap" data-start="0.0000" data-duration="0.3167" data-track-index="3" style="z-index:40;top:900px;height:0;"><div class="hv" style="font-size:64px;">That’s</div></div>
+<div id="s_dimon-d3" class="clip cap" data-start="0.3167" data-duration="0.8833" data-track-index="3" style="z-index:40;top:900px;height:0;"><div class="hv" style="font-size:64px;text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);">Jamie Dimon</div></div>
+<div id="s_dimon-d4" class="clip cap" data-start="1.2000" data-duration="0.7667" data-track-index="3" style="z-index:40;top:900px;height:0;"><div class="hv" style="font-size:64px;text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);">The guy running</div></div>
 <video id="s_dimon-v5" class="clip full" src="assets/clips/v2_jp1.mp4" data-start="1.9667" data-duration="0.3666" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
 <video id="s_dimon-v6" class="clip full" src="assets/clips/v2_jp2.mp4" data-start="2.3333" data-duration="0.3500" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
 <video id="s_dimon-v7" class="clip full" src="assets/clips/v2_jp3.mp4" data-start="2.6833" data-duration="0.3667" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
@@ -36,7 +36,7 @@
 (function(){
   const tl = gsap.timeline({ paused: true });
   tl.set({}, {}, 3.4000);
-  
+  tl.set("#s_dimon-d2 .hv",{color:"#17171a"},0);
   window.__timelines["s_dimon"] = tl;
 })();
 </script>

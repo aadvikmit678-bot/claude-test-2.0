@@ -270,7 +270,10 @@ def split(a, b, n):
 def s_dimon():
     sc = Scene("s_dimon", B["dimon"][0], B["jpm"][1])
     sc.video("r_dimon_page.mp4", *B["dimon"], z=1)
-    chunks(sc, [("That’s", T["thats"]), ("Jamie Dimon", T["jamie"]), ("The guy running", T["the1"])], B["dimon"][1])
+    # "That's" on the bare cream page in ink; then over him (face, shirt, suit) white with the soft shadow
+    cid = caption(sc, "That’s", T["thats"], T["jamie"], blend=None)
+    sc.js.append(f'tl.set("#{cid} .hv",{{color:"#17171a"}},0);')
+    chunks(sc, [("Jamie Dimon", T["jamie"]), ("The guy running", T["the1"])], B["dimon"][1], blend=None, shadow=True)
     slots = split(*B["jpm"], 4)
     cuts(sc, [(f"v2_jp{k + 1}.mp4", a, b) for k, (a, b) in enumerate(slots)])
     caption(sc, "JPMorgan Chase", B["jpm"][0], B["jpm"][1] - 2 * FR, blend=None, shadow=True)
