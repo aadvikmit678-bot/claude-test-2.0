@@ -157,16 +157,17 @@ def chunks(sc, items, end, **kw):
 # ------------------------------------------------------------------ s_quote: the panel line
 def s_quote():
     sc = Scene("s_quote", *B["quote"])
-    cut1, cut2, cut3 = TM.LINE[8][1], TM.LINE[14][1], TM.LINE[18][1]   # "with", "financial", "as" (second)
-    seq = [("p_wide.mp4", 0.0, cut1, "50% 62%", 1.0, 1.07), ("p_over.mp4", cut1, cut2, "50% 50%", 1.04, 1.10),
-           ("p_side.mp4", cut2, cut3, "50% 55%", 1.02, 1.08), ("p_dolly.mp4", cut3, B["quote"][1], "50% 55%", 1.0, 1.06)]
-    for src, a, b, origin, s0, s1 in seq:
-        v = sc.video(src, a, b, z=1, style=f"transform-origin:{origin};")
-        sc.js.append(f'tl.fromTo("#{v}",{{scale:{s0}}},{{scale:{s1},duration:{r4(B_dur(a, b))},ease:"none",immediateRender:false}},{sc.at(a)});')
-    # a soft dark floor for the caption
-    sc.add('<div class="layer" style="z-index:20;background:linear-gradient(to bottom,rgba(0,0,0,0) 55%,rgba(0,0,0,0.55) 100%)"></div>')
-    # the story's captions in the Jensen Huang reel's style: white Helvetica caps, a short chunk at a time
     L = TM.LINE
+    cut1, cut2 = L[8][1], L[14][1]                     # "with", "financial"
+    sc.video("p_wide.mp4", 0.0, cut1, z=1)             # no zooms (the user)
+    sc.video("p_over.mp4", cut1, cut2, z=1)
+    # "of financial talent and skill as you've been able to put together here": four panelists talking (muted),
+    # a white flash into each one
+    cuts_ = [cut2, L[16][1], L[19][1], L[23][1], B["quote"][1]]
+    for k, name in enumerate(["ob_fink", "ob_schw", "ob_dalio", "ob_motsepe"]):
+        sc.video(f"v3_{name}.mp4", cuts_[k], cuts_[k + 1], z=1)
+        sc.flash(cuts_[k], peak=1.0, up=2 * FR, down=0.16, z=30)
+    sc.add('<div class="layer" style="z-index:20;background:linear-gradient(to bottom,rgba(0,0,0,0) 55%,rgba(0,0,0,0.55) 100%)"></div>')
     items = []
     for i0, i1 in [(0, 3), (3, 6), (6, 8), (8, 11), (11, 13), (13, 16), (16, 18), (18, 22), (22, 26)]:
         items.append((" ".join(w for w, _ in L[i0:i1]).replace("'", "’"), L[i0][1]))
@@ -175,132 +176,86 @@ def s_quote():
     return sc
 
 
-# ------------------------------------------------------------------ s_hook: Nvidia-style hook
+# ------------------------------------------------------------------ s_hook: from "These" to the puppet
 def s_hook():
-    sc = Scene("s_hook", B["these"][0], B["glow"][1])
-    # 1. these are the most
-    sc.video("r_these.mp4", *B["these"], z=1)
-    cid = caption(sc, "These are the most", T["these"], B["these"][1], blend=None)
-    for a, b in ((T["these"], T["these"] + 2 * FR), (T["these"] + 5 * FR, T["these"] + 7 * FR)):  # inverts with the picture
-        sc.js.append(f'tl.set("#{cid} .hv",{{color:"#0b0b0b"}},{sc.at(a)});tl.set("#{cid} .hv",{{color:"#EEF0F0"}},{sc.at(b)});')
-    # 2. the tiles + POWERFUL / PEOPLE
-    sc.video("r_tiles.mp4", *B["tiles"], z=1)
+    sc = Scene("s_hook", B["tiles"][0], B["puppet"][1])
     t0 = B["tiles"][0]
-    for word, a, b in (("Powerful", t0, T["people"]), ("People", T["people"], t0 + 56 * FR)):
+    n = round((B["tiles"][1] - t0) * 60)
+    sc.video("r_tiles3.mp4", *B["tiles"], z=1)
+    caption(sc, "These are the most", T["these"], T["powerful"], blend=None)
+    for word, a, b in (("Powerful", T["powerful"], T["people"]), ("People", T["people"], t0 + (n - 5) * FR)):
         wid = sc.uid("pw")
         sc.div(a, b, f'<div id="{wid}" class="nv" style="font-size:118px;text-shadow:0 0 22px rgba(0,0,0,0.45);">{word}</div>', z=30, cls="cap",
                style="top:540px;height:0;")
-        sc.js.append(f'tl.fromTo("#{wid}",{{scale:1.09}},{{scale:1.0,duration:0.05,ease:"power2.out",immediateRender:false}},{sc.at(a)});')
-        for fa, fb in ((40, 43), (53, 56)):
+        for fa, fb in ((n - 21, n - 18), (n - 8, n - 5)):   # black while the tiles go negative
             ta, tb = t0 + fa * FR, t0 + fb * FR
             if a <= ta < b:
                 sc.js.append(f'tl.set("#{wid}",{{color:"#000"}},{sc.at(ta)});tl.set("#{wid}",{{color:"#fff"}},{sc.at(tb)});')
-    # 3. ON EARTH on the red card
-    sc.img("red_card.jpg", *B["earth"], z=1)
+    # ON EARTH on the user's plain red
+    sc.img("red_bg_user.jpg", *B["earth"], z=1)
     on, ea = sc.uid("on"), sc.uid("ea")
-    inner = (f'<div id="{on}p" style="display:flex;gap:0.2em;font-family:\'LGothic\',sans-serif;font-size:330px;color:#fff;'
-             f'letter-spacing:0.01em;line-height:1;text-shadow:0 0 30px rgba(255,255,255,0.12);">'
-             f'<span id="{on}">ON</span><span id="{ea}" style="opacity:0">EARTH</span></div>')
+    inner = (f'<div style="display:flex;gap:0.2em;font-family:\'LGothic\',sans-serif;font-size:330px;color:#fff;'
+             f'letter-spacing:0.01em;line-height:1;"><span id="{on}">ON</span><span id="{ea}" style="opacity:0">EARTH</span></div>')
     sc.div(*B["earth"], inner, z=30, cls="cap", style="top:545px;height:0;")
-    sc.js += [f'tl.fromTo("#{on}",{{scale:1.12}},{{scale:1.0,duration:0.034,ease:"none",immediateRender:false}},{sc.at(T["on"])});',
-              f'tl.set("#{ea}",{{opacity:1,scale:1.1}},{sc.at(T["earth"])});',
-              f'tl.to("#{ea}",{{scale:1.0,duration:0.034,ease:"none"}},{sc.at(T["earth"] + FR)});',
-              f'tl.fromTo("#{on}p",{{scale:1.0}},{{scale:1.035,duration:{r4(B_dur(*B["earth"]))},ease:"none",immediateRender:false}},{sc.at(B["earth"][0])});']
-    # 4. a 60 trillion dollar ... cartel: the money run, then the cartel run, one word layer across both
-    sc.video("r_money.mp4", *B["money"], z=1)
+    sc.js.append(f'tl.set("#{ea}",{{opacity:1}},{sc.at(T["earth"])});')
+    # a $60 trillion dollar: the article flipbook (its "$60 trillion" is the text); cartel as it was
+    sc.video("r_articles.mp4", *B["money"], z=1)
     sc.video("r_cartel.mp4", *B["cartel"], z=1)
-    wl = sc.uid("ml")
-    spans = []
-    # "a $60" together, centred on the top row (the user: symmetric, like the reel's long line), the rest below
-    top = []
-    for w, t, size in (("a", T["a"], 104), ("$60", T["sixty"], 120)):
-        sid = sc.uid("mw")
-        top.append(f'<span id="{sid}" style="white-space:nowrap;font-family:\'InterD\',sans-serif;font-weight:500;'
-                   f'font-size:{size}px;letter-spacing:-0.02em;color:#fff;opacity:0">{w}</span>')
-        sc.js.append(f'tl.fromTo("#{sid}",{{opacity:0,filter:"blur(10px)"}},{{opacity:1,filter:"blur(0px)",duration:0.05,'
-                     f'ease:"none",immediateRender:false}},{sc.at(t)});')
-    spans.append('<div style="position:absolute;left:0;right:0;top:170px;height:0;display:flex;justify-content:center;'
-                 'align-items:center;gap:0.42em;font-size:104px;">' + "".join(top) + '</div>')
-    for w, t, x, y, size in (("trillion", T["trillion"], 540, 880, 104), ("dollar", T["dollar"], 1390, 880, 104),
-                             ("cartel", T["cartel"], 960, 1000, 92)):
-        sid = sc.uid("mw")
-        spans.append(f'<div style="position:absolute;left:{x}px;top:{y}px;width:0;height:0;display:flex;justify-content:center;'
-                     f'align-items:center;"><span id="{sid}" style="white-space:nowrap;font-family:\'InterD\',sans-serif;'
-                     f'font-weight:500;font-size:{size}px;letter-spacing:-0.02em;color:#fff;opacity:0">{w}</span></div>')
-        sc.js.append(f'tl.fromTo("#{sid}",{{opacity:0,filter:"blur(10px)"}},{{opacity:1,filter:"blur(0px)",duration:0.05,'
-                     f'ease:"none",immediateRender:false}},{sc.at(t)});')
-    sc.div(B["money"][0], B["cartel"][1], f'<div id="{wl}" class="layer">' + "".join(spans) + "</div>", z=30,
-           style="mix-blend-mode:difference;")
-    sc.js.append(f'tl.fromTo("#{wl}",{{scale:1.07}},{{scale:1.0,duration:{r4(B_dur(B["money"][0], B["cartel"][1]))},'
-                 f'ease:"none",immediateRender:false}},{sc.at(B["money"][0])});')
-    # 5. weaponized capital
+    cw = sc.uid("cw")
+    sc.div(*B["cartel"], f'<div id="{cw}" style="font-family:\'InterD\',sans-serif;font-weight:500;font-size:92px;letter-spacing:-0.02em;color:#fff;">cartel</div>',
+           z=30, cls="cap", style="top:1000px;height:0;mix-blend-mode:difference;")
+    # weaponized capital: on its word, gone again, no bounce
     sc.video("r_weap.mp4", *B["weap"], z=1)
     cap = T["capital"]
-    for word, a, b in (("WEAPONIZED", B["weap"][0], B["weap"][0] + 0.35),       # once, on its word (the user)
-                       ("CAPITAL", cap, min(cap + 0.42, B["weap"][1] - 2 * FR))):
-        wid = sc.uid("wz")
-        sc.div(a, b, f'<div id="{wid}" style="font-family:\'LGothic\',sans-serif;font-size:430px;line-height:1;color:#fff;'
-                     f'letter-spacing:0.01em;">{word}</div>', z=30, cls="cap", style="top:545px;height:0;mix-blend-mode:difference;")
-        sc.js.append(f'tl.fromTo("#{wid}",{{scale:1.06}},{{scale:1.0,duration:0.06,ease:"power2.out",immediateRender:false}},{sc.at(a)});')
-    # 6. that owns a piece of everything you touch
+    for word, a, b in (("WEAPONIZED", B["weap"][0], B["weap"][0] + 0.35), ("CAPITAL", cap, min(cap + 0.42, B["weap"][1] - 2 * FR))):
+        sc.div(a, b, f'<div style="font-family:\'LGothic\',sans-serif;font-size:430px;line-height:1;color:#fff;letter-spacing:0.01em;">{word}</div>',
+               z=30, cls="cap", style="top:545px;height:0;mix-blend-mode:difference;")
+    # that owns a piece of everything you touch
     sc.video("r_logos.mp4", *B["logos"], z=1)
     chunks(sc, [("That owns", T["that"]), ("A piece of", T["piece"]), ("Everything", T["everything"])], B["logos"][1])
-    sc.video("r_touch.mp4", *B["touch"], z=1)
+    sc.video("r_touch3.mp4", *B["touch"], z=1)
     caption(sc, "Everything", B["touch"][0], T["you"], blend=None)
     chunks(sc, [("You", T["you"]), ("You touch.", T["touch"])], B["touch"][1] - 2 * FR, blend=None)
-    # 7. split second: the panel from above, every seat lighting up
-    sc.video("r_glow.mp4", *B["glow"], z=1)
+    sc.video("v3_puppet.mp4", *B["puppet"], z=1)        # the explainer's puppet, then "That's Jamie Dimon"
     sc.write()
     return sc
 
 
-# ------------------------------------------------------------------ v2: plain cuts between real shots
+# ------------------------------------------------------------------ plain cuts
 def cuts(sc, shots, z=1):
-    """[(clip, start, end)]: one video per shot, each cut hard to the next."""
     for src, a, b in shots:
         sc.video(src, a, b, z=z)
 
 
 def split(a, b, n):
-    """n plain-cut slots between a and b on the 60 fps grid."""
     return [(F(a + (b - a) * k / n), F(a + (b - a) * (k + 1) / n)) for k in range(n)]
 
 
-# ------------------------------------------------------------------ s_dimon: the tfg page, then JPMorgan Chase
+# ------------------------------------------------------------------ the intros (pre-rendered from the references)
 def s_dimon():
     sc = Scene("s_dimon", B["dimon"][0], B["jpm"][1])
-    sc.video("r_dimon_page.mp4", *B["dimon"], z=1)
-    # "That's" on the bare cream page in ink; then over him (face, shirt, suit) white with the soft shadow
-    cid = caption(sc, "That’s", T["thats"], T["jamie"], blend=None)
-    sc.js.append(f'tl.set("#{cid} .hv",{{color:"#17171a"}},0);')
-    chunks(sc, [("Jamie Dimon", T["jamie"]), ("The guy running", T["the1"])], B["dimon"][1], blend=None, shadow=True)
-    slots = split(*B["jpm"], 4)
-    cuts(sc, [(f"v2_jp{k + 1}.mp4", a, b) for k, (a, b) in enumerate(slots)])
-    caption(sc, "JPMorgan Chase", B["jpm"][0], B["jpm"][1] - 2 * FR, blend=None, shadow=True)
+    sc.video("r_dimon3.mp4", *B["dimon"], z=1)         # the reference edit's "if intelligence is automated"
+    sc.video("r_jpm.mp4", *B["jpm"], z=1)              # the reel's "the man behind OpenAI"
     sc.write()
     return sc
 
 
-# ------------------------------------------------------------------ s_solomon: Hemant flash, D-Sol, the panel title
 def s_solomon():
     sc = Scene("s_solomon", B["solomon"][0], B["ceo"][1])
-    sc.video("r_solomon.mp4", *B["solomon"], z=1)
-    caption(sc, "David Solomon", T["david"], B["solomon"][1])
-    cuts(sc, [(f"v2_dj{k + 1}.mp4", a, b) for k, (a, b) in enumerate(split(*B["dj"], 3))])
-    caption(sc, "A part-time DJ", B["dj"][0], B["dj"][1], blend=None, shadow=True)
-    sc.video("v2_ceo.mp4", *B["ceo"], z=1)
-    # above the panel's own lower third ("David Solomon -- Chairman & CEO, Goldman Sachs", y 815-1025)
-    chunks(sc, [("And the CEO of", T["and"]), ("Goldman Sachs", T["goldman"])], B["ceo"][1] - 2 * FR, y=745, blend=None, shadow=True)
+    sc.video("r_solomon3.mp4", *B["solomon"], z=1)     # the reference edit's "AI"
+    a, b = B["dj"]
+    m = F((a + b) / 2)
+    sc.video("v3_dj_a.mp4", a, m, z=1)
+    sc.video("v3_dj_b.mp4", m, b, z=1)
+    sc.video("r_ceo.mp4", *B["ceo"], z=1)              # the reel's OpenAI device, with the Goldman Sachs video
     sc.write()
     return sc
 
 
-# ------------------------------------------------------------------ s_search: the orbit, people lighting; this guy
 def s_search():
-    sc = Scene("s_search", B["search"][0], B["thisguy"][1])
-    sc.video("r_orbit.mp4", *B["search"], z=1)
-    sc.video("v2_fink_pc.mp4", *B["thisguy"], z=1)
-    chunks(sc, [("Amongst them", T["amongst"]), ("Is this guy", T["is"])], B["thisguy"][1] - 2 * FR, blend=None, shadow=True)
+    sc = Scene("s_search", B["orbit"][0], B["thisguy"][1])
+    sc.video("r_orbit3.mp4", *B["orbit"], z=1)
+    sc.video("r_amongst.mp4", B["amongst"][0], B["thisguy"][1], z=1)
     sc.write()
     return sc
 
@@ -348,7 +303,63 @@ def s_fink():
     return sc
 
 
-# ------------------------------------------------------------------ s_rogan: Elon's question, the film's last shot
+# ------------------------------------------------------------------ the rest of the script
+import shotlist as SL
+
+CARD_RED = "url(assets/img/red_bg_user.jpg) center/cover"
+
+
+def rest_time(x):
+    return TM.RT(x) if isinstance(x, str) else F((TM.REST1_AT if x < TM.REST_SPLIT else TM.REST2_AT) + x)
+
+
+def rest_part(sc, shots, part, caps):
+    a0, a1 = B[part]
+    starts = [a0 if k in ("rest1", "rest2") else TM.RT(k) for k, *_ in shots]
+    for (key, name, src, t0, extra, fc), a, b in zip(shots, starts, starts[1:] + [a1]):
+        if src == "card":
+            color, word = extra
+            bg = CARD_RED if color == "red" else color
+            inner = (f'<div style="position:absolute;inset:0;background:{bg};"></div>'
+                     f'<div class="cap" style="top:540px;height:0;"><div style="font-family:\'LGothic\',sans-serif;'
+                     f'font-size:300px;line-height:1;color:#fff;letter-spacing:0.01em;">{word}</div></div>')
+            sc.div(a, b, inner, z=1)
+            if name == "card_jobs":                    # "ever did." under the name
+                sc.div(TM.RT("ever"), b, '<div style="font-family:\'LGothic\',sans-serif;font-size:120px;line-height:1;color:#fff;">EVER DID.</div>',
+                       z=2, cls="cap", style="top:800px;height:0;")
+        elif src == "clip":
+            sc.video(f"{name}.mp4", a, b, z=1)
+        else:
+            sc.video(f"v3_{name}.mp4", a, b, z=1)
+    for key, text, until in SL.HERO:
+        t = TM.RT(key)
+        if a0 <= t < a1:
+            sc.div(t, TM.RT(until) - 2 * FR, f'<div style="font-family:\'LGothic\',sans-serif;font-size:300px;line-height:1;color:#fff;'
+                   f'letter-spacing:0.01em;text-shadow:0 0 40px rgba(0,0,0,0.45),0 0 12px rgba(0,0,0,0.35);">{text}</div>',
+                   z=30, cls="cap", style="top:520px;height:0;")
+    for i, (text, t) in enumerate(caps):
+        if text is None:
+            continue
+        a = rest_time(t)
+        b = rest_time(caps[i + 1][1]) if i + 1 < len(caps) else a1 - 2 * FR
+        caption(sc, text, a, min(b, a1 - 2 * FR), blend=None, shadow=True)
+
+
+def s_rest1():
+    sc = Scene("s_rest1", *B["rest1"])
+    rest_part(sc, SL.REST1, "rest1", SL.CAPS1)
+    sc.write()
+    return sc
+
+
+def s_rest2():
+    sc = Scene("s_rest2", *B["rest2"])
+    rest_part(sc, SL.REST2, "rest2", SL.CAPS2)
+    sc.write()
+    return sc
+
+
+# ------------------------------------------------------------------ s_rogan: Elon's question, after "...than Steve Jobs ever did."
 def s_rogan():
     sc = Scene("s_rogan", *B["rogan"])
     sc.video("rogan.mp4", *B["rogan"], z=1)
@@ -391,6 +402,6 @@ def index(scenes):
 
 if __name__ == "__main__":
     os.makedirs(COMP, exist_ok=True)
-    scenes = [s_quote(), s_hook(), s_dimon(), s_solomon(), s_search(), s_fink(), s_rogan()]
+    scenes = [s_quote(), s_hook(), s_dimon(), s_solomon(), s_search(), s_fink(), s_rest1(), s_rogan(), s_rest2()]
     index(scenes)
     print("wrote", len(scenes), "scenes; total", TM.TOTAL)

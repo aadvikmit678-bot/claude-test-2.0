@@ -471,9 +471,9 @@ def r_dimon3():
 # ------------------------------------------------------------------ 6. the reel's "the man behind OpenAI" device
 def live(src, t0, n, crop=None, fc=False):
     """n frames at 60 fps from a clip (optionally a crop filter), as float RGB 1920x1080."""
-    vf = (crop + "," if crop else "") + "scale=1920:1080:flags=lanczos,setsar=1"
+    vf = (crop + "," if crop else "") + "setsar=1"
     ss = t0 + (stream_start(src) if fc else 0.0)
-    return [f.astype(np.float32) for f in grab(src, ss, n, fps=FPS, vf=vf)]
+    return [f.astype(np.float32) for f in grab(src, ss, n, fps=FPS, vf=vf, size=(W, H))]
 
 
 def hero_text(text, size, seed, y=540):
@@ -563,7 +563,7 @@ def altman_device(name, n, flip, collage, logo, cells, hero, cap=None, cap_until
 JPM = {  # JPMorgan footage (videos, checked: they move)
     "hq": (f"{J2}/HOW_69230_151.mp4", 0.0), "doors": (f"{J2}/LASTFAST_370_112.mp4", 0.0),
     "board": (f"{J2}/MONT_1410_73.mp4", 0.0), "tower": (f"{J2}/JPH2_445_259.mp4", 0.0),
-    "tower2": (f"{J2}/JPH2_945_97.mp4", 0.0), "ticker": (f"{J2}/JPFLASH_940_74.mp4", 0.0),
+    "tower2": (f"{J2}/JPH2_945_97.mp4", 0.0), "ticker": (f"{J2}/MONT_1241_83.mp4", 0.0),
 }
 
 
@@ -612,8 +612,8 @@ def r_solomon3():
         cap = 0.727 * size
         b1 = int(70 + cap)
         b2 = int(b1 + 0.98 * size)
-        da, dbox = word_layer("David", INTER_XB, size, 120, b1)
-        sa, sbox = word_layer("Solomon", INTER_XB, size, 120, b2)
+        da, dbox = word_layer("David", INTER_XB, size, 150, b1)
+        sa, sbox = word_layer("Solomon", INTER_XB, size, 150, b2)
         rows = union[int(sbox[1]):int(sbox[3])]
         cols = np.where(rows.any(axis=0))[0]
         edge = cols.min() if len(cols) else W
@@ -628,18 +628,18 @@ def r_solomon3():
     ywords = [("a part-time", rel("a3")), ("DJ", rel("a3") + 22)]
     ylayers, cursor = [], 0
     for w, k in ywords:
-        m, base, _ = text_mask(w, HEROS, 56, pad=14)
+        m, base, _ = text_mask(w, INTER_B, 66, pad=14)
         rot = np.rot90(m)                              # reads bottom to top
         a = np.zeros((H, W), np.float32)
         y_bottom = int(sbox[3]) - cursor
-        paste_alpha(a, rot, 40, y_bottom - rot.shape[0])
+        paste_alpha(a, rot, 26, y_bottom - rot.shape[0])
         ys, xs = np.where(rot > 0.3)
-        box = (40 + xs.min(), y_bottom - rot.shape[0] + ys.min(), 40 + xs.max(), y_bottom - rot.shape[0] + ys.max())
+        box = (26 + xs.min(), y_bottom - rot.shape[0] + ys.min(), 26 + xs.max(), y_bottom - rot.shape[0] + ys.max())
         ylayers.append((a, box, k))
         cursor += rot.shape[0] - 6
-    bar_y0 = int(sbox[3]) + 52
-    bar_y1, bar_end = bar_y0 + 120, 820
-    k_bar0, k_bar1 = 8, 40
+    bar_y0 = int(sbox[3]) + 46
+    bar_y1, bar_end = bar_y0 + 250, 1760
+    k_bar0, k_bar1 = 8, 46
     wr = Writer(f"{CLIPS}/r_solomon3.mp4")
     prev_x = 0.0
     for i in range(n):
@@ -657,10 +657,9 @@ def r_solomon3():
                 bar = cv2.filter2D(bar, -1, np.ones((1, kl), np.float32) / kl)
             prev_x = xe
             bg = over_color(bg, bar, RED)
-        # the giant gold name behind him: "David" from the cut, "Solomon" on its word
-        bg = bg * (1 - da[..., None]) + gold * da[..., None]
-        if i >= k_sol:
-            bg = bg * (1 - sa[..., None]) + gold * sa[..., None]
+        # the giant name behind him, white with a soft glow: "David" from the cut, "Solomon" on its word
+        name = da if i < k_sol else np.maximum(da, sa)
+        bg = glow_text(bg, name, (250, 250, 248), glow=0.9, sigma=(8, 26))
         fr = bg * (1 - pa[..., None]) + img * pa[..., None]
         for a, box, k in ylayers:
             st = block_entrance(i, k)
@@ -669,7 +668,9 @@ def r_solomon3():
             elif st == "block":
                 fr = glow_text(fr, block_layer(box, grow=4), (255, 255, 240), glow=0.6)
             elif st == "word":
-                fr = glow_text(fr, a, YELLOW, glow=0.35)
+                sh = cv2.GaussianBlur(a, (0, 0), 8)
+                fr = fr * (1 - 0.6 * np.clip(sh * 1.6, 0, 1))[..., None]
+                fr = glow_text(fr, a, YELLOW, glow=0.7, sigma=(5, 14))
         wr.write(fr + grain(seed=1900 + i, amt=2.2))
     wr.close()
 
@@ -803,6 +804,52 @@ def r_amongst():
     wr.close()
 
 
+# ------------------------------------------------------------------ 10. the rest of the script: every shot cut on its word
+import shotlist as SL
+
+
+def shot_bounds(shots, part_start, part_end):
+    """Film start / end of each shot of a part (a shot ends where the next one starts)."""
+    t = [part_start if k in ("rest1", "rest2") else TM.RT(k) for k, *_ in shots]
+    return [(a, b) for a, b in zip(t, t[1:] + [part_end])]
+
+
+def rest_shots(names=None):
+    for shots, part in ((SL.REST1, "rest1"), (SL.REST2, "rest2")):
+        a0, a1 = TM.B[part]
+        for (key, name, src, t0, extra, fc), (a, b) in zip(shots, shot_bounds(shots, a0, a1)):
+            if src in ("card", "clip") or (names and name not in names):
+                continue
+            crop = None
+            if src == "X":
+                path, crop = f"{V3}/br_explainer.mp4", extra
+            elif src == "J":
+                path = f"{J2}/{extra}.mp4"
+            elif src == "D":
+                path = f"{DL}/{extra}"
+            else:
+                path = PANEL
+            ss = t0 + (stream_start(path) if fc else 0.0)
+            dur = b - a + 0.15
+            filt = ([crop] if crop else []) + ["scale=1920:1080:flags=lanczos", "setsar=1", "fps=60"]
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{ss:.3f}", "-i", path, "-t", f"{dur:.3f}", "-vf",
+                            ",".join(filt), "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "14",
+                            "-pix_fmt", "yuv420p", "-movflags", "+faststart", f"{CLIPS}/v3_{name}.mp4"], check=True)
+            got = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of",
+                                                 "csv=p=0", f"{CLIPS}/v3_{name}.mp4"]).strip())
+            flag = ""
+            if got < b - a - 0.02:                    # a short library clip: slow it just enough to fill the slot
+                k = dur / max(0.1, got)
+                filt2 = ([crop] if crop else []) + ["scale=1920:1080:flags=lanczos", "setsar=1", f"setpts={k:.3f}*PTS",
+                                                    "fps=60"]
+                subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{ss:.3f}", "-i", path, "-vf", ",".join(filt2),
+                                "-t", f"{dur:.3f}", "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "14",
+                                "-pix_fmt", "yuv420p", "-movflags", "+faststart", f"{CLIPS}/v3_{name}.mp4"], check=True)
+                flag = f"  slowed x{k:.2f}"
+            print(f"   {name:12s} {a:7.3f}-{b:7.3f}{flag}")
+
+
+ALL["rest"] = rest_shots
 ALL.update({"dimon": r_dimon3, "jpm": r_jpm, "solomon": r_solomon3, "ceo": r_ceo, "orbit": r_orbit3,
             "amongst": r_amongst})
 

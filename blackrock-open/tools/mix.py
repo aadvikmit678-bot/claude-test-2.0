@@ -117,26 +117,35 @@ def frames_to_times(start, durs):
     return out
 
 
+REST = os.path.abspath(f"{ROOT}/../blackrock-src/vo/rest/rest.mp3")   # the user's second recording (the rest)
+
+
 def main():
+    T, B = TM.T, TM.B
     speech = np.zeros((N, 2), np.float32)
-    line, vo, rogan = load(f"{AUD}/line.wav"), load(f"{AUD}/vo.wav"), load(f"{AUD}/rogan.wav")
+    line, vo, rogan, rest = load(f"{AUD}/line.wav"), load(f"{AUD}/vo.wav"), load(f"{AUD}/rogan.wav"), load(REST)
     target = -19.0
     place(speech, line * 10 ** ((target - rms_db(line)) / 20), 0.0, fade_in=0.01, fade_out=0.03)
     place(speech, vo * 10 ** ((target - rms_db(vo)) / 20), TM.V0, fade_in=0.005, fade_out=0.03)
-    place(speech, rogan * 10 ** ((target + 1 - rms_db(rogan)) / 20), TM.B["rogan"][0], fade_in=0.004, fade_out=0.08)
+    g = 10 ** ((target - rms_db(rest)) / 20)
+    k = int(round(TM.REST_SPLIT * SR))
+    place(speech, rest[:k] * g, B["rest1"][0], fade_in=0.004, fade_out=0.02)        # ... than Steve Jobs ever did.
+    place(speech, rogan * 10 ** ((target + 1 - rms_db(rogan)) / 20), B["rogan"][0], fade_in=0.004, fade_out=0.08)
+    place(speech, rest[k:] * g, B["rogan"][1], fade_in=0.004, fade_out=0.06)        # Back in the 1980s ... in it.
 
     music = np.zeros((N, 2), np.float32)
-    T, B = TM.T, TM.B
-    end = B["rogan"][0]
-    d = drone(end)
+    d = drone(TM.TOTAL)
     env = np.ones(len(d), np.float32)
     env[: int(1.5 * SR)] = np.linspace(0.0, 1.0, int(1.5 * SR))
+    r0, r1 = int(B["rogan"][0] * SR), int(B["rogan"][1] * SR)
+    env[r0:r1] *= 0.35                                   # under Rogan's own sound
+    env[-int(1.2 * SR):] *= np.linspace(1.0, 0.0, int(1.2 * SR))
     place(music, d * env[:, None], 0.0, fade_out=0.06)
     fx = np.zeros((N, 2), np.float32)
     if USE_SFX:
         add_sfx(music, fx, T, B)
 
-    # duck the music and effects under speech a little
+    # duck the music under speech a little
     lvl = np.abs(speech).max(axis=1)
     win = int(0.08 * SR)
     sm = np.convolve(lvl, np.ones(win) / win, mode="same")

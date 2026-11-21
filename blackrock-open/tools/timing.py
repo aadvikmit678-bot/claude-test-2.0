@@ -77,8 +77,41 @@ B = {
     "brand": (T["blackrock"], F(V0 + VO_END + 0.045)),  # "BlackRock.": the letters on its facade
 }
 B["fink"] = (B["thisguy"][0], B["brand"][1])
-B["rogan"] = (B["fink"][1], F(B["fink"][1] + ROGAN_T1 - ROGAN_T0))
-TOTAL = B["rogan"][1]
+
+# ---- the rest of the script: the user's second recording (larryfink video audio rest.mp3, 57.39 s), split after
+# "...than Steve Jobs ever did." for the Rogan clip ("Do you think BlackRock's a bad company?")
+REST_SPLIT, REST_END = 10.56, 57.39
+RW = {  # word starts in the rest recording (whisper small.en, file seconds)
+    "a": 0.09, "manages": 1.06, "15": 1.73, "trillion": 2.30, "assets": 3.24, "holds": 4.01, "nvidia": 4.51,
+    "than1": 5.00, "jensen": 5.19, "more2": 6.20, "microsoft": 6.57, "than2": 7.24, "bill": 7.38, "and1": 8.10,
+    "apple": 8.82, "than3": 9.10, "steve": 9.61, "ever": 10.16,
+    "back": 10.63, "1980s": 11.39, "larry1": 12.63, "was1": 13.14, "wall1": 13.44, "prodigy": 14.20, "but1": 14.96,
+    "bad": 15.52, "cost": 16.08, "100": 16.56, "loss": 17.87, "that1": 18.21, "enough": 18.66, "thrown": 19.56,
+    "wall2": 20.27, "and2": 20.92, "convince": 21.24, "onething": 22.08, "wall3": 23.31, "terrible": 23.98,
+    "seeing": 24.63, "risk1": 25.02, "so": 25.52, "1988": 26.11, "he1": 27.52, "cofounded": 27.65, "blackrock": 28.31,
+    "built": 29.03, "system": 29.55, "job": 30.52, "calculating": 30.87, "risk2": 31.81, "he_called": 32.39,
+    "aladdin": 33.42, "when": 34.16, "2008": 34.56, "crisis1": 35.24, "hit": 35.75, "the_us": 36.03,
+    "government": 36.49, "called2": 37.04, "oneguy": 37.56, "wall4": 37.88, "threw": 38.41, "years": 38.84,
+    "clean": 39.46, "mess": 40.00, "larry2": 40.80, "fink2": 41.19, "he2": 41.63, "crisis2": 42.76, "three": 43.44,
+    "money1": 44.38, "today": 45.13, "every": 45.46, "buy": 46.32, "sp": 46.80, "500": 47.43, "your": 48.19,
+    "ends": 48.69, "this": 49.22, "hands": 49.82, "a2": 50.36, "never": 51.37, "single": 52.09, "product": 52.56,
+    "but2": 53.31, "own": 54.22, "everything2": 54.57, "touch2": 55.36, "has": 55.80, "piece": 56.05, "him": 56.49,
+    "it": 56.81,
+}
+REST1_AT = B["brand"][1]
+B["rest1"] = (REST1_AT, F(REST1_AT + REST_SPLIT))
+B["rogan"] = (B["rest1"][1], F(B["rest1"][1] + ROGAN_T1 - ROGAN_T0))
+REST2_AT = round(B["rogan"][1] - REST_SPLIT, 4)
+B["rest2"] = (B["rogan"][1], F(REST2_AT + REST_END + 0.35))
+
+
+def RT(key):
+    """Film time of a word in the rest recording."""
+    t = RW[key]
+    return F((REST1_AT if t < REST_SPLIT else REST2_AT) + t)
+
+
+TOTAL = B["rest2"][1]
 
 if __name__ == "__main__":
     for k, (a, b) in B.items():
