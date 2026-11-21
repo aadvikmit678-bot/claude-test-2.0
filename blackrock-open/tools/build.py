@@ -4,6 +4,7 @@
 Every time comes from tools/timing.py (60 fps grid). Scene times in the HTML are relative to the scene's start.
 Run: python3 tools/build.py
 """
+import html as _html
 import json
 import os
 
@@ -22,7 +23,16 @@ FONTS = """
 @font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-ExtraBold.otf") format("opentype");font-weight:800;font-style:normal;}
 @font-face{font-family:"LGothic";src:url("assets/fonts/LeagueGothic-latin.woff2") format("woff2");font-weight:400;font-style:normal;}
 @font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
+@font-face{font-family:"InterSB";src:url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype");font-weight:600;font-style:normal;}
 """
+# the Dario video's Instrument Serif glow (the user: "exactly like the Dario video ... with that white glow")
+SERIF_REST = "0 0 14px rgba(255,255,255,0.62),0 0 42px rgba(255,255,255,0.30),0 0 90px rgba(255,255,255,0.12)"
+SERIF_SOFT = "0 0 18px rgba(255,255,255,0.85),0 0 50px rgba(255,255,255,0.45),0 0 100px rgba(255,255,255,0.18)"
+SERIF_BLOOM = "0 0 22px rgba(255,255,255,1),0 0 60px rgba(255,255,255,0.95),0 0 130px rgba(255,255,255,0.7)"
+# the Porsche reel's small italic line: a tight halo and a wide faint one; a faint dark lift over bright pictures
+POR_GLOW = "0 0 6px rgba(255,255,255,0.50),0 0 30px rgba(255,255,255,0.20),0 2px 16px rgba(0,0,0,0.42)"
+# over white pictures (the user's ending video, the S&P logo wall): the same type with a dark halo
+POR_HEAVY = "0 0 10px rgba(0,0,0,0.85),0 0 26px rgba(0,0,0,0.65),0 0 60px rgba(0,0,0,0.35),0 2px 6px rgba(0,0,0,0.7)"
 
 BASE_CSS = """
 #root{position:absolute;inset:0;overflow:hidden;background:#000;}
@@ -32,6 +42,15 @@ BASE_CSS = """
 .nv{font-family:"InterD",sans-serif;font-weight:800;letter-spacing:-0.02em;color:#fff;text-transform:uppercase;}
 .hv{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.012em;color:#EEF0F0;text-transform:uppercase;line-height:1;white-space:nowrap;}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;}
+.jn{font-family:"InterSB",sans-serif;font-weight:600;font-size:62px;letter-spacing:-0.05em;line-height:1;color:#fff;white-space:nowrap;
+ text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);}
+.jn.ink{color:#141414;text-shadow:none;}
+.ser{font-family:"ISerif",serif;font-weight:400;line-height:1;color:#FBF8EC;white-space:nowrap;letter-spacing:0.005em;}
+.por{font-family:"ISerif",serif;font-style:italic;font-weight:400;line-height:1;color:#fff;white-space:nowrap;word-spacing:0.38em;}
+.por span{display:inline-block;opacity:0;}
+.pl{font-family:"Heros",sans-serif;font-weight:700;font-size:94px;line-height:1.02;letter-spacing:-0.015em;color:#EDEDEA;
+ text-shadow:0 0 14px rgba(0,0,0,0.35);}
+.pl span{display:inline-block;opacity:0;}
 """
 
 
@@ -158,6 +177,66 @@ def chunks(sc, items, end, **kw):
         caption(sc, text, t, b, **kw)
 
 
+# ------------------------------------------------------------------ type devices
+BIG_REST = "0 0 20px rgba(255,255,255,0.75),0 0 60px rgba(255,255,255,0.40),0 0 130px rgba(255,255,255,0.16)"
+
+
+def dhero(sc, eid, a, rest=SERIF_REST):
+    """The Dario entrance: in blurred and blooming at 1.04, sharp and at rest four frames later."""
+    sc.js.append(f'tl.set("#{eid}",{{scale:1.04,filter:"blur(14px)",textShadow:"{SERIF_BLOOM}"}},{sc.at(a)});')
+    sc.js.append(f'tl.set("#{eid}",{{scale:1.015,filter:"blur(5px)",textShadow:"{SERIF_SOFT}"}},{sc.at(a + FR)});')
+    sc.js.append(f'tl.set("#{eid}",{{scale:1.005,filter:"blur(2.5px)"}},{sc.at(a + 3 * FR)});')
+    sc.js.append(f'tl.set("#{eid}",{{scale:1,filter:"blur(0px)",textShadow:"{rest}"}},{sc.at(a + 4 * FR)});')
+
+
+def serif(sc, text, a, b, size, y=540, z=60, italic=False, rest=SERIF_REST):
+    eid = sc.uid("sr")
+    st = "font-style:italic;" if italic else ""
+    sc.div(a, b, f'<div id="{eid}" class="ser" style="font-size:{size}px;{st}text-shadow:{rest};transform-origin:50% 55%;">'
+                 f'{text}</div>', z=z, cls="cap", style=f"top:{y}px;height:0;")
+    dhero(sc, eid, a, rest)
+    return eid
+
+
+def por_phrase(sc, words, a, b, size=96, y=540, z=60, fade=0.28, blur=6, spacing=None, glow=None):
+    """The Porsche reel's line: laid out whole and centred first, each word fading in from a soft blur in its place."""
+    spans, ids = [], []
+    for w, t in words:
+        sid = sc.uid("pw")
+        ids.append((sid, t))
+        spans.append(f'<span id="{sid}">{_html.escape(w, quote=False)}</span>')
+    ws = f"word-spacing:{spacing};" if spacing else ""
+    sc.div(a, b, f'<div class="por" style="font-size:{size}px;{ws}text-shadow:{glow or POR_GLOW};">{" ".join(spans)}</div>',
+           z=z, cls="cap", style=f"top:{y}px;height:0;")
+    for sid, t in ids:
+        sc.js.append(f'tl.fromTo("#{sid}",{{opacity:0,filter:"blur({blur}px)"}},{{opacity:1,filter:"blur(0px)",'
+                     f'duration:{fade},ease:"power1.out"}},{sc.at(t)});')
+
+
+def type_phrase(sc, words, a, b, size=150, y=540, z=60, step=0.07, glow=None):
+    """The Porsche reel's "4,500 people": the letters come in left to right, each from a soft blur."""
+    spans, sets = [], []
+    for wi, (w, t) in enumerate(words):
+        for ci, ch in enumerate(w):
+            sid = sc.uid("ty")
+            spans.append(f'<span id="{sid}">{_html.escape(ch, quote=False)}</span>')
+            sets.append((sid, t + ci * step))
+        if wi < len(words) - 1:
+            spans.append(" ")
+    sc.div(a, b, f'<div class="por" style="font-size:{size}px;word-spacing:0.12em;text-shadow:{glow or POR_GLOW};">{"".join(spans)}</div>',
+           z=z, cls="cap", style=f"top:{y}px;height:0;")
+    for sid, t in sets:
+        sc.js.append(f'tl.fromTo("#{sid}",{{opacity:0,filter:"blur(4px)"}},{{opacity:1,filter:"blur(0px)",duration:0.16,'
+                     f'ease:"power1.out"}},{sc.at(t)});')
+
+
+def big_words(sc, text, a, b, z=30, y=545, size=330):
+    """League Gothic, centred, in difference over the picture (WEAPONIZED's treatment, the user's CARTEL)."""
+    sc.div(a, b, f'<div style="font-family:\'LGothic\',sans-serif;font-size:{size}px;line-height:0.9;color:#fff;'
+                 f'letter-spacing:0.01em;text-align:center;">{text}</div>',
+           z=z, cls="cap", style=f"top:{y}px;height:0;mix-blend-mode:difference;")
+
+
 # ------------------------------------------------------------------ s_quote: the panel line
 def s_quote():
     sc = Scene("s_quote", *B["quote"])
@@ -165,17 +244,11 @@ def s_quote():
     cut1, cut2 = L[8][1], L[14][1]                     # "with", "financial"
     sc.video("p_wide.mp4", 0.0, cut1, z=1)             # no zooms (the user)
     sc.video("p_over.mp4", cut1, cut2, z=1)
-    # "of financial talent and skill as you've been able to put together here": four panelists talking (muted),
-    # a white flash into each one
+    # from "financial talent": Fink, Schwarzman, then Jamie Dimon (3rd) and Ray Dalio (4th) -- the user, Nov 21
     cuts_ = [cut2, L[16][1], L[19][1], L[23][1], B["quote"][1]]
-    for k, name in enumerate(["ob_fink", "ob_schw", "ob_dalio", "ob_motsepe"]):
-        sc.video(f"v3_{name}.mp4", cuts_[k], cuts_[k + 1], z=1)
+    for k, clip in enumerate(["v3_ob_fink", "v3_ob_schw", "v4_ob_dimon", "v4_ob_dalio"]):
+        sc.video(f"{clip}.mp4", cuts_[k], cuts_[k + 1], z=1)
         sc.flash(cuts_[k], peak=1.0, up=2 * FR, down=0.16, z=30)
-    sc.add('<div class="layer" style="z-index:20;background:linear-gradient(to bottom,rgba(0,0,0,0) 55%,rgba(0,0,0,0.55) 100%)"></div>')
-    items = []
-    for i0, i1 in [(0, 3), (3, 6), (6, 8), (8, 11), (11, 13), (13, 16), (16, 18), (18, 22), (22, 26)]:
-        items.append((" ".join(w for w, _ in L[i0:i1]).replace("'", "’"), L[i0][1]))
-    chunks(sc, items, B["quote"][1] - 2 * FR, blend=None)
     sc.write()
     return sc
 
@@ -186,7 +259,6 @@ def s_hook():
     t0 = B["tiles"][0]
     n = round((B["tiles"][1] - t0) * 60)
     sc.video("r_tiles3.mp4", *B["tiles"], z=1)
-    caption(sc, "These are the most", T["these"], T["powerful"], blend=None)
     for word, a, b in (("Powerful", T["powerful"], T["people"]), ("People", T["people"], t0 + (n - 5) * FR)):
         wid = sc.uid("pw")
         sc.div(a, b, f'<div id="{wid}" class="nv" style="font-size:118px;text-shadow:0 0 22px rgba(0,0,0,0.45);">{word}</div>', z=30, cls="cap",
@@ -202,22 +274,23 @@ def s_hook():
              f'letter-spacing:0.01em;line-height:1;"><span id="{on}">ON</span><span id="{ea}" style="opacity:0">EARTH</span></div>')
     sc.div(*B["earth"], inner, z=30, cls="cap", style="top:545px;height:0;")
     sc.js.append(f'tl.set("#{ea}",{{opacity:1}},{sc.at(T["earth"])});')
-    # a $60 trillion dollar: the article flipbook (its "$60 trillion" is the text)
+    # "a $60 trillion dollar": the article flipbook (its "$60 trillion" is the text), as long as the line lets it run
     sc.video("r_articles.mp4", *B["money"], z=1)
-    sc.video("r_cartel3.mp4", *B["cartel"], z=1)     # the user's cartel video as it is: table flash, then the faces
-    # weaponized capital: on its word, gone again, no bounce
+    # "cartel": the user's cartel video -- its table flash, a split second later the faces; CARTEL at the centre in
+    # difference, on its word (the user: "like WEAPONIZED is written")
+    sc.video("r_cartel4.mp4", *B["cartel"], z=1)
+    big_words(sc, "CARTEL", T["cartel"], B["cartel"][1] - FR)
+    # "weaponized capital": nothing written at the cut; WEAPONIZED on its word, then CAPITAL under it, smaller,
+    # centred, in difference, no bounce (the user)
     sc.video("r_weap.mp4", *B["weap"], z=1)
-    cap = T["capital"]
-    for word, a, b in (("WEAPONIZED", B["weap"][0], B["weap"][0] + 0.35), ("CAPITAL", cap, min(cap + 0.42, B["weap"][1] - 2 * FR))):
-        sc.div(a, b, f'<div style="font-family:\'LGothic\',sans-serif;font-size:430px;line-height:1;color:#fff;letter-spacing:0.01em;">{word}</div>',
-               z=30, cls="cap", style="top:545px;height:0;mix-blend-mode:difference;")
-    # that owns a piece of everything you touch
-    sc.video("r_logos.mp4", *B["logos"], z=1)
-    chunks(sc, [("That owns", T["that"]), ("A piece of", T["piece"]), ("Everything", T["everything"])], B["logos"][1])
-    sc.video("r_touch3.mp4", *B["touch"], z=1)
-    caption(sc, "Everything", B["touch"][0], T["you"], blend=None)
-    chunks(sc, [("You", T["you"]), ("You touch.", T["touch"])], B["touch"][1] - 2 * FR, blend=None)
-    sc.video("v3_puppet.mp4", *B["puppet"], z=1)        # the explainer's puppet, then "That's Jamie Dimon"
+    wid, cid = sc.uid("wz"), sc.uid("cp")
+    stack = (f'<div style="font-family:\'LGothic\',sans-serif;font-size:250px;line-height:0.88;color:#fff;letter-spacing:0.01em;'
+             f'text-align:center;"><div id="{wid}" style="opacity:0">WEAPONIZED</div><div id="{cid}" style="opacity:0">CAPITAL</div></div>')
+    sc.div(T["weapon"], B["weap"][1] - FR, stack, z=30, cls="cap", style="top:545px;height:0;mix-blend-mode:difference;")
+    sc.js.append(f'tl.set("#{wid}",{{opacity:1}},{sc.at(T["weapon"])});tl.set("#{cid}",{{opacity:1}},{sc.at(T["capital"])});')
+    sc.video("r_logos.mp4", *B["logos"], z=1)          # that owns a piece of
+    sc.video("r_touch3.mp4", *B["touch"], z=1)         # everything you touch
+    sc.video("v3_puppet.mp4", *B["puppet"], z=1)
     sc.write()
     return sc
 
@@ -228,14 +301,10 @@ def cuts(sc, shots, z=1):
         sc.video(src, a, b, z=z)
 
 
-def split(a, b, n):
-    return [(F(a + (b - a) * k / n), F(a + (b - a) * (k + 1) / n)) for k in range(n)]
-
-
-# ------------------------------------------------------------------ the intros (pre-rendered from the references)
+# ------------------------------------------------------------------ the intros
 def s_dimon():
     sc = Scene("s_dimon", B["dimon"][0], B["jpm"][1])
-    sc.video("r_dimon3.mp4", *B["dimon"], z=1)         # the reference edit's "if intelligence is automated"
+    sc.video("v5_dimon.mp4", *B["dimon"], z=1)         # refff's band in the ON EARTH red, the name in the white glow
     sc.video("r_jpm.mp4", *B["jpm"], z=1)              # the reel's "the man behind OpenAI"
     sc.write()
     return sc
@@ -243,138 +312,138 @@ def s_dimon():
 
 def s_solomon():
     sc = Scene("s_solomon", B["solomon"][0], B["ceo"][1])
-    sc.video("r_solomon3.mp4", *B["solomon"], z=1)     # the reference edit's "AI"
+    sc.video("v5_solomon.mp4", *B["solomon"], z=1)     # the same device; "a part-time DJ" is the captions' line
     a, b = B["dj"]
     m = F((a + b) / 2)
-    sc.video("v3_dj_a.mp4", a, m, z=1)
-    sc.video("v3_dj_b.mp4", m, b, z=1)
-    sc.video("r_ceo.mp4", *B["ceo"], z=1)              # the reel's OpenAI device, with the Goldman Sachs video
+    sc.video("v4_dj_a.mp4", a, m, z=1)
+    sc.video("v4_dj_b.mp4", m, b, z=1)
+    sc.video("r_ceo4.mp4", *B["ceo"], z=1)             # exactly the JPMorgan device, no shot repeated
     sc.write()
     return sc
 
 
 def s_search():
+    """"Amongst them is this guy": the spotlight reel (DeJRKmqTPdg) -- the big glowing serif words over the group,
+    then the face flash, the room going dark and the punch-in on Fink, the small italic words under his face."""
     sc = Scene("s_search", B["orbit"][0], B["thisguy"][1])
-    sc.video("r_orbit3.mp4", *B["orbit"], z=1)          # the table circling, people lighting up at random
-    sc.video("r_spot.mp4", *B["thisguy"], z=1)          # "is this guy": the spotlight reel's 3rd second on Fink
-    caption(sc, "Amongst them", T["amongst"], T["is"], blend=None, shadow=True)
-    caption(sc, "Is this guy", T["is"], B["thisguy"][1] - 2 * FR, blend=None, shadow=True)
+    sc.video("r_orbit4.mp4", *B["orbit"], z=1)
+    sc.video("r_spot4.mp4", *B["thisguy"], z=1)
+    serif(sc, "Amongst them", T["amongst"] - 0.03, B["orbit"][1], 150, y=540)
+    por_phrase(sc, [("is", T["is"] - 0.03), ("this", T["this"] - 0.03), ("guy", T["guy2"] - 0.03)],
+               T["is"] - 0.03, B["thisguy"][1], size=78, y=745, spacing="0.3em")
     sc.write()
     return sc
 
 
 # ------------------------------------------------------------------ s_fink: the man who runs ... BlackRock.
-BOX_FACE = (1332, 396)   # Fink's face centre in v2_fink_box (Haar, mean over the shot; it moves < 2 px a step)
-BOX = 400                # the square, a little wider than his face (345 px)
-# the VC reel's box: cut in at 88.5 % of its size, then held 2 frames at 25 fps per step (12.5 steps a second)
-BOX_STEPS = [(0.0, 0.885, 0.40), (0.08, 0.945, 0.43), (0.16, 0.980, 0.46), (0.24, 0.995, 0.475), (0.32, 1.0, 0.48)]
-
-
 def s_fink():
     sc = Scene("s_fink", B["walk"][0], B["brand"][1])
-    sc.video("v2_fink_stage.mp4", *B["walk"], z=1)
-    sc.video("v2_fink_box.mp4", *B["box"], z=1)
-    caption(sc, "The man who runs", T["the3"], T["most"], blend=None, shadow=True)
-    # the red square: appears on "most" while the shot plays (not on the cut), settles in steps, stays put
-    rb = sc.uid("rb")
-    bx, by = BOX_FACE[0] - BOX // 2, BOX_FACE[1] - BOX // 2 - 10
-    hs = "".join(f'<div style="position:absolute;left:{x - 7}px;top:{y - 7}px;width:14px;height:14px;background:#0b0b0b;"></div>'
-                 for x, y in ((0, 0), (BOX, 0), (0, BOX), (BOX, BOX)))
-    w1, w2, fill = sc.uid("t"), sc.uid("t"), sc.uid("f")
-    box = (f'<div id="{rb}" style="position:absolute;left:{bx}px;top:{by}px;width:{BOX}px;height:{BOX}px;'
-           f'transform-origin:50% 50%;">'
-           f'<div id="{fill}" style="position:absolute;inset:0;background:rgba(222,30,44,{BOX_STEPS[0][2]});'
-           f'border:2px solid rgba(36,6,8,0.9);"></div>' + hs +
-           f'<div style="position:absolute;left:0;right:0;top:22px;display:flex;justify-content:center;gap:0.24em;'
-           f'font-family:\'ISerif\',serif;font-size:50px;line-height:1;color:#fff;letter-spacing:0.005em;">'
-           f'<span id="{w1}">most</span><span id="{w2}" style="opacity:0">evil</span></div></div>')
-    sc.div(T["most"], B["box"][1], box, z=12, did=f"{rb}w")
-    sc.js.append(f'tl.set("#{rb}",{{scale:{BOX_STEPS[0][1]}}},0);')
-    for dt, k, al in BOX_STEPS[1:]:
-        sc.js.append(f'tl.set("#{rb}",{{scale:{k}}},{sc.at(T["most"] + dt)});')
-        sc.js.append(f'tl.set("#{fill}",{{backgroundColor:"rgba(222,30,44,{al})"}},{sc.at(T["most"] + dt)});')
-    sc.js.append(f'tl.set("#{w2}",{{opacity:1}},{sc.at(T["evil"])});')
-    # company in the world: BlackRock itself, in plain cuts; "BlackRock.": its letters
-    # the source edit cuts every 16 frames, so the letters and the flags get their whole shots (0.45 s, 0.5 s)
+    # "the man who runs the most evil": reel DeHkRtts3bI's opening -- a Fink picture every 4 frames, out of
+    # perspective, blurred on the cuts (the user's new photos first); no red box
+    sc.video("r_finkflip.mp4", B["walk"][0], B["box"][1], z=1)
     c0, c1 = B["company"]
     k1, k2 = F(c0 + 0.45), F(c0 + 0.95)
     cuts(sc, [("v2_br_letters.mp4", c0, k1), ("v2_br_bldg.mp4", k1, k2), ("v2_br_doors.mp4", k2, c1),
               ("v2_br_sign.mp4", *B["brand"])])
-    caption(sc, "Company in the world", T["company"], B["company"][1], blend=None, shadow=True)
-    caption(sc, "BlackRock.", T["blackrock"], B["brand"][1] - 2 * FR, blend=None, shadow=True)
     sc.write()
     return sc
 
 
-# ------------------------------------------------------------------ the rest of the script
+# ------------------------------------------------------------------ rest1: "A company that manages ... ever did."
 import shotlist as SL
-
-CARD_RED = "url(assets/img/red_bg_user.jpg) center/cover"
-
-
-def rest_time(x):
-    return TM.RT(x) if isinstance(x, str) else F((TM.REST1_AT if x < TM.REST_SPLIT else TM.REST2_AT) + x)
-
-
-def rest_part(sc, shots, part, caps):
-    a0, a1 = B[part]
-    starts = [a0 if k in ("rest1", "rest2") else TM.RT(k) for k, *_ in shots]
-    for (key, name, src, t0, extra, fc), a, b in zip(shots, starts, starts[1:] + [a1]):
-        if src == "card":
-            color, word = extra
-            bg = CARD_RED if color == "red" else color
-            inner = (f'<div style="position:absolute;inset:0;background:{bg};"></div>'
-                     f'<div class="cap" style="top:540px;height:0;"><div style="font-family:\'LGothic\',sans-serif;'
-                     f'font-size:300px;line-height:1;color:#fff;letter-spacing:0.01em;">{word}</div></div>')
-            sc.div(a, b, inner, z=1)
-            if name == "card_jobs":                    # "ever did." under the name
-                sc.div(TM.RT("ever"), b, '<div style="font-family:\'LGothic\',sans-serif;font-size:120px;line-height:1;color:#fff;">EVER DID.</div>',
-                       z=2, cls="cap", style="top:800px;height:0;")
-        elif src == "clip":
-            sc.video(f"{name}.mp4", a, b, z=1)
-        else:
-            sc.video(f"v3_{name}.mp4", a, b, z=1)
-    for key, text, until in SL.HERO:
-        t = TM.RT(key)
-        if a0 <= t < a1:
-            sc.div(t, TM.RT(until) - 2 * FR, f'<div style="font-family:\'LGothic\',sans-serif;font-size:300px;line-height:1;color:#fff;'
-                   f'letter-spacing:0.01em;text-shadow:0 0 40px rgba(0,0,0,0.45),0 0 12px rgba(0,0,0,0.35);">{text}</div>',
-                   z=30, cls="cap", style="top:520px;height:0;")
-    for i, (text, t, *opt) in enumerate(caps):
-        if text is None:
-            continue
-        a = rest_time(t)
-        b = rest_time(caps[i + 1][1]) if i + 1 < len(caps) else a1 - 2 * FR
-        ink = "ink" in opt                             # dark, over Think School's light grey page
-        heavy = TM.RT("a2") <= a < TM.RT("has")        # over the user's ending video
-        caption(sc, text, a, min(b, a1 - 2 * FR), blend=None, shadow=("heavy" if heavy else not ink),
-                color="#151515" if ink else None)
 
 
 def s_rest1():
     sc = Scene("s_rest1", *B["rest1"])
-    rest_part(sc, SL.REST1, "rest1", SL.CAPS1)
+    a0, a1 = B["rest1"]
+    starts = [a0 if k == "rest1" else TM.RTX(k) for k, *_ in SL.REST1]
+    for (key, name, src, t0, extra, fc), a, b in zip(SL.REST1, starts, starts[1:] + [a1]):
+        sc.video(f"v3_{name}.mp4", a, b, z=1)
+    # "$15 trillion": the Dario serif glow over the user's montage (not League Gothic, the user)
+    serif(sc, "$15 trillion", TM.RT("15") - 0.03, TM.RT("assets") - 0.03, 210, y=540)
     sc.write()
     return sc
 
 
+# ------------------------------------------------------------------ Rogan: Elon's question, then Rogan's silent second
+def s_rogan():
+    a, b = B["rogan"][0], B["react"][1]
+    sc = Scene("s_rogan", a, b)
+    sc.video("v5_rogan.mp4", *B["rogan"], z=1)
+    sc.video("v5_react.mp4", *B["react"], z=1)
+    # the Palmer Luckey reel's captions: lowercase bold Helvetica stacked beside him, each word blurring in
+    rows, sets = [], []
+    for line in CAP.palmer_lines():
+        spans = []
+        for w, t in line:
+            sid = sc.uid("pl")
+            spans.append(f'<span id="{sid}">{w}</span>')
+            sets.append((sid, t))
+        rows.append('<div class="pl">' + " ".join(spans) + "</div>")
+    stack = sc.uid("st")
+    sc.div(a, B["react"][0] + 0.62, f'<div id="{stack}" style="position:absolute;left:118px;top:300px;text-align:left;">{"".join(rows)}</div>',
+           z=40, cls="layer")
+    for sid, t in sets:
+        sc.js.append(f'tl.fromTo("#{sid}",{{opacity:0,filter:"blur(8px)"}},{{opacity:1,filter:"blur(0px)",'
+                     f'duration:0.22,ease:"power2.out"}},{sc.at(t)});')
+    sc.js.append(f'tl.to("#{stack}",{{opacity:0,filter:"blur(10px)",duration:0.28,ease:"power1.in"}},{sc.at(B["react"][0] + 0.32)});')
+    sc.write()
+    return sc
+
+
+# ------------------------------------------------------------------ rest2: "Back in the 1980s" to the end
 def s_rest2():
     sc = Scene("s_rest2", *B["rest2"])
-    rest_part(sc, SL.REST2, "rest2", SL.CAPS2)
+    sc.video("v5_rest2.mp4", *B["rest2"], z=1)         # prep_v5: 72 shots, cut on the words (shotlist.REST2_V5)
+    for a, b, kind, words, text in CAP.porsche_phrases():
+        if kind != "card":
+            continue
+        # "in 1988": exactly the ON EARTH card (the user) -- the user's red, IN, then 1988 on its word
+        in_, yr = sc.uid("in"), sc.uid("yr")
+        sc.img("red_bg_user.jpg", a, b, z=5)
+        inner = (f'<div style="display:flex;gap:0.2em;font-family:\'LGothic\',sans-serif;font-size:330px;color:#fff;'
+                 f'letter-spacing:0.01em;line-height:1;"><span id="{in_}">{words[0][0]}</span>'
+                 f'<span id="{yr}" style="opacity:0">{words[1][0]}</span></div>')
+        sc.div(a, b, inner, z=6, cls="cap", style="top:545px;height:0;")
+        sc.js.append(f'tl.set("#{yr}",{{opacity:1}},{sc.at(words[1][1])});')
     sc.write()
     return sc
 
 
-# ------------------------------------------------------------------ s_rogan: Elon's question, after "...than Steve Jobs ever did.", and a 1 s pause
-ROGAN_CAPS = [("Do you think", 0.00), ("BlackRock’s", 0.67), ("a bad company?", 1.41)]   # s from his first word
+# ------------------------------------------------------------------ s_caps: every caption, on its word
+import captions as CAP
+
+SL_white = ("a2", "has")                    # rest-recording keys: the ending video's span
 
 
-def s_rogan():
-    a, b = B["rogan"][0], B["pause"][1]
-    sc = Scene("s_rogan", a, b)
-    sc.video("rogan2.mp4", a, b, z=1)                  # its burned-in subtitle removed; held 1 s after the question
-    items = [(text, F(a + dt)) for text, dt in ROGAN_CAPS]
-    chunks(sc, items, b - 2 * FR, blend=None, shadow=True)
+def s_caps():
+    sc = Scene("s_caps", 0.0, TM.TOTAL, bg="transparent")
+    # 1. the Jensen reel's line (and the serif key words) to "...ever did."
+    for a, b, ws, kind in CAP.jensen_phrases():
+        if kind == "emph":
+            serif(sc, " ".join(w for w, _, _ in ws), a, b, 150, y=540)
+            continue
+        y, cls = (900, "jn ink") if kind == "ink" else (540, "jn")
+        for k in range(len(ws)):                       # the phrase builds word by word, re-centring as it grows
+            s0 = ws[k][1]
+            s1 = ws[k + 1][1] if k + 1 < len(ws) else b
+            if s1 - s0 < FR:
+                continue
+            text = " ".join(w for w, _, _ in ws[:k + 1])
+            sc.div(s0, s1, f'<div class="{cls}">{text}</div>', z=60, cls="cap", style=f"top:{y}px;height:0;")
+    # 3. the Porsche reel's type from "Back in the 1980s"
+    white = [(TM.RTX(SL_white[0]), TM.RTX(SL_white[1]))]          # the ending video (white frames) to "has"
+    for a, b, kind, words, text in CAP.porsche_phrases():
+        glow = POR_HEAVY if any(w0 - 0.05 <= a < w1 for w0, w1 in white) else None
+        if kind == "por":
+            por_phrase(sc, words, a, b, glow=glow)
+        elif kind == "word":
+            por_phrase(sc, words, a, b, size=150, glow=glow)
+        elif kind == "type":
+            type_phrase(sc, words, a, b, glow=POR_HEAVY)
+        elif kind == "big":
+            size = {"2008": 470, "3x": 560}.get(text, 200)
+            serif(sc, text, a, b, size, y=545, italic=True, rest=BIG_REST)
     sc.write()
     return sc
 
@@ -414,6 +483,7 @@ def index(scenes):
 
 if __name__ == "__main__":
     os.makedirs(COMP, exist_ok=True)
-    scenes = [s_quote(), s_hook(), s_dimon(), s_solomon(), s_search(), s_fink(), s_rest1(), s_rogan(), s_rest2()]
+    scenes = [s_quote(), s_hook(), s_dimon(), s_solomon(), s_search(), s_fink(), s_rest1(), s_rogan(), s_rest2(),
+              s_caps()]
     index(scenes)
     print("wrote", len(scenes), "scenes; total", TM.TOTAL)

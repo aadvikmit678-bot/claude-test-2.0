@@ -1,0 +1,422 @@
+[
+{
+"text": "These",
+"start": 0.12,
+"end": 0.38,
+"score": 0.987
+},
+{
+"text": "are",
+"start": 0.52,
+"end": 0.6,
+"score": 1.0
+},
+{
+"text": "the",
+"start": 0.64,
+"end": 0.7,
+"score": 0.997
+},
+{
+"text": "most",
+"start": 0.74,
+"end": 0.9,
+"score": 0.986
+},
+{
+"text": "powerful",
+"start": 1.04,
+"end": 1.541,
+"score": 0.992
+},
+{
+"text": "people",
+"start": 1.641,
+"end": 1.921,
+"score": 0.996
+},
+{
+"text": "on",
+"start": 2.121,
+"end": 2.161,
+"score": 0.999
+},
+{
+"text": "earth,",
+"start": 2.341,
+"end": 2.541,
+"score": 0.913
+},
+{
+"text": "a",
+"start": 3.141,
+"end": 3.162,
+"score": 0.994
+},
+{
+"text": "60",
+"start": 3.322,
+"end": 3.662,
+"score": 0.985
+},
+{
+"text": "trillion",
+"start": 3.782,
+"end": 4.222,
+"score": 0.956
+},
+{
+"text": "dollar",
+"start": 4.282,
+"end": 4.522,
+"score": 0.969
+},
+{
+"text": "cartel",
+"start": 4.582,
+"end": 5.022,
+"score": 0.905
+},
+{
+"text": "of",
+"start": 5.142,
+"end": 5.182,
+"score": 0.999
+},
+{
+"text": "weaponized",
+"start": 5.323,
+"end": 5.783,
+"score": 0.897
+},
+{
+"text": "capital",
+"start": 5.863,
+"end": 6.243,
+"score": 0.993
+},
+{
+"text": "that",
+"start": 6.343,
+"end": 6.463,
+"score": 0.985
+},
+{
+"text": "owns",
+"start": 6.563,
+"end": 6.683,
+"score": 1.0
+},
+{
+"text": "a",
+"start": 6.743,
+"end": 6.763,
+"score": 0.999
+},
+{
+"text": "piece",
+"start": 6.843,
+"end": 7.063,
+"score": 0.969
+},
+{
+"text": "of",
+"start": 7.123,
+"end": 7.163,
+"score": 1.0
+},
+{
+"text": "everything",
+"start": 7.444,
+"end": 7.824,
+"score": 0.999
+},
+{
+"text": "you",
+"start": 7.864,
+"end": 7.944,
+"score": 1.0
+},
+{
+"text": "touch.",
+"start": 8.044,
+"end": 8.304,
+"score": 1.0
+},
+{
+"text": "That's",
+"start": 9.044,
+"end": 9.244,
+"score": 0.994
+},
+{
+"text": "Jamie",
+"start": 9.304,
+"end": 9.565,
+"score": 0.959
+},
+{
+"text": "Dimon,",
+"start": 9.625,
+"end": 9.925,
+"score": 0.96
+},
+{
+"text": "the",
+"start": 10.225,
+"end": 10.305,
+"score": 0.967
+},
+{
+"text": "guy",
+"start": 10.345,
+"end": 10.465,
+"score": 0.67
+},
+{
+"text": "running",
+"start": 10.565,
+"end": 10.765,
+"score": 0.998
+},
+{
+"text": "JP",
+"start": 10.805,
+"end": 11.005,
+"score": 0.998
+},
+{
+"text": "Morgan",
+"start": 11.125,
+"end": 11.385,
+"score": 0.995
+},
+{
+"text": "Chase,",
+"start": 11.465,
+"end": 11.746,
+"score": 0.991
+},
+{
+"text": "David",
+"start": 12.446,
+"end": 12.666,
+"score": 0.992
+},
+{
+"text": "Solomon,",
+"start": 12.746,
+"end": 13.146,
+"score": 0.987
+},
+{
+"text": "a",
+"start": 13.466,
+"end": 13.486,
+"score": 0.999
+},
+{
+"text": "part-time",
+"start": 13.526,
+"end": 13.947,
+"score": 0.984
+},
+{
+"text": "DJ",
+"start": 14.027,
+"end": 14.247,
+"score": 0.998
+},
+{
+"text": "and",
+"start": 14.547,
+"end": 14.607,
+"score": 0.997
+},
+{
+"text": "the",
+"start": 14.647,
+"end": 14.707,
+"score": 0.799
+},
+{
+"text": "CEO",
+"start": 14.767,
+"end": 15.187,
+"score": 0.938
+},
+{
+"text": "Goldman",
+"start": 15.307,
+"end": 15.607,
+"score": 0.941
+},
+{
+"text": "Sachs.",
+"start": 15.707,
+"end": 16.048,
+"score": 0.479
+},
+{
+"text": "Amongst",
+"start": 16.828,
+"end": 17.088,
+"score": 0.981
+},
+{
+"text": "them",
+"start": 17.128,
+"end": 17.268,
+"score": 0.983
+},
+{
+"text": "is",
+"start": 17.508,
+"end": 17.588,
+"score": 0.944
+},
+{
+"text": "this",
+"start": 17.668,
+"end": 17.829,
+"score": 0.938
+},
+{
+"text": "guy,",
+"start": 17.909,
+"end": 18.089,
+"score": 0.974
+},
+{
+"text": "the",
+"start": 18.549,
+"end": 18.649,
+"score": 0.935
+},
+{
+"text": "man",
+"start": 18.689,
+"end": 18.829,
+"score": 0.93
+},
+{
+"text": "who",
+"start": 18.889,
+"end": 18.989,
+"score": 0.999
+},
+{
+"text": "runs",
+"start": 19.069,
+"end": 19.289,
+"score": 0.946
+},
+{
+"text": "the",
+"start": 19.349,
+"end": 19.429,
+"score": 0.997
+},
+{
+"text": "most",
+"start": 19.469,
+"end": 19.629,
+"score": 0.966
+},
+{
+"text": "evil",
+"start": 19.889,
+"end": 20.11,
+"score": 0.958
+},
+{
+"text": "company",
+"start": 20.23,
+"end": 20.57,
+"score": 0.954
+},
+{
+"text": "in",
+"start": 20.69,
+"end": 20.73,
+"score": 0.998
+},
+{
+"text": "the",
+"start": 20.77,
+"end": 20.85,
+"score": 1.0
+},
+{
+"text": "world,",
+"start": 20.93,
+"end": 21.21,
+"score": 0.952
+},
+{
+"text": "BlackRock.",
+"start": 21.87,
+"end": 22.391,
+"score": 0.974
+},
+{
+"text": "A",
+"start": 23.071,
+"end": 23.091,
+"score": 0.999
+},
+{
+"text": "man",
+"start": 23.151,
+"end": 23.291,
+"score": 1.0
+},
+{
+"text": "got",
+"start": 23.351,
+"end": 23.491,
+"score": 1.0
+},
+{
+"text": "fired",
+"start": 23.651,
+"end": 24.011,
+"score": 0.995
+},
+{
+"text": "over",
+"start": 24.152,
+"end": 24.292,
+"score": 0.999
+},
+{
+"text": "a",
+"start": 24.832,
+"end": 24.852,
+"score": 0.0
+},
+{
+"text": "100",
+"start": null,
+"end": null,
+"score": 0
+},
+{
+"text": "million",
+"start": 25.232,
+"end": 25.552,
+"score": 0.998
+},
+{
+"text": "dollar",
+"start": 25.612,
+"end": 25.852,
+"score": 1.0
+},
+{
+"text": "mistake.",
+"start": 25.912,
+"end": 26.333,
+"score": 0.991
+}
+]

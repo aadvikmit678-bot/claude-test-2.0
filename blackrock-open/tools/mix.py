@@ -109,6 +109,22 @@ def limit(x, ceil=0.93, look=0.004, release=0.06):
     return x * gs[:, None]
 
 
+def place_paced(bus, x, f0, f1, cuts, base):
+    """Recording x from file time f0 to f1, its cut pauses left out, each kept piece at base + squeeze(its start)."""
+    keep, t = [], f0
+    for a, b in sorted(cuts):
+        if b <= f0 or a >= f1:
+            continue
+        if a > t:
+            keep.append((t, a))
+        t = max(t, b)
+    if t < f1:
+        keep.append((t, f1))
+    for a, b in keep:
+        seg = x[int(round(a * SR)):int(round(b * SR))]
+        place(bus, seg, base + TM.squeeze(a, cuts), fade_in=0.006, fade_out=0.006)
+
+
 def frames_to_times(start, durs):
     out, f = [], round(start * 60)
     for d in durs:
@@ -123,22 +139,28 @@ REST = os.path.abspath(f"{ROOT}/../blackrock-src/vo/rest/rest.mp3")   # the user
 def main():
     T, B = TM.T, TM.B
     speech = np.zeros((N, 2), np.float32)
-    line, vo, rogan, rest = load(f"{AUD}/line.wav"), load(f"{AUD}/vo.wav"), load(f"{AUD}/rogan.wav"), load(REST)
+    # Rogan: the voice only (Demucs htdemucs, two stems): the user, "remove the background music from the Elon Musk
+    # interview" -- the clip came with music under it (the music stem was within 1.5 dB of the voice)
+    line, vo, rogan, rest = load(f"{AUD}/line.wav"), load(f"{AUD}/vo.wav"), load(f"{AUD}/rogan_vocals.wav"), load(REST)
     target = -19.0
     place(speech, line * 10 ** ((target - rms_db(line)) / 20), 0.0, fade_in=0.01, fade_out=0.03)
-    place(speech, vo * 10 ** ((target - rms_db(vo)) / 20), TM.V0, fade_in=0.005, fade_out=0.03)
+    # the voiceover and the rest recording go in piece by piece: the pauses timing.py cuts (tools/words/pace.json)
+    # are left out, each piece placed where the paced clock puts it (every cut is in silence; 6 ms fades)
+    place_paced(speech, vo * 10 ** ((target - rms_db(vo)) / 20), 0.0, TM.VO_END, TM.VO_CUTS, TM.V0)
     g = 10 ** ((target - rms_db(rest)) / 20)
-    k = int(round(TM.REST_SPLIT * SR))
-    place(speech, rest[:k] * g, B["rest1"][0], fade_in=0.004, fade_out=0.02)        # ... than Steve Jobs ever did.
+    place_paced(speech, rest * g, 0.0, TM.REST1_OUT, TM.REST_CUTS, TM.REST1_AT)        # ... than Steve Jobs ever did.
     place(speech, rogan * 10 ** ((target + 1 - rms_db(rogan)) / 20), B["rogan"][0], fade_in=0.004, fade_out=0.08)
-    place(speech, rest[k:] * g, B["rest2"][0], fade_in=0.004, fade_out=0.06)        # (1 s pause) Back in the 1980s ... in it.
+    place_paced(speech, rest * g, TM.REST2_IN, TM.REST_END, TM.REST_CUTS, TM.REST2_AT)  # Back in the 1980s ... in it.
 
     music = np.zeros((N, 2), np.float32)
     d = drone(TM.TOTAL)
     env = np.ones(len(d), np.float32)
     env[: int(1.5 * SR)] = np.linspace(0.0, 1.0, int(1.5 * SR))
-    r0, r1 = int(B["rogan"][0] * SR), int(B["pause"][1] * SR)
-    env[r0:r1] *= 0.35                                   # under Rogan's own sound and the 1 s pause after it
+    r0, r1 = int(B["rogan"][0] * SR), int(B["react"][1] * SR)
+    fade = int(0.12 * SR)                                # no music under Elon's question and Rogan's silent second
+    env[r0 - fade:r0] *= np.linspace(1.0, 0.0, fade)
+    env[r0:r1] = 0.0
+    env[r1:r1 + fade] *= np.linspace(0.0, 1.0, fade)
     env[-int(1.2 * SR):] *= np.linspace(1.0, 0.0, int(1.2 * SR))
     place(music, d * env[:, None], 0.0, fade_out=0.06)
     fx = np.zeros((N, 2), np.float32)

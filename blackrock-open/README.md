@@ -1,11 +1,15 @@
-# BlackRock (16:9, 60 fps, 90.85 s)
+# BlackRock (16:9, 60 fps, 85.13 s)
 
 This is a HyperFrames project.
 
-- **Sources:** the Drive downloads live in `blackrock-src/` (git-ignored), plus the clip library in `jpm-dimon/assets/clips2/`.
-- **Derived media:** every clip, still and the mix are rebuilt by the scripts below. The scratch venv needs numpy, pillow and opencv-python-headless<5.
-- **References:** what was measured from them is in `notes/REFERENCES_v2.md`.
-- **Higgsfield scene:** 48.1–54.0 s is the Higgsfield scene; its prompts, picks and credits are in `notes/HIGGSFIELD_SCENE.md`.
+- **Sources:** the Drive downloads live in `blackrock-src/` (git-ignored). Also used:
+  - the clip library in `jpm-dimon/assets/clips2/`;
+  - the Dimon drive's sources in `dimon-src/`, including the Larry Fink documentary "larry fink metro media house".
+- **Derived media:** every clip, still and the mix are rebuilt by the scripts below. The scratch venv needs numpy, pillow and opencv-python-headless<5. `tools/align.py` also needs torch and torchaudio.
+- **References:**
+  - `notes/REFERENCES_v2.md`;
+  - `notes/REF_PORSCHE.md`: the Porsche reel, measured frame by frame, the model for the second half;
+  - `notes/HIGGSFIELD_SCENE.md`.
 
 ## Preview and render
 
@@ -14,61 +18,72 @@ npx --yes hyperframes@0.9.46 preview                 # Studio in the browser (ht
 npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 -o renders/blackrock_60fps.mp4
 ```
 
+## Sync and pace
+
+**Sync:** every caption appears on its word as it is spoken.
+- The three recordings (the voiceover, the rest of the script and Elon's question) are force-aligned word by word to their sound: `tools/align.py`, which writes `tools/words/*.json`.
+- Whisper's own times had been up to 0.95 s early ("Back in the 1980s" came 0.8 s before it was said).
+
+**Pace:** the long pauses are cut out of both recordings (`tools/pace.py` → `tools/words/pace.json`).
+- Sentence breaks keep 0.22 s.
+- "Goldman Sachs." goes straight into "Amongst them".
+- Every cut is in silence.
+- The mix and the captions both go through the same clock (`timing.squeeze`).
+
+**"did":** "… than Steve Jobs ever did." now ends after "did" has faded, then the Elon clip.
+
 ## Beats
 
 | Film s | What |
 |---|---|
-| 0.00–6.70 | **The FII7 panel line.** Wide, then overhead. From "financial talent", four panelists talk, with a white flash into each one. No zooms. |
-| 6.70–8.72 | **"These are the most powerful people".** From "These": the Nvidia reel's negative frames and its 3×3 tile flash, over nine panelists. |
-| 8.72–9.82 | **ON EARTH** on the user's plain red. |
-| 9.82–10.67 | **"a $60 trillion".** An Opal-style article flipbook made from the user's cut-outs, centred, with a subtle zoom. |
-| 10.67–11.90 | **"cartel".** The user's cartel video as it is: from the flash on the table, then the faces with their glitches. |
-| 11.90–12.98 | **"weaponized capital".** Opal's tank. WEAPONIZED comes and goes; CAPITAL has no bounce. |
-| 12.98–14.25 | **"that owns a piece of everything".** The ownership pages. |
-| 14.25–15.13 | **"you touch".** The touch clip, from the black hands. |
-| 15.13–15.75 | **The explainer's puppet.** |
-| 15.75–17.72 | **"That's Jamie Dimon, the guy running".** The reference edit's "intelligence" intro: a red band, white type, Instrument Serif glow. |
-| 17.72–19.15 | **"JP Morgan Chase".** The Attention Compounds "man behind OpenAI" device, using JPMorgan videos. |
-| 19.15–20.82 | **"David Solomon, the part-time DJ".** His name huge in white glow behind him, a broad red bar, and "a part-time DJ" vertical in yellow. |
-| 20.82–21.47 | **The DJ clips.** |
-| 21.47–22.87 | **"and the CEO of Goldman Sachs".** The OpenAI device again, using the Goldman video. |
-| 22.87–24.23 | **"Amongst them".** The camera circles the table while people light up at random. |
-| 24.23–25.28 | **"is this guy".** The group picture, with the spotlight reel's third-second treatment on Fink. |
-| 25.28–29.37 | **"the man who runs the most evil company in the world, BlackRock."** Fink on stage, the red box on "most evil", then BlackRock's letters, building, doors and sign. |
-| 29.37–33.38 | **"A company that manages $15 trillion in assets".** The HQ flags, the tower, the FT's $15.5tn, and the glass tower. |
-| 33.38–39.93 | **"holds more of Nvidia than Jensen Huang … than Steve Jobs ever did."** Think School's graphic, one company at a time, with dark captions on its grey page. Jensen is the Nvidia reel's own opening clip; Gates and Jobs get the same negative and tile-flash treatment. |
-| 39.93–43.67 | **Elon on Rogan: "Do you think BlackRock's a bad company?"** The clip's burned-in subtitle is removed and the film's own captions go on top. Then a 1 s pause on the same shot. |
-| 43.67–83.47 | **"Back in the 1980s … in this guy's hands."** Videos only: Fink, BlackRock, Wall Street, 2008. Big words: $100 MILLION, RISK., 2008, 3X. A red 1988 card. |
-| 48.07–54.03 | **The Higgsfield scene.** "But one bad bet cost him a $100 million loss. That was enough to get him thrown out of Wall Street." The user's ChatGPT keyframes, animated with Kling 3.0 Pro: the trader's green screens turn red, then the red room under $100 MILLION, then he walks out into Wall Street with his box. The walk-out comes back in grey at "threw out years ago" (71.52 s). |
-| 83.47–88.90 | **"A company that has never made a single product, but everything you own, everything you touch".** The user's ending video, cropped below its watermark. |
-| 88.90–90.85 | **"has a piece of him in it."** Fink at the panel. |
+| 0.00–6.70 | **The FII7 panel line.** Then the panelists with white flashes: Fink, Schwarzman, **Jamie Dimon (3rd)**, **Ray Dalio (4th)**. |
+| 6.70–8.82 | **"These are the most powerful people".** The tile flash; POWERFUL and PEOPLE. |
+| 8.82–9.48 | **ON EARTH** on the user's red. |
+| 9.48–10.80 | **"a $60 trillion".** The article flipbook. |
+| 10.80–11.48 | **"cartel".** The cartel clip's table flash, then the faces on the word. **CARTEL** is centred, in difference. |
+| 11.48–12.68 | **"of weaponized capital".** Nothing is written at the cut. **WEAPONIZED** comes in on its word, then **CAPITAL** under it, centred, in difference, with no bounce. |
+| 12.68–15.10 | **"that owns a piece of everything you touch".** The ownership pages, the hands, the puppet. |
+| 15.10–16.87 | **"That's Jamie Dimon, the guy running".** refff's device: the band in the **ON EARTH red** and **"Jamie Dimon" in the white glow**. |
+| 16.87–18.18 | **"JP Morgan Chase".** The OpenAI device. |
+| 18.18–19.77 | **"David Solomon, a part-time".** The same device as Dimon. "a part-time DJ" is written by the captions; no vertical text. |
+| 19.77–22.05 | **"DJ and the CEO of Goldman Sachs".** His DJ nights, then the JPMorgan device exactly, with no shot repeated. Straight into "Amongst". |
+| 22.05–23.70 | **"Amongst them is this guy".** The spotlight reel: "Amongst them" as big glowing serif words over the table, then the face flash, the dark punch-in on Fink and "is this guy" under his face. |
+| 23.70–25.38 | **"the man who runs the most evil".** Reel DeHkRtts3bI's opening: a Fink picture every 4 frames, tilted out of perspective, blurred on the cuts, with light leaks and negatives. The user's 12 new photos come first. No red box. |
+| 25.38–27.52 | **"company in the world, BlackRock."** |
+| 27.52–38.18 | **"A company that manages $15 trillion in assets … than Steve Jobs ever did."** The $15T montage with the Dario serif glow. Think School's columns, Jensen, Gates and Jobs carry the money texture at low opacity and the soft corners. |
+| 38.18–40.32 | **Elon: "Do you think BlackRock's a bad company?"** The music is removed. It has the Palmer Luckey reel's look: a slow push, soft corners, grain, and stacked lowercase bold captions blurring in. |
+| 40.32–41.92 | **Rogan, chin on hand, saying nothing.** The cut is on "company". A flash leads into the next part. |
+| 41.92–85.13 | **"Back in the 1980s" to the end.** The Porsche reel's look: 72 shots, each on a word, each moving, with flashes, whips and zoom punches. Details below. |
+
+**The second half in detail:**
+- **Footage:**
+  - mostly the Larry Fink documentary: 1980s Wall Street, the 1980s photo of young Fink on the floor, 2008 on the NYSE, BlackRock's signs, iShares;
+  - the Higgsfield trader scene, cut tighter;
+  - the user's genie clip on "Aladdin.", their chalkboard on "calculating" and their ending video, now centred with its watermark painted out.
+- **The 1980s look:** warm and faded, with grain at low opacity.
+- **The red card:** "in 1988" is exactly the ON EARTH card.
+- **Big words:** "$100 million loss." is one glowing line. "2008" and "3x" are big glowing figures, with "the money." on a printing press. "S&P 500," comes in letter by letter.
 
 ## Type and sound
 
-**Display type:**
-- ON EARTH, WEAPONIZED, CAPITAL and the big words: League Gothic.
-- POWERFUL and PEOPLE: Inter Display.
-- The Dimon and Solomon intros: Instrument Serif glow.
+**Captions:** `tools/captions.py`, all in the composition `s_caps`, each word on its aligned onset. There are three styles:
+- **To "…ever did.":** the Jensen reel's centre line, Inter Display SemiBold. The words cut in and the line re-centres. Key words ("everything", "evil", "BlackRock") are set alone in Instrument Serif with the Dario white glow.
+- **Elon:** the Palmer Luckey reel's stacked lowercase Helvetica.
+- **From "Back in the 1980s":** the Porsche reel's Instrument Serif Italic.
+  - The words are set wide apart and laid out first.
+  - Each fades in from a soft blur in its place.
 
-**Storyline captions:** every one is the Jensen Huang reel's caption, Helvetica caps (TeX Gyre Heros Bold), white with a soft shadow. There are two exceptions:
-- they're dark over Think School's page;
-- they get a heavier halo over the ending video, which strobes white.
-
-**Sound:** no sound effects. A low drone sits under the voice, ducked.
+**Sound:** no sound effects. A low drone sits under the voice, ducked; there is none under Elon and Rogan.
 
 ## Rebuild
 
 ```
-python -E -s tools/prep_hook.py   # hook beats (these, tiles, money, cartel, weap, logos, touch)
-python -E -s tools/prep_misc.py   # panel clips, cut-outs, stills, the line / vo / rogan audio
-python -E -s tools/prep_v2.py     # glow, orbit, the Fink box, BlackRock, the v2 plain-cut shots
-python -E -s tools/prep_v3.py     # v3: opening b-rolls, tiles, articles, cartel, Dimon/JPM, Solomon/CEO, orbit, spot,
-                                  # Think School, Jensen/Gates/Jobs, rogan2 (caption removed), the Higgsfield scene (bet),
-                                  # every rest-of-script shot
+python -I tools/align.py          # (torch venv) the word alignment -> tools/words/{vo,rest,rogan}.json
+python -I tools/pace.py           # the pauses cut out -> tools/words/pace.json
+python -E -s tools/prep_hook.py weap logos
+python -E -s tools/prep_v3.py tiles articles touch jpm rogan2   # + rest_shots(REST1 names), r_tsg, r_jensen, r_gates, r_jobs
+python -E -s tools/prep_v4.py finkflip cartel4 ceo4 dj4 orbit4 spot4 panel4 founders
+python -E -s tools/prep_v5.py rest2 rogan dimon5 solomon5
 python -E -s tools/mix.py         # assets/audio/mix.wav (+ mix_dry.wav: speech only)
 python3 tools/build.py            # index.html + compositions/s_*.html
 ```
-
-- **Shot list:** the rest of the script, shot by shot, is `tools/shotlist.py`.
-- **Timings:** `tools/timing.py` holds every time, on a 60 fps grid.
-- **Rogan clip:** its subtitle is removed with a clean plate made from the clip's own caption-free frames (`rogan_plate` and `rogan_clean` in `tools/prep_v3.py`).

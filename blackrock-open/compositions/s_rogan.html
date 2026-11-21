@@ -8,6 +8,7 @@
 @font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-ExtraBold.otf") format("opentype");font-weight:800;font-style:normal;}
 @font-face{font-family:"LGothic";src:url("assets/fonts/LeagueGothic-latin.woff2") format("woff2");font-weight:400;font-style:normal;}
 @font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
+@font-face{font-family:"InterSB";src:url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype");font-weight:600;font-style:normal;}
 
 
 #root{position:absolute;inset:0;overflow:hidden;background:#000;}
@@ -17,21 +18,36 @@
 .nv{font-family:"InterD",sans-serif;font-weight:800;letter-spacing:-0.02em;color:#fff;text-transform:uppercase;}
 .hv{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.012em;color:#EEF0F0;text-transform:uppercase;line-height:1;white-space:nowrap;}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;}
+.jn{font-family:"InterSB",sans-serif;font-weight:600;font-size:62px;letter-spacing:-0.05em;line-height:1;color:#fff;white-space:nowrap;
+ text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);}
+.jn.ink{color:#141414;text-shadow:none;}
+.ser{font-family:"ISerif",serif;font-weight:400;line-height:1;color:#FBF8EC;white-space:nowrap;letter-spacing:0.005em;}
+.por{font-family:"ISerif",serif;font-style:italic;font-weight:400;line-height:1;color:#fff;white-space:nowrap;word-spacing:0.38em;}
+.por span{display:inline-block;opacity:0;}
+.pl{font-family:"Heros",sans-serif;font-weight:700;font-size:94px;line-height:1.02;letter-spacing:-0.015em;color:#EDEDEA;
+ text-shadow:0 0 14px rgba(0,0,0,0.35);}
+.pl span{display:inline-block;opacity:0;}
 
 #root{background:#000;}
 
 </style>
 <div id="root" data-composition-id="s_rogan" data-width="1920" data-height="1080" data-duration="3.7334">
-<video id="s_rogan-v1" class="clip full" src="assets/clips/rogan2.mp4" data-start="0.0000" data-duration="3.7334" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
-<div id="s_rogan-d2" class="clip cap" data-start="0.0000" data-duration="0.6667" data-track-index="3" style="z-index:40;top:900px;height:0;"><div class="hv" style="font-size:64px;text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);">Do you think</div></div>
-<div id="s_rogan-d3" class="clip cap" data-start="0.6667" data-duration="0.7500" data-track-index="3" style="z-index:40;top:900px;height:0;"><div class="hv" style="font-size:64px;text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);">BlackRock’s</div></div>
-<div id="s_rogan-d4" class="clip cap" data-start="1.4167" data-duration="2.2833" data-track-index="3" style="z-index:40;top:900px;height:0;"><div class="hv" style="font-size:64px;text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);">a bad company?</div></div>
+<video id="s_rogan-v1" class="clip full" src="assets/clips/v5_rogan.mp4" data-start="0.0000" data-duration="2.1334" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
+<video id="s_rogan-v2" class="clip full" src="assets/clips/v5_react.mp4" data-start="2.1334" data-duration="1.6000" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
+<div id="s_rogan-d11" class="clip layer" data-start="0.0000" data-duration="2.7500" data-track-index="3" style="z-index:40;"><div id="s_rogan-st10" style="position:absolute;left:118px;top:300px;text-align:left;"><div class="pl"><span id="s_rogan-pl3">do</span> <span id="s_rogan-pl4">you</span> <span id="s_rogan-pl5">think</span></div><div class="pl"><span id="s_rogan-pl6">BlackRock’s</span> <span id="s_rogan-pl7">a</span></div><div class="pl"><span id="s_rogan-pl8">bad</span> <span id="s_rogan-pl9">company?</span></div></div></div>
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
   tl.set({}, {}, 3.7334);
-  
+  tl.fromTo("#s_rogan-pl3",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},0.3834);
+  tl.fromTo("#s_rogan-pl4",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},0.4834);
+  tl.fromTo("#s_rogan-pl5",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},0.5834);
+  tl.fromTo("#s_rogan-pl6",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},1.0667);
+  tl.fromTo("#s_rogan-pl7",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},1.8000);
+  tl.fromTo("#s_rogan-pl8",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},1.8667);
+  tl.fromTo("#s_rogan-pl9",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},2.1000);
+  tl.to("#s_rogan-st10",{opacity:0,filter:"blur(10px)",duration:0.28,ease:"power1.in"},2.4500);
   window.__timelines["s_rogan"] = tl;
 })();
 </script>

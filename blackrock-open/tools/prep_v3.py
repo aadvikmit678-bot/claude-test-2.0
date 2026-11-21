@@ -811,7 +811,7 @@ import shotlist as SL
 
 def shot_bounds(shots, part_start, part_end):
     """Film start / end of each shot of a part (a shot ends where the next one starts)."""
-    t = [part_start if k in ("rest1", "rest2") else TM.RT(k) for k, *_ in shots]
+    t = [part_start if k in ("rest1", "rest2") else TM.RTX(k) for k, *_ in shots]
     return [(a, b) for a, b in zip(t, t[1:] + [part_end])]
 
 

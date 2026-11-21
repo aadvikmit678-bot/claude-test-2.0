@@ -354,12 +354,13 @@ def logo_page(src, t, kind, yc):
 
 
 def r_logos():
-    n = nframes("logos")  # 98
+    n = nframes("logos")
     total = sum(p[4] for p in LOGO_PAGES)
-    assert total == n, (total, n)
+    durs = [max(3, round(p[4] * n / total)) for p in LOGO_PAGES]   # the pages share the (paced) beat
+    durs[-1] += n - sum(durs)
     wr = Writer(f"{CLIPS}/r_logos.mp4")
     i = 0
-    for pi, (src, t, kind, yc, d) in enumerate(LOGO_PAGES):
+    for pi, ((src, t, kind, yc, _), d) in enumerate(zip(LOGO_PAGES, durs)):
         page = logo_page(src, t, kind, yc)
         for j in range(d):
             k = 1.0 + 0.012 * j
