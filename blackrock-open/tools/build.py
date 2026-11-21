@@ -137,14 +137,18 @@ CAP_Y, CAP_SIZE = 900, 64   # the Jensen Huang reel's caption: white bold Helvet
 
 
 SHADOW = "text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);"
+# over the ending video (it strobes pure white / black, then bright sand): the same white caption, a heavier halo
+SHADOW_HEAVY = "text-shadow:0 0 30px rgba(0,0,0,0.8),0 0 12px rgba(0,0,0,0.72),0 2px 5px rgba(0,0,0,0.6);"
 
 
-def caption(sc, text, a, b, y=CAP_Y, size=CAP_SIZE, blend="difference", z=40, shadow=False):
+def caption(sc, text, a, b, y=CAP_Y, size=CAP_SIZE, blend="difference", z=40, shadow=False, color=None):
     """The captions that were small italic labels, now as the Nvidia reel's caption (the user: the Jensen video's
-    caption font). Difference blend over the people, so they read on the dark suits and the white shirts alike."""
+    caption font). Difference blend over the people, so they read on the dark suits and the white shirts alike.
+    `color` only for the dark "ink" captions over Think School's light grey page (same font, size and place)."""
     st = f"top:{y}px;height:0;" + (f"mix-blend-mode:{blend};" if blend else "")
-    sh = SHADOW if shadow else ""
-    return sc.div(a, b, f'<div class="hv" style="font-size:{size}px;{sh}">{text}</div>', z=z, cls="cap", style=st)
+    sh = SHADOW_HEAVY if shadow == "heavy" else (SHADOW if shadow else "")
+    col = f"color:{color};" if color else ""
+    return sc.div(a, b, f'<div class="hv" style="font-size:{size}px;{sh}{col}">{text}</div>', z=z, cls="cap", style=st)
 
 
 def chunks(sc, items, end, **kw):
@@ -198,12 +202,9 @@ def s_hook():
              f'letter-spacing:0.01em;line-height:1;"><span id="{on}">ON</span><span id="{ea}" style="opacity:0">EARTH</span></div>')
     sc.div(*B["earth"], inner, z=30, cls="cap", style="top:545px;height:0;")
     sc.js.append(f'tl.set("#{ea}",{{opacity:1}},{sc.at(T["earth"])});')
-    # a $60 trillion dollar: the article flipbook (its "$60 trillion" is the text); cartel as it was
+    # a $60 trillion dollar: the article flipbook (its "$60 trillion" is the text)
     sc.video("r_articles.mp4", *B["money"], z=1)
-    sc.video("r_cartel.mp4", *B["cartel"], z=1)
-    cw = sc.uid("cw")
-    sc.div(*B["cartel"], f'<div id="{cw}" style="font-family:\'InterD\',sans-serif;font-weight:500;font-size:92px;letter-spacing:-0.02em;color:#fff;">cartel</div>',
-           z=30, cls="cap", style="top:1000px;height:0;mix-blend-mode:difference;")
+    sc.video("r_cartel3.mp4", *B["cartel"], z=1)     # the user's cartel video as it is: table flash, then the faces
     # weaponized capital: on its word, gone again, no bounce
     sc.video("r_weap.mp4", *B["weap"], z=1)
     cap = T["capital"]
@@ -254,8 +255,10 @@ def s_solomon():
 
 def s_search():
     sc = Scene("s_search", B["orbit"][0], B["thisguy"][1])
-    sc.video("r_orbit3.mp4", *B["orbit"], z=1)
-    sc.video("r_amongst.mp4", B["amongst"][0], B["thisguy"][1], z=1)
+    sc.video("r_orbit3.mp4", *B["orbit"], z=1)          # the table circling, people lighting up at random
+    sc.video("r_spot.mp4", *B["thisguy"], z=1)          # "is this guy": the spotlight reel's 3rd second on Fink
+    caption(sc, "Amongst them", T["amongst"], T["is"], blend=None, shadow=True)
+    caption(sc, "Is this guy", T["is"], B["thisguy"][1] - 2 * FR, blend=None, shadow=True)
     sc.write()
     return sc
 
@@ -337,12 +340,15 @@ def rest_part(sc, shots, part, caps):
             sc.div(t, TM.RT(until) - 2 * FR, f'<div style="font-family:\'LGothic\',sans-serif;font-size:300px;line-height:1;color:#fff;'
                    f'letter-spacing:0.01em;text-shadow:0 0 40px rgba(0,0,0,0.45),0 0 12px rgba(0,0,0,0.35);">{text}</div>',
                    z=30, cls="cap", style="top:520px;height:0;")
-    for i, (text, t) in enumerate(caps):
+    for i, (text, t, *opt) in enumerate(caps):
         if text is None:
             continue
         a = rest_time(t)
         b = rest_time(caps[i + 1][1]) if i + 1 < len(caps) else a1 - 2 * FR
-        caption(sc, text, a, min(b, a1 - 2 * FR), blend=None, shadow=True)
+        ink = "ink" in opt                             # dark, over Think School's light grey page
+        heavy = TM.RT("a2") <= a < TM.RT("has")        # over the user's ending video
+        caption(sc, text, a, min(b, a1 - 2 * FR), blend=None, shadow=("heavy" if heavy else not ink),
+                color="#151515" if ink else None)
 
 
 def s_rest1():
@@ -359,10 +365,16 @@ def s_rest2():
     return sc
 
 
-# ------------------------------------------------------------------ s_rogan: Elon's question, after "...than Steve Jobs ever did."
+# ------------------------------------------------------------------ s_rogan: Elon's question, after "...than Steve Jobs ever did.", and a 1 s pause
+ROGAN_CAPS = [("Do you think", 0.00), ("BlackRock’s", 0.67), ("a bad company?", 1.41)]   # s from his first word
+
+
 def s_rogan():
-    sc = Scene("s_rogan", *B["rogan"])
-    sc.video("rogan.mp4", *B["rogan"], z=1)
+    a, b = B["rogan"][0], B["pause"][1]
+    sc = Scene("s_rogan", a, b)
+    sc.video("rogan2.mp4", a, b, z=1)                  # its burned-in subtitle removed; held 1 s after the question
+    items = [(text, F(a + dt)) for text, dt in ROGAN_CAPS]
+    chunks(sc, items, b - 2 * FR, blend=None, shadow=True)
     sc.write()
     return sc
 

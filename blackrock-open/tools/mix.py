@@ -131,14 +131,14 @@ def main():
     k = int(round(TM.REST_SPLIT * SR))
     place(speech, rest[:k] * g, B["rest1"][0], fade_in=0.004, fade_out=0.02)        # ... than Steve Jobs ever did.
     place(speech, rogan * 10 ** ((target + 1 - rms_db(rogan)) / 20), B["rogan"][0], fade_in=0.004, fade_out=0.08)
-    place(speech, rest[k:] * g, B["rogan"][1], fade_in=0.004, fade_out=0.06)        # Back in the 1980s ... in it.
+    place(speech, rest[k:] * g, B["rest2"][0], fade_in=0.004, fade_out=0.06)        # (1 s pause) Back in the 1980s ... in it.
 
     music = np.zeros((N, 2), np.float32)
     d = drone(TM.TOTAL)
     env = np.ones(len(d), np.float32)
     env[: int(1.5 * SR)] = np.linspace(0.0, 1.0, int(1.5 * SR))
-    r0, r1 = int(B["rogan"][0] * SR), int(B["rogan"][1] * SR)
-    env[r0:r1] *= 0.35                                   # under Rogan's own sound
+    r0, r1 = int(B["rogan"][0] * SR), int(B["pause"][1] * SR)
+    env[r0:r1] *= 0.35                                   # under Rogan's own sound and the 1 s pause after it
     env[-int(1.2 * SR):] *= np.linspace(1.0, 0.0, int(1.2 * SR))
     place(music, d * env[:, None], 0.0, fade_out=0.06)
     fx = np.zeros((N, 2), np.float32)

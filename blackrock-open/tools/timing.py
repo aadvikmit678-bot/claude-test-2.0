@@ -53,12 +53,14 @@ LINE_WORDS = [
 LINE = [(w, F(t - LINE_T0)) for w, t in LINE_WORDS]
 
 # beats (film seconds, frame-snapped)
+CARTEL_IN = F(T["cartel"] - 14 / 24)   # the cartel clip from its table flash (frame 14 at 24 fps) to the cut at frame 28
+
 B = {
     "quote": (0.0, F(V0)),
     "tiles": (F(V0), T["on"]),                 # "These are the most powerful people": the 3x3 tile flash from "These"
     "earth": (T["on"], T["a"]),
-    "money": (T["a"], T["cartel"]),            # "a $60 trillion dollar": the article flipbook
-    "cartel": (T["cartel"], T["weapon"]),
+    "money": (T["a"], CARTEL_IN),              # "a $60 trillion": the article flipbook (shortened for the cartel clip)
+    "cartel": (CARTEL_IN, T["weapon"]),        # the user's cartel clip: its table flash, the faces cut in on "cartel"
     "weap": (T["weapon"], T["that"]),
     "logos": (T["that"], F(14.25)),
     "touch": (F(14.25), T["touch_end"]),       # the hands come together, touch on "touch"
@@ -68,9 +70,8 @@ B = {
     "solomon": (T["david"], T["dj"]),          # "David Solomon, a part-time" (the reference edit's "AI")
     "dj": (T["dj"], T["ceo"]),                 # "DJ and the": the D-Sol video
     "ceo": (T["ceo"], T["sachs_end"]),         # "CEO of Goldman Sachs" (the reel's OpenAI device)
-    "orbit": (T["sachs_end"], T["amongst"]),   # the camera circling the table, people lighting up
-    "amongst": (T["amongst"], T["is"]),        # "Amongst them" (the reel's selection box)
-    "thisguy": (T["is"], T["the3"]),           # "is this guy": the box grows into Fink's card
+    "orbit": (T["sachs_end"], T["is"]),        # the camera circling the table, people lighting up, through "Amongst them"
+    "thisguy": (T["is"], T["the3"]),           # "is this guy": the group image, the spotlight on Fink (reel DeJRKmqTPdg)
     "walk": (T["the3"], T["runs"]),            # "the man who": Fink on stage
     "box": (T["runs"], T["company"]),          # "runs the most evil": the interview, the red square on "most"
     "company": (T["company"], T["blackrock"]), # "company in the world": BlackRock's letters, building, doors
@@ -82,10 +83,10 @@ B["fink"] = (B["thisguy"][0], B["brand"][1])
 # "...than Steve Jobs ever did." for the Rogan clip ("Do you think BlackRock's a bad company?")
 REST_SPLIT, REST_END = 10.56, 57.39
 RW = {  # word starts in the rest recording (whisper small.en, file seconds)
-    "a": 0.09, "manages": 1.06, "15": 1.73, "trillion": 2.30, "assets": 3.24, "holds": 4.01, "nvidia": 4.51,
+    "a": 0.09, "that_r": 0.71, "manages": 1.06, "15": 1.73, "trillion": 2.30, "assets": 3.24, "holds": 4.01, "nvidia": 4.51,
     "than1": 5.00, "jensen": 5.19, "more2": 6.20, "microsoft": 6.57, "than2": 7.24, "bill": 7.38, "and1": 8.10,
     "apple": 8.82, "than3": 9.10, "steve": 9.61, "ever": 10.16,
-    "back": 10.63, "1980s": 11.39, "larry1": 12.63, "was1": 13.14, "wall1": 13.44, "prodigy": 14.20, "but1": 14.96,
+    "back": 10.63, "1980s": 11.39, "larry1": 12.63, "was1": 13.14, "wall1": 13.44, "street1": 13.74, "prodigy": 14.20, "but1": 14.96,
     "bad": 15.52, "cost": 16.08, "100": 16.56, "loss": 17.87, "that1": 18.21, "enough": 18.66, "thrown": 19.56,
     "wall2": 20.27, "and2": 20.92, "convince": 21.24, "onething": 22.08, "wall3": 23.31, "terrible": 23.98,
     "seeing": 24.63, "risk1": 25.02, "so": 25.52, "1988": 26.11, "he1": 27.52, "cofounded": 27.65, "blackrock": 28.31,
@@ -101,8 +102,9 @@ RW = {  # word starts in the rest recording (whisper small.en, file seconds)
 REST1_AT = B["brand"][1]
 B["rest1"] = (REST1_AT, F(REST1_AT + REST_SPLIT))
 B["rogan"] = (B["rest1"][1], F(B["rest1"][1] + ROGAN_T1 - ROGAN_T0))
-REST2_AT = round(B["rogan"][1] - REST_SPLIT, 4)
-B["rest2"] = (B["rogan"][1], F(REST2_AT + REST_END + 0.35))
+B["pause"] = (B["rogan"][1], F(B["rogan"][1] + 1.0))   # the user: a 1-second pause after Elon's question
+REST2_AT = round(B["pause"][1] - REST_SPLIT, 4)
+B["rest2"] = (B["pause"][1], F(REST2_AT + REST_END + 0.35))
 
 
 def RT(key):

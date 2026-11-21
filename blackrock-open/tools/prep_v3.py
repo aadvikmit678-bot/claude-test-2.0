@@ -278,12 +278,13 @@ def r_articles():
         s = HL / (y1 - y0)
         pages[k] = (im, s, (x0 + x1) / 2, (y0 + y1) / 2)
         print(f"   c{k:02d} highlight {x1 - x0}x{y1 - y0} at ({(x0 + x1) // 2},{(y0 + y1) // 2}) scale {s:.2f}")
-    durs = [6] * (len(ARTICLE_ORDER) - 1)
-    durs.append(n - sum(durs))
+    k_pages = max(1, n // 6)
+    order = (ARTICLE_ORDER * 3)[:k_pages]
+    durs = [6] * (k_pages - 1) + [n - 6 * (k_pages - 1)]
     canvas = np.full((H, W, 3), 246, np.float32)
     wr = Writer(f"{CLIPS}/r_articles.mp4")
     i = 0
-    for k, d in zip(ARTICLE_ORDER, durs):
+    for k, d in zip(order, durs):
         im, s, hx, hy = pages[k]
         rgba = np.dstack([im, np.full(im.shape[:2], 255, np.float32)])
         layer = affine(rgba, s, hx, hy, W / 2, H / 2)
@@ -677,9 +678,9 @@ def r_solomon3():
 
 # ------------------------------------------------------------------ 8. the orbit at its settled zoom
 def r_orbit3():
-    n = beat_frames("orbit")                          # 37: the pause after "Goldman Sachs"
-    src = V2.src_frames(V2.ORBIT, 0, 20)
-    d = V2.orbit_tracks()
+    n = beat_frames("orbit")                          # the pause after "Goldman Sachs" and "Amongst them"
+    src = V2.src_frames(V2.ORBIT, 0, 40)
+    d = V2.orbit_tracks(40)
     keys = list(V2.ORBIT_POLY)
     nb = {(0, 1), (1, 2), (4, 6), (6, 7), (8, 9), (9, 10), (10, 11), (2, 4)}
     apart = {(keys.index(a), keys.index(b)) for a, b in nb if a in keys and b in keys}
@@ -814,17 +815,28 @@ def shot_bounds(shots, part_start, part_end):
     return [(a, b) for a, b in zip(t, t[1:] + [part_end])]
 
 
+# where a chosen shot ends in its source (the next frame is a cut): a slot longer than that slows the shot instead
+SHOT_END = {"r2_lobby": 5.93, "r2_bull": 2.795, "r1_ap": 26.74, "r2_founding": 26.87, "r1_flags": 3.29,
+            "r1_glass": 5.095, "r2_aladdin": 53.62, "r2_datacenter": 60.28, "r1_ft": 16.34}
+
+
 def rest_shots(names=None):
     for shots, part in ((SL.REST1, "rest1"), (SL.REST2, "rest2")):
         a0, a1 = TM.B[part]
         for (key, name, src, t0, extra, fc), (a, b) in zip(shots, shot_bounds(shots, a0, a1)):
-            if src in ("card", "clip") or (names and name not in names):
+            if src in ("card", "clip", "FX") or (names and name not in names):
                 continue
             crop = None
-            if src == "X":
+            if src == "E":
+                path, crop = f"{V3}/ending_user.mp4", extra
+            elif src == "N":
+                path, crop = f"{V3}/new/{extra[0]}", extra[1]
+            elif src == "X":
                 path, crop = f"{V3}/br_explainer.mp4", extra
             elif src == "J":
                 path = f"{J2}/{extra}.mp4"
+                if t0:
+                    path = path
             elif src == "D":
                 path = f"{DL}/{extra}"
             else:
@@ -832,7 +844,14 @@ def rest_shots(names=None):
             ss = t0 + (stream_start(path) if fc else 0.0)
             dur = b - a + 0.15
             filt = ([crop] if crop else []) + ["scale=1920:1080:flags=lanczos", "setsar=1", "fps=60"]
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{ss:.3f}", "-i", path, "-t", f"{dur:.3f}", "-vf",
+            inp = ["-ss", f"{ss:.3f}"]
+            if name in SHOT_END and SHOT_END[name] - t0 < b - a + 0.02:
+                avail = SHOT_END[name] - t0
+                k = (b - a + 0.05) / avail
+                inp += ["-t", f"{avail:.3f}"]
+                filt = filt[:-1] + [f"setpts={k:.4f}*PTS", "fps=60", "tpad=stop_mode=clone:stop_duration=0.2"]
+                print(f"   {name}: its shot is {avail:.2f}s for a {b - a:.2f}s slot, slowed x{k:.2f}")
+            subprocess.run(["ffmpeg", "-v", "error", "-y"] + inp + ["-i", path, "-t", f"{dur:.3f}", "-vf",
                             ",".join(filt), "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "14",
                             "-pix_fmt", "yuv420p", "-movflags", "+faststart", f"{CLIPS}/v3_{name}.mp4"], check=True)
             got = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of",
@@ -847,6 +866,285 @@ def rest_shots(names=None):
                                 "-pix_fmt", "yuv420p", "-movflags", "+faststart", f"{CLIPS}/v3_{name}.mp4"], check=True)
                 flag = f"  slowed x{k:.2f}"
             print(f"   {name:12s} {a:7.3f}-{b:7.3f}{flag}")
+
+
+# ------------------------------------------------------------------ 11. the notes of Nov 21 (evening)
+def r_cartel3():
+    """The user's cartel clip as it is: from the flash on the table (its frame 14, 24 fps); its cut to the faces (frame
+    28) lands on "cartel"; the faces and their glitches run until "weaponized". Its first frames (rising out of black)
+    are not used, as the user asked."""
+    a0, a1 = TM.B["cartel"]
+    n = nf(a0, a1)
+    k_c = round(TM.T["cartel"] * FPS) - round(a0 * FPS)
+    src = grab(f"{V3}/cartel_user.mp4", 0.0, 66)
+    wr = Writer(f"{CLIPS}/r_cartel3.mp4")
+    for i in range(n):
+        j = min(14 + int(i * 24 / FPS), 27) if i < k_c else 28 + int((i - k_c) * 24 / FPS)
+        wr.write(src[min(j, len(src) - 1)].astype(np.float32))
+    wr.close()
+    print("   faces cut in at film frame", k_c, "/", n)
+
+
+def find_face(img, expect, size):
+    """The detected face nearest to `expect` (x, y), or a box of `size` there."""
+    g = cv2.equalizeHist(cv2.cvtColor(np.clip(img, 0, 255).astype(np.uint8), cv2.COLOR_RGB2GRAY))
+    best = None
+    for c in HAAR:
+        for (x, y, w, h) in c.detectMultiScale(g, scaleFactor=1.05, minNeighbors=5, minSize=(40, 40)):
+            dd = math.hypot(x + w / 2 - expect[0], y + h / 2 - expect[1])
+            if dd < 160 and (best is None or dd < best[0]):
+                best = (dd, (int(x), int(y), int(w), int(h)))
+    if best:
+        return best[1]
+    return (int(expect[0] - size / 2), int(expect[1] - size / 2), int(size), int(size))
+
+
+def r_spot():
+    """"is this guy": the user's group image, and the reel's move (DeJRKmqTPdg, 3.03-3.33 s) on Fink -- a white square
+    on his face (2 frames at 30 fps), a whole-frame negative (1), a small negative box on his face (2), the room
+    going dark under the box (1), then the room at about a fifth of its light with only his face lit, held."""
+    a0, a1 = TM.B["thisguy"]
+    n = nf(a0, a1)
+    img = np.asarray(Image.open(f"{V3}/fink_spot.png").convert("RGB")).astype(np.float32)
+    ih, iw = img.shape[:2]
+    k = H / ih
+    big = cv2.resize(img, (int(round(iw * k)), H), interpolation=cv2.INTER_CUBIC)
+    x0 = int(min(max(836 * k - W / 2, 0), big.shape[1] - W))
+    base = big[:, x0:x0 + W].copy()
+    fx, fy, fw, fh = find_face(base, (836 * k - x0, 430 * k), 120 * k)
+    cx, cy = fx + fw / 2, fy + fh / 2
+    print(f"   Fink's face {fx},{fy} {fw}x{fh}")
+    pad = 0.18
+    bx0, by0 = int(fx - fw * pad), int(fy - fh * pad)
+    bx1, by1 = int(fx + fw * (1 + pad)), int(fy + fh * (1 + pad))
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    r = np.sqrt(((xx - cx) / (fw * 0.95)) ** 2 + ((yy - cy - fh * 0.08) / (fh * 1.15)) ** 2)
+    lit = np.clip(1 - smooth((r - 0.55) / 0.75), 0, 1)[..., None]
+    g = base.mean(axis=2, keepdims=True)
+    dark = (g + (base - g) * 0.7) * 0.2
+    spot = dark * (1 - lit) + base * lit
+    t0 = round(a0 * FPS)
+    k_this = round(TM.T["this"] * FPS) - t0
+    wr = Writer(f"{CLIPS}/r_spot.mp4")
+    for i in range(n):
+        j = i - k_this
+        if j < 0:
+            fr = base
+        elif j < 4:                                   # the white square on his face
+            fr = base.copy()
+            fr[by0:by1, bx0:bx1] = 250
+        elif j < 6:                                   # the whole frame in negative
+            fr = negative(base)
+        elif j < 10:                                  # a small negative box over his face
+            fr = base.copy()
+            fr[by0:by1, bx0:bx1] = negative(base[by0:by1, bx0:bx1])
+        elif j < 12:                                  # the room goes dark, the box still there
+            fr = dark.copy()
+            fr[by0:by1, bx0:bx1] = negative(base[by0:by1, bx0:bx1])
+        else:                                         # only his face lit
+            fr = spot
+        wr.write(fr + grain(seed=2600 + i, amt=2.6))
+    wr.close()
+
+
+# Think School's "Founders vs Blackrock" (the user's file, 44 s on): one company's column at a time, centred on its
+# own grey page, while BlackRock's black bar grows past the founder's
+TS = f"{V3}/thinkschool.mp4"
+# each column of the "Founders vs Blackrock" page: its time window (the BlackRock bar growing) and its box, measured
+# on the frames (product image, label, bar and both legend lines; the legend ends at y 886)
+TSG = {"tsg_nv": (39.20, 40.95, 961, 310, 905), "tsg_ap": (44.60, 46.50, 1385, 197, 905),
+       "tsg_ms": (50.20, 52.10, 1566, 183, 906)}
+TS_HALF, TS_SCALE = 235, 1.11          # one scale for all three, so the bars and legends match
+TS_AREA = (40, 845)                    # centred above the caption line (captions sit on y 900)
+
+
+def rest1_slot(name):
+    for (key, nm, *_), ab in zip(SL.REST1, shot_bounds(SL.REST1, *TM.B["rest1"])):
+        if nm == name:
+            return ab
+    raise KeyError(name)
+
+
+def r_tsg(name):
+    a, b = rest1_slot(name)
+    n = nf(a, b)
+    t0, t1, cx, y0, y1 = TSG[name]
+    m = int((t1 - t0) * 25) + 2
+    src = grab(TS, t0, m)
+    x0, x1 = cx - TS_HALF, cx + TS_HALF
+    ch, cw = y1 - y0, x1 - x0
+    sw, sh = int(cw * TS_SCALE), int(ch * TS_SCALE)
+    canvas = np.full((H, W, 3), 222, np.float32) + grain(seed=31, amt=1.4)
+    edge = 36
+    ramp = np.clip(np.minimum.outer(np.minimum(np.arange(sh), np.arange(sh)[::-1]),
+                                    np.minimum(np.arange(sw), np.arange(sw)[::-1])) / edge, 0, 1)
+    fm = ramp.astype(np.float32)[..., None]
+    px, py = (W - sw) // 2, TS_AREA[0] + (TS_AREA[1] - TS_AREA[0] - sh) // 2
+    wr = Writer(f"{CLIPS}/v3_{name}.mp4")
+    for i in range(n):
+        j = min(round(i * (m - 2) / max(1, n - 1)), len(src) - 1)
+        crop = src[j][y0:y1, x0:x1].astype(np.float32)
+        crop = cv2.resize(crop, (sw, sh), interpolation=cv2.INTER_CUBIC)
+        fr = canvas.copy()
+        fr[py:py + sh, px:px + sw] = fr[py:py + sh, px:px + sw] * (1 - fm) + crop * fm
+        wr.write(fr)
+    wr.close()
+    print(f"   {name}: source {t0}-{t1}s into {n} frames")
+
+
+TILE_PATS = [list("WWBWBBBWB"), list("BFWFWBWFB"), list("FFWFFFBFF")]   # the Nvidia reel's tile flash, 3 frames at 24
+
+
+def tiles(fr, nxt, pat, gap=6):
+    out = np.full((H, W, 3), 10, np.float32)
+    tw, th = W // 3, H // 3
+    for k, c in enumerate(pat):
+        r, q = divmod(k, 3)
+        x, y = q * tw + gap // 2, r * th + gap // 2
+        if c == "W":
+            out[y:y + th - gap, x:x + tw - gap] = 246
+        elif c == "B":
+            out[y:y + th - gap, x:x + tw - gap] = 6
+        else:
+            out[y:y + th - gap, x:x + tw - gap] = nxt[y:y + th - gap, x:x + tw - gap]
+    return out
+
+
+def flash_clip(out_name, frames_, nxt):
+    """The Nvidia reel's opening on any clip: negatives on its 3rd and 5th frames (24 fps), then a tile flash into the
+    next shot over the last three 24-fps frames."""
+    n = len(frames_)
+    last24 = int((n - 1) * 24 / FPS)
+    wr = Writer(f"{CLIPS}/{out_name}.mp4")
+    for i, fr in enumerate(frames_):
+        f24 = int(i * 24 / FPS)
+        if f24 in (2, 4):
+            fr = negative(fr)
+        t = f24 - (last24 - 2)
+        if t >= 0 and nxt is not None:
+            fr = tiles(fr, nxt, TILE_PATS[min(t, 2)])
+        wr.write(fr)
+    wr.close()
+
+
+def first_frame(path):
+    return frame_at(path, 0).astype(np.float32)
+
+
+def r_jensen():
+    """"Jensen Huang,": the Nvidia reel's own opening (its frames 0-24: Jensen on stage, its two negatives, its tile
+    flash), the band above its burned-in caption, at the reel's 24 fps."""
+    a, b = rest1_slot("r1_jensen")
+    n = nf(a, b)
+    src = grab(f"{V3}/nvidia_reel.mp4", 0.0, 26)
+    wr = Writer(f"{CLIPS}/v3_r1_jensen.mp4")
+    for i in range(n):
+        j = min(int(i * 24 / FPS), len(src) - 1)
+        fr = cv2.resize(src[j][0:540].astype(np.float32), (W, H), interpolation=cv2.INTER_CUBIC)
+        fr = np.clip(fr + (fr - cv2.GaussianBlur(fr, (0, 0), 2.0)) * 0.6, 0, 255)
+        wr.write(fr)
+    wr.close()
+
+
+def r_gates():
+    a, b = rest1_slot("r1_gates")
+    n = nf(a, b)
+    fr = live(f"{V3}/bill_gates.mp4", 9.40, n, crop="crop=1186:667:90:0")   # the crop drops the CBS eye (bottom left)
+    flash_clip("v3_r1_gates", fr[:n], first_frame(f"{CLIPS}/v3_tsg_ap.mp4"))
+
+
+def r_jobs():
+    a, b = rest1_slot("r1_jobs")
+    n = nf(a, b)
+    fr = live(f"{V3}/steve_jobs.mp4", 0.30, n)
+    flash_clip("v3_r1_jobs", fr[:n], first_frame(f"{CLIPS}/rogan2.mp4"))
+
+
+ROG_Z = (750, 973, 280, 1660)   # the Rogan clip's caption zone (rows, cols): its words end on row 972, the shirt's
+                                # RAPTOR ENGINE starts on 970-973, the typing cursor on 767
+
+
+def rogan_plate(frames, free):
+    """A clean plate of the caption zone: the median of the frames without words (only the @genzcongress handle is
+    on them; it never moves, so it is found on the plate itself and inpainted away there)."""
+    z0, z1, x0, x1 = ROG_Z
+    plate = np.median(np.stack([np.asarray(frames[k][z0:z1, x0:x1], np.float32) for k in free]), axis=0)
+    pl = plate.mean(axis=2)
+    loc = cv2.medianBlur(np.clip(pl, 0, 255).astype(np.uint8), 41).astype(np.float32)
+    mx, mn = plate.max(axis=2), plate.min(axis=2)
+    hm = ((pl - loc) > 22) & ((mx - mn) / (mx + 1) < 0.25)
+    keep = np.zeros_like(hm)
+    keep[100:180, 400:1000] = True              # the handle only: rows 850-930, cols 680-1280 of the frame
+    hm = cv2.dilate((hm & keep).astype(np.uint8), np.ones((7, 7), np.uint8))
+    ys, xs = np.nonzero(hm)
+    print(f"   handle on the plate: rows {ys.min() + z0}-{ys.max() + z0}, cols {xs.min() + x0}-{xs.max() + x0}")
+    plate = cv2.inpaint(np.clip(plate, 0, 255).astype(np.uint8), hm, 7, cv2.INPAINT_TELEA).astype(np.float32)
+    return plate, hm
+
+
+def rogan_core(z, plate):
+    """The caption's own pixels in the zone: white / grey words (neutral, brighter than the plate: skin is saturated,
+    so Elon's chin is never taken) and the black BLACKROCK'S (near black, darker than the plate)."""
+    L, Lp = z.mean(axis=2), plate.mean(axis=2)
+    mx, mn = z.max(axis=2), z.min(axis=2)
+    white = (L > 118) & ((mx - mn) / (mx + 1) < 0.16) & (L - Lp > 40)
+    black = (L < 12) & (Lp - L > 6) & (Lp < 60)   # the letters sit on curtain / shirt / mic, never on his neck
+    return cv2.morphologyEx((white | black).astype(np.uint8), cv2.MORPH_OPEN, np.ones((2, 2), np.uint8))
+
+
+def rogan_skin(x):
+    """Elon's neck: bright enough, orange (R > G > B, G above 0.45 R; the red curtain's G is ~0.15 R)."""
+    r, g, bb = x[..., 0], x[..., 1], x[..., 2]
+    return (x.mean(axis=2) > 45) & (r > g) & (g > bb) & (g > 0.45 * r)
+
+
+def rogan_clean(fr, plate, hm, core):
+    """`core` (grown 8 px) and the handle are refilled: from the clean plate on the curtain, mic and shirt; by
+    inpainting this frame where his neck is (here or on the plate: it moves, so the plate's neck would not line up).
+    Then the soft shade at the bottom for our caption."""
+    z0, z1, x0, x1 = ROG_Z
+    z = fr[z0:z1, x0:x1]
+    m = cv2.dilate(core, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (17, 17))) | hm
+    nk = cv2.dilate((rogan_skin(z) | rogan_skin(plate)).astype(np.uint8), np.ones((15, 15), np.uint8))
+    # every caption pixel is inpainted first (so nothing of a letter survives where the plate fades out at the
+    # neck's edge); the plate then goes over everything that is not neck
+    base = cv2.inpaint(np.clip(z, 0, 255).astype(np.uint8), m, 6, cv2.INPAINT_TELEA).astype(np.float32)
+    mp = (m & (1 - nk)).astype(np.float32)
+    mf = np.clip(cv2.GaussianBlur(mp, (0, 0), 3.0) * 1.5, 0, 1)[..., None]
+    out = fr.copy()
+    out[z0:z1, x0:x1] = base * (1 - mf) + plate * mf
+    shade = (np.clip((np.arange(H) - 700) / 340, 0, 1) * 0.32)[:, None, None]
+    return out * (1 - shade)
+
+
+def r_rogan2():
+    """Elon's question with its caption removed (ours goes on top, in the film's own type), then the user's one-second
+    pause: Elon's silent second just before he asks (the same shot), muted. The words fade in through dark grey, so
+    each frame takes the caption pixels of its neighbours too (4 before, 12 after): every word is gone from its first
+    faint frame (the words stay up once in, and behind them is the clean plate either way)."""
+    na = nf(*TM.B["rogan"])
+    npz = nf(*TM.B["pause"])
+    a = grab(f"{CLIPS}/rogan.mp4", 0.0, na)
+    b = live(f"{DL}/rogan_elon.mp4", 11.30, npz, crop="crop=1048:590:16:664")
+    frames = list(a[:na]) + list(b[:npz])
+    free = list(range(na, na + npz)) + list(range(0, 30)) + [na - 1]   # no words: the pause, the first half second
+    plate, hm = rogan_plate(frames, free)
+    z0, z1, x0, x1 = ROG_Z
+    cores = [rogan_core(np.asarray(f, np.float32)[z0:z1, x0:x1], plate) for f in frames]
+    wr = Writer(f"{CLIPS}/rogan2.mp4")
+    for k, fr in enumerate(frames):
+        if k < na:
+            core = np.zeros_like(cores[0])
+            for j in range(max(0, k - 4), min(na, k + 13)):
+                core |= cores[j]
+        else:
+            core = cores[k]
+        wr.write(rogan_clean(np.asarray(fr, np.float32), plate, hm, core))
+    wr.close()
+
+
+ALL.update({"cartel": r_cartel3, "spot": r_spot, "rogan2": r_rogan2, "jensen": r_jensen,
+            "tsg": lambda: [r_tsg(k) for k in TSG], "gates": r_gates, "jobs": r_jobs})
 
 
 ALL["rest"] = rest_shots
