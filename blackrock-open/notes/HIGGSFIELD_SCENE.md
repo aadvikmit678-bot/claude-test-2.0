@@ -87,12 +87,18 @@ Every take is Kling 3.0 Pro, 5 s, 16:9, sound off (no SFX). Your picture is the 
 - `ref_1_lamp_light.jpg` is `blackrock-src/dl/v3/cartel_user.mp4`, frame 10 (1920×1080).
 - `ref_2_red_city.jpg` is `blackrock-src/dl/v3/ending_user.mp4` at 8.0 s, `crop=566:318:85:80`, scaled to 1280×720, so the "@YS_MR4" watermark is cut off.
 
-Status: waiting for the user's three keyframes. Nothing has been generated on Higgsfield yet. Quotes, all silent 16:9:
+## Status: done (Nov 21)
 
-| Model | Setting | Credits |
-|---|---|---|
-| Kling 3.0 Pro | 5 s | 8.75 |
-| Kling 3.0 Std | 5 s | 7.5 |
-| Seedance 2.5 | 1080p, 5 s | 80 |
-| Seedance 2.5 | 480p draft, 8 s | 24 |
-| GPT Image 2.6 | 16:9 image | 0.75 |
+The user made the three keyframes in ChatGPT; they are kept in `blackrock-src/dl/v3/higgsfield/`. They were animated on Higgsfield with Kling 3.0 Pro (5 s, 16:9, sound off), two takes per shot. That cost 52.5 credits: the balance went from 736.3 to 683.8.
+
+| Shot | Take used | Job | Source span → slot | Treatment |
+|---|---|---|---|---|
+| 1 | `shot1_b.mp4` | 3e0c91ed | 2.30–4.98 s → 1.60 s (1.68×) | none (the screens flip red at 2.8 / 3.8 / 4.8 s) |
+| 2 | `shot2_a.mp4` | 865ea0ad | 1.20–3.30 s → 1.65 s (1.27×) | the Nvidia reel's two negative frames as "$100 MILLION" lands |
+| 3 | `shot3_b.mp4` | 04f128c0 | 0.10–3.60 s → 2.72 s (1.29×) | a white flash in |
+| callback | `shot3_a.mp4` | 20280c32 | 1.40–2.60 s → 1.05 s at "threw out years ago" | grey, with a white flash in |
+
+The other takes are `shot1_a` (1c1929d1), `shot2_b` (c9824b7b) and `shot3_a`, which is used for the callback.
+
+- **Renderer:** `r_bet` in `tools/prep_v3.py`, run with `python -E -s tools/prep_v3.py bet`.
+- **Shot list:** the `bet*` entries in `tools/shotlist.py`.

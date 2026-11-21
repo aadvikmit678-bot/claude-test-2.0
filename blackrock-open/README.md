@@ -5,7 +5,7 @@ This is a HyperFrames project.
 - **Sources:** the Drive downloads live in `blackrock-src/` (git-ignored), plus the clip library in `jpm-dimon/assets/clips2/`.
 - **Derived media:** every clip, still and the mix are rebuilt by the scripts below. The scratch venv needs numpy, pillow and opencv-python-headless<5.
 - **References:** what was measured from them is in `notes/REFERENCES_v2.md`.
-- **Pending scene:** the Higgsfield scene for 48.1–54.0 s is in `notes/HIGGSFIELD_SCENE.md`.
+- **Higgsfield scene:** 48.1–54.0 s is the Higgsfield scene; its prompts, picks and credits are in `notes/HIGGSFIELD_SCENE.md`.
 
 ## Preview and render
 
@@ -39,6 +39,7 @@ npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 12 -o rend
 | 33.38–39.93 | **"holds more of Nvidia than Jensen Huang … than Steve Jobs ever did."** Think School's graphic, one company at a time, with dark captions on its grey page. Jensen is the Nvidia reel's own opening clip; Gates and Jobs get the same negative and tile-flash treatment. |
 | 39.93–43.67 | **Elon on Rogan: "Do you think BlackRock's a bad company?"** The clip's burned-in subtitle is removed and the film's own captions go on top. Then a 1 s pause on the same shot. |
 | 43.67–83.47 | **"Back in the 1980s … in this guy's hands."** Videos only: Fink, BlackRock, Wall Street, 2008. Big words: $100 MILLION, RISK., 2008, 3X. A red 1988 card. |
+| 48.07–54.03 | **The Higgsfield scene.** "But one bad bet cost him a $100 million loss. That was enough to get him thrown out of Wall Street." The user's ChatGPT keyframes, animated with Kling 3.0 Pro: the trader's green screens turn red, then the red room under $100 MILLION, then he walks out into Wall Street with his box. The walk-out comes back in grey at "threw out years ago" (71.52 s). |
 | 83.47–88.90 | **"A company that has never made a single product, but everything you own, everything you touch".** The user's ending video, cropped below its watermark. |
 | 88.90–90.85 | **"has a piece of him in it."** Fink at the panel. |
 
@@ -62,7 +63,8 @@ python -E -s tools/prep_hook.py   # hook beats (these, tiles, money, cartel, wea
 python -E -s tools/prep_misc.py   # panel clips, cut-outs, stills, the line / vo / rogan audio
 python -E -s tools/prep_v2.py     # glow, orbit, the Fink box, BlackRock, the v2 plain-cut shots
 python -E -s tools/prep_v3.py     # v3: opening b-rolls, tiles, articles, cartel, Dimon/JPM, Solomon/CEO, orbit, spot,
-                                  # Think School, Jensen/Gates/Jobs, rogan2 (caption removed), every rest-of-script shot
+                                  # Think School, Jensen/Gates/Jobs, rogan2 (caption removed), the Higgsfield scene (bet),
+                                  # every rest-of-script shot
 python -E -s tools/mix.py         # assets/audio/mix.wav (+ mix_dry.wav: speech only)
 python3 tools/build.py            # index.html + compositions/s_*.html
 ```

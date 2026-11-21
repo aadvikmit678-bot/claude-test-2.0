@@ -39,11 +39,11 @@ REST2 = [
     ("wall1", "r2_bull", N, 2.535, ("axirohq.mp4", None), True),        # Wall (the Charging Bull)
     ("street1", "r2_nysefloor", N, 4.34, ("axirohq.mp4", None), True),  # Street (the NYSE floor)
     ("prodigy", "r2_floor", J, 0.0, "CRASH_7650_125", False),           # prodigy,
-    ("but1", "r2_head", J, 0.0, "STO_229460_88", False),                # but one bad bet
-    ("cost", "r2_ticker2", J, 0.0, "CRASH_6450_111", False),           # cost him (the ticker, INDU -605)
-    ("100", "r2_bill", J, 0.0, "MONEY_95_134", False),                  # $100 million loss.
-    ("that1", "r2_fired", J, 0.0, "FIRED_9693_161", False),             # That was enough to get him thrown out of
-    ("wall2", "r2_nyse", J, 0.0, "WSMONT_380_112", False),              # Wall Street
+    # "But one bad bet cost him a $100 million loss. That was enough to get him thrown out of Wall Street." -- the
+    # Higgsfield scene: the user's ChatGPT keyframes animated with Kling 3.0 Pro (FX = pre-rendered by r_bet)
+    ("but1", "bet1", FX, 0, None, False),                               # But one bad bet cost him (green -> red)
+    ("100", "bet2", FX, 0, None, False),                                # $100 million loss. (the red screens)
+    ("that1", "bet3", FX, 0, None, False),                              # That was enough ... thrown out of Wall Street
     ("and2", "r2_think", D, 19.0, "fink_interview.mp4", False),         # and to convince him of one thing.
     ("wall3", "r2_plunge", J, 0.0, "CRASH_8850_111", False),            # Wall Street is terrible at seeing
     ("risk1", "r2_lehman", J, 0.0, "STO_124700_70", False),             # risk.
@@ -60,7 +60,7 @@ REST2 = [
     ("the_us", "r2_capitol", N, 8.67, ("axirohq.mp4", None), True),     # the U.S. (the Capitol)
     ("government", "r2_gov", X, 6.0, None, False),                      # government called
     ("oneguy", "r2_stage", D, 4.3, "lf_interview2.mp4", True),          # the one guy Wall Street
-    ("threw", "r2_fired2", J, 0.0, "FIRED_5500_122", False),            # threw out years ago
+    ("threw", "bet3fb", FX, 0, None, False),                            # threw out years ago (the walk-out again, grey)
     ("clean", "r2_fed", X, 140.0, None, False),                         # to clean up the mess (WSJ: Fed hires BlackRock)
     ("larry2", "r2_cnbcfink", X, 168.0, None, False),                   # Larry Fink.
     ("he2", "r2_cash", J, 0.12, "STO_31075_137", False),                 # He came out of that crisis

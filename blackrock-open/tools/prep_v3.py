@@ -1143,8 +1143,52 @@ def r_rogan2():
     wr.close()
 
 
+# ------------------------------------------------------------------ the Higgsfield scene (48.1-54.0 s, and 71.5 s)
+# "But one bad bet cost him a $100 million loss. That was enough to get him thrown out of Wall Street.": the user's
+# ChatGPT keyframes, animated on Higgsfield with Kling 3.0 Pro (5 s, 24 fps, silent; two takes each, the picks below).
+HF = f"{V3}/higgsfield"
+BET = {  # clip: (take, source start s, source end s, treatment) -- the source span is time-mapped onto the slot
+    "bet1": ("shot1_b.mp4", 2.30, 4.98, None),     # the screens flip red at 2.8 / 3.8 / 4.8 s -> during "bad bet cost him"
+    "bet2": ("shot2_a.mp4", 1.20, 3.30, "neg"),    # his head goes down; the Nvidia reel's two negative frames as it lands
+    "bet3": ("shot3_b.mp4", 0.10, 3.60, "flash"),  # locked-off: he walks out of the doors and away into the red street
+    "bet3fb": ("shot3_a.mp4", 1.40, 2.60, "grey"),  # "the one guy Wall Street threw out years ago": the walk-out again, grey
+}
+
+
+def rest2_slot(name):
+    for (key, nm, *_), ab in zip(SL.REST2, shot_bounds(SL.REST2, *TM.B["rest2"])):
+        if nm == name:
+            return ab
+    raise KeyError(name)
+
+
+def r_bet():
+    for name, (take, s0, s1, fx) in BET.items():
+        a, b = rest2_slot(name)
+        n = nf(a, b)
+        src = grab(f"{HF}/{take}", 0.0, 121)
+        wr = Writer(f"{CLIPS}/v3_{name}.mp4")
+        for i in range(n):
+            j = min(int((s0 + (s1 - s0) * i / n) * 24 + 1e-6), len(src) - 1)
+            fr = cover(np.asarray(src[j], np.float32))
+            if fx == "grey":                       # a memory: no colour, a little crushed
+                g = fr @ np.float32([0.30, 0.59, 0.11])
+                g = np.clip((g - 18) * 1.12, 0, 255)
+                fr = np.repeat(g[..., None], 3, axis=2)
+            fr = fr + grain(seed=4000 + 97 * len(name) + i, amt=3.0)   # film grain, so it sits with the real footage
+            f24 = int(i * 24 / FPS)
+            if fx == "neg" and f24 in (2, 4):
+                fr = negative(fr)
+            if fx in ("flash", "grey") and i < 3:   # cut in on a white flash
+                w = (1.0, 0.55, 0.2)[i]
+                fr = fr * (1 - w) + 255 * w
+            wr.write(fr)
+        wr.close()
+        print(f"   {name}: {take} {s0}-{s1}s ({(s1 - s0) / (n / FPS):.2f}x) into {n} frames")
+
+
 ALL.update({"cartel": r_cartel3, "spot": r_spot, "rogan2": r_rogan2, "jensen": r_jensen,
-            "tsg": lambda: [r_tsg(k) for k in TSG], "gates": r_gates, "jobs": r_jobs})
+            "tsg": lambda: [r_tsg(k) for k in TSG], "gates": r_gates, "jobs": r_jobs, "bet": r_bet})
 
 
 ALL["rest"] = rest_shots
