@@ -55,28 +55,28 @@ LINE = [(w, F(t - LINE_T0)) for w, t in LINE_WORDS]
 # beats (film seconds, frame-snapped)
 B = {
     "quote": (0.0, F(V0)),
-    "these": (F(V0), T["powerful"]),
-    "tiles": (T["powerful"], T["on"]),
+    "tiles": (F(V0), T["on"]),                 # "These are the most powerful people": the 3x3 tile flash from "These"
     "earth": (T["on"], T["a"]),
-    "money": (T["a"], T["cartel"]),
+    "money": (T["a"], T["cartel"]),            # "a $60 trillion dollar": the article flipbook
     "cartel": (T["cartel"], T["weapon"]),
     "weap": (T["weapon"], T["that"]),
     "logos": (T["that"], F(14.25)),
-    "touch": (F(14.25), T["touch_end"]),      # the hands come together from mid "everything", touch on "touch"
-    "glow": (T["touch_end"], T["thats"]),      # split second: the panel from above, people lighting up (X-creative)
-    "dimon": (T["thats"], T["jp"]),            # the tfg page: "That's Jamie Dimon, the guy running"
-    "jpm": (T["jp"], T["david"]),              # "JP Morgan Chase": the bank, in plain cuts
-    "solomon": (T["david"], T["a3"]),          # his speaking clip, then the Hemant flash on him
-    "dj": (T["a3"], T["and"]),                 # "a part-time DJ": the D-Sol video
-    "ceo": (T["and"], T["sachs_end"]),         # the panel's own title lands on "CEO"
-    "search": (T["sachs_end"], T["this"]),     # the camera circling the table; from "Amongst" people light up
-    "thisguy": (T["this"], T["the3"]),         # Fink's close-up at the panel
+    "touch": (F(14.25), T["touch_end"]),       # the hands come together, touch on "touch"
+    "puppet": (T["touch_end"], T["thats"]),    # the explainer's puppet shot
+    "dimon": (T["thats"], T["jp"]),            # "That's Jamie Dimon, the guy running" (the reference edit's intro)
+    "jpm": (T["jp"], T["david"]),              # "JP Morgan Chase" (the reel's "the man behind OpenAI")
+    "solomon": (T["david"], T["dj"]),          # "David Solomon, a part-time" (the reference edit's "AI")
+    "dj": (T["dj"], T["ceo"]),                 # "DJ and the": the D-Sol video
+    "ceo": (T["ceo"], T["sachs_end"]),         # "CEO of Goldman Sachs" (the reel's OpenAI device)
+    "orbit": (T["sachs_end"], T["amongst"]),   # the camera circling the table, people lighting up
+    "amongst": (T["amongst"], T["is"]),        # "Amongst them" (the reel's selection box)
+    "thisguy": (T["is"], T["the3"]),           # "is this guy": the box grows into Fink's card
     "walk": (T["the3"], T["runs"]),            # "the man who": Fink on stage
     "box": (T["runs"], T["company"]),          # "runs the most evil": the interview, the red square on "most"
-    "company": (T["company"], T["blackrock"]), # "company in the world": BlackRock's lobby and building
+    "company": (T["company"], T["blackrock"]), # "company in the world": BlackRock's letters, building, doors
     "brand": (T["blackrock"], F(V0 + VO_END + 0.045)),  # "BlackRock.": the letters on its facade
 }
-B["fink"] = (B["thisguy"][0], B["brand"][1])   # the Fink run as a whole (the Rogan clip follows it)
+B["fink"] = (B["thisguy"][0], B["brand"][1])
 B["rogan"] = (B["fink"][1], F(B["fink"][1] + ROGAN_T1 - ROGAN_T0))
 TOTAL = B["rogan"][1]
 
