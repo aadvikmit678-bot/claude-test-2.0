@@ -341,11 +341,12 @@ def s_hook():
     # ON EARTH: reel DdB8's "IT ISN'T" -- the tiles go negative for a frame, cyan for two, then the user's red, ON
     # landing large for a frame in its place and EARTH joining on its word
     isnt_card(sc, B["earth"][0], B["earth"][1], "ON", "EARTH", T["earth"] + 0.02)
-    # "a $60 trillion dollar cartel of weaponized capital that owns a piece of everything you touch." -- all of it
-    # written, in the Porsche reel's italic ("$100 million loss.") with Dario's entrance: each word's glowing bar, then
-    # the word (the big ones blown out, then crisp). The bright pages under it are brought down so the white reads.
+    # "a $60 trillion dollar": no caption -- the article flipbook writes "$60 trillion" itself (the user, Nov 22: "it was
+    # not written, it is there in the video"); the pages at their own brightness, as before
     sc.video("r_articles.mp4", *B["money"], z=1)
-    dim(sc, *B["money"], k=0.5)
+    # "cartel of weaponized capital that owns a piece of everything" in the Porsche reel's italic ("$100 million loss.")
+    # with Dario's entrance: each word's glowing bar, then the word (the big ones blown out, then crisp); the bright
+    # pages under it brought down so the white reads. No "you touch." -- the line ends on "everything" (the user)
     sc.video("r_cartel4.mp4", *B["cartel"], z=1)
     sc.video("r_weap.mp4", *B["weap"], z=1)
     dim(sc, *B["weap"], k=0.45)
@@ -354,19 +355,16 @@ def s_hook():
     L = lambda k: T[k] - 0.03
     SM, HE, BIG = 100, 175, 225
     phrases = [
-        [("a", L("a"), SM, False), ("$60", L("sixty"), HE, True), ("trillion", L("trillion"), HE, True)],
         [("cartel", L("cartel"), BIG, True)],
         [("of", L("of1"), SM, False), ("weaponized", L("weapon"), HE, True), ("capital", L("capital"), HE, True)],
         [("that", L("that"), SM, False), ("owns", L("owns"), HE, True)],
         [("a", L("a2"), SM, False), ("piece", L("piece"), HE, True), ("of", L("of2"), SM, False)],
         [("everything", L("everything"), BIG, True)],
-        [("you", L("you"), SM, False), ("touch.", L("touch"), HE, True)],
     ]
     starts = [F(p[0][1] - 2 * F25 - FR) for p in phrases]
-    ends = starts[1:] + [B["touch"][1]]
-    for k, (p, a, b) in enumerate(zip(phrases, starts, ends)):
-        # "you touch." sits low, clear of the burst where the fingers meet
-        dario_line(sc, p, a, b, y=860 if k == len(phrases) - 1 else 540, z=30)
+    ends = starts[1:] + [F(T["touch"] - 0.03)]          # "everything" until the fingers meet: the burst lands clean
+    for p, a, b in zip(phrases, starts, ends):
+        dario_line(sc, p, a, b, y=540, z=30)
     sc.video("r_touch3.mp4", *B["touch"], z=1)         # cut on "everything": the fingers meet on "touch"
     sc.write()
     return sc
