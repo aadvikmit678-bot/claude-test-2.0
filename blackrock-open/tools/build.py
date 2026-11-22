@@ -301,11 +301,12 @@ def isnt_card(sc, a, b, w1, w2, t2, y=548, size=205, z=30, extra=""):
     fx_out "neg" on "So,"'s shot for IN 1988)"""
     sc.img("red_bg_user.jpg", a, b, z=z - 1)
     i1, i2 = sc.uid("iw"), sc.uid("iw")
-    inner = (f'<div class="isnt" style="font-size:{size}px;"><span id="{i1}" style="transform:scale(1.25);">'
+    inner = (f'<div class="isnt" style="font-size:{size}px;"><span id="{i1}">'
              f'{_html.escape(w1, quote=False)}</span><span id="{i2}" style="opacity:0;position:relative;">'
              f'{_html.escape(w2, quote=False)}{extra}</span></div>')
     sc.div(a, b, inner, z=z, cls="cap", style=f"top:{y}px;height:0;")
-    sc.js.append(f'tl.set("#{i1}",{{scale:1}},{sc.at(a + 3 * FR)});')      # one reel frame large
+    sc.js.append(f'tl.set("#{i1}",{{scale:1.25}},{sc.at(a)});')             # one reel frame large
+    sc.js.append(f'tl.set("#{i1}",{{scale:1}},{sc.at(a + 3 * FR)});')
     sc.js.append(f'tl.set("#{i2}",{{opacity:1}},{sc.at(t2)});')
     return i1, i2
 

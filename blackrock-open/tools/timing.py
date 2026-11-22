@@ -25,7 +25,7 @@ def _load(name):
         return json.load(f)
 
 
-ALIGN = {k: _load(k) for k in ("vo", "rest", "rogan")}
+ALIGN = {k: _load(k) for k in ("vo", "rest", "rogan", "line")}
 PACE = _load("pace")
 VO_CUTS = PACE["vo"]["cuts"]
 REST_CUTS = PACE["rest"]["cuts"]
@@ -91,7 +91,9 @@ LINE_WORDS = [
     ("skill", 36.38), ("as", 36.58), ("you've", 37.03), ("been", 37.25), ("able", 37.52), ("to", 37.82),
     ("put", 37.92), ("together", 38.15), ("here.", 38.76),
 ]
-LINE = [(w, F(t - LINE_T0)) for w, t in LINE_WORDS]
+# (whisper's times above ran up to 0.9 s early -- "big" gone in 0.08 s, "assemblage" 0.7 s before it is said, the
+# user, Nov 22); the line is force-aligned like the rest (tools/align.py line -> tools/words/line.json, film seconds)
+LINE = [(w["text"], F(w["start"])) for w in _load("line")]
 
 # beats (film seconds, frame-snapped)
 CARTEL_IN = F(T["cartel"] - 3 / 24)    # the cartel clip only for its table flash (frames 14-16 at 24 fps), the main

@@ -1,0 +1,158 @@
+[
+{
+"text": "I",
+"start": 0.08,
+"end": 0.1,
+"score": 0.247
+},
+{
+"text": "don't",
+"start": 0.361,
+"end": 0.501,
+"score": 0.992
+},
+{
+"text": "think",
+"start": 0.521,
+"end": 0.641,
+"score": 0.999
+},
+{
+"text": "there's",
+"start": 0.681,
+"end": 0.841,
+"score": 0.666
+},
+{
+"text": "ever",
+"start": 0.901,
+"end": 1.022,
+"score": 0.997
+},
+{
+"text": "been",
+"start": 1.082,
+"end": 1.222,
+"score": 0.996
+},
+{
+"text": "a",
+"start": 1.282,
+"end": 1.302,
+"score": 0.926
+},
+{
+"text": "panel",
+"start": 1.362,
+"end": 1.663,
+"score": 0.403
+},
+{
+"text": "with",
+"start": 1.703,
+"end": 1.823,
+"score": 0.965
+},
+{
+"text": "as",
+"start": 1.923,
+"end": 1.963,
+"score": 0.988
+},
+{
+"text": "big",
+"start": 2.404,
+"end": 2.524,
+"score": 0.994
+},
+{
+"text": "an",
+"start": 2.684,
+"end": 2.724,
+"score": 0.385
+},
+{
+"text": "assemblage",
+"start": 2.784,
+"end": 3.225,
+"score": 0.995
+},
+{
+"text": "of",
+"start": 3.285,
+"end": 3.325,
+"score": 0.96
+},
+{
+"text": "financial",
+"start": 3.385,
+"end": 3.766,
+"score": 0.992
+},
+{
+"text": "talent",
+"start": 3.846,
+"end": 4.166,
+"score": 0.967
+},
+{
+"text": "and",
+"start": 4.206,
+"end": 4.286,
+"score": 0.937
+},
+{
+"text": "skill",
+"start": 4.327,
+"end": 4.607,
+"score": 0.971
+},
+{
+"text": "as",
+"start": 5.148,
+"end": 5.208,
+"score": 0.899
+},
+{
+"text": "you've",
+"start": 5.268,
+"end": 5.448,
+"score": 0.944
+},
+{
+"text": "been",
+"start": 5.488,
+"end": 5.608,
+"score": 0.957
+},
+{
+"text": "able",
+"start": 5.628,
+"end": 5.749,
+"score": 0.987
+},
+{
+"text": "to",
+"start": 5.789,
+"end": 5.829,
+"score": 0.999
+},
+{
+"text": "put",
+"start": 5.869,
+"end": 5.989,
+"score": 0.947
+},
+{
+"text": "together",
+"start": 6.029,
+"end": 6.289,
+"score": 0.991
+},
+{
+"text": "here.",
+"start": 6.33,
+"end": 6.47,
+"score": 0.928
+}
+]

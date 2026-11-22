@@ -103,16 +103,25 @@ def whisper_words(path):
     return [s["text"].strip() for s in d["transcription"] if s["text"].strip()]
 
 
+# the FII7 panel line, as said (its words were whisper's times until Nov 22: "big" left too fast, "assemblage" came
+# early); line.wav is the panel audio as the film places it (film second 0 = the panel's 32.32 s)
+LINE = ("I don't think there's ever been a panel with as big an assemblage of financial talent and skill as you've "
+        "been able to put together here.").split()
+
 JOBS = {
     "rest": (f"{SRC}/rest/rest16.wav", f"{SRC}/rest/transcript.json"),
     "vo": (f"{SRC}/vo16.wav", f"{SRC}/vo_dtw.json"),
     "rogan": (f"{AUD}/rogan_vocals.wav", f"{SRC}/rogan/transcript.json"),
+    "line": (f"{AUD}/line.wav", LINE),
 }
 
 if __name__ == "__main__":
+    import sys
     os.makedirs(OUT, exist_ok=True)
     for name, (audio, words) in JOBS.items():
-        res = align(audio, whisper_words(words))
+        if len(sys.argv) > 1 and name not in sys.argv[1:]:
+            continue
+        res = align(audio, words if isinstance(words, list) else whisper_words(words))
         json.dump(res, open(f"{OUT}/{name}.json", "w"), indent=0)
         low = [f"{r['text']}({r['score']})" for r in res if r["score"] < 0.35]
         print(f"{name}: {len(res)} words, mean score {np.mean([r['score'] for r in res]):.2f}; weak: {' '.join(low)}")

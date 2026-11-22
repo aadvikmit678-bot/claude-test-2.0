@@ -22,7 +22,7 @@ npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o rend
 ## Sync and pace
 
 **Sync:** every caption appears on its word as it is spoken.
-- The three recordings (the voiceover, the rest of the script and Elon's question) are force-aligned word by word to their sound: `tools/align.py`, which writes `tools/words/*.json`.
+- All four recordings (the panel line, the voiceover, the rest of the script and Elon's question) are force-aligned word by word to their sound: `tools/align.py`, which writes `tools/words/*.json`. The panel line was on whisper's times until v7: "big" left too fast and "assemblage" came 0.7 s early.
 - Whisper's own times had been up to 0.95 s early ("Back in the 1980s" came 0.8 s before it was said).
 
 **Pace:** the long pauses are cut out of both recordings (`tools/pace.py` → `tools/words/pace.json`).
@@ -37,7 +37,7 @@ npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o rend
 
 | Film s | What |
 |---|---|
-| 0.00–6.70 | **The FII7 panel line.** Then the panelists with white flashes: Fink, Schwarzman, **Jamie Dimon (3rd)**, **Ray Dalio (4th)**. |
+| 0.00–6.70 | **The FII7 panel line.** Its captions and cuts sit on the aligned words ("with as big an" / "assemblage" / "of financial talent"). Then the panelists with white flashes: Fink, Schwarzman, **Jamie Dimon (3rd)**, **Ray Dalio (4th)**. |
 | 6.70–8.82 | **"These are the most powerful people".** The tile flash; "powerful" and "people" in the Dario serif white glow, blooming in on their words. |
 | 8.82–9.48 | **ON EARTH**, exactly as reel DdB8's "IT ISN'T":<br>• the tiles' last frames strobe, go negative for a frame and cyan for two;<br>• the user's red card;<br>• ON lands in its final place one reel frame 1.25× large, and EARTH joins on its word;<br>• League Gothic, caps about 15 % of the height. |
 | 9.48–10.80 | **"a $60 trillion".** The article flipbook, dimmed under the type.<br>From here to "you touch." every word is written in the "$100 million loss." italic with Dario's entrance: its place lights up as a glowing white bar, then the word, big ones blown out and crisp four frames later. |
@@ -45,11 +45,11 @@ npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o rend
 | 11.48–12.68 | **"of weaponized capital".** The blueprint pages flip under a continuous push, with no frame held. *of weaponized capital* is one italic line. |
 | 12.68–13.78 | **"that owns a piece of".** The user's ending video from its glasses for 0.45 s, each object moved down to the centre, then the brand maps ("everything you own"). |
 | 13.78–15.10 | **"everything you touch".** A cut on "everything" to the fingers meeting on "touch". The puppet shot is gone. |
-| 15.10–16.87 | **"That's Jamie Dimon, the guy running".** refff's band (ON EARTH red) and flashes. "That's Jamie Dimon" sits in the red band, top left, beside his face, in the **JPMorgan Chase title type** with a white glow and refff's flicker. "the guy running" stays centred below. |
+| 15.10–16.87 | **"That's Jamie Dimon, the guy running".** refff's band (ON EARTH red) and flashes. "That's Jamie Dimon" sits inside the red band, top left, clear of his face, in the **JPMorgan Chase title type** (140 px) with a white glow and refff's flicker. "the guy running" stays centred below. |
 | 16.87–18.18 | **"JP Morgan Chase".** The OpenAI device, the title with a subtle white glow (so is Goldman Sachs'). |
-| 18.18–19.77 | **"David Solomon, a part-time".** The same device. "David Solomon" is in the Goldman Sachs / JPMorgan title type with the flicker; "a part-time DJ" is the captions' line. |
+| 18.18–19.77 | **"David Solomon, a part-time".** The same device. "David" over "Solomon" (145 px) inside the red band beside his face, in the same title type with the glow and the flicker; "a part-time DJ" is the captions' line. |
 | 19.77–22.05 | **"DJ and the CEO of Goldman Sachs".** His DJ nights, then the JPMorgan device exactly. The two-up's left half is the Goldman Sachs tower sign, no longer Solomon at the panel again. Straight into "Amongst". |
-| 22.05–23.70 | **"Amongst them is this guy".** The spotlight reel: "Amongst them" in the captions' line (as "a part-time DJ"), then the face flash, the dark punch-in on Fink and "is this guy" under his face. |
+| 22.05–23.70 | **"Amongst them is this guy".** The spotlight reel: the table in its original colours (no grade, no grain), "Amongst them" in the captions' line (as "a part-time DJ"), then the face flash, the dark punch-in on Fink and "is this guy" under his face. |
 | 23.70–25.38 | **"the man who runs the most evil".** Reel DfhzVs8q9NH's "terrible boss" scene, rebuilt on the user's red with the user's Fink cut-outs.<br>• Fink rises slowly on the reference's curve while "the", "man", "who", "runs" and "the" come in as its small words.<br>• The horns fade in, then a smooth cut to the close-up.<br>• **most** and **evil** sit behind him as its **terrible** / **boss**.<br>• No grain is added on him: only the photo's own (the user).<br>See `notes/REF_TERRIBLE_BOSS.md`. |
 | 25.38–27.52 | **"company in the world, BlackRock."** |
 | 27.52–38.18 | **"A company that manages $15 trillion in assets … than Steve Jobs ever did."**<br>• The $15T montage, with "$15 trillion" in the Dario serif white glow.<br>• Think School's columns, Jensen, Gates and Jobs have no money overlay (corner softening only). |
@@ -95,7 +95,7 @@ npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o rend
 ## Rebuild
 
 ```
-python -I tools/align.py          # (torch venv) the word alignment -> tools/words/{vo,rest,rogan}.json
+python -I tools/align.py          # (torch venv) the word alignment -> tools/words/{vo,rest,rogan,line}.json
 python -I tools/pace.py           # the pauses cut out -> tools/words/pace.json
 python -E -s tools/prep_hook.py weap logos
 python -E -s tools/prep_v3.py tiles articles touch jpm rogan2   # + rest_shots(REST1 names), r_tsg, r_jensen, r_gates, r_jobs

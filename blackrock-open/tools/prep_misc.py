@@ -35,7 +35,7 @@ def cut(src, t0, dur, out, vf=None, fps=None, audio=True, crf=12):
 
 PANEL_SHOTS = {  # id: (panel time, seconds)
     "p_wide": (TM.LINE_T0, 1.75),        # the line starts on the wide, its own picture
-    "p_over": (954.40, 1.30),            # from above: the whole table
+    "p_over": (954.40, 1.80),            # from above: the whole table (longer: the aligned "with" .. "financial")
     "p_side": (1195.00, 1.50),           # the stage from the side
     "p_dolly": (1199.00, 2.50),          # behind the chairs, moving
     "p_these": (1192.00, 1.10),          # high wide for "These are the most powerful people"

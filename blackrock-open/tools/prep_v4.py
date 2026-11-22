@@ -314,12 +314,12 @@ def r_orbit4():
     wr = Writer(f"{CLIPS}/r_orbit4.mp4")
     for i in range(n):
         j = min(int(i / FPS * 25), len(src) - 1)
-        im = P.V2.xgrade(src[j].astype(np.float32))
+        im = src[j].astype(np.float32)                 # the original colours: no grade, no grain (the user, Nov 22)
         z = Z * (1 + 0.035 * i / n)                   # a slow push in, no flashing lights
         im = P.affine(im, z, cx, cy, cx, cy, border=(20, 18, 20))
         if i >= n - 5:                                 # the light streak that carries into the group picture
             im = streak(im, (i - (n - 5)) / 9)
-        wr.write(im + grain(seed=2100 + j, amt=3.0))
+        wr.write(im)
     wr.close()
 
 

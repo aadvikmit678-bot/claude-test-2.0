@@ -69,7 +69,7 @@ def _clean(w):
 
 # ------------------------------------------------------------------ 1. jensen (+ serif key words)
 SCRIPT = {
-    "line": "I don't think | there's ever been | a panel | with as big | an assemblage | of financial talent | "
+    "line": "I don't think | there's ever been | a panel | with as big an | assemblage | of financial talent | "
             "and skill | as you've been able | to put together here.",
     "vo": "These are the most | [powerful people on earth,] | "
           "[a 60 trillion dollar cartel of weaponized capital that owns a piece of everything you touch.] | "
@@ -193,6 +193,8 @@ def porsche_phrases():
         words = [(tok, F(film(idx[min(j, len(idx) - 1)]) - LEAD)) for j, tok in enumerate(toks)]
         nxt = film(PORSCHE[k + 1][1]) - LEAD if k + 1 < len(PORSCHE) else B["rest2"][1]
         end = min(nxt, TM.R(ws[b]["end"]) + 1.0, B["rest2"][1] - 2 / 60)
+        if k + 1 < len(PORSCHE) and PORSCHE[k + 1][0] == "card":   # clear before the card's lead-in (the negative
+            end = min(end, film(PORSCHE[k + 1][1]) - 10 / 60)        # frame and the cyan, as "IT ISN'T")
         out.append((F(words[0][1]), F(min(nxt, max(end, words[-1][1] + 0.2))), kind, words, text))
     return out
 

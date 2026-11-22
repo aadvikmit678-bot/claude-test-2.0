@@ -406,20 +406,22 @@ def hero_left(text, size, seed, x, base):
     return a
 
 
-NAME_X, NAME_BASE = 104, 392        # the name in refff's red band, top left (the user, Nov 22: where it was before)
+NAME_X = 104                        # the name in refff's red band, top left (the user, Nov 22: where it was before)
 
 
 def intro(name, beat, person, s, ox, oy, title, that=None, words=(), until=None, seed=1700):
     """refff's device (the band, the flashes, the flicker) with the JPMorgan Chase / Goldman Sachs title type. The name
-    sits in the red band, top left, beside the face (the user, Nov 22: "where I marked blue ... not a centre line"),
-    "That's" just above it, both with a white glow (no dark shadow); "the guy running" stays as it was, centred low."""
+    sits inside the red band, top left, clear of the face (the user, Nov 22: "where I marked blue ... why is it coming
+    out of the box ... David above and then Solomon below"), "That's" above it, all with a white glow (no dark shadow);
+    "the guy running" stays as it was, centred low. `title`: [(line, size, baseline)] -- every line sits above the
+    band's edge from the name's first flicker (refff frame 10: the edge at 319 px)."""
     n = P.beat_frames(beat)
     t0 = round(TM.B[beat][0] * FPS)
     rel = lambda w: round(TM.T[w] * FPS) - t0
     frs = P.person_frames(person, n, s, ox, oy, clean=True)
     off = 392 / H - P4.REF_BASE
-    that_a = hero_left(that, 76, seed + 1, NAME_X + 4, NAME_BASE - 136) if that else None
-    name_a = hero_left(title, 150, seed + 2, NAME_X, NAME_BASE)
+    that_a = hero_left(that[0], that[1], seed + 1, NAME_X + 3, that[2]) if that else None
+    name_a = sum(hero_left(t, sz, seed + 2 + k, NAME_X, base) for k, (t, sz, base) in enumerate(title))
     line_a, ends = hero_words(" ".join(w for w, _ in words), 96, 668, seed + 3) if words else (None, [])
     keys = [k for k, _ in P4.REF_BAND]
     vals = [v for _, v in P4.REF_BAND]
@@ -461,13 +463,14 @@ def intro(name, beat, person, s, ox, oy, title, that=None, words=(), until=None,
 
 
 def r_dimon5():
-    intro("v5_dimon", "dimon", "dimon", 1.2, 0.0, -60.0, "Jamie Dimon", that="That’s",
+    intro("v5_dimon", "dimon", "dimon", 1.2, 0.0, -60.0, [("Jamie Dimon", 140, 266)], that=("That’s", 72, 116),
           words=[("the", "the1"), ("guy", "guy1"), ("running", "running")], seed=1700)
 
 
 def r_solomon5():
     # "David Solomon" until "a part-time" (the captions write "a part-time DJ" in the centre)
-    intro("v5_solomon", "solomon", "solomon", 1.3, -4.0, -40.0, "David Solomon", until="a3", seed=1900)
+    intro("v5_solomon", "solomon", "solomon", 1.3, -4.0, -40.0, [("David", 145, 162), ("Solomon", 145, 306)],
+          until="a3", seed=1900)
 
 
 ALL = {"rest2": r_rest2, "rogan": r_rogan, "dimon5": r_dimon5, "solomon5": r_solomon5, "owns": r_owns,

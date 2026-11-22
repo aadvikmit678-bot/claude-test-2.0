@@ -150,7 +150,7 @@ def whip(img, dx=90):
 SHOTS = [  # (name, source, start s, seconds, crop, frame-count start)
     # "of financial talent and skill as you've been able to put together here": panelists talking (muted)
     ("ob_fink", PANEL, 1185.30, 1.05, None, False),
-    ("ob_schw", PANEL, 2183.90, 0.88, None, False),
+    ("ob_schw", PANEL, 2183.74, 1.10, None, False),   # (ends before the panel's cut at 2184.86)
     ("ob_dalio", PANEL, 729.30, 0.92, None, False),
     ("ob_motsepe", PANEL, 1816.00, 1.12, None, False),
     # the BlackRock explainer's first shot: a puppet master's hand on a man's strings
