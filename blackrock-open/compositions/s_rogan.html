@@ -19,27 +19,29 @@
 .hv{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.012em;color:#EEF0F0;text-transform:uppercase;line-height:1;white-space:nowrap;}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;}
 .jn{font-family:"InterSB",sans-serif;font-weight:600;font-size:62px;letter-spacing:-0.05em;line-height:1;color:#fff;white-space:nowrap;
- text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);}
+ text-shadow:0 0 10px rgba(255,255,255,0.40),0 0 28px rgba(255,255,255,0.18);}
 .jn.ink{color:#141414;text-shadow:none;}
+.jn.heavy{text-shadow:0 0 10px rgba(255,255,255,0.45),0 0 28px rgba(255,255,255,0.2);}
 .ser{font-family:"ISerif",serif;font-weight:400;line-height:1;color:#FBF8EC;white-space:nowrap;letter-spacing:0.005em;}
 .por{font-family:"ISerif",serif;font-style:italic;font-weight:400;line-height:1;color:#fff;white-space:nowrap;word-spacing:0.38em;}
 .por span{display:inline-block;opacity:0;}
 .pl{font-family:"Heros",sans-serif;font-weight:700;font-size:94px;line-height:1.02;letter-spacing:-0.015em;color:#EDEDEA;
- text-shadow:0 0 14px rgba(0,0,0,0.35);}
+ text-shadow:0 0 12px rgba(255,255,255,0.35),0 0 30px rgba(255,255,255,0.14);}
 .pl span{display:inline-block;opacity:0;}
 
 #root{background:#000;}
 
 </style>
-<div id="root" data-composition-id="s_rogan" data-width="1920" data-height="1080" data-duration="3.7334">
+<div id="root" data-composition-id="s_rogan" data-width="1920" data-height="1080" data-duration="2.5167">
 <video id="s_rogan-v1" class="clip full" src="assets/clips/v5_rogan.mp4" data-start="0.0000" data-duration="2.1334" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
-<video id="s_rogan-v2" class="clip full" src="assets/clips/v5_react.mp4" data-start="2.1334" data-duration="1.6000" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
-<div id="s_rogan-d11" class="clip layer" data-start="0.0000" data-duration="2.7500" data-track-index="3" style="z-index:40;"><div id="s_rogan-st10" style="position:absolute;left:118px;top:300px;text-align:left;"><div class="pl"><span id="s_rogan-pl3">do</span> <span id="s_rogan-pl4">you</span> <span id="s_rogan-pl5">think</span></div><div class="pl"><span id="s_rogan-pl6">BlackRock’s</span> <span id="s_rogan-pl7">a</span></div><div class="pl"><span id="s_rogan-pl8">bad</span> <span id="s_rogan-pl9">company?</span></div></div></div>
+<video id="s_rogan-v2" class="clip full" src="assets/clips/v5_react.mp4" data-start="2.1334" data-duration="0.3833" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
+<div id="s_rogan-d11" class="clip layer" data-start="0.0000" data-duration="2.5167" data-track-index="3" style="z-index:40;"><div id="s_rogan-st10" style="position:absolute;left:118px;top:300px;text-align:left;"><div class="pl"><span id="s_rogan-pl3">do</span> <span id="s_rogan-pl4">you</span> <span id="s_rogan-pl5">think</span></div><div class="pl"><span id="s_rogan-pl6">BlackRock’s</span> <span id="s_rogan-pl7">a</span></div><div class="pl"><span id="s_rogan-pl8">bad</span> <span id="s_rogan-pl9">company?</span></div></div></div>
+<div id="s_rogan-fl12" class="clip flash" data-start="2.4334" data-duration="0.0833" data-track-index="4" style="z-index:90;background:#fff"></div>
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
-  tl.set({}, {}, 3.7334);
+  tl.set({}, {}, 2.5167);
   tl.fromTo("#s_rogan-pl3",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},0.3834);
   tl.fromTo("#s_rogan-pl4",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},0.4834);
   tl.fromTo("#s_rogan-pl5",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},0.5834);
@@ -47,7 +49,9 @@
   tl.fromTo("#s_rogan-pl7",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},1.8000);
   tl.fromTo("#s_rogan-pl8",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},1.8667);
   tl.fromTo("#s_rogan-pl9",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.22,ease:"power2.out"},2.1000);
-  tl.to("#s_rogan-st10",{opacity:0,filter:"blur(10px)",duration:0.28,ease:"power1.in"},2.4500);
+  tl.to("#s_rogan-st10",{opacity:0,filter:"blur(10px)",duration:0.2,ease:"power1.in"},2.3167);
+  tl.fromTo("#s_rogan-fl12",{opacity:0},{opacity:1.0,duration:0.0667,ease:"power2.in"},2.4334);
+  tl.to("#s_rogan-fl12",{opacity:0,duration:0.0167,ease:"power2.out"},2.5000);
   window.__timelines["s_rogan"] = tl;
 })();
 </script>

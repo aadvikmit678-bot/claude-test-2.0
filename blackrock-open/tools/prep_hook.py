@@ -300,11 +300,15 @@ def r_weap():
     t0 = round(TM.B["weap"][0] * FPS)
     ized = round(TM.T["ized"] * FPS) - t0       # cut to the live tank
     cap = round(TM.T["capital"] * FPS) - t0     # cut to the turret
+    # blueprint pages (top view, side views, M4A3, Tiger) shared over the whole run up to "-ized", each a 16:9 band
+    # of its page, and the frame always pushing in: no held frame (the user: "it kind of stops here")
+    pages = [center_focus(opal_page_band(f), r0=380, r1=880, zoom=0.012) for f in (95, 98, 100, 102, 105)]
+    per = max(1, round(ized / len(pages)))
     seq = []
-    for f in (95, 98, 100, 102, 105):            # blueprint pages (top view, side views, M4A3, Tiger), 3 frames each
-        pg = center_focus(opal_page_band(f), r0=380, r1=880, zoom=0.012)  # a 16:9 band of the page, filling the frame
-        seq += [pg] * 3
-    seq = seq[:ized] + [seq[-1]] * max(0, ized - len(seq))
+    for j in range(ized):
+        pg = pages[min(j // per, len(pages) - 1)]
+        k = 1.0 + 0.12 * j / max(1, ized - 1)
+        seq.append(affine(np.asarray(pg, np.float32), k, W / 2, H / 2, W / 2, H / 2, border=(255, 255, 255)))
     live = []
     for j in range(cap - ized):                  # the tank firing, source 30 fps -> 2 output frames each
         f = 108 + j // 2

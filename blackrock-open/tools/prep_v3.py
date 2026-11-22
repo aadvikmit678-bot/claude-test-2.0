@@ -327,10 +327,10 @@ def r_touch3():
             ms = cv2.warpAffine(m, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)[..., None]
             fr = fr * (1 - ms) + hs * ms
         seq.append(fr)
-    burst = [cover(frame_at(TOUCH, f, 24).astype(np.float32)) for f in (21, 22, 23, 24, 25)]
-    nb = n - len(seq)
+    nb = n - len(seq)                                 # after "touch": the clip runs on at its own 24 fps
+    burst = [cover(frame_at(TOUCH, f, 24).astype(np.float32)) for f in range(21, 21 + int(nb * 24 / FPS) + 2)]
     for j in range(nb):
-        seq.append(burst[min(len(burst) - 1, j * len(burst) // nb)])
+        seq.append(burst[min(len(burst) - 1, int(j * 24 / FPS))])
     wr = Writer(f"{CLIPS}/r_touch3.mp4")
     for i, fr in enumerate(seq):
         wr.write(fr + grain(seed=400 + i, amt=4))

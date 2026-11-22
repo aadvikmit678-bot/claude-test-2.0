@@ -266,8 +266,10 @@ def r_ceo4():
         fr = U(src, t + 5 * j / FPS, 5, crop=crop, fc=fc)
         flip.append([fr[0]] * (5 * j) + fr)
     m = n - k
-    collage = (U(PANEL, 2827.6 + 10 / FPS, m, size=(W // 2, H)),
-               U(NEW2, 19.4 + 20 / FPS, m, crop="crop=840:472:0:120", size=(W // 2, H)))
+    # the left half: the Goldman Sachs sign on its glass tower (the user: the panel Solomon there was repetitive)
+    gold = [np.clip(f, 0, 255).astype(np.uint8) for f in grab(f"{V3}/goldman.mp4", 6.0, m, fps=FPS,
+                                                               vf="crop=1400:1572:740:300,setsar=1", size=(W // 2, H))]
+    collage = (gold, U(NEW2, 19.4 + 20 / FPS, m, crop="crop=840:472:0:120", size=(W // 2, H)))
     slots, cw, ch = P.grid_cells()
     cell_src = [(NEW2, 22.2 + 20 / FPS, "crop=840:472:0:160", False), (PANEL, 2802.9 + 30 / FPS, None, False),
                 (NEW2, 26.4 + 20 / FPS, band, False), (NEW2, 23.3 + 40 / FPS, band, False),
@@ -392,13 +394,14 @@ def texture_pass(name, opacity=0.16, seed=0):
     difference at low opacity, and the soft corner blur."""
     path = f"{CLIPS}/{name}.mp4"
     src = grab(path, 0.0, 400)
-    tex = grab(TEX, 1.0 + seed * 0.7, len(src), fps=FPS, size=(W, H))
+    tex = grab(TEX, 1.0 + seed * 0.7, len(src), fps=FPS, size=(W, H)) if opacity > 0 else []
     tmp = f"{CLIPS}/{name}.tex.mp4"
     wr = Writer(tmp)
     for i, f in enumerate(src):
         f = f.astype(np.float32)
-        t = tex[min(i, len(tex) - 1)].astype(np.float32)
-        f = f * (1 - opacity) + np.abs(f - t) * opacity
+        if opacity > 0:
+            t = tex[min(i, len(tex) - 1)].astype(np.float32)
+            f = f * (1 - opacity) + np.abs(f - t) * opacity
         f = center_focus(f, zoom=0.014, gblur=2.4)
         wr.write(f)
     wr.close()
@@ -408,7 +411,7 @@ def texture_pass(name, opacity=0.16, seed=0):
 
 def r_founders():
     for k, name in enumerate(["v3_tsg_nv", "v3_tsg_ms", "v3_tsg_ap", "v3_r1_jensen", "v3_r1_gates", "v3_r1_jobs"]):
-        texture_pass(name, opacity=0.14 if "tsg" in name else 0.18, seed=k)
+        texture_pass(name, opacity=0.0, seed=k)   # the user (Nov 22): no money overlay ever again; corner blur only
 
 
 ALL = {"finkflip": r_finkflip, "cartel4": r_cartel4, "dimon4": r_dimon4, "ceo4": r_ceo4, "dj4": r_dj4,

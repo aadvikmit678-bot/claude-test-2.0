@@ -58,6 +58,17 @@ SRC = {
 }
 for k in ("1_a", "1_b", "2_a", "2_b", "3_a", "3_b"):
     SRC[f"HF{k}"] = f"{V3}/higgsfield/shot{k}.mp4"
+# v6 (Nov 22): the second half on real footage -- the new BlackRock documentaries and the Dimon drive's long ones
+SRC.update({
+    "BR15": f"{DL}/v6/docs/br_15t_machine.mp4", "BRC": f"{DL}/v6/docs/br_conspiracies.mp4",
+    "BRL": f"{DL}/v6/docs/br_largest.mp4", "BRE": f"{DL}/v6/docs/br_edit.mp4",
+    "STO": f"{DIMON}/_direct/stories_2008_recession.mp4", "MPB": f"{DIMON}/_direct/most_powerful_banker_doc.mp4",
+    "HOW": f"{DIMON}/_direct/how_jpm_became_largest.mp4", "UNT": f"{DIMON}/_direct/untold_career_story.mp4",
+    "AX": f"{V3}/new/axirohq.mp4", "ASH": f"{V3}/new/asher.mp4", "MFC": f"{DL}/m_finance_clips.mp4",
+    "MONEY": f"{DL}/v6/money_user.mp4",          # the user's fire clip (Nov 22): "three times the money"
+})
+for k in ("1_b", "3_a", "3_b"):                  # the Higgsfield takes at 60 fps (motion-interpolated), real speed
+    SRC[f"HF6_{k[0]}{k[2]}"] = f"{DL}/v6/hf60/shot{k}.mp4"
 
 # fixed crops (source pixels): the montages' badges and subtitles, the vertical videos' 16:9 bands
 CROP = {
@@ -134,6 +145,23 @@ def dewatermark(fr):
                        cv2.INPAINT_TELEA).astype(np.float32)
 
 
+def shift_down(fr, dy):
+    """The picture moved down dy px (to centre what sits high in it); the uncovered top takes its top edge's colours."""
+    dy = int(dy)
+    out = np.empty_like(fr)
+    out[dy:] = fr[:H - dy]
+    edge = cv2.GaussianBlur(fr[:24], (0, 0), 6).mean(axis=0, keepdims=True)   # the top edge's colours, stretched up
+    out[:dy] = cv2.GaussianBlur(np.repeat(edge, dy, axis=0), (0, 0), 14)
+    return out
+
+
+# the user's ending video puts its objects high in the frame; each source window below is moved down by that share of
+# the height so the object sits in the centre (read off its frames at 30 fps): the camera on red, its white glow, its
+# line drawings, the glasses' glow, the glasses on red and glowing, their drawings, the phone
+E_PAN = [(0.395, 0.465, 0.22), (0.465, 0.495, 0.20), (0.495, 0.625, 0.18), (0.625, 0.660, 0.30), (0.660, 0.765, 0.12),
+         (0.765, 0.895, 0.06), (0.895, 1.200, 0.10)]
+
+
 def smooth(u):
     u = min(max(u, 0.0), 1.0)
     return u * u * (3 - 2 * u)
@@ -152,6 +180,11 @@ def look(fr, kind, i, seed):
         fr = cv2.warpAffine(fr, np.float32([[1, 0, dx], [0, 1, dy]]), (W, H), borderMode=cv2.BORDER_REFLECT)
         fr = vignette(fr, 0.36)
         return fr + grain(seed=seed * 1000 + i, amt=5.0)
+    if kind == "dimw":                                   # bright footage under the white type: brought down until the
+        c = float(fr[H // 4:3 * H // 4, W // 5:4 * W // 5].mean())    # type's white glow reads (the user: white glow
+        if c > 92.0:                                                   # only, never a dark shadow behind the words)
+            fr = fr * (92.0 / c)
+        kind = None
     if kind == "bw":
         g = fr @ np.float32([0.299, 0.587, 0.114])
         g = (g - 128) * 1.06 + 124
@@ -201,7 +234,7 @@ def frames_for(spec, n, dur):
         crop = auto_crop(path, t0 + 0.05)
     vf = (crop + "," if crop else "") + "setsar=1"
     got = grab(path, t0, n, fps=FPS / speed, vf=vf, size=(W, H))
-    got = [g.astype(np.float32) for g in got] or [np.zeros((H, W, 3), np.float32)]
+    got = got or [np.zeros((H, W, 3), np.uint8)]          # uint8 until used (a long take is 200+ frames)
     while len(got) < n:
         got.append(got[-1])
     return got
@@ -232,11 +265,17 @@ def render_montage(name, shots, a0, a1, seed=50):
         push, k0 = spec.get("push", 0.045), spec.get("k0", 1.0)
         fx, fy = spec.get("fx", 0.5) * W, spec.get("fy", 0.5) * H
         for i in range(n):
-            fr = frs[i]
+            fr = np.asarray(frs[i], np.float32)
             if spec["src"] == "LFM":
                 fr = decap(fr)
             if spec["src"] == "E":
                 fr = dewatermark(fr)
+            if spec.get("pan"):                          # source windows shown moved down (see E_PAN)
+                ts = spec["t0"] + i * spec.get("speed", 1.0) / FPS
+                for p0, p1, dy in (E_PAN if spec["pan"] == "E" else spec["pan"]):
+                    if p0 <= ts < p1:
+                        fr = shift_down(fr, dy * H)
+                        break
             if spec["src"] == "P":                       # the panel's FII logo (top left)
                 u8 = np.ascontiguousarray(np.clip(fr, 0, 255).astype(np.uint8))
                 m = P.logo_mask(u8)
@@ -254,8 +293,42 @@ def render_montage(name, shots, a0, a1, seed=50):
     wr.close()
 
 
-def r_rest2():
-    render_montage("v5_rest2", SL.REST2_V5, *TM.B["rest2"])
+def r_owns():
+    """\"that owns a piece of\": the user's ending video from its glasses (0.6 s), panned so the glasses sit in the
+    centre, for 0.45 s; then the two brand maps ("but everything you own") from the Fink edit."""
+    a0, a1 = TM.B["logos"]
+    shots = [dict(at=None, src="E", t0=0.633, push=0.04, pan="E", note="the glasses, centred, then the phone"),
+             dict(at=a0 + 0.45, src="FE3", t0=22.5, look="bw", fx_in="zoom", note="the brands"),
+             dict(at=a0 + 0.783, src="FE3", t0=24.1, look="bw", note="the media map")]
+    render_montage("v6_owns", shots, a0, a1, seed=80)
+
+
+def r_rest2(part=None, parts=4):
+    """The second half; `part` k of `parts` renders a contiguous run of shots to v6_rest2_p{k}.mp4 (run the parts in
+    parallel, then `rest2join` concatenates them -- identical frames to a single pass)."""
+    shots, (a0, a1) = SL.REST2_V6, TM.B["rest2"]
+    if part is None:
+        render_montage("v6_rest2", shots, a0, a1)
+        return
+    bounds = shot_times(shots, a0, a1)
+    cut = [round(len(shots) * k / parts) for k in range(parts + 1)]
+    sub = shots[cut[part]:cut[part + 1]]
+    s0 = bounds[cut[part]][0]
+    s1 = bounds[cut[part + 1] - 1][1]
+    sub = [dict(sh, at=(s0 if j == 0 else sh["at"])) for j, sh in enumerate(sub)]
+    render_montage(f"v6_rest2_p{part}", sub, s0, s1, seed=50 + cut[part])
+
+
+def r_rest2join(parts=4):
+    lst = f"{CLIPS}/v6_rest2_parts.txt"
+    with open(lst, "w") as f:
+        for k in range(parts):
+            f.write(f"file 'v6_rest2_p{k}.mp4'\n")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy",
+                    f"{CLIPS}/v6_rest2.mp4"], check=True)
+    for k in range(parts):
+        os.remove(f"{CLIPS}/v6_rest2_p{k}.mp4")
+    os.remove(lst)
 
 
 # ------------------------------------------------------------------ Rogan: Elon's question, then Rogan listening
@@ -300,27 +373,35 @@ def r_rogan():
 
 
 # ------------------------------------------------------------------ the intros: refff's band in the ON EARTH red, the name glowing
-def intro(name, beat, person, s, ox, oy, title, that=None, words=(), seed=1700):
+def hero_words(text, size, y, seed):
+    """A centred line in the JPMorgan Chase / Goldman Sachs title type (Inter Display Bold, speckled white) and the
+    x where each of its words ends, so the words can come in one by one in their final, centred places."""
+    from PIL import ImageFont
+    a = P.hero_text(text, size, seed, y=y)
+    f = ImageFont.truetype(P.INTER_B, size)
+    left = W / 2 - f.getlength(text) / 2
+    ends, acc = [], ""
+    for w in text.split():
+        acc = (acc + " " + w).strip()
+        ends.append(left + f.getlength(acc) + size * 0.12)
+    return a, ends
+
+
+def intro(name, beat, person, s, ox, oy, title, that=None, words=(), until=None, seed=1700):
+    """refff's device (the band, the flashes, the flicker) with the type the user picked on Nov 22: the names set
+    exactly like the "JPMorgan Chase" / "Goldman Sachs" titles, centred -- "That's Jamie Dimon, the guy running"."""
     n = P.beat_frames(beat)
     t0 = round(TM.B[beat][0] * FPS)
     rel = lambda w: round(TM.T[w] * FPS) - t0
     frs = P.person_frames(person, n, s, ox, oy, clean=True)
-    name_base = 392
-    name_a, name_box = P.word_layer(title, P.SERIF, 172, 108, name_base)
-    that_a = None
-    if that:
-        that_a, _ = P.word_layer(that, P.SERIF_I, 84, 112, int(name_box[1]) - 18)
-    off = name_base / H - P4.REF_BASE
-    serif_base = int((P4.REF_BAND[-1][1] + off) * H) + 108
-    layers, x = [], 112
-    for w, key in words:
-        a, box = P.word_layer(w, P.SERIF, 138, x, serif_base)
-        layers.append((a, box, rel(key)))
-        x = box[2] + 36
+    off = 392 / H - P4.REF_BASE
+    ys = (420, 540, 668) if that else (None, 540, 668)
+    that_a = P.hero_text(that, 76, seed + 1, y=ys[0]) if that else None
+    name_a = P.hero_text(title, 150, seed + 2, y=ys[1])
+    line_a, ends = hero_words(" ".join(w for w, _ in words), 96, ys[2], seed + 3) if words else (None, [])
     keys = [k for k, _ in P4.REF_BAND]
     vals = [v for _, v in P4.REF_BAND]
-    glow1 = cv2.GaussianBlur(name_a, (0, 0), 10)
-    glow2 = cv2.GaussianBlur(name_a, (0, 0), 34)
+    k_until = rel(until) - 2 if until else n
     wr = Writer(f"{CLIPS}/{name}.mp4")
     for i in range(n):
         img, pa = frs[i]
@@ -331,20 +412,7 @@ def intro(name, beat, person, s, ox, oy, title, that=None, words=(), seed=1700):
             bnd = np.zeros((H, W), np.float32)
             bnd[:int(edge)] = 1.0
             bg = P.over_color(bg, cv2.GaussianBlur(bnd, (0, 0), 1.2), EARTH_RED)
-        if that_a is not None:
-            if 4 <= rf < 6:
-                sq = np.zeros((H, W), np.float32)
-                sq[300:332, 112:144] = 1
-                bg = P.over_color(bg, sq, P.WHITE)
-            elif rf >= 6:
-                bg = P.over_color(bg, that_a, P.WHITE)
         f30 = int(rf)
-        op = P4.REF_WORD.get(f30, 1.0 if f30 > 14 else 0.0)
-        if op > 0:                                        # the name: refff's flicker, then the white glow (a bloom
-            bloom = 1.0 + 1.6 * max(0.0, 1 - (rf - 14) / 6) if f30 >= 14 else 1.0   # as it lands, settling)
-            g = np.clip(glow1 * 0.75 * bloom + glow2 * 0.55 * bloom, 0, 1) * op
-            bg = bg + (np.float32([255, 255, 255]) - bg) * g[..., None] * 0.6
-            bg = P.over_color(bg, name_a * op, (251, 248, 236))
         fg = img
         kind = P4.REF_FLASH.get(f30)
         if kind == "wash":
@@ -354,16 +422,18 @@ def intro(name, beat, person, s, ox, oy, title, that=None, words=(), seed=1700):
         elif kind == "sil":
             fg = fg * 0.05 + 255 * 0.95
         fr = bg * (1 - pa[..., None]) + fg * pa[..., None]
-        for a, box, k in layers:
-            st = P.block_entrance(i, k)
-            if st == "ghost":
-                fr = P.over_color(fr, a * 0.35, P.WHITE)
-            elif st == "block":
-                fr = P.glow_text(fr, P.block_layer(box), (255, 255, 255), glow=0.8)
-            elif st == "word":
-                sh = cv2.GaussianBlur(a, (0, 0), 9)
-                fr = fr * (1 - 0.5 * np.clip(sh * 1.5, 0, 1))[..., None]
-                fr = P.glow_text(fr, a, (246, 244, 240), glow=0.75)
+        if i < k_until:
+            if that_a is not None and rf >= 6:            # "That's" from refff's second wash
+                fr = P.with_caption(fr, that_a, shadow=0.6)
+            op = P4.REF_WORD.get(f30, 1.0 if f30 > 14 else 0.0)
+            if op > 0:                                    # the name: refff's flicker (ghost, gone, half, gone, solid)
+                fr = P.with_caption(fr, name_a * op, shadow=0.6 * op)
+            if line_a is not None:                        # "the guy running": each word on its own onset, in place
+                shown = [e for (w, key), e in zip(words, ends) if i >= rel(key)]
+                if shown:
+                    m = line_a.copy()
+                    m[:, int(shown[-1]):] = 0
+                    fr = P.with_caption(fr, m, shadow=0.6)
         wr.write(fr + grain(seed=seed + i, amt=2.2))
     wr.close()
 
@@ -374,10 +444,13 @@ def r_dimon5():
 
 
 def r_solomon5():
-    intro("v5_solomon", "solomon", "solomon", 1.3, -4.0, -40.0, "David Solomon", seed=1900)
+    # "David Solomon" until "a part-time" (the captions write "a part-time DJ" in the centre)
+    intro("v5_solomon", "solomon", "solomon", 1.3, -4.0, -40.0, "David Solomon", until="a3", seed=1900)
 
 
-ALL = {"rest2": r_rest2, "rogan": r_rogan, "dimon5": r_dimon5, "solomon5": r_solomon5}
+ALL = {"rest2": r_rest2, "rogan": r_rogan, "dimon5": r_dimon5, "solomon5": r_solomon5, "owns": r_owns,
+       "rest2join": r_rest2join}
+ALL.update({f"rest2p{k}": (lambda k=k: r_rest2(part=k)) for k in range(4)})
 
 if __name__ == "__main__":
     for name in (sys.argv[1:] or ALL):

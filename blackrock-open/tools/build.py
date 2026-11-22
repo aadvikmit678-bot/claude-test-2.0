@@ -30,9 +30,9 @@ SERIF_REST = "0 0 14px rgba(255,255,255,0.62),0 0 42px rgba(255,255,255,0.30),0 
 SERIF_SOFT = "0 0 18px rgba(255,255,255,0.85),0 0 50px rgba(255,255,255,0.45),0 0 100px rgba(255,255,255,0.18)"
 SERIF_BLOOM = "0 0 22px rgba(255,255,255,1),0 0 60px rgba(255,255,255,0.95),0 0 130px rgba(255,255,255,0.7)"
 # the Porsche reel's small italic line: a tight halo and a wide faint one; a faint dark lift over bright pictures
-POR_GLOW = "0 0 6px rgba(255,255,255,0.50),0 0 30px rgba(255,255,255,0.20),0 2px 16px rgba(0,0,0,0.42)"
+POR_GLOW = "0 0 6px rgba(255,255,255,0.55),0 0 22px rgba(255,255,255,0.32),0 0 48px rgba(255,255,255,0.16)"
 # over white pictures (the user's ending video, the S&P logo wall): the same type with a dark halo
-POR_HEAVY = "0 0 10px rgba(0,0,0,0.85),0 0 26px rgba(0,0,0,0.65),0 0 60px rgba(0,0,0,0.35),0 2px 6px rgba(0,0,0,0.7)"
+POR_HEAVY = POR_GLOW                       # (no dark halo any more: the white shots are toned down under the type instead)
 
 BASE_CSS = """
 #root{position:absolute;inset:0;overflow:hidden;background:#000;}
@@ -43,13 +43,14 @@ BASE_CSS = """
 .hv{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.012em;color:#EEF0F0;text-transform:uppercase;line-height:1;white-space:nowrap;}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;}
 .jn{font-family:"InterSB",sans-serif;font-weight:600;font-size:62px;letter-spacing:-0.05em;line-height:1;color:#fff;white-space:nowrap;
- text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);}
+ text-shadow:0 0 10px rgba(255,255,255,0.40),0 0 28px rgba(255,255,255,0.18);}
 .jn.ink{color:#141414;text-shadow:none;}
+.jn.heavy{text-shadow:0 0 10px rgba(255,255,255,0.45),0 0 28px rgba(255,255,255,0.2);}
 .ser{font-family:"ISerif",serif;font-weight:400;line-height:1;color:#FBF8EC;white-space:nowrap;letter-spacing:0.005em;}
 .por{font-family:"ISerif",serif;font-style:italic;font-weight:400;line-height:1;color:#fff;white-space:nowrap;word-spacing:0.38em;}
 .por span{display:inline-block;opacity:0;}
 .pl{font-family:"Heros",sans-serif;font-weight:700;font-size:94px;line-height:1.02;letter-spacing:-0.015em;color:#EDEDEA;
- text-shadow:0 0 14px rgba(0,0,0,0.35);}
+ text-shadow:0 0 12px rgba(255,255,255,0.35),0 0 30px rgba(255,255,255,0.14);}
 .pl span{display:inline-block;opacity:0;}
 """
 
@@ -155,9 +156,9 @@ def B_dur(a, b):
 CAP_Y, CAP_SIZE = 900, 64   # the Jensen Huang reel's caption: white bold Helvetica caps, ~83 % down, in at once
 
 
-SHADOW = "text-shadow:0 0 18px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.35);"
+SHADOW = "text-shadow:0 0 10px rgba(255,255,255,0.40),0 0 28px rgba(255,255,255,0.18);"
 # over the ending video (it strobes pure white / black, then bright sand): the same white caption, a heavier halo
-SHADOW_HEAVY = "text-shadow:0 0 30px rgba(0,0,0,0.8),0 0 12px rgba(0,0,0,0.72),0 2px 5px rgba(0,0,0,0.6);"
+SHADOW_HEAVY = SHADOW
 
 
 def caption(sc, text, a, b, y=CAP_Y, size=CAP_SIZE, blend="difference", z=40, shadow=False, color=None):
@@ -253,20 +254,16 @@ def s_quote():
     return sc
 
 
-# ------------------------------------------------------------------ s_hook: from "These" to the puppet
+# ------------------------------------------------------------------ s_hook: from "These" to "you touch"
 def s_hook():
-    sc = Scene("s_hook", B["tiles"][0], B["puppet"][1])
+    sc = Scene("s_hook", B["tiles"][0], B["touch"][1])
     t0 = B["tiles"][0]
     n = round((B["tiles"][1] - t0) * 60)
     sc.video("r_tiles3.mp4", *B["tiles"], z=1)
-    for word, a, b in (("Powerful", T["powerful"], T["people"]), ("People", T["people"], t0 + (n - 5) * FR)):
-        wid = sc.uid("pw")
-        sc.div(a, b, f'<div id="{wid}" class="nv" style="font-size:118px;text-shadow:0 0 22px rgba(0,0,0,0.45);">{word}</div>', z=30, cls="cap",
-               style="top:540px;height:0;")
-        for fa, fb in ((n - 21, n - 18), (n - 8, n - 5)):   # black while the tiles go negative
-            ta, tb = t0 + fa * FR, t0 + fb * FR
-            if a <= ta < b:
-                sc.js.append(f'tl.set("#{wid}",{{color:"#000"}},{sc.at(ta)});tl.set("#{wid}",{{color:"#fff"}},{sc.at(tb)});')
+    # "powerful" / "people": a different effect (the user, Nov 22) -- the Dario video's Instrument Serif with its white
+    # glow, in on the word blurred and blooming, sharp four frames later
+    for word, a, b in (("powerful", T["powerful"], T["people"]), ("people", T["people"], t0 + (n - 5) * FR)):
+        serif(sc, word, a - 0.03, b, 200, y=540, z=30)
     # ON EARTH on the user's plain red
     sc.img("red_bg_user.jpg", *B["earth"], z=1)
     on, ea = sc.uid("on"), sc.uid("ea")
@@ -288,9 +285,9 @@ def s_hook():
              f'text-align:center;"><div id="{wid}" style="opacity:0">WEAPONIZED</div><div id="{cid}" style="opacity:0">CAPITAL</div></div>')
     sc.div(T["weapon"], B["weap"][1] - FR, stack, z=30, cls="cap", style="top:545px;height:0;mix-blend-mode:difference;")
     sc.js.append(f'tl.set("#{wid}",{{opacity:1}},{sc.at(T["weapon"])});tl.set("#{cid}",{{opacity:1}},{sc.at(T["capital"])});')
-    sc.video("r_logos.mp4", *B["logos"], z=1)          # that owns a piece of
-    sc.video("r_touch3.mp4", *B["touch"], z=1)         # everything you touch
-    sc.video("v3_puppet.mp4", *B["puppet"], z=1)
+    # "that owns a piece of": the user's video from its glasses (centred), then the brand maps (prep_v5 r_owns)
+    sc.video("v6_owns.mp4", *B["logos"], z=1)
+    sc.video("r_touch3.mp4", *B["touch"], z=1)         # cut on "everything": the fingers meet on "touch"
     sc.write()
     return sc
 
@@ -337,10 +334,10 @@ def s_search():
 
 # ------------------------------------------------------------------ s_fink: the man who runs ... BlackRock.
 def s_fink():
-    sc = Scene("s_fink", B["walk"][0], B["brand"][1])
-    # "the man who runs the most evil": reel DeHkRtts3bI's opening -- a Fink picture every 4 frames, out of
-    # perspective, blurred on the cuts (the user's new photos first); no red box
-    sc.video("r_finkflip.mp4", B["walk"][0], B["box"][1], z=1)
+    sc = Scene("s_fink", B["evil"][0], B["brand"][1])
+    # "the man who runs the most evil": the reference's "terrible boss" scene (prep_v6 r_evil) -- red, Fink rising,
+    # the horns, MOST / EVIL behind him (the user, Nov 22: the red part only)
+    sc.video("v6_evil.mp4", *B["evil"], z=1)
     c0, c1 = B["company"]
     k1, k2 = F(c0 + 0.45), F(c0 + 0.95)
     cuts(sc, [("v2_br_letters.mp4", c0, k1), ("v2_br_bldg.mp4", k1, k2), ("v2_br_doors.mp4", k2, c1),
@@ -360,7 +357,7 @@ def s_rest1():
     for (key, name, src, t0, extra, fc), a, b in zip(SL.REST1, starts, starts[1:] + [a1]):
         sc.video(f"v3_{name}.mp4", a, b, z=1)
     # "$15 trillion": the Dario serif glow over the user's montage (not League Gothic, the user)
-    serif(sc, "$15 trillion", TM.RT("15") - 0.03, TM.RT("assets") - 0.03, 210, y=540)
+    serif(sc, "$15 trillion", TM.RT("15") - 0.03, TM.RT("assets") - 0.03, 220, y=540, rest=BIG_REST)
     sc.write()
     return sc
 
@@ -381,12 +378,13 @@ def s_rogan():
             sets.append((sid, t))
         rows.append('<div class="pl">' + " ".join(spans) + "</div>")
     stack = sc.uid("st")
-    sc.div(a, B["react"][0] + 0.62, f'<div id="{stack}" style="position:absolute;left:118px;top:300px;text-align:left;">{"".join(rows)}</div>',
+    sc.div(a, b, f'<div id="{stack}" style="position:absolute;left:118px;top:300px;text-align:left;">{"".join(rows)}</div>',
            z=40, cls="layer")
     for sid, t in sets:
         sc.js.append(f'tl.fromTo("#{sid}",{{opacity:0,filter:"blur(8px)"}},{{opacity:1,filter:"blur(0px)",'
                      f'duration:0.22,ease:"power2.out"}},{sc.at(t)});')
-    sc.js.append(f'tl.to("#{stack}",{{opacity:0,filter:"blur(10px)",duration:0.28,ease:"power1.in"}},{sc.at(B["react"][0] + 0.32)});')
+    sc.js.append(f'tl.to("#{stack}",{{opacity:0,filter:"blur(10px)",duration:0.2,ease:"power1.in"}},{sc.at(b - 0.2)});')
+    sc.flash(b - FR, peak=1.0, up=4 * FR, down=FR, z=90)     # the flash into "Back in the 1980s" (no pause)
     sc.write()
     return sc
 
@@ -394,7 +392,8 @@ def s_rogan():
 # ------------------------------------------------------------------ rest2: "Back in the 1980s" to the end
 def s_rest2():
     sc = Scene("s_rest2", *B["rest2"])
-    sc.video("v5_rest2.mp4", *B["rest2"], z=1)         # prep_v5: 72 shots, cut on the words (shotlist.REST2_V5)
+    sc.video("v6_rest2.mp4", *B["rest2"], z=1)         # prep_v5: the shots, cut on the words (shotlist.REST2_V6)
+    sc.flash(B["rest2"][0], peak=1.0, up=0, down=0.22, z=90)  # out of the Rogan flash
     for a, b, kind, words, text in CAP.porsche_phrases():
         if kind != "card":
             continue
@@ -406,6 +405,17 @@ def s_rest2():
                  f'<span id="{yr}" style="opacity:0">{words[1][0]}</span></div>')
         sc.div(a, b, inner, z=6, cls="cap", style="top:545px;height:0;")
         sc.js.append(f'tl.set("#{yr}",{{opacity:1}},{sc.at(words[1][1])});')
+        # in on a white flash (as the cut into ON EARTH lands off the tile flash), and on "1988" the Tesla reel's
+        # boxes: white frames snapping around the year, one filled box wiping across it, then the year alone
+        sc.flash(a, peak=0.95, up=0, down=0.12, z=9)
+        t8 = words[1][1]
+        boxes = [(1180, 330, 560, 360, 0, 2, "o"), (1100, 300, 720, 420, 2, 4, "o"), (1210, 360, 500, 300, 4, 6, "f"),
+                 (250, 210, 1420, 660, 6, 8, "o"), (1160, 340, 600, 380, 8, 10, "o")]
+        for x, y, w, h, f0, f1, kind in boxes:
+            bid = sc.uid("bx")
+            style = ("background:#fff;" if kind == "f" else "border:6px solid #fff;")
+            sc.div(t8 + f0 * FR, t8 + f1 * FR, f'<div id="{bid}" style="position:absolute;left:{x}px;top:{y}px;width:{w}px;'
+                   f'height:{h}px;{style}"></div>', z=8, cls="layer")
     sc.write()
     return sc
 
@@ -423,7 +433,7 @@ def s_caps():
         if kind == "emph":
             serif(sc, " ".join(w for w, _, _ in ws), a, b, 150, y=540)
             continue
-        y, cls = (900, "jn ink") if kind == "ink" else (540, "jn")
+        y, cls = {"ink": (900, "jn ink"), "heavy": (540, "jn heavy")}.get(kind, (540, "jn"))
         for k in range(len(ws)):                       # the phrase builds word by word, re-centring as it grows
             s0 = ws[k][1]
             s1 = ws[k + 1][1] if k + 1 < len(ws) else b

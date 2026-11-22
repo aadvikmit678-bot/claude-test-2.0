@@ -48,7 +48,7 @@ V0 = 6.70          # voiceover start on the film
 VO_END = 22.62     # voiceover file time where "BlackRock." has finished (then the rest recording)
 LINE_T0, LINE_T1 = 32.32, 38.95   # panel audio for the opening line
 ROGAN_T0, ROGAN_T1 = 12.55, 15.28  # the Rogan clip: Elon's question only (the clip's own times)
-REACT_HOLD = 1.0                   # Rogan's silent second after the question (the user)
+REACT_HOLD = 0.0                   # (was 1.0: Rogan's silent second; the user removed it on Nov 22)
 
 
 def V(t):
@@ -106,8 +106,7 @@ B = {
     "cartel": (CARTEL_IN, T["of1"]),           # the user's cartel clip: its table flash, the faces cut in on "cartel"
     "weap": (T["of1"], T["that"]),             # the tank from "of", so WEAPONIZED comes in on its word
     "logos": (T["that"], T["everything"]),
-    "touch": (T["everything"], T["touch_end"]),  # the hands come together, touch on "touch"
-    "puppet": (T["touch_end"], T["thats"]),    # the explainer's puppet shot
+    "touch": (T["everything"], T["thats"]),    # cut on "everything": the fingers meet on "touch" (the puppet is gone)
     "dimon": (T["thats"], T["jp"]),            # "That's Jamie Dimon, the guy running" (the reference edit's intro)
     "jpm": (T["jp"], T["david"]),              # "JP Morgan Chase" (the reel's "the man behind OpenAI")
     "solomon": (T["david"], T["dj"]),          # "David Solomon, a part-time"
@@ -120,6 +119,7 @@ B = {
     "company": (T["company"], T["blackrock"]), # "company in the world": BlackRock's letters, building, doors
     "brand": (T["blackrock"], F(V(VO_END) + 0.045)),  # "BlackRock.": the letters on its facade
 }
+B["evil"] = (T["the3"], T["company"])     # "the man who runs the most evil": the red horned scene (reel DfhzVs8q9NH)
 B["fink"] = (B["thisguy"][0], B["brand"][1])
 
 # ---- the rest of the script: the user's second recording (rest.mp3, 57.39 s), split after "...than Steve Jobs ever
@@ -147,7 +147,8 @@ B["rest1"] = (REST1_AT, F(REST1_AT + squeeze(REST1_OUT, REST_CUTS)))
 # Elon's question, cut to Rogan's face on "company" (it finishes over him), then his silent second
 _ROG_COMPANY = ALIGN["rogan"][-1]["start"]
 B["rogan"] = (B["rest1"][1], F(B["rest1"][1] + _ROG_COMPANY))
-B["react"] = (B["rogan"][1], F(B["rest1"][1] + (ROGAN_T1 - ROGAN_T0) + REACT_HOLD))
+# Rogan on "company?" only (the user, Nov 22: "I don't want a pause ... a flash transition to the next part only")
+B["react"] = (B["rogan"][1], F(B["rest1"][1] + ALIGN["rogan"][-1]["end"] + 0.10 + REACT_HOLD))
 B["pause"] = B["react"]                                   # (older scripts' name for the beat after the question)
 REST2_AT = round(B["react"][1] - squeeze(REST2_IN, REST_CUTS), 4)
 B["rest2"] = (B["react"][1], F(REST2_AT + squeeze(REST_END, REST_CUTS) + 0.35))

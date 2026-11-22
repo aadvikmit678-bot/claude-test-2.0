@@ -19,7 +19,7 @@ def band(y):
 # N = the user's new Drive videos (blackrock-src/dl/v3/new): (file, crop)
 REST1 = [
     ("rest1", "r1_flags", N, 2.52, ("asher.mp4", ASH), True),            # A company (BlackRock HQ, its flags)
-    ("that_r", "r1_tower", X, 175.0, None, False),                        # that manages (the tower at night)
+    ("that_r", "r1_tower", X, 175.0, "crop=iw*0.8:ih*0.8:iw*0.1:ih*0.2", False),  # the sign above the caption                        # that manages (the tower at night)
     # "$15 trillion in assets": the user's montage from its 3 s (charts, cash, cars, jets), the big serif over it
     ("15", "r1_montage", N, 3.0, ("../pin/montage15t.mp4", None), False),
     # the founders block (the user's notes): Think School's "Founders vs Blackrock" graphic, one company at a time,
@@ -211,11 +211,120 @@ REST2_V5 = [
     dict(at=143, src="CO", t0=3.0, crop=band(600), note="Fink holding a dollar"),
     dict(at=145, src="LFM", t0=80.1, push=0.07, note="hands."),
     # A company that has never made a single product, but everything you own, everything you touch,
-    dict(at=146, src="E", t0=0.40, push=0.03, fx_in="flash", note="the user's ending video (centred)"),
-    dict(at=156, src="FE3", t0=22.5, look="bw", note="everything you own: the brands"),
-    dict(at=158, src="FE3", t0=24.1, look="bw"),
+    dict(at=146, src="E", t0=0.40, push=0.03, fx_in="flash", pan="E", note="the user's ending video (its objects centred)"),
+    dict(at=156, src="GE", t0=46.2, note="everything you own: American Airlines in its holdings"),
+    dict(at=157, src="GE", t0=47.75, note="Nike"),
+    dict(at=158, src="GE", t0=48.02, speed=0.5, note="Kraft"),
     dict(at=159, src="E", t0=4.44, push=0.03),
     # has a piece of him in it.
     dict(at=162, src="LFM", t0=79.5, note="has a piece"),
+    dict(at=(165, -0.1), src="P", t0=1185.3, push=0.08, note="of him in it.: Fink at the panel"),
+]
+
+
+# ---- v6 (the user's notes of Nov 22): every shot of the second half is real, moving footage ("use more videos … not a
+# stock photo zooming in", "no slideshow"), found by a CLIP search over every source (the Larry Fink, Jamie Dimon and
+# Wall Street drives and the new BlackRock documentaries), each span checked for a hidden cut and for real motion, no
+# footage repeated from anywhere in the film. Crops (source-relative, 16:9) drop the channel logos and burned-in text.
+CNBC = "crop=iw*0.86:ih*0.86:iw*0.07:ih*0.12"      # the CNBC peacock (top right) and the show's line (top left)
+MPU = "crop=iw*0.86:ih*0.86:iw*0.07:ih*0.14"       # More Perfect Union's badge (top right)
+MPU_R = "crop=iw*0.86:ih*0.86:iw*0.14:ih*0.14"     # the same, keeping the right edge (Fink walks in there)
+SIXTY = "crop=iw*0.86:ih*0.86:iw*0.14:ih*0.14"     # the 60 Minutes stopwatch (top left)
+UNT_C = "crop=iw*0.82:ih*0.82:iw*0.09:ih*0.14"     # the year badge (top right)
+MPB_TOP = "crop=iw*0.72:ih*0.72:iw*0.14:0"         # the ABC News lower third
+MFC_C = "crop=iw*0.72:ih*0.72:iw*0.14:ih*0.04"     # the TCR timecode (bottom) and the corner letter
+BRE_C = "crop=1440:810:0:100"                      # br_edit is 4:3: a 16:9 band (the trader's face)
+BRE_WALL = "crop=1440:810:0:135"
+FE3_C = "crop=1000:562:40:70"                      # fink_edit3 (1180x714): 16:9 without the event line (top left)
+DOME = "crop=iw*0.86:ih*0.86:iw*0.04:ih*0.06"      # the Capitol dome without the CNBC peacock
+
+REST2_V6 = [
+    # Back in the 1980s,  (the old film look: warm, faded, grain at low opacity)
+    dict(at=None, src="LFM", t0=15.27, speed=0.98, look="old", fx_in="flash", note="Back in: the crowd on Wall Street (1980s)"),
+    dict(at=33, src="MPB", t0=800.0, look="old", note="1980s,: the trading floor on a 1980s TV set"),
+    dict(at=(33, 0.45), src="LFM", t0=43.245, speed=0.78, look="old", note="men on Wall Street (1980s)"),
+    # Larry Fink was a Wall Street prodigy,
+    dict(at=34, src="FE3", t0=21.5, crop=FE3_C, look="old", fx_in="over", note="Larry Fink: at the table, his name card"),
+    dict(at=36, src="UNT", t0=412.0, crop=UNT_C, look="old", note="was a: the 1980s boards"),
+    dict(at=38, src="LFM", t0=18.85, look="old", note="Wall Street: the NYSE, its flag"),
+    dict(at=40, src="BRE", t0=7.9, crop=BRE_C, look="old", note="prodigy,: a trader on two phones"),
+    dict(at=(40, 0.37), src="MFC", t0=106.0, crop=MFC_C, look="old", note="a trader shouting (black and white)"),
+    # but one bad bet cost him $100 million loss. -- ONE take, real speed, 60 fps (the user: "smoothed out as a
+    # single video"; it was cut four times, slowed and looped): the screens flip from green to red on "$100 million"
+    dict(at=41, src="HF6_1b", t0=1.2, push=0.08, note="the trader at his screens, one slow push"),
+    # That was enough to get him thrown out of Wall Street
+    dict(at=50, src="HF6_3b", t0=0.0, fx_in="over", note="That was enough: the walk-out (60 fps)"),
+    dict(at=56, src="FI", t0=96.95, note="thrown out: the push"),
+    dict(at=58, src="LFM", t0=35.35, look="old", fx_in="whip", note="of Wall Street"),
+    dict(at=60, src="BR15", t0=868.0, look="old", note="Street: the NYSE and its flag, people passing"),
+    # and to convince him of one thing.
+    dict(at=61, src="LFM", t0=36.45, look="old", note="and to convince: a young trader (1980s)"),
+    dict(at=64, src="FE3", t0=9.02, look="bw", note="him: Fink, black and white"),
+    dict(at=66, src="LFM", t0=59.18, speed=0.75, note="one thing.: the chess clock"),
+    # Wall Street is terrible at seeing risk.
+    dict(at=68, src="BRL", t0=697.0, crop=CNBC, fx_in="zoom", note="Wall Street: the Charging Bull"),
+    dict(at=70, src="STO", t0=1412.2, crop=SIXTY, note="is: traders at their screens"),
+    dict(at=71, src="MPB", t0=1772.0, crop=MPB_TOP, note="terrible: the NYSE floor from above"),
+    dict(at=(71, 0.37), src="BRL", t0=185.0, crop=CNBC, note="traders on their phones"),
+    dict(at=73, src="LFM", t0=20.85, speed=0.6, fx_in="zoom", note="seeing: the eye"),
+    dict(at=74, src="CR", t0=92.0, note="risk.: the Dow plunges"),
+    # So, in 1988, he co-founded BlackRock
+    dict(at=75, src="LFM", t0=18.21, note="So,: the old board"),
+    dict(at=76, src="BLACK", t0=0, push=0, note="in 1988: the red card (HTML, as ON EARTH)"),
+    dict(at=78, src="BRC", t0=17.0, crop=MPU, look="dimw", note="he co-founded: BlackRock's glass front"),
+    dict(at=80, src="BRL", t0=33.0, crop=CNBC, fx_in="whip", note="BlackRock: its entrance at night"),
+    dict(at=(80, 0.35), src="BRC", t0=358.0, crop=MPU, note="its doors on the street"),
+    # and built a system with one job— calculating risk.
+    dict(at=81, src="MBS", t0=6.675, look="dimw", note="and built: a tower from below"),
+    dict(at=84, src="BZ", t0=59.42, crop=band(1000), note="a system: a data centre"),
+    dict(at=86, src="LFM", t0=60.81, note="one job: the glass brain, then in pixels"),
+    dict(at=88, src="CALC", t0=0.55, look="bw", fx_in="zoom", note="calculating: the user's chalkboard clip"),
+    dict(at=89, src="FK2", t0=4.75, note="risk.: the money's eye"),
+    # He called it Aladdin.
+    dict(at=90, src="BRL", t0=786.6, crop=CNBC, push=0, note="He called it: Fink, one plain cut, no zoom (the user)"),
+    dict(at=93, src="AL", t0=8.0, span=8.9, fx_in="flash", note="Aladdin.: the user's genie clip, its 8-9 s"),
+    # When the 2008 crisis hit,
+    dict(at=94, src="BRL", t0=75.0, crop=CNBC, note="When the: the ticker"),
+    dict(at=96, src="AX", t0=4.5, crop=CNBC, fx_in="flash", note="2008 (big word): the NYSE floor"),
+    dict(at=(96, 0.33), src="STO", t0=885.7, crop=SIXTY, note="Lehman Brothers"),
+    dict(at=97, src="BR15", t0=462.0, note="crisis: a trader, his hand on his head"),
+    dict(at=98, src="UNT", t0=1131.0, crop=UNT_C, note="hit,: the floor, 2008"),
+    # the U.S. government called the one guy Wall Street threw out years ago to clean up the mess— Larry Fink.
+    dict(at=99, src="MPB", t0=1804.0, look="dimw", note="the U.S.: the Capitol from the air"),
+    dict(at=101, src="HOW", t0=631.0, crop=DOME, look="dimw", note="government: the dome"),
+    dict(at=102, src="CR", t0=116.0, note="called: Bernanke"),
+    dict(at=104, src="FE3", t0=5.85, look="bw", fx_in="zoom", note="the one guy (circled)"),
+    dict(at=106, src="LFM", t0=44.305, speed=0.76, look="old", note="Wall Street threw out (1980s)"),
+    dict(at=108, src="HF6_3a", t0=1.4, look="bw", note="threw out: the walk-out, grey (60 fps)"),
+    dict(at=110, src="UNT", t0=418.0, crop=UNT_C, look="old", note="years ago: the 1980s floor"),
+    dict(at=112, src="BR15", t0=585.62, note="to clean up: a man carrying his box out"),
+    dict(at=116, src="HOW", t0=817.6, crop=CNBC, note="the mess: boxes out of the bank"),
+    dict(at=117, src="MBS", t0=9.55, fx_in="over", note="Larry Fink.: his face"),
+    # He came out of that crisis with three times the money.
+    dict(at=119, src="BRC", t0=254.95, crop=MPU_R, note="He came out: he walks on and waves"),
+    dict(at=122, src="STO", t0=2449.5, crop=SIXTY, look="dimw", note="of that crisis: BANK OWNED"),
+    dict(at=125, src="MONEY", t0=2.0, push=0.07, look="dimw", note="with 3x the money.: the user's fire clip"),
+    # Today, every time you buy the S&P 500,
+    dict(at=130, src="B2", t0=7.375, speed=0.88, fx_in="whip", note="Today,: the skyline"),
+    dict(at=(130, 0.40), src="B2", t0=7.745, speed=0.95, note="the Wall St sign"),
+    dict(at=131, src="B2", t0=5.64, note="every time: the street"),
+    dict(at=(131, 0.32), src="B2", t0=5.975, note="One World Trade Center"),
+    dict(at=134, src="B2", t0=9.44, speed=0.8, note="you buy: the screens"),
+    dict(at=136, src="CO", t0=22.45, crop=band(0), look="dimw", note="the S&P 500: its companies"),
+    dict(at=(137, 0.4), src="BRL", t0=240.0, crop=CNBC, note="a trader at his screens"),
+    # your money ends up in this guy's hands.
+    dict(at=138, src="STO", t0=632.0, crop=SIXTY, note="your money: the cash"),
+    dict(at=140, src="BR15", t0=871.2, crop="crop=iw*0.8:ih*0.8:iw*0.1:ih*0.2", note="ends up in: iShares by BlackRock on the NYSE"),
+    dict(at=143, src="CO", t0=3.0, crop=band(600), look="dimw", note="this guy's: the dollars fly"),
+    dict(at=145, src="LFM", t0=80.04, push=0.07, note="hands.: Fink"),
+    # A company that has never made a single product, but everything you own, everything you touch,
+    dict(at=146, src="ASH", t0=5.5, crop=ASH, look="dimw", fx_in="flash", note="A company: into BlackRock's lobby"),
+    dict(at=148, src="BRL", t0=711.5, crop=CNBC, note="that has never: its revolving doors"),
+    dict(at=151, src="E", t0=1.15, push=0.03, look="dimw", note="made a single product, but: the user's ending video"),
+    dict(at=156, src="BRC", t0=626.0, crop=MPU, note="everything you own: the brands"),
+    dict(at=158, src="BRE", t0=83.0, crop=BRE_WALL, look="dimw", note="own,: the wall of logos"),
+    dict(at=159, src="E", t0=4.38, push=0.03, note="everything you touch"),
+    # has a piece of him in it.
+    dict(at=162, src="LFM", t0=79.5, look="dimw", note="has a piece: Fink"),
     dict(at=(165, -0.1), src="P", t0=1185.3, push=0.08, note="of him in it.: Fink at the panel"),
 ]
