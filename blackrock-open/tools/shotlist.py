@@ -249,9 +249,11 @@ REST2_V6 = [
     dict(at=38, src="LFM", t0=18.85, look="old", note="Wall Street: the NYSE, its flag"),
     dict(at=40, src="BRE", t0=7.9, crop=BRE_C, look="old", note="prodigy,: a trader on two phones"),
     dict(at=(40, 0.37), src="MFC", t0=106.0, crop=MFC_C, look="old", note="a trader shouting (black and white)"),
-    # but one bad bet cost him $100 million loss. -- ONE take, real speed, 60 fps (the user: "smoothed out as a
-    # single video"; it was cut four times, slowed and looped): the screens flip from green to red on "$100 million"
-    dict(at=41, src="HF6_1b", t0=1.2, push=0.08, note="the trader at his screens, one slow push"),
+    # but one bad bet cost him $100 million loss. -- smooth takes at real speed, 60 fps (the user: "smoothed out as a
+    # single video"); on "$100 million loss." a white flash into the red take of the same scene (the user, Nov 22: "the
+    # red video ... like how this same photo turns red, with a flash" -- his red keyframe, animated)
+    dict(at=41, src="HF6_1b", t0=1.2, push=0.05, note="but one bad bet cost him: the trader, green screens"),
+    dict(at=47, src="HF6_2a", t0=1.4, push=0.05, fx_in="flash", note="$100 million loss.: the same scene gone red"),
     # That was enough to get him thrown out of Wall Street
     dict(at=50, src="HF6_3b", t0=0.0, fx_in="over", note="That was enough: the walk-out (60 fps)"),
     dict(at=56, src="FI", t0=96.95, note="thrown out: the push"),
@@ -269,7 +271,7 @@ REST2_V6 = [
     dict(at=73, src="LFM", t0=20.85, speed=0.6, fx_in="zoom", note="seeing: the eye"),
     dict(at=74, src="CR", t0=92.0, note="risk.: the Dow plunges"),
     # So, in 1988, he co-founded BlackRock
-    dict(at=75, src="LFM", t0=18.21, note="So,: the old board"),
+    dict(at=75, src="LFM", t0=18.21, fx_out="neg", note="So,: the old board (its last frames: IN 1988's negative, cyan)"),
     dict(at=76, src="BLACK", t0=0, push=0, note="in 1988: the red card (HTML, as ON EARTH)"),
     dict(at=78, src="BRC", t0=17.0, crop=MPU, look="dimw", note="he co-founded: BlackRock's glass front"),
     dict(at=80, src="BRL", t0=33.0, crop=CNBC, fx_in="whip", note="BlackRock: its entrance at night"),

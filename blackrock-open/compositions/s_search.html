@@ -28,6 +28,15 @@
 .pl{font-family:"Heros",sans-serif;font-weight:700;font-size:94px;line-height:1.02;letter-spacing:-0.015em;color:#EDEDEA;
  text-shadow:0 0 12px rgba(255,255,255,0.35),0 0 30px rgba(255,255,255,0.14);}
 .pl span{display:inline-block;opacity:0;}
+.dline{display:flex;align-items:baseline;justify-content:center;font-family:"ISerif",serif;font-weight:400;line-height:1;
+ color:#fff;white-space:nowrap;}
+.dw{position:relative;display:inline-block;}
+.dfl{position:absolute;left:-0.04em;right:-0.04em;top:0.34em;bottom:0.12em;opacity:0;background:#fff;
+ box-shadow:0 0 16px rgba(255,255,255,0.9),0 0 44px rgba(255,255,255,0.45);}
+.dwt{position:relative;display:inline-block;opacity:0;}
+.isnt{display:flex;align-items:baseline;gap:0.11em;font-family:"LGothic",sans-serif;font-weight:400;line-height:1;color:#fff;
+ white-space:nowrap;}
+.isnt span{display:inline-block;transform-origin:50% 55%;}
 
 #root{background:#000;}
 
@@ -35,20 +44,15 @@
 <div id="root" data-composition-id="s_search" data-width="1920" data-height="1080" data-duration="1.6500">
 <video id="s_search-v1" class="clip full" src="assets/clips/r_orbit4.mp4" data-start="0.0000" data-duration="0.6833" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
 <video id="s_search-v2" class="clip full" src="assets/clips/r_spot4.mp4" data-start="0.6833" data-duration="0.9667" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
-<div id="s_search-d4" class="clip cap" data-start="0.0000" data-duration="0.6833" data-track-index="3" style="z-index:60;top:540px;height:0;"><div id="s_search-sr3" class="ser" style="font-size:150px;text-shadow:0 0 14px rgba(255,255,255,0.62),0 0 42px rgba(255,255,255,0.30),0 0 90px rgba(255,255,255,0.12);transform-origin:50% 55%;">Amongst them</div></div>
-<div id="s_search-d8" class="clip cap" data-start="0.6500" data-duration="1.0000" data-track-index="3" style="z-index:60;top:745px;height:0;"><div class="por" style="font-size:78px;word-spacing:0.3em;text-shadow:0 0 6px rgba(255,255,255,0.55),0 0 22px rgba(255,255,255,0.32),0 0 48px rgba(255,255,255,0.16);"><span id="s_search-pw5">is</span> <span id="s_search-pw6">this</span> <span id="s_search-pw7">guy</span></div></div>
+<div id="s_search-d6" class="clip cap" data-start="0.6500" data-duration="1.0000" data-track-index="3" style="z-index:60;top:745px;height:0;"><div class="por" style="font-size:78px;word-spacing:0.3em;text-shadow:0 0 6px rgba(255,255,255,0.55),0 0 22px rgba(255,255,255,0.32),0 0 48px rgba(255,255,255,0.16);"><span id="s_search-pw3">is</span> <span id="s_search-pw4">this</span> <span id="s_search-pw5">guy</span></div></div>
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
   tl.set({}, {}, 1.6500);
-  tl.set("#s_search-sr3",{scale:1.04,filter:"blur(14px)",textShadow:"0 0 22px rgba(255,255,255,1),0 0 60px rgba(255,255,255,0.95),0 0 130px rgba(255,255,255,0.7)"},0.0000);
-  tl.set("#s_search-sr3",{scale:1.015,filter:"blur(5px)",textShadow:"0 0 18px rgba(255,255,255,0.85),0 0 50px rgba(255,255,255,0.45),0 0 100px rgba(255,255,255,0.18)"},0.0000);
-  tl.set("#s_search-sr3",{scale:1.005,filter:"blur(2.5px)"},0.0167);
-  tl.set("#s_search-sr3",{scale:1,filter:"blur(0px)",textShadow:"0 0 14px rgba(255,255,255,0.62),0 0 42px rgba(255,255,255,0.30),0 0 90px rgba(255,255,255,0.12)"},0.0333);
-  tl.fromTo("#s_search-pw5",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.28,ease:"power1.out"},0.6500);
-  tl.fromTo("#s_search-pw6",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.28,ease:"power1.out"},0.8000);
-  tl.fromTo("#s_search-pw7",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.28,ease:"power1.out"},1.0500);
+  tl.fromTo("#s_search-pw3",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.28,ease:"power1.out"},0.6500);
+  tl.fromTo("#s_search-pw4",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.28,ease:"power1.out"},0.8000);
+  tl.fromTo("#s_search-pw5",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.28,ease:"power1.out"},1.0500);
   window.__timelines["s_search"] = tl;
 })();
 </script>

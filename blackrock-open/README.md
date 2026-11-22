@@ -1,4 +1,4 @@
-# BlackRock (16:9, 60 fps, 83.92 s)
+# BlackRock (16:9, 60 fps, 84.13 s)
 
 This is a HyperFrames project.
 
@@ -16,7 +16,7 @@ This is a HyperFrames project.
 
 ```
 npx --yes hyperframes@0.9.46 preview                 # Studio in the browser (http://localhost:3002)
-npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o renders/blackrock_v6_60fps.mp4
+npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o renders/blackrock_v7_60fps.mp4
 ```
 
 ## Sync and pace
@@ -39,23 +39,22 @@ npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o rend
 |---|---|
 | 0.00–6.70 | **The FII7 panel line.** Then the panelists with white flashes: Fink, Schwarzman, **Jamie Dimon (3rd)**, **Ray Dalio (4th)**. |
 | 6.70–8.82 | **"These are the most powerful people".** The tile flash; "powerful" and "people" in the Dario serif white glow, blooming in on their words. |
-| 8.82–9.48 | **ON EARTH** on the user's red. |
-| 9.48–10.80 | **"a $60 trillion".** The article flipbook. |
-| 10.80–11.48 | **"cartel".** The cartel clip's table flash, then the faces on the word. **CARTEL** is centred, in difference. |
-| 11.48–12.68 | **"of weaponized capital".** The blueprint pages flip under a continuous push, with no frame held. **WEAPONIZED** comes in on its word, then **CAPITAL** under it, centred, in difference, with no bounce. |
+| 8.82–9.48 | **ON EARTH**, exactly as reel DdB8's "IT ISN'T":<br>• the tiles' last frames strobe, go negative for a frame and cyan for two;<br>• the user's red card;<br>• ON lands in its final place one reel frame 1.25× large, and EARTH joins on its word;<br>• League Gothic, caps about 15 % of the height. |
+| 9.48–10.80 | **"a $60 trillion".** The article flipbook, dimmed under the type.<br>From here to "you touch." every word is written in the "$100 million loss." italic with Dario's entrance: its place lights up as a glowing white bar, then the word, big ones blown out and crisp four frames later. |
+| 10.80–11.48 | **"cartel".** The cartel clip's table flash, then the faces on the word; *cartel* big. |
+| 11.48–12.68 | **"of weaponized capital".** The blueprint pages flip under a continuous push, with no frame held. *of weaponized capital* is one italic line. |
 | 12.68–13.78 | **"that owns a piece of".** The user's ending video from its glasses for 0.45 s, each object moved down to the centre, then the brand maps ("everything you own"). |
 | 13.78–15.10 | **"everything you touch".** A cut on "everything" to the fingers meeting on "touch". The puppet shot is gone. |
-| 15.10–16.87 | **"That's Jamie Dimon, the guy running".** refff's band (ON EARTH red) and flashes. The words are centred in the **JPMorgan Chase title type**, the name with refff's flicker. |
-| 16.87–18.18 | **"JP Morgan Chase".** The OpenAI device. |
+| 15.10–16.87 | **"That's Jamie Dimon, the guy running".** refff's band (ON EARTH red) and flashes. "That's Jamie Dimon" sits in the red band, top left, beside his face, in the **JPMorgan Chase title type** with a white glow and refff's flicker. "the guy running" stays centred below. |
+| 16.87–18.18 | **"JP Morgan Chase".** The OpenAI device, the title with a subtle white glow (so is Goldman Sachs'). |
 | 18.18–19.77 | **"David Solomon, a part-time".** The same device. "David Solomon" is in the Goldman Sachs / JPMorgan title type with the flicker; "a part-time DJ" is the captions' line. |
 | 19.77–22.05 | **"DJ and the CEO of Goldman Sachs".** His DJ nights, then the JPMorgan device exactly. The two-up's left half is the Goldman Sachs tower sign, no longer Solomon at the panel again. Straight into "Amongst". |
-| 22.05–23.70 | **"Amongst them is this guy".** The spotlight reel: "Amongst them" as big glowing serif words over the table, then the face flash, the dark punch-in on Fink and "is this guy" under his face. |
-| 23.70–25.38 | **"the man who runs the most evil".** Reel DfhzVs8q9NH's "terrible boss" scene, rebuilt on the user's red with the user's Fink cut-outs.<br>• Fink rises slowly on the reference's curve while "the", "man", "who", "runs" and "the" come in as its small words.<br>• The horns fade in, then a smooth cut to the close-up.<br>• **most** and **evil** sit behind him as its **terrible** / **boss**.<br>See `notes/REF_TERRIBLE_BOSS.md`. |
+| 22.05–23.70 | **"Amongst them is this guy".** The spotlight reel: "Amongst them" in the captions' line (as "a part-time DJ"), then the face flash, the dark punch-in on Fink and "is this guy" under his face. |
+| 23.70–25.38 | **"the man who runs the most evil".** Reel DfhzVs8q9NH's "terrible boss" scene, rebuilt on the user's red with the user's Fink cut-outs.<br>• Fink rises slowly on the reference's curve while "the", "man", "who", "runs" and "the" come in as its small words.<br>• The horns fade in, then a smooth cut to the close-up.<br>• **most** and **evil** sit behind him as its **terrible** / **boss**.<br>• No grain is added on him: only the photo's own (the user).<br>See `notes/REF_TERRIBLE_BOSS.md`. |
 | 25.38–27.52 | **"company in the world, BlackRock."** |
 | 27.52–38.18 | **"A company that manages $15 trillion in assets … than Steve Jobs ever did."**<br>• The $15T montage, with "$15 trillion" in the Dario serif white glow.<br>• Think School's columns, Jensen, Gates and Jobs have no money overlay (corner softening only). |
-| 38.18–40.32 | **Elon: "Do you think BlackRock's a bad company?"** The music is removed. It has the Palmer Luckey reel's look: a slow push, soft corners, grain, and stacked lowercase bold captions blurring in. |
-| 40.32–40.70 | **Rogan, chin on hand.** The cut is on "company". There is no pause: a white flash goes straight into the next part. |
-| 40.70–83.92 | **"Back in the 1980s" to the end.** The Porsche reel's look, on 71 real video shots. Each shot is cut on a word, and there are no stills. Details below. |
+| 38.18–40.92 | **Elon: "Do you think BlackRock's a bad company?"** His own shot, through his short silent pause after "company?" (real video, no still), then a flash. The music is removed. It has the Palmer Luckey reel's look: a slow push, soft corners, grain, and stacked lowercase bold captions blurring in. |
+| 40.92–84.13 | **"Back in the 1980s" to the end.** The Porsche reel's look, on 72 real video shots. Each shot is cut on a word, and there are no stills. Details below. |
 
 **The second half in detail** (`tools/shotlist.py` REST2_V6, rendered by `tools/prep_v5.py rest2`):
 - **Footage, all real moving video:** every source was searched with a CLIP index, and each span was checked for real motion and for hidden cuts. The sources are:
@@ -65,9 +64,9 @@ npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o rend
 
   Channel logos and burned-in words are cropped out, and no footage repeats from anywhere in the film.
 - **The 1980s run:** warm and faded, with grain at low opacity and a little gate weave.
-- **"but one bad bet … $100 million loss.":** one smooth take, from the Higgsfield trader scene motion-interpolated to 60 fps, at real speed under a slow push. The screens flip from green to red on "$100 million".
+- **"but one bad bet … $100 million loss.":** the Higgsfield trader scene at 60 fps, at real speed under a slow push; on "$100 million loss." a white flash into the red take (the user's red keyframe of the same scene, animated).
 - **"That was enough" / "threw out":** the walk-out, at 60 fps.
-- **"in 1988":** exactly the ON EARTH card, with a flash and the Tesla reel's boxes snapping around the year.
+- **"in 1988":** exactly like ON EARTH (reel DdB8's "IT ISN'T"), with the Tesla reel's boxes snapping around the year.
 - **"He called it":** one plain cut of Fink, with no zoom.
 - **"Aladdin.":** the user's genie clip (8–9 s).
 - **"calculating":** the user's chalkboard clip.
@@ -84,7 +83,7 @@ npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o rend
 
 ## Type and sound
 
-**Captions:** `tools/captions.py`, all in the composition `s_caps`, each word on its aligned onset. There are three styles:
+**Captions:** `tools/captions.py`, all in the composition `s_caps`, each word on its aligned onset (the hook's line and "$15 trillion" are written in their scenes, in Dario's style). There are three styles:
 - **To "…ever did.":** the Jensen reel's centre line, Inter Display SemiBold. The words cut in and the line re-centres. Key words ("everything", "evil", "BlackRock") are set alone in Instrument Serif with the Dario white glow.
 - **Elon:** the Palmer Luckey reel's stacked lowercase Helvetica.
 - **From "Back in the 1980s":** the Porsche reel's Instrument Serif Italic.

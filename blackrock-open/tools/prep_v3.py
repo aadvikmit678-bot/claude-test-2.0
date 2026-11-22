@@ -470,11 +470,13 @@ def r_dimon3():
 
 
 # ------------------------------------------------------------------ 6. the reel's "the man behind OpenAI" device
-def live(src, t0, n, crop=None, fc=False):
-    """n frames at 60 fps from a clip (optionally a crop filter), as float RGB 1920x1080."""
+def live(src, t0, n, crop=None, fc=False, u8=False):
+    """n frames at 60 fps from a clip (optionally a crop filter), as float RGB 1920x1080 (uint8 with u8: a quarter of
+    the memory, for devices that hold many sources at once)."""
     vf = (crop + "," if crop else "") + "setsar=1"
     ss = t0 + (stream_start(src) if fc else 0.0)
-    return [f.astype(np.float32) for f in grab(src, ss, n, fps=FPS, vf=vf, size=(W, H))]
+    got = grab(src, ss, n, fps=FPS, vf=vf, size=(W, H))
+    return got if u8 else [f.astype(np.float32) for f in got]
 
 
 def hero_text(text, size, seed, y=540):
@@ -518,7 +520,7 @@ def grid_cells(cols=3, rows=2, gap=6):
     return [(gap + c * (cw + gap), gap + r * (ch + gap), cw, ch) for r in range(rows) for c in range(cols)], cw, ch
 
 
-def altman_device(name, n, flip, collage, logo, cells, hero, cap=None, cap_until=0, seed=0, k_collage=30):
+def altman_device(name, n, flip, collage, logo, cells, hero, cap=None, cap_until=0, seed=0, k_collage=30, glow=None):
     """flip: list of frame-lists (each source's 60 fps frames); collage: (left frames, right frames);
     logo: an RGB frame (the 1-frame logo); cells: 6 frame-lists for the grid; hero: the textured hero word."""
     hero_a = hero_text(hero, 150, seed)
@@ -553,8 +555,9 @@ def altman_device(name, n, flip, collage, logo, cells, hero, cap=None, cap_until
                         f = clip[min(j - 15 - 5 * c, len(clip) - 1)]
                         fr[y:y + h_, x:x + w_] = cover(f, w_, h_)
                 fr = curved(fr, k=0.06)
-            if j >= 8:
-                fr = with_caption(fr, hero_a, shadow=0.6)
+            if j >= 8:                                       # the title: a subtle white glow (the user, Nov 22)
+                fr = glow_text(fr, hero_a, (250, 250, 250), glow=glow, sigma=(8, 24)) if glow else \
+                    with_caption(fr, hero_a, shadow=0.6)
         if cap_a is not None and i < cap_until:
             fr = with_caption(fr, cap_a)
         wr.write(fr + grain(seed=seed * 1000 + i, amt=3.5))
@@ -570,7 +573,7 @@ JPM = {  # JPMorgan footage (videos, checked: they move)
 
 def r_jpm():
     n = beat_frames("jpm")                            # 86: "JP Morgan Chase" + the pause
-    L = {k: live(p, t, 90) for k, (p, t) in JPM.items()}
+    L = {k: live(p, t, 90, u8=True) for k, (p, t) in JPM.items()}
     flip = [L[k][j * 5:] for j, k in enumerate(["hq", "doors", "board", "tower", "ticker", "tower2"])]
     collage = (L["hq"][20:], L["board"][20:])
     logo = np.zeros((H, W, 3), np.float32)
@@ -579,7 +582,7 @@ def r_jpm():
     logo = logo + np.array([60, 140, 255], np.float32) * np.clip(glow * 1.6, 0, 1)[..., None]
     logo = over_color(logo, la, (250, 252, 255))
     cells = [L["tower"][30:], L["doors"][30:], L["board"][30:], L["hq"][30:], L["ticker"][30:], L["tower2"][30:]]
-    altman_device("r_jpm", n, flip, collage, logo, cells, "JPMorgan Chase", seed=7)
+    altman_device("r_jpm", n, flip, collage, logo, cells, "JPMorgan Chase", seed=7, glow=0.75)
 
 
 def r_ceo():
@@ -1125,7 +1128,7 @@ def r_rogan2():
     na = nf(*TM.B["rogan"])
     npz = nf(*TM.B["pause"])
     a = grab(f"{CLIPS}/rogan.mp4", 0.0, na)
-    b = live(f"{DL}/rogan_elon.mp4", 11.30, npz, crop="crop=1048:590:16:664")
+    b = live(f"{DL}/rogan_elon.mp4", 11.30, npz, crop="crop=1048:590:16:664") if npz > 0 else []
     frames = list(a[:na]) + list(b[:npz])
     free = list(range(na, na + npz)) + list(range(0, 30)) + [na - 1]   # no words: the pause, the first half second
     plate, hm = rogan_plate(frames, free)

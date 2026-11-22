@@ -278,7 +278,7 @@ def r_ceo4():
     for c, (src, t, crop, fc) in enumerate(cell_src):
         x, y, w_, h_ = slots[c]
         cells.append(U(src, t, max(1, m - 15 - 5 * c), crop=crop, fc=fc, size=(w_, h_)))
-    P.altman_device("r_ceo4", n, flip, collage, gs_logo(), cells, "Goldman Sachs", seed=9)
+    P.altman_device("r_ceo4", n, flip, collage, gs_logo(), cells, "Goldman Sachs", seed=9, glow=0.75)
 
 
 def r_dj4():

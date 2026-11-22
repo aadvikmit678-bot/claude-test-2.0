@@ -71,9 +71,10 @@ def _clean(w):
 SCRIPT = {
     "line": "I don't think | there's ever been | a panel | with as big | an assemblage | of financial talent | "
             "and skill | as you've been able | to put together here.",
-    "vo": "These are the most | [powerful people on earth,] | [a 60 trillion dollar cartel of weaponized capital] | "
-          "^that owns | ^a piece of | *everything | you touch. | [That's Jamie Dimon, the guy running JP Morgan Chase,] | "
-          "[David Solomon,] | a part-time DJ | and the CEO~of | [Goldman Sachs.] | [Amongst them is this guy,] | "
+    "vo": "These are the most | [powerful people on earth,] | "
+          "[a 60 trillion dollar cartel of weaponized capital that owns a piece of everything you touch.] | "
+          "[That's Jamie Dimon, the guy running JP Morgan Chase,] | "
+          "[David Solomon,] | a part-time DJ | and the CEO~of | [Goldman Sachs.] | Amongst them | [is this guy,] | "
           "[the man who runs the most evil] | company in the world, | [BlackRock.]",
     "rest1": "A company | that manages | [$15 trillion] | in assets | ^holds more of | ^Nvidia than | Jensen Huang, | "
              "^more of | ^Microsoft than | Bill Gates, | ^and more of | ^Apple than | Steve Jobs | ever did.",

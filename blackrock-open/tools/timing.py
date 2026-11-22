@@ -5,8 +5,8 @@ Sources of the times:
 - the voiceover (starting_part.mp3) and the rest recording (rest.mp3): every word force-aligned to the sound
   (tools/align.py -> tools/words/*.json; whisper's own times ran up to 0.95 s early), with the long pauses cut out
   (tools/pace.py -> tools/words/pace.json): a file time goes through squeeze() before it is placed on the film;
-- the Rogan / Musk clip from its 12.55 s (Elon: "Do you think BlackRock's a bad company?") to 15.28 s, then Rogan
-  listening (the user: cut to his face on "company", a second of him saying nothing, a flash into "Back in the 1980s").
+- the Rogan / Musk clip from its 12.55 s (Elon: "Do you think BlackRock's a bad company?") to 15.28 s: Elon's own shot
+  through his short silent pause after "company?", then a flash into "Back in the 1980s".
 """
 import json
 import os
@@ -48,7 +48,6 @@ V0 = 6.70          # voiceover start on the film
 VO_END = 22.62     # voiceover file time where "BlackRock." has finished (then the rest recording)
 LINE_T0, LINE_T1 = 32.32, 38.95   # panel audio for the opening line
 ROGAN_T0, ROGAN_T1 = 12.55, 15.28  # the Rogan clip: Elon's question only (the clip's own times)
-REACT_HOLD = 0.0                   # (was 1.0: Rogan's silent second; the user removed it on Nov 22)
 
 
 def V(t):
@@ -144,11 +143,11 @@ RW = {k: ALIGN["rest"][i]["start"] for k, i in RW_IDX.items()}   # rest-recordin
 
 REST1_AT = B["brand"][1]
 B["rest1"] = (REST1_AT, F(REST1_AT + squeeze(REST1_OUT, REST_CUTS)))
-# Elon's question, cut to Rogan's face on "company" (it finishes over him), then his silent second
-_ROG_COMPANY = ALIGN["rogan"][-1]["start"]
-B["rogan"] = (B["rest1"][1], F(B["rest1"][1] + _ROG_COMPANY))
-# Rogan on "company?" only (the user, Nov 22: "I don't want a pause ... a flash transition to the next part only")
-B["react"] = (B["rogan"][1], F(B["rest1"][1] + ALIGN["rogan"][-1]["end"] + 0.10 + REACT_HOLD))
+# Elon's question, his own shot through "company?" and on into his silent pause, to just before Rogan answers (the
+# clip's 15.28 s): real video only, no cut to a still of Rogan (the user, Nov 22: "extended only a slight second when
+# Elon Musk pauses ... that pause and then cut. I don't want any still photo frame"), then the flash into the next part
+B["rogan"] = (B["rest1"][1], F(B["rest1"][1] + ROGAN_T1 - ROGAN_T0))
+B["react"] = (B["rogan"][1], B["rogan"][1])               # (Rogan's listening shot is gone: no length)
 B["pause"] = B["react"]                                   # (older scripts' name for the beat after the question)
 REST2_AT = round(B["react"][1] - squeeze(REST2_IN, REST_CUTS), 4)
 B["rest2"] = (B["react"][1], F(REST2_AT + squeeze(REST_END, REST_CUTS) + 0.35))

@@ -6,12 +6,14 @@ Run: python3 tools/build.py
 """
 import html as _html
 import json
+import subprocess
 import os
 
 import timing as TM
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 COMP = f"{ROOT}/compositions"
+CLIPS = f"{ROOT}/assets/clips"
 T, B, F = TM.T, TM.B, TM.F
 FR = 1 / 60
 
@@ -52,6 +54,15 @@ BASE_CSS = """
 .pl{font-family:"Heros",sans-serif;font-weight:700;font-size:94px;line-height:1.02;letter-spacing:-0.015em;color:#EDEDEA;
  text-shadow:0 0 12px rgba(255,255,255,0.35),0 0 30px rgba(255,255,255,0.14);}
 .pl span{display:inline-block;opacity:0;}
+.dline{display:flex;align-items:baseline;justify-content:center;font-family:"ISerif",serif;font-weight:400;line-height:1;
+ color:#fff;white-space:nowrap;}
+.dw{position:relative;display:inline-block;}
+.dfl{position:absolute;left:-0.04em;right:-0.04em;top:0.34em;bottom:0.12em;opacity:0;background:#fff;
+ box-shadow:0 0 16px rgba(255,255,255,0.9),0 0 44px rgba(255,255,255,0.45);}
+.dwt{position:relative;display:inline-block;opacity:0;}
+.isnt{display:flex;align-items:baseline;gap:0.11em;font-family:"LGothic",sans-serif;font-weight:400;line-height:1;color:#fff;
+ white-space:nowrap;}
+.isnt span{display:inline-block;transform-origin:50% 55%;}
 """
 
 
@@ -238,6 +249,67 @@ def big_words(sc, text, a, b, z=30, y=545, size=330):
            z=z, cls="cap", style=f"top:{y}px;height:0;mix-blend-mode:difference;")
 
 
+# Dario's words (the Dimon edit's recipe, read from the Dario reel at 25 fps; the user, Nov 22: "our Dario Amodei style,
+# how it comes with that flash"): a word's place lights up as a glowing white bar for two Dario frames, then a small word
+# comes in dim and soft for a frame and sits in its white glow, a big word comes in blown out and a little large and is
+# crisp four frames later. White glow only, never a dark shadow.
+F25 = 0.04
+
+
+def dario_word_js(sc, wid, t, hero, t_min, rest):
+    b0 = max(t_min, t - 2 * F25)
+    if t - b0 > 0.015:
+        sc.js.append(f'tl.set("#{wid}f",{{opacity:1,filter:"blur({3 if hero else 0}px)"}},{sc.at(b0)});')
+        sc.js.append(f'tl.set("#{wid}f",{{opacity:0}},{sc.at(t)});')
+    if hero:
+        sc.js.append(f'tl.set("#{wid}",{{opacity:1,scale:1.04,filter:"blur(14px)",textShadow:"{SERIF_BLOOM}"}},{sc.at(t)});')
+        sc.js.append(f'tl.set("#{wid}",{{scale:1.015,filter:"blur(5px)",textShadow:"{SERIF_SOFT}"}},{sc.at(t + FR)});')
+        sc.js.append(f'tl.set("#{wid}",{{scale:1.005,filter:"blur(2.5px)"}},{sc.at(t + 3 * FR)});')
+        sc.js.append(f'tl.set("#{wid}",{{scale:1,filter:"blur(0px)",textShadow:"{rest}"}},{sc.at(t + 4 * FR)});')
+    else:
+        sc.js.append(f'tl.set("#{wid}",{{opacity:0.5,filter:"blur(1.5px)",textShadow:"{SERIF_SOFT}"}},{sc.at(t)});')
+        sc.js.append(f'tl.set("#{wid}",{{opacity:1,filter:"blur(0px)",textShadow:"{rest}"}},{sc.at(t + F25)});')
+
+
+def dario_line(sc, words, a, b, y=540, z=60, italic=True, gap=0.26):
+    """words: [(text, onset, size px, hero?)] laid out whole and centred, each word coming in on its onset in its place."""
+    spans = []
+    for text, t, size, hero in words:
+        wid = sc.uid("dw")
+        rest = BIG_REST if hero else SERIF_REST
+        spans.append(f'<span class="dw" style="font-size:{size}px;margin:0 {gap / 2:.3f}em;"><span id="{wid}f" class="dfl"></span>'
+                     f'<span id="{wid}" class="dwt" style="text-shadow:{rest};transform-origin:50% 60%;">'
+                     f'{_html.escape(text, quote=False)}</span></span>')
+        dario_word_js(sc, wid, t, hero, a, rest)
+    st = "font-style:italic;" if italic else ""
+    sc.div(a, b, f'<div class="dline" style="{st}">{"".join(spans)}</div>', z=z, cls="cap", style=f"top:{y}px;height:0;")
+
+
+def dim(sc, a, b, k=0.5, z=5):
+    """bright footage brought down under the white type (a black layer at k), so the glow reads without a dark halo"""
+    sc.div(a, b, f'<div style="position:absolute;inset:0;background:rgba(0,0,0,{k});"></div>', z=z, cls="layer")
+
+
+# Reel DdB8's "IT ISN'T" (the user, Nov 22: ON EARTH and IN 1988 "exactly like that"), read frame by frame at 24 fps:
+# the shot before goes negative for one frame, two frames of cyan (the red's own negative), then the red card; the
+# first word lands in its final place one reel frame 1.25x large, the second joins on its syllable; League Gothic,
+# white, the caps ~15 % of the height, the phrase centred, nothing moves after.
+
+
+def isnt_card(sc, a, b, w1, w2, t2, y=548, size=205, z=30, extra=""):
+    """(the lead-in -- one reel frame negative, two cyan -- is in the shot before: r_tiles3 for ON EARTH, the montage's
+    fx_out "neg" on "So,"'s shot for IN 1988)"""
+    sc.img("red_bg_user.jpg", a, b, z=z - 1)
+    i1, i2 = sc.uid("iw"), sc.uid("iw")
+    inner = (f'<div class="isnt" style="font-size:{size}px;"><span id="{i1}" style="transform:scale(1.25);">'
+             f'{_html.escape(w1, quote=False)}</span><span id="{i2}" style="opacity:0;position:relative;">'
+             f'{_html.escape(w2, quote=False)}{extra}</span></div>')
+    sc.div(a, b, inner, z=z, cls="cap", style=f"top:{y}px;height:0;")
+    sc.js.append(f'tl.set("#{i1}",{{scale:1}},{sc.at(a + 3 * FR)});')      # one reel frame large
+    sc.js.append(f'tl.set("#{i2}",{{opacity:1}},{sc.at(t2)});')
+    return i1, i2
+
+
 # ------------------------------------------------------------------ s_quote: the panel line
 def s_quote():
     sc = Scene("s_quote", *B["quote"])
@@ -259,34 +331,41 @@ def s_hook():
     sc = Scene("s_hook", B["tiles"][0], B["touch"][1])
     t0 = B["tiles"][0]
     n = round((B["tiles"][1] - t0) * 60)
+    # the tiles end on "IT ISN'T"'s lead-in already (prep_v3 r_tiles3): the strobe, one reel frame negative, two cyan
     sc.video("r_tiles3.mp4", *B["tiles"], z=1)
     # "powerful" / "people": a different effect (the user, Nov 22) -- the Dario video's Instrument Serif with its white
     # glow, in on the word blurred and blooming, sharp four frames later
-    for word, a, b in (("powerful", T["powerful"], T["people"]), ("people", T["people"], t0 + (n - 5) * FR)):
+    for word, a, b in (("powerful", T["powerful"], T["people"]), ("people", T["people"], t0 + (n - 8) * FR)):
         serif(sc, word, a - 0.03, b, 200, y=540, z=30)
-    # ON EARTH on the user's plain red
-    sc.img("red_bg_user.jpg", *B["earth"], z=1)
-    on, ea = sc.uid("on"), sc.uid("ea")
-    inner = (f'<div style="display:flex;gap:0.2em;font-family:\'LGothic\',sans-serif;font-size:330px;color:#fff;'
-             f'letter-spacing:0.01em;line-height:1;"><span id="{on}">ON</span><span id="{ea}" style="opacity:0">EARTH</span></div>')
-    sc.div(*B["earth"], inner, z=30, cls="cap", style="top:545px;height:0;")
-    sc.js.append(f'tl.set("#{ea}",{{opacity:1}},{sc.at(T["earth"])});')
-    # "a $60 trillion dollar": the article flipbook (its "$60 trillion" is the text), as long as the line lets it run
+    # ON EARTH: reel DdB8's "IT ISN'T" -- the tiles go negative for a frame, cyan for two, then the user's red, ON
+    # landing large for a frame in its place and EARTH joining on its word
+    isnt_card(sc, B["earth"][0], B["earth"][1], "ON", "EARTH", T["earth"] + 0.02)
+    # "a $60 trillion dollar cartel of weaponized capital that owns a piece of everything you touch." -- all of it
+    # written, in the Porsche reel's italic ("$100 million loss.") with Dario's entrance: each word's glowing bar, then
+    # the word (the big ones blown out, then crisp). The bright pages under it are brought down so the white reads.
     sc.video("r_articles.mp4", *B["money"], z=1)
-    # "cartel": the user's cartel video -- its table flash, a split second later the faces; CARTEL at the centre in
-    # difference, on its word (the user: "like WEAPONIZED is written")
+    dim(sc, *B["money"], k=0.5)
     sc.video("r_cartel4.mp4", *B["cartel"], z=1)
-    big_words(sc, "CARTEL", T["cartel"], B["cartel"][1] - FR)
-    # "weaponized capital": nothing written at the cut; WEAPONIZED on its word, then CAPITAL under it, smaller,
-    # centred, in difference, no bounce (the user)
     sc.video("r_weap.mp4", *B["weap"], z=1)
-    wid, cid = sc.uid("wz"), sc.uid("cp")
-    stack = (f'<div style="font-family:\'LGothic\',sans-serif;font-size:250px;line-height:0.88;color:#fff;letter-spacing:0.01em;'
-             f'text-align:center;"><div id="{wid}" style="opacity:0">WEAPONIZED</div><div id="{cid}" style="opacity:0">CAPITAL</div></div>')
-    sc.div(T["weapon"], B["weap"][1] - FR, stack, z=30, cls="cap", style="top:545px;height:0;mix-blend-mode:difference;")
-    sc.js.append(f'tl.set("#{wid}",{{opacity:1}},{sc.at(T["weapon"])});tl.set("#{cid}",{{opacity:1}},{sc.at(T["capital"])});')
-    # "that owns a piece of": the user's video from its glasses (centred), then the brand maps (prep_v5 r_owns)
+    dim(sc, *B["weap"], k=0.45)
     sc.video("v6_owns.mp4", *B["logos"], z=1)
+    dim(sc, *B["logos"], k=0.5)
+    L = lambda k: T[k] - 0.03
+    SM, HE, BIG = 100, 175, 225
+    phrases = [
+        [("a", L("a"), SM, False), ("$60", L("sixty"), HE, True), ("trillion", L("trillion"), HE, True)],
+        [("cartel", L("cartel"), BIG, True)],
+        [("of", L("of1"), SM, False), ("weaponized", L("weapon"), HE, True), ("capital", L("capital"), HE, True)],
+        [("that", L("that"), SM, False), ("owns", L("owns"), HE, True)],
+        [("a", L("a2"), SM, False), ("piece", L("piece"), HE, True), ("of", L("of2"), SM, False)],
+        [("everything", L("everything"), BIG, True)],
+        [("you", L("you"), SM, False), ("touch.", L("touch"), HE, True)],
+    ]
+    starts = [F(p[0][1] - 2 * F25 - FR) for p in phrases]
+    ends = starts[1:] + [B["touch"][1]]
+    for k, (p, a, b) in enumerate(zip(phrases, starts, ends)):
+        # "you touch." sits low, clear of the burst where the fingers meet
+        dario_line(sc, p, a, b, y=860 if k == len(phrases) - 1 else 540, z=30)
     sc.video("r_touch3.mp4", *B["touch"], z=1)         # cut on "everything": the fingers meet on "touch"
     sc.write()
     return sc
@@ -320,12 +399,12 @@ def s_solomon():
 
 
 def s_search():
-    """"Amongst them is this guy": the spotlight reel (DeJRKmqTPdg) -- the big glowing serif words over the group,
-    then the face flash, the room going dark and the punch-in on Fink, the small italic words under his face."""
+    """"Amongst them is this guy": the spotlight reel (DeJRKmqTPdg) -- "Amongst them" in the captions' line (the user,
+    Nov 22: like "a part-time DJ"), then the face flash, the room going dark and the punch-in on Fink, the small italic
+    words under his face."""
     sc = Scene("s_search", B["orbit"][0], B["thisguy"][1])
     sc.video("r_orbit4.mp4", *B["orbit"], z=1)
     sc.video("r_spot4.mp4", *B["thisguy"], z=1)
-    serif(sc, "Amongst them", T["amongst"] - 0.03, B["orbit"][1], 150, y=540)
     por_phrase(sc, [("is", T["is"] - 0.03), ("this", T["this"] - 0.03), ("guy", T["guy2"] - 0.03)],
                T["is"] - 0.03, B["thisguy"][1], size=78, y=745, spacing="0.3em")
     sc.write()
@@ -357,7 +436,8 @@ def s_rest1():
     for (key, name, src, t0, extra, fc), a, b in zip(SL.REST1, starts, starts[1:] + [a1]):
         sc.video(f"v3_{name}.mp4", a, b, z=1)
     # "$15 trillion": the Dario serif glow over the user's montage (not League Gothic, the user)
-    serif(sc, "$15 trillion", TM.RT("15") - 0.03, TM.RT("assets") - 0.03, 220, y=540, rest=BIG_REST)
+    t15, t_in = TM.RT("15") - 0.03, TM.R(TM.ALIGN["rest"][TM.RW_IDX["trillion"] + 1]["start"]) - 0.03
+    dario_line(sc, [("$15 trillion", t15, 220, True)], F(t15 - 2 * F25 - FR), F(t_in - FR), y=540, z=60, italic=False)
     sc.write()
     return sc
 
@@ -366,8 +446,9 @@ def s_rest1():
 def s_rogan():
     a, b = B["rogan"][0], B["react"][1]
     sc = Scene("s_rogan", a, b)
-    sc.video("v5_rogan.mp4", *B["rogan"], z=1)
-    sc.video("v5_react.mp4", *B["react"], z=1)
+    sc.video("v5_rogan.mp4", *B["rogan"], z=1)             # Elon, through "company?" and his short silent pause
+    if B["react"][1] - B["react"][0] > FR / 2:
+        sc.video("v5_react.mp4", *B["react"], z=1)
     # the Palmer Luckey reel's captions: lowercase bold Helvetica stacked beside him, each word blurring in
     rows, sets = [], []
     for line in CAP.palmer_lines():
@@ -397,25 +478,22 @@ def s_rest2():
     for a, b, kind, words, text in CAP.porsche_phrases():
         if kind != "card":
             continue
-        # "in 1988": exactly the ON EARTH card (the user) -- the user's red, IN, then 1988 on its word
-        in_, yr = sc.uid("in"), sc.uid("yr")
-        sc.img("red_bg_user.jpg", a, b, z=5)
-        inner = (f'<div style="display:flex;gap:0.2em;font-family:\'LGothic\',sans-serif;font-size:330px;color:#fff;'
-                 f'letter-spacing:0.01em;line-height:1;"><span id="{in_}">{words[0][0]}</span>'
-                 f'<span id="{yr}" style="opacity:0">{words[1][0]}</span></div>')
-        sc.div(a, b, inner, z=6, cls="cap", style="top:545px;height:0;")
-        sc.js.append(f'tl.set("#{yr}",{{opacity:1}},{sc.at(words[1][1])});')
-        # in on a white flash (as the cut into ON EARTH lands off the tile flash), and on "1988" the Tesla reel's
-        # boxes: white frames snapping around the year, one filled box wiping across it, then the year alone
-        sc.flash(a, peak=0.95, up=0, down=0.12, z=9)
+        # "in 1988": exactly like reel DdB8's "IT ISN'T" (the user, Nov 22), as ON EARTH; then on "1988" the Tesla
+        # reel's boxes snap round the year (outlines, one filled wipe, a wide frame), one every two frames
         t8 = words[1][1]
-        boxes = [(1180, 330, 560, 360, 0, 2, "o"), (1100, 300, 720, 420, 2, 4, "o"), (1210, 360, 500, 300, 4, 6, "f"),
-                 (250, 210, 1420, 660, 6, 8, "o"), (1160, 340, 600, 380, 8, 10, "o")]
-        for x, y, w, h, f0, f1, kind in boxes:
+        boxes = [(-0.10, -0.10, 0.10, 0.02, 0, 2, "o"), (-0.26, -0.26, -0.04, -0.10, 2, 4, "o"),
+                 (-0.05, -0.05, 0.16, 0.08, 4, 6, "f"), (-1.45, -0.95, -0.55, -0.55, 6, 8, "o"),
+                 (-0.16, -0.16, 0.04, -0.03, 8, 10, "o")]
+        extra, sets = "", []
+        for k, (l, r, t, btm, f0, f1, kind) in enumerate(boxes):
             bid = sc.uid("bx")
-            style = ("background:#fff;" if kind == "f" else "border:6px solid #fff;")
-            sc.div(t8 + f0 * FR, t8 + f1 * FR, f'<div id="{bid}" style="position:absolute;left:{x}px;top:{y}px;width:{w}px;'
-                   f'height:{h}px;{style}"></div>', z=8, cls="layer")
+            look = "background:#fff;" if kind == "f" else "border:0.03em solid #fff;"
+            extra += (f'<span id="{bid}" style="position:absolute;left:{l}em;right:{r}em;top:{t}em;bottom:{btm}em;'
+                      f'{look}opacity:0;display:block;transform:none;"></span>')
+            sets.append((bid, t8 + f0 * FR, t8 + f1 * FR))
+        isnt_card(sc, a, b, words[0][0], words[1][0], t8, z=6, extra=extra)   # ("So,"'s shot ends negative)
+        for bid, s0, s1 in sets:
+            sc.js.append(f'tl.set("#{bid}",{{opacity:1}},{sc.at(s0)});tl.set("#{bid}",{{opacity:0}},{sc.at(s1)});')
     sc.write()
     return sc
 

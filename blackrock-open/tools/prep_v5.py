@@ -67,7 +67,7 @@ SRC.update({
     "AX": f"{V3}/new/axirohq.mp4", "ASH": f"{V3}/new/asher.mp4", "MFC": f"{DL}/m_finance_clips.mp4",
     "MONEY": f"{DL}/v6/money_user.mp4",          # the user's fire clip (Nov 22): "three times the money"
 })
-for k in ("1_b", "3_a", "3_b"):                  # the Higgsfield takes at 60 fps (motion-interpolated), real speed
+for k in ("1_b", "2_a", "3_a", "3_b"):           # the Higgsfield takes at 60 fps (motion-interpolated), real speed
     SRC[f"HF6_{k[0]}{k[2]}"] = f"{DL}/v6/hf60/shot{k}.mp4"
 
 # fixed crops (source pixels): the montages' badges and subtitles, the vertical videos' 16:9 bands
@@ -288,6 +288,12 @@ def render_montage(name, shots, a0, a1, seed=50):
                 fr = affine(fr, z, fx, fy, fx, fy, border=(0, 0, 0))
             fr = look(fr, spec.get("look"), i, seed + k)
             fr = transition(fr, spec.get("fx_in"), i)
+            # "IT ISN'T"'s lead-in before the IN 1988 card: one reel frame negative, then the card's cyan (the card
+            # starts 2 frames before this shot ends -- the captions' lead -- so its cyan covers frames n-7 .. n-2)
+            if spec.get("fx_out") == "neg" and n - 10 <= i < n - 7:
+                fr = 255.0 - np.clip(fr, 0, 255)
+            if spec.get("fx_out") == "neg" and i >= n - 7:
+                fr = np.zeros_like(fr) + np.float32([94, 253, 254])     # the cyan r_tiles3 ends on
             wr.write(fr)
         print(f"   {k:2d} {a:7.3f}-{b:7.3f} {spec['src']:5s} {spec.get('t0', '')!s:>7} {spec.get('note', '')}")
     wr.close()
@@ -358,6 +364,10 @@ def r_rogan():
     # picture-in-picture slides in from the right after 9.45), cropped clear of that edge and slowed into his second of
     # silence with frame blending, under a slow push-in
     n2 = round(TM.B["react"][1] * FPS) - round(TM.B["react"][0] * FPS)
+    if n2 <= 0:                                             # (the user, Nov 22: no still of Rogan; Elon's own pause)
+        if os.path.exists(f"{CLIPS}/v5_react.mp4"):
+            os.remove(f"{CLIPS}/v5_react.mp4")
+        return
     src2 = [f.astype(np.float32) for f in grab(ROGAN_SRC, REACT_T0, 9, fps=FPS, vf=REACT_CROP + ",setsar=1",
                                                size=(W, H))]
     fr = []
@@ -387,18 +397,30 @@ def hero_words(text, size, y, seed):
     return a, ends
 
 
+def hero_left(text, size, seed, x, base):
+    """The JPMorgan Chase title type (Inter Display Bold, speckled white), set from x with its baseline at `base`."""
+    m, b0, x0 = P.text_mask(text, P.INTER_B, size, pad=30)
+    m = m * P.speckle(m.shape, seed)
+    a = np.zeros((H, W), np.float32)
+    P.paste_alpha(a, m, x - x0, base - b0)
+    return a
+
+
+NAME_X, NAME_BASE = 104, 392        # the name in refff's red band, top left (the user, Nov 22: where it was before)
+
+
 def intro(name, beat, person, s, ox, oy, title, that=None, words=(), until=None, seed=1700):
-    """refff's device (the band, the flashes, the flicker) with the type the user picked on Nov 22: the names set
-    exactly like the "JPMorgan Chase" / "Goldman Sachs" titles, centred -- "That's Jamie Dimon, the guy running"."""
+    """refff's device (the band, the flashes, the flicker) with the JPMorgan Chase / Goldman Sachs title type. The name
+    sits in the red band, top left, beside the face (the user, Nov 22: "where I marked blue ... not a centre line"),
+    "That's" just above it, both with a white glow (no dark shadow); "the guy running" stays as it was, centred low."""
     n = P.beat_frames(beat)
     t0 = round(TM.B[beat][0] * FPS)
     rel = lambda w: round(TM.T[w] * FPS) - t0
     frs = P.person_frames(person, n, s, ox, oy, clean=True)
     off = 392 / H - P4.REF_BASE
-    ys = (420, 540, 668) if that else (None, 540, 668)
-    that_a = P.hero_text(that, 76, seed + 1, y=ys[0]) if that else None
-    name_a = P.hero_text(title, 150, seed + 2, y=ys[1])
-    line_a, ends = hero_words(" ".join(w for w, _ in words), 96, ys[2], seed + 3) if words else (None, [])
+    that_a = hero_left(that, 76, seed + 1, NAME_X + 4, NAME_BASE - 136) if that else None
+    name_a = hero_left(title, 150, seed + 2, NAME_X, NAME_BASE)
+    line_a, ends = hero_words(" ".join(w for w, _ in words), 96, 668, seed + 3) if words else (None, [])
     keys = [k for k, _ in P4.REF_BAND]
     vals = [v for _, v in P4.REF_BAND]
     k_until = rel(until) - 2 if until else n
@@ -424,10 +446,10 @@ def intro(name, beat, person, s, ox, oy, title, that=None, words=(), until=None,
         fr = bg * (1 - pa[..., None]) + fg * pa[..., None]
         if i < k_until:
             if that_a is not None and rf >= 6:            # "That's" from refff's second wash
-                fr = P.with_caption(fr, that_a, shadow=0.6)
+                fr = P.glow_text(fr, that_a, (250, 250, 250), glow=0.9, sigma=(7, 22))
             op = P4.REF_WORD.get(f30, 1.0 if f30 > 14 else 0.0)
             if op > 0:                                    # the name: refff's flicker (ghost, gone, half, gone, solid)
-                fr = P.with_caption(fr, name_a * op, shadow=0.6 * op)
+                fr = P.glow_text(fr, name_a * op, (250, 250, 250), glow=0.95, sigma=(8, 26))
             if line_a is not None:                        # "the guy running": each word on its own onset, in place
                 shown = [e for (w, key), e in zip(words, ends) if i >= rel(key)]
                 if shown:

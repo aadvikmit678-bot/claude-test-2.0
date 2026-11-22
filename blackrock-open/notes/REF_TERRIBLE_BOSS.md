@@ -49,6 +49,7 @@ The renderer is `tools/prep_v6.py` (`r_evil`), and its output is `assets/clips/v
 
 ## Our version
 
-- The same curve, sizes, blur, grain, word layout and fade constants, on the user's red with the user's cut-outs.
+- The same curve, sizes, blur, word layout and fade constants, on the user's red with the user's cut-outs.
 - The cut-out stops at his waist, so the torso is continued downwards (mirrored and darkened) so the frame's bottom edge is always covered.
+- No grain is added on him: the user asked for only the photo's own texture (Nov 22). This is a deliberate departure from the reference.
 - The old Fink flipbook montage is not used. The red scene covers the whole beat, as the user allowed: "the red part only".

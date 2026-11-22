@@ -172,7 +172,7 @@ def r_evil():
                 pm2, al2 = horn.place(s_w, x0, y0)
                 pm, al = pm * (1 - hf) + pm2 * hf, al * (1 - hf) + al2 * hf
             pm, al = soften(pm, al, sigma=2.2, vblur=min(60, v * 1.0))
-            fr = over_man(fr, pm, al, grain_field(7000 + i, 24))
+            fr = over_man(fr, pm, al, grain_field(7000 + i, 0.0))      # no grain added (the user, Nov 22)
             # the small words: each on its onset (fading in over ~0.1 s), gone at the next word of its group / the cut
             for a, gl, ta, key in small:
                 if t < ta:
@@ -191,7 +191,7 @@ def r_evil():
             # out of focus at the cut, a little less by "evil"; the grain builds from almost none to full by "evil"
             ue = (t - t_cut) / max(0.2, t_evil + 0.05 - t_cut)
             sigma = 10.0 - 3.5 * smooth(ue)
-            gamp = 4 + 66 * (np.expm1(3.0 * min(1.0, max(0.0, ue))) / np.expm1(3.0))
+            gamp = 0.0                                   # (was building to heavy grain; the user: the photo's own)
             # the type behind him
             if t >= t_most:
                 fr = put_text(fr, most_a, 1 - np.exp(-(t - t_most) / 0.062), most_g, fringe=3)
