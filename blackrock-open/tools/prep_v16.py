@@ -127,7 +127,7 @@ def r_touch5():
 
 
 # ------------------------------------------------------------------------------------------------ bad bet
-BET_X, BET_TOP, BET_SIZE = 1100, 70, 168
+BET_X, BET_TOP, BET_SIZE = 790, 175, 168      # (the user: closer to his face, a bit lower)
 
 
 def r_bet3():
@@ -138,7 +138,7 @@ def r_bet3():
     im = Image.new("L", (W, H), 0)
     ImageDraw.Draw(im).text((BET_X, BET_TOP - int(0.12 * BET_SIZE)), "but", fill=255, font=f)
     word = np.asarray(im).astype(np.float32) / 255.0
-    wr = Writer(f"{CLIPS}/v16_bet.mp4")
+    wr = Writer(f"{CLIPS}/v16_bet2.mp4")
     for i in range(n):
         fr = frs[min(i, len(frs) - 1)].astype(np.float32)
         if i < 12:                                          # the whip: two reel frames, dark, black and white

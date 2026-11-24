@@ -847,7 +847,7 @@ def s_rest2():
 # ---- "but one bad bet cost him $100 million loss." (v15)
 BET_CSS = """
 .hbw{position:absolute;inset:0;transform-origin:960px 540px;}
-.hb{position:absolute;left:1100px;top:70px;font-family:"ISerif",serif;font-size:168px;letter-spacing:-0.05em;line-height:0.84;
+.hb{position:absolute;left:790px;top:175px;font-family:"ISerif",serif;font-size:168px;letter-spacing:-0.05em;line-height:0.84;
  color:#f6f1e8;white-space:nowrap;}
 .hb span{display:inline-block;opacity:0;margin-right:0.16em;}
 """
@@ -867,7 +867,7 @@ def s_bet():
     # is there"; the trader at his screens, the B-roll used before): its 9.1-9.6 s at 10 fps -- two reel frames of the
     # shot smeared dark (the first word smeared with it), then the shot with the words already there, crisp with the
     # soft glow, each next word on the reel frame of its onset; the picture and the words settle together
-    sc.video("v16_bet.mp4", a0, t_c, z=1)
+    sc.video("v16_bet2.mp4", a0, t_c, z=1)
     sc.video("v16_count.mp4", t_c, a1, z=1)           # (v16: "$100 million" with a stronger white glow)
     t_sharp = F(a0 + 2 * REEL)
     q = lambda t: F(a0 + max(2, int((t - 0.03 - a0) / REEL + 1e-6)) * REEL)
