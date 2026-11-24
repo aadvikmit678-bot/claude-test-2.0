@@ -289,25 +289,28 @@ def cut_focus(img, pb):
 
 
 def r_cutouts15():
+    """v15 (the user: "why is the $15 trillion pausing ... I want it to continue and then cut"): the cutouts spread
+    evenly over the beat, the last no longer held, and the whole run pushing in slowly to the cut"""
     a0, a1 = TM.B["money"]
-    n = nf(a0, a1)                                   # 72: "A $15 trillion dollar"
+    n = nf(a0, a1)
     boxes = json.load(open(f"{ROOT}/tools/words/shots15.json"))
     names = {k[:3]: k for k in boxes}
     back, rim = cut_backdrop(), cut_rim()
-    frames = []
+    pre = []
     for j, key in enumerate(CUT_ORDER):
         nm = names[key]
         card, pb = cut_card(key, f"{V9}/shots15/{nm}", boxes[nm]["box"], CUT_VAR[j % len(CUT_VAR)])
-        fr = back * (cut_focus(card, pb) / 255.0)    # the page's white is the screen's grey
-        fr = barrel(fr, W / 2, H / 2, 1180, 0.07)    # the screen's curve
-        fr = fr * rim + np.float32([22, 22, 24]) * (1 - rim)
-        frames.append(fr)
-        print(f"   {key}: phrase box on screen {tuple(round(v) for v in pb)}")
+        pre.append(back * (cut_focus(card, pb) / 255.0))
     wr = Writer(f"{CLIPS}/v9_cutouts.mp4")
     for i in range(n):
-        wr.write(frames[min(i // CUT_PER, len(frames) - 1)])
+        j = min(len(pre) - 1, int(i * len(pre) / n))
+        k = 1.0 + 0.05 * i / max(1, n - 1)
+        fr = affine(pre[j], k, CUT_AX, CUT_AY, CUT_AX, CUT_AY, border=(200, 200, 200))
+        fr = barrel(fr, W / 2, H / 2, 1180, 0.07)
+        fr = fr * rim + np.float32([22, 22, 24]) * (1 - rim)
+        wr.write(fr)
     wr.close()
-    print(f"   cutouts: {len(frames)} over {n} frames ({CUT_PER} a cutout, the last {n - CUT_PER * (len(frames) - 1)})")
+    print(f"   cutouts: {len(pre)} over {n} frames ({n / len(pre):.2f} a cutout), pushing in 5 %")
 
 
 # ------------------------------------------------------------------ 3. "Larry Fink, the CEO of BlackRock."

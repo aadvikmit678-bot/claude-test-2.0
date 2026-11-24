@@ -424,10 +424,7 @@ def r_flag():
     wr = Writer(f"{CLIPS}/v10_flag.mp4")
     for i in range(n):
         im = frs[min(i, len(frs) - 1)].astype(np.float32)
-        if i < k_zoom:
-            fr = cover(im)
-        else:                                                # closer on the flag (it flies at x 0.27-0.55, y 0.15-0.5)
-            fr = affine(cover(im), 1.75, 0.40 * W, 0.36 * H, W / 2, H / 2, border=(0, 0, 0))
+        fr = affine(cover(im), 1.0 + 0.04 * i / max(1, n - 1), W / 2, H / 2, W / 2, H / 2, border=(0, 0, 0))   # (v15: no cut zoom)
         fr = grade(fr, sat=0.9, contrast=1.05) * 0.86
         if i % 6 == 0:                                       # the squares jump every reel frame (10 fps)
             m = 22
@@ -846,7 +843,501 @@ def r_wall4():
     print(f"   wall4: {n} frames; the soft wall for Fink's frame: v13_bg_wall.jpg")
 
 
-ALL = {"wall4": r_wall4, "plates3": fink_plates3, "wall3": r_wall3, "wall2": r_wall2, "finkbg": r_finkbg, "founders": r_founders, "factory": r_factory, "flag": r_flag, "wall": r_wall, "evil": r_evil, "company": r_company, "built": r_built, "cartel": r_cartel}
+# ============================================================================== v14: "cost him $100 million loss."
+# The Kalanick reel's year counter (19.2-20.8 s, read frame by frame): one reel frame of soft white, the first year
+# sharp for one frame, then the years roll up through a band -- the old one leaving upwards, the next coming from
+# below, smeared vertically with the speed -- fast first and slowing, the last one settling with the old one's edge
+# still showing at the top of the band; it holds, then slides out to the left. Every change on the reel's 10-12 fps.
+# Ours: "$1 million" rolling up to "$100 million" over the user's money clip (dark, textured), "loss." blooming in under
+# it on the word.
+ISF = f"{ROOT}/assets/fonts/InstrumentSerif-Regular.woff2"
+ISF_I = f"{ROOT}/assets/fonts/InstrumentSerif-Italic.woff2"
+COUNT_VALUES = ["$1", "$7", "$18", "$31", "$46", "$60", "$73", "$84", "$92", "$97", "$100"]
+
+
+def text_mask(text, path, size, track=-0.045):
+    f = ImageFont.truetype(path, size)
+    widths = [f.getlength(ch) for ch in text]
+    tw = int(sum(widths) + track * size * (len(text) - 1)) + 40
+    im = Image.new("L", (tw, int(size * 1.35)), 0)
+    d = ImageDraw.Draw(im)
+    x = 20
+    for ch, w in zip(text, widths):
+        d.text((x, int(size * 0.08)), ch, fill=255, font=f)
+        x += w + track * size
+    a = np.asarray(im).astype(np.float32) / 255.0
+    cols = np.where(a.max(axis=0) > 0.02)[0]
+    return a[:, cols.min():cols.max() + 1]
+
+
+def glow_white(base, a, k_glow=1.0, bloom=0.0):
+    """white type with a white halo (a soft one, wider and brighter when it blooms)"""
+    g1 = cv2.GaussianBlur(a, (0, 0), 6 + 10 * bloom)
+    g2 = cv2.GaussianBlur(a, (0, 0), 22 + 40 * bloom)
+    halo = np.clip(0.55 * g1 + 0.35 * g2, 0, 1) * (k_glow + 1.4 * bloom)
+    out = base * (1 - np.clip(halo, 0, 0.9)[..., None]) + 255 * np.clip(halo, 0, 0.9)[..., None]
+    return out * (1 - a[..., None]) + np.float32([248, 244, 236]) * a[..., None]
+
+
+def r_count():
+    t0 = F(TM.RT("cost") - TM.LEAD)
+    t1 = F(TM.R(TM.ALIGN["rest"][50]["start"]) - TM.LEAD)             # the cut to "That was enough"
+    n = nf(t0, t1)
+    t_land = TM.R(TM.ALIGN["rest"][48]["start"]) - 0.03             # "million": the counter has landed
+    t_loss = TM.R(TM.ALIGN["rest"][49]["start"]) - 0.03             # "loss."
+    size = 250
+    masks = [text_mask(f"{v} million", ISF, size) for v in COUNT_VALUES]
+    full = text_mask("$100 million loss.", ISF, size)
+    cut_x = masks[-1].shape[1] + int(0.10 * size)             # where "loss." starts in the full line
+    L = int(size * 1.08)                                            # the roll's step: one line
+    cy = 470                                                        # the number line's centre
+    band = (cy - int(0.62 * L), cy + int(0.62 * L))
+    bg_src = grab(SRC["COPP"], 0.1, (n + STEP - 1) // STEP + 2, fps=12)
+    lines = screen_lines(W)
+    N = len(COUNT_VALUES) - 1
+    t_roll = t0 + 2 * STEP / FPS                                     # the white frame, then "$1 million" sharp
+    wr = Writer(f"{CLIPS}/v14_count.mp4")
+    prev = None
+    for i in range(n):
+        st = i // STEP                                              # the 12 fps step
+        ts = t0 + st * STEP / FPS
+        bg = cover(bg_src[min(st, len(bg_src) - 1)].astype(np.float32))
+        g = bg @ np.float32([0.299, 0.587, 0.114])
+        bg = (g[..., None] * 0.35 + bg * 0.65) * 0.50
+        bg = vignette(bg * lines, strength=0.40)
+        if st == 0:                                                 # the reel's soft white frame
+            fr = cv2.GaussianBlur(bg, (0, 0), 20) * 0.25 + 205
+            wr.write(fr + grain(seed=9100 + st, amt=4))
+            continue
+        u = min(1.0, max(0.0, (ts - t_roll) / max(0.1, t_land - t_roll)))
+        pos = N * (1 - (1 - u) ** 3)
+        u2 = min(1.0, max(0.0, (ts + STEP / FPS - t_roll) / max(0.1, t_land - t_roll)))
+        speed = N * ((1 - (1 - u) ** 3) - 0)                         # (placeholder, replaced below)
+        speed = abs(N * (1 - (1 - u2) ** 3) - pos)                  # values per step
+        k0 = int(np.floor(pos))
+        frac = pos - k0
+        canvas = np.zeros((H, W), np.float32)
+        for k, off in ((k0, -frac * L), (min(N, k0 + 1), (1 - frac) * L)):
+            if k0 >= N and k != k0:
+                continue
+            m = masks[k]
+            mh, mw = m.shape
+            x0 = (W - mw) // 2
+            y0 = int(cy - mh / 2 + off)
+            ys0, ys1 = max(0, y0), min(H, y0 + mh)
+            if ys1 > ys0:
+                canvas[ys0:ys1, x0:x0 + mw] = np.maximum(canvas[ys0:ys1, x0:x0 + mw], m[ys0 - y0:ys1 - y0])
+        blur = int(min(140, speed * L * 0.9))                       # the roll's vertical smear
+        if blur > 2:
+            ker = np.full((blur, 1), 1.0 / blur, np.float32)
+            canvas = cv2.filter2D(canvas, -1, ker)
+        yy = np.arange(H, dtype=np.float32)[:, None]
+        bm = np.clip(np.minimum(yy - band[0], band[1] - yy) / 18.0, 0, 1)      # clipped to the band, soft edges
+        canvas *= bm
+        # "loss." on the same line (the user: "$100 million loss." in one line): the line re-centres and "loss."
+        # blooms in at its end
+        bloom = 0.0
+        if ts >= t_loss - 1e-6:
+            canvas = np.zeros((H, W), np.float32)
+            mh, mw = full.shape
+            x0, y0 = (W - mw) // 2, int(cy - mh / 2)
+            lpart = full.copy()
+            lpart[:, :cut_x] = 0
+            fpart = full - lpart
+            if ts < t_loss + STEP / FPS:
+                bloom = 1.0
+                lpart = cv2.GaussianBlur(lpart, (0, 0), 7)
+            canvas[y0:y0 + mh, x0:x0 + mw] = np.maximum(fpart, lpart)
+        a = canvas
+        # the exit: the last two steps slide to the left
+        steps_left = (n - 1) // STEP - st
+        if steps_left <= 1:
+            dx = -340 if steps_left == 1 else -980
+            M = np.float32([[1, 0, dx], [0, 1, 0]])
+            a = cv2.warpAffine(a, M, (W, H))
+            a = cv2.filter2D(a, -1, np.full((1, 60), 1 / 60, np.float32))
+        fr = glow_white(bg, a, k_glow=0.9, bloom=bloom)
+        wr.write(fr + grain(seed=9100 + st, amt=4))
+    wr.close()
+    print(f"   count: {n} frames ({t0:.3f}-{t1:.3f}), lands at {t_land:.3f}, 'loss.' at {t_loss:.3f}")
+
+
+# ============================================================================== v15 (the user's notes on the v10 render)
+# The wall: "covering the whole screen ... curved inward ... away from perspective": photos over the whole frame (a
+# 3 x 4 cover, each tile overlapping its neighbours, no gaps), more cutting in on top every reel frame (12 fps), the
+# whole picture bent inward (a pincushion: the edges near, the middle far), the edges soft.
+WALL5_BASE = [   # (key, t, cx, cy, zoom, look), row by row
+    ("ASH", 9.3, 0.42, 0.40, 0.86, "c"), ("XEX", 125.0, 0.50, 0.48, 0.72, "c"),
+    ("BRL", 845.0, 0.44, 0.55, 0.80, "c"), ("CPIN", 11.1, 0.50, 0.50, 0.60, "c"),
+    ("FE3", 13.4, 0.50, 0.42, 0.62, "bw"), ("C618", 3.3, 0.55, 0.45, 0.85, "bw"),
+    ("ASH", 8.2, 0.52, 0.42, 0.80, "c"), ("BR15", 214.0, 0.50, 0.50, 0.55, "c"),
+    ("COPP", 7.0, 0.52, 0.50, 0.70, "green"), ("CMJ", 2.6, 0.50, 0.50, 0.92, "c"),
+    ("BRL", 160.0, 0.46, 0.60, 0.80, "c"), ("BRS", 13.5, 0.46, 0.50, 0.70, "c"),
+]
+ROWS5, COLS5 = [0, 380, 720, 1080], [0, 520, 980, 1460, 1920]
+WALL5_OVER = [   # (key, t, cx, cy, zoom, x, y, w, h, step, look)
+    ("LFI", 10.3, 0.50, 0.38, 0.50, 120, 560, 380, 280, 1, "c"),
+    ("CPIN", 2.9, 0.50, 0.50, 0.80, 1500, 520, 420, 470, 2, "c"),
+    ("FIN", 1.0, 0.68, 0.36, 0.56, 640, 90, 640, 620, 3, "c"),      # the big one in the middle (the reel's duo)
+    ("MF2", 7.4, 0.42, 0.40, 0.50, 1290, 60, 330, 420, 4, "bw"),
+    ("ASH", 11.5, 0.42, 0.45, 0.78, 260, 0, 420, 270, 5, "c"),
+    ("BRS", 0.5, 0.50, 0.58, 0.82, 560, 760, 460, 280, 6, "c"),
+    ("ASH", 10.6, 0.47, 0.42, 0.62, 1020, 640, 360, 300, 7, "c"),
+]
+_CONC = {}
+
+
+def concave(img, k=0.20):
+    """bend the picture inward (pincushion): the edges magnified, the middle pushed back; the frame stays full"""
+    h, w = img.shape[:2]
+    key = (h, w, k)
+    if key not in _CONC:
+        yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+        dx, dy = (xx - w / 2) / (w / 2), (yy - h / 2) / (w / 2)
+        f = 1 - k * (dx * dx + dy * dy)
+        _CONC[key] = ((w / 2 + dx * f * (w / 2)).astype(np.float32), (h / 2 + dy * f * (w / 2)).astype(np.float32))
+    mx, my = _CONC[key]
+    return cv2.remap(img, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+
+
+def wall5_lens(fr, step):
+    k = 1.0 + 0.006 * step
+    fr = affine(fr, k, W / 2, H / 2, W / 2, H / 2, border=(0, 0, 0))
+    fr = concave(fr, 0.20)
+    fr = center_focus(fr, r0=560, r1=1150, zoom=0.008, n=6, gblur=1.6)
+    return vignette(fr, strength=0.22)
+
+
+def fink_white():
+    cut = np.asarray(Image.open(f"{IMG}/v10_fink_cut.png").convert("RGBA")).astype(np.float32)
+    out = np.zeros_like(cut)
+    out[..., :3] = 255
+    out[..., 3] = cut[..., 3]
+    Image.fromarray(out.astype(np.uint8), "RGBA").save(f"{IMG}/v15_fink_white.png")
+
+
+def r_wall5():
+    n = nf(0.0, FINK_IN)
+    k_wall, k_thresh, k_false = 10, n - 8, n - 4
+    base = []
+    for i, (key, t, cx, cy, z, look) in enumerate(WALL5_BASE):
+        r, c = divmod(i, 4)
+        x0, y0 = COLS5[c] - 18, ROWS5[r] - 18
+        w, h = COLS5[c + 1] - COLS5[c] + 36, ROWS5[r + 1] - ROWS5[r] + 36
+        base.append((tile_still(key, t, cx, cy, z, w, h, look), x0, y0, w, h, k_wall))
+    over = [(tile_still(k, t, cx, cy, z, w, h, look), x, y, w, h, k_wall + STEP * st)
+            for k, t, cx, cy, z, x, y, w, h, st, look in WALL5_OVER]
+
+    def paste(fr, im, x, y, w, h):
+        x0, y0, x1, y1 = max(0, x), max(0, y), min(W, x + w), min(H, y + h)
+        fr[y0:y1, x0:x1] = im[y0 - y:y1 - y, x0 - x:x1 - x]
+
+    def wall(i):
+        st = max(0, (i - k_wall) // STEP)
+        fr = np.zeros((H, W, 3), np.float32)
+        for im, x, y, w, h, f0 in base + over:
+            if f0 <= max(i, k_wall):
+                paste(fr, im, x, y, w, h)
+        return wall5_lens(fr, st)
+
+    texture = (np.sin(np.arange(H, dtype=np.float32) * np.pi / 2.0) * 3.0)[:, None, None]
+    first, last = wall(k_wall), wall(k_thresh - 1)
+    soft = cv2.GaussianBlur(last, (0, 0), 7) * 0.62
+    soft_c = cv2.resize(soft, (FW, FH), interpolation=cv2.INTER_CUBIC) * screen_lines(FW)
+    save_jpg(soft_c, f"{IMG}/v15_bg_wall.jpg", q=94)
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    L = 140
+    pan = cv2.filter2D(first, -1, np.full((1, L), 1.0 / L, np.float32), borderType=cv2.BORDER_REFLECT)
+    bend = (xx - W / 2) / (W / 2)
+    pan = cv2.remap(pan, xx, (H / 2 + (yy - H / 2) * (1 + 0.22 * bend * bend)).astype(np.float32), cv2.INTER_LINEAR,
+                    borderMode=cv2.BORDER_REFLECT)
+    pan = np.stack([np.roll(pan[..., 0], 16, axis=1), pan[..., 1], np.roll(pan[..., 2], -16, axis=1)], axis=2)
+    pan = grade(pan, sat=1.9, contrast=1.35, bright=10)
+    pan = pan + cv2.GaussianBlur(np.clip(pan - 150, 0, 255), (0, 0), 14) * 0.9
+    grey = grade(cv2.GaussianBlur(first, (0, 0), 1.6), sat=0.35, contrast=0.5) * 0.7 + 150 * 0.3
+    grey = np.stack([np.roll(grey[..., 0], 4, axis=1), grey[..., 1], np.roll(grey[..., 2], -4, axis=1)], axis=2)
+    cutc = fink_cut2()
+    al = cutc[..., 3:4] / 255.0
+    comp = soft_c * (1 - al) + cutc[..., :3] * al
+    M = np.float32([[1.0, 0, W / 2 - (FX0 + W / 2)], [0, 1.0, H / 2 - (FY0 + H / 2)]])
+    fv = cv2.warpAffine(comp, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    g = np.clip(fv @ np.float32([0.299, 0.587, 0.114]) * 1.6 + 25, 0, 255).astype(np.uint8)
+    falsec = cv2.GaussianBlur(cv2.applyColorMap(255 - g, cv2.COLORMAP_TURBO)[..., ::-1].astype(np.float32), (0, 0), 3.0)
+    gg = last @ np.float32([0.299, 0.587, 0.114])
+    gg = np.where(gg > 58, 255.0, gg * 0.25)
+    blk = cv2.resize(cv2.resize(gg, (W // 18, H // 18), interpolation=cv2.INTER_AREA), (W, H), interpolation=cv2.INTER_NEAREST)
+    m = ((xx > W * 0.55) & (((xx // 90).astype(int) + (yy // 70).astype(int)) % 3 == 0)).astype(np.float32)
+    photocopy = np.repeat((gg * (1 - m) + np.where(blk > 140, 255.0, 20.0) * m)[..., None], 3, axis=2)
+    fink_white()
+    wr = Writer(f"{CLIPS}/v15_wall.mp4")
+    cache = {}
+    for i in range(n):
+        if i < 6:
+            fr = pan
+        elif i < k_wall:
+            fr = grey
+        elif i < k_thresh:
+            st = (i - k_wall) // STEP
+            if st not in cache:
+                cache[st] = wall(i)
+            fr = cache[st]
+        elif i < k_false:
+            fr = photocopy
+        else:
+            fr = falsec
+        wr.write(fr + texture + grain(seed=5000 + (i // STEP), amt=5))
+    wr.close()
+    print(f"   wall5: {n} frames, {len(WALL5_BASE)} photos covering the frame + {len(WALL5_OVER)} cutting in")
+
+
+def r_company2():
+    """"company ever": Fink from behind facing the crowd (FG 2.55: his glasses and profile show), black and white,
+    only lightly lifted (the user: less texture, less opacity, so he can be seen)"""
+    a0, a1 = B["built"][0], F(T["built"] - TM.LEAD)
+    n = nf(a0, a1)
+    frs = grab(SRC["FG"], 2.55, n, fps=FPS)
+    wr = Writer(f"{CLIPS}/v15_company.mp4")
+    for i, im in enumerate(frs):
+        im = im.astype(np.float32)
+        h, w = im.shape[:2]
+        ch = int(w * 9 / 16)
+        y0 = max(0, int(h * 0.36 - ch / 2))
+        fr = cv2.resize(im[y0:y0 + ch], (W, H), interpolation=cv2.INTER_CUBIC)
+        k = 1.10 + 0.02 * i / max(1, n - 1)                   # (cropped in: clear of the channel's "tfg" bug)
+        fr = affine(fr, k, W * 0.56, H / 2, W / 2, H / 2, border=(0, 0, 0))
+        g = cv2.GaussianBlur(fr, (0, 0), 0.6) @ np.float32([0.299, 0.587, 0.114])
+        g = np.clip(g * 0.95 + 16, 0, 255)
+        wr.write(vignette(np.repeat(g[..., None], 3, axis=2), strength=0.25) + grain(seed=6100 + i, amt=2.5))
+    wr.close()
+    print(f"   company2: {n} frames (FG 2.55, light)")
+
+
+def r_bet():
+    """"but one bad bet": the Kalanick reel's "he's coming back hungrier." frame (9.0-9.7 s): the cut goes through one
+    reel frame of the next shot in black and white, smeared sideways; then the shot, dark and warm with a red light at
+    the right edge (its stage) -- ours the user's money clip on the dollar's "1", textured"""
+    a0, a1 = F(TM.RT("but1") - TM.LEAD), F(TM.RT("cost") - TM.LEAD)
+    n = nf(a0, a1)
+    frs = grab(SRC["COPP"], 4.0, n, fps=FPS)
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    red = np.exp(-(((xx - W) / 420) ** 2 + ((yy - 0.45 * H) / 700) ** 2))[..., None] * np.float32([150, 22, 18])
+    lines = screen_lines(W)
+    wr = Writer(f"{CLIPS}/v15_bet.mp4")
+    for i in range(n):
+        fr = cover(frs[min(i, len(frs) - 1)].astype(np.float32))
+        if i < 6:
+            g = fr @ np.float32([0.299, 0.587, 0.114])
+            g = cv2.filter2D(g, -1, np.full((1, 110), 1 / 110, np.float32), borderType=cv2.BORDER_REFLECT)
+            fr = np.repeat((g * 0.55)[..., None], 3, axis=2)
+        else:
+            g = fr @ np.float32([0.299, 0.587, 0.114])
+            fr = (g[..., None] * 0.35 + fr * 0.65) * np.float32([1.05, 0.92, 0.80]) * 0.52 + red
+            fr = vignette(fr * lines, strength=0.35)
+        wr.write(fr + grain(seed=6700 + i // STEP, amt=4))
+    wr.close()
+    print(f"   bet: {n} frames ({a0:.3f}-{a1:.3f})")
+
+
+def rembg(src_png, out_png):
+    subprocess.run(["npx", "--yes", "hyperframes@0.9.46", "remove-background", src_png, "-o", out_png],
+                   cwd=ROOT, check=True, capture_output=True)
+
+
+def r_r88():
+    """"in 1988,": the Anthropic reel's "2018" (12.82-13.57): the first reel frame the man's white silhouette on the
+    shot, then the shot (the number in the composition) -- ours Fink seated at the Economic Club (FG 6.2)"""
+    a0, a1 = F(TM.RT("1988") - 0.033), F(TM.RT("he1") - 0.033)
+    n = nf(a0, a1)
+    frs = grab(SRC["FG"], 6.20, n, fps=FPS)
+
+    def crop(im):
+        im = im.astype(np.float32)
+        h, w = im.shape[:2]
+        ch = int(w * 9 / 16)
+        y0 = max(0, int(h * 0.42 - ch / 2))
+        return cv2.resize(im[y0:y0 + ch], (W, H), interpolation=cv2.INTER_CUBIC)
+
+    first = crop(frs[0])
+    save_png(first, f"{WORK}/r88_first.png")
+    rembg(f"{WORK}/r88_first.png", f"{WORK}/r88_cut.png")
+    al = np.asarray(Image.open(f"{WORK}/r88_cut.png").convert("RGBA")).astype(np.float32)[..., 3:4] / 255.0
+    wr = Writer(f"{CLIPS}/v15_r88.mp4")
+    for i in range(n):
+        fr = grade(crop(frs[min(i, len(frs) - 1)]), sat=0.9, contrast=1.06)
+        if i < STEP:
+            fr = fr * 0.75 * (1 - al) + 255 * al
+        wr.write(fr + grain(seed=6900 + i, amt=2.5))
+    wr.close()
+    print(f"   r88: {n} frames ({a0:.3f}-{a1:.3f}), the silhouette for {STEP} frames")
+
+
+def r_called():
+    """"He called it": the reel's "Now elon's" (16.23-16.32): the man's white silhouette over the shot for two reel
+    frames -- the shot is v6_rest2's (BRL 786.6); its first frame cut out here (v15_called_white.png)"""
+    t = F(TM.RT("he_called") - TM.LEAD) + 0.05 - TM.B["rest2"][0]
+    im = grab(f"{CLIPS}/v6_rest2.mp4", t, 1)[0].astype(np.float32)
+    save_png(im, f"{WORK}/called_first.png")
+    rembg(f"{WORK}/called_first.png", f"{WORK}/called_cut.png")
+    a = np.asarray(Image.open(f"{WORK}/called_cut.png").convert("RGBA"))
+    out = np.zeros_like(a)
+    out[..., :3] = 255
+    out[..., 3] = a[..., 3]
+    Image.fromarray(out, "RGBA").save(f"{IMG}/v15_called_white.png")
+    print(f"   called: silhouette from rest2 at {t:.3f}s, {np.mean(a[..., 3] > 128):.3f} of the frame")
+
+
+
+# ---- the founders' square transition (the user: "slightly before, on his face ... a transition between the clips"):
+# over the last 0.2 s of each founder's clip the frame breaks into the Nvidia reel's 3 x 3 squares -- first his face,
+# white and black, then more and more of the next shot (our next page; for Jobs, Elon on Rogan)
+TILE_SEQ = ["CWCCBCCWC", "WCBNCWBCN", "NWNBNNWNB", "NNWNNBNNN"]
+
+
+def tiles2(cur, nxt, pat, gap=6):
+    out = np.full((H, W, 3), 10, np.float32)
+    tw, th = W // 3, H // 3
+    for k, c in enumerate(pat):
+        r, q = divmod(k, 3)
+        x, y = q * tw + gap // 2, r * th + gap // 2
+        src = {"C": cur, "N": nxt}.get(c)
+        if src is None:
+            out[y:y + th - gap, x:x + tw - gap] = 246 if c == "W" else 6
+        else:
+            out[y:y + th - gap, x:x + tw - gap] = src[y:y + th - gap, x:x + tw - gap]
+    return out
+
+
+def tile_out(name, frames_, nxt, step=3):
+    n = len(frames_)
+    k0 = n - step * len(TILE_SEQ)
+    wr = Writer(f"{CLIPS}/{name}.mp4")
+    for i, fr in enumerate(frames_):
+        fr = fr.astype(np.float32)
+        f24 = int(i * 24 / FPS)
+        if f24 in (2, 4):                                   # the reel's two negatives at the start
+            fr = 255 - fr
+        if i >= k0:
+            fr = tiles2(fr, nxt, TILE_SEQ[min(len(TILE_SEQ) - 1, (i - k0) // step)])
+        wr.write(fr)
+    wr.close()
+
+
+def r_founders2():
+    """the v6 founders' clips re-cut: Jensen (the Nvidia reel's own opening, held before its own squares), Gates and
+    Jobs, each ending in the squares into the shot that really follows (the page images from snapshots)"""
+    import prep_v3 as P3
+    import prep_v4 as P4
+    slots = founder_slots()
+    nxt = {k: np.asarray(Image.open(f"{WORK}/next_{k}.png").convert("RGB").resize((W, H))).astype(np.float32)
+           for k in ("ms", "ap")}
+    nxt["rogan"] = grab(f"{CLIPS}/v5_rogan.mp4", 0.0, 1)[0].astype(np.float32)
+    a, b = slots["r1_jensen"]
+    n = nf(a, b)
+    src = grab(f"{P3.V3}/nvidia_reel.mp4", 0.0, 26)
+    fr = []
+    for i in range(n):
+        j = min(int(i * 24 / FPS), 21)                     # (its own squares, frames 22-24, left out)
+        im = cv2.resize(src[j][0:540].astype(np.float32), (W, H), interpolation=cv2.INTER_CUBIC)
+        fr.append(np.clip(im + (im - cv2.GaussianBlur(im, (0, 0), 2.0)) * 0.6, 0, 255))
+    tile_out("v3_r1_jensen", fr, nxt["ms"])
+    a, b = slots["r1_gates"]
+    n = nf(a, b)
+    tile_out("v3_r1_gates", P3.live(f"{P3.V3}/bill_gates.mp4", 9.40, n, crop="crop=1186:667:90:0")[:n], nxt["ap"])
+    a, b = slots["r1_jobs"]
+    n = nf(a, b)
+    tile_out("v3_r1_jobs", P3.live(f"{P3.V3}/steve_jobs.mp4", 0.30, n)[:n], nxt["rogan"])
+    for k, name in enumerate(["v3_r1_jensen", "v3_r1_gates", "v3_r1_jobs"]):
+        P4.texture_pass(name, opacity=0.0, seed=3 + k)
+    print("   founders2: squares into the next shot over each clip's last 0.2 s")
+
+
+
+def r_touch4():
+    """"everything you touch." running on until "A company" (the user: the touch video continues): the fingers meet on
+    "touch" (v3's r_touch3), then the burst -- its own frames 21-27 only (from 28 the source cuts to an office) --
+    slowed to fill the beat, blended frame to frame, easing into its white"""
+    import prep_v3 as P3
+    n = nf(*B["touch"])
+    t0 = round(B["touch"][0] * FPS)
+    k_touch = round(T["touch"] * FPS) - t0
+    hands = cover(P3.frame_at(P3.TOUCH, 0, 24).astype(np.float32))
+    strip = hands[:, 922:992]
+    plate = np.concatenate([strip] * (W // strip.shape[1] + 1), axis=1)[:, :W]
+    lum = cv2.GaussianBlur(hands.mean(axis=2), (0, 0), 1.2)
+    mask = np.clip((lum - 34) / 40, 0, 1)[..., None]
+    left_m, right_m = mask.copy(), mask.copy()
+    left_m[:, 960:] = 0
+    right_m[:, :960] = 0
+    burst = [cover(P3.frame_at(P3.TOUCH, f, 24).astype(np.float32)) for f in range(21, 28)]
+    wr = Writer(f"{CLIPS}/r_touch3.mp4")
+    for j in range(n):
+        if j < k_touch:
+            u = smooth((j + 1) / k_touch)
+            d = 260 - 305 * u
+            fr = plate.copy()
+            for m, dx in ((left_m, -d), (right_m, d)):
+                M = np.float32([[1, 0, dx], [0, 1, 0]])
+                hs = cv2.warpAffine(hands, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+                ms = cv2.warpAffine(m, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)[..., None]
+                fr = fr * (1 - ms) + hs * ms
+        else:
+            p = (j - k_touch) / max(1, n - k_touch - 1)
+            x = 6.0 * p ** 0.75
+            a = int(np.floor(x))
+            b = min(6, a + 1)
+            w = x - a
+            fr = burst[a] * (1 - w) + burst[b] * w
+            fr = fr + (255 - fr) * (0.55 * smooth((p - 0.7) / 0.3))   # into its white, ahead of the paper
+        wr.write(fr + grain(seed=400 + j, amt=4))
+    wr.close()
+    print(f"   touch4: {n} frames, the fingers meet at {k_touch}, the burst slowed over {n - k_touch}")
+
+
+def r_job():
+    """"one job": the same source as v6_rest2's "a system" shot running on to its ring of trading screens (BZ 60.55),
+    in place of the brain shot with its burned-in text"""
+    a0, a1 = F(TM.R(TM.ALIGN["rest"][86]["start"]) - 0.03), F(TM.R(TM.ALIGN["rest"][88]["start"]) - 0.03)
+    n = nf(a0, a1)
+    frs = grab(f"{DL}/v3/new/bazzarbyte.mp4", 60.55, n, fps=FPS)
+    wr = Writer(f"{CLIPS}/v15_job.mp4")
+    for i, im in enumerate(frs):
+        band = im[520:1128].astype(np.float32)
+        fr = cv2.resize(band, (W, H), interpolation=cv2.INTER_CUBIC)
+        wr.write(grade(fr, sat=0.95, contrast=1.05) + grain(seed=7100 + i, amt=3))
+    wr.close()
+    print(f"   job: {n} frames ({a0:.3f}-{a1:.3f})")
+
+
+
+def r_factory2():
+    """the card in "A company that's never made" (the user: the clips added earlier, each the same length, nothing
+    like the knob-press shot): v9's three -- circuit boards on a bench, the press, the line -- an equal third each"""
+    import prep_v9 as P9
+    a, b = B["made"][0], F(T["a4"] - TM.LEAD)
+    n = nf(a, b)
+    shots = [("BRL", 167.05, 880, 600, 1500), ("HOW", 192.74, 860, 600, 1500), ("BRL", 170.60, 880, 600, 1500)]
+    per = [n // 3 + (1 if k < n % 3 else 0) for k in range(3)]
+    wr = Writer(f"{CLIPS}/v10_factory.mp4", w=960, h=540)
+    for (key, t0, cx, cy, span), m in zip(shots, per):
+        for fr in P9.crop_clip(key, t0, m, cx, cy, span, 960, 540):
+            wr.write(fr)
+    wr.close()
+    print(f"   factory2: {n} frames, three shots of {per}")
+
+
+
+def r_negs():
+    """the reel's one-frame negatives (11.32 s) as stills of v6_rest2's own frames, inverted (a blend in another
+    composition cannot see the video under it)"""
+    r0 = TM.B["rest2"][0]
+    for name, i in (("br", 80), ("risk", 89)):
+        t = F(TM.R(TM.ALIGN["rest"][i]["start"]) - 0.03) - 2.5 / FPS
+        im = grab(f"{CLIPS}/v6_rest2.mp4", t - r0, 1)[0].astype(np.float32)
+        save_jpg(255 - im, f"{IMG}/v15_neg_{name}.jpg", q=92)
+        print(f"   neg {name}: rest2 frame at film {t:.3f}")
+
+
+ALL = {"negs": r_negs, "factory2": r_factory2, "touch4": r_touch4, "job": r_job, "founders2": r_founders2, "wall5": r_wall5, "company2": r_company2, "bet": r_bet, "r88": r_r88, "called": r_called, "count": r_count, "wall4": r_wall4, "plates3": fink_plates3, "wall3": r_wall3, "wall2": r_wall2, "finkbg": r_finkbg, "founders": r_founders, "factory": r_factory, "flag": r_flag, "wall": r_wall, "evil": r_evil, "company": r_company, "built": r_built, "cartel": r_cartel}
 
 if __name__ == "__main__":
     for name in (sys.argv[1:] or ALL):

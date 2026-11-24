@@ -120,8 +120,8 @@ B = {
     "logos": (T["that"], T["everything"]),                   # "that owns a piece of"
     # "everything you touch.": the fingers meet on "touch", the burst, and its white frames (the touch source.s 29;
     # after it the clip cuts to other footage, so the beat ends there)
-    "touch": (T["everything"], TOUCH_END),
-    "made": (TOUCH_END, F(T["yet"] - LEAD)),                 # "A company that's never made a single physical product,"
+    "touch": (T["everything"], F(T["a3"] - LEAD)),           # (v15: the touch clip runs on until "A company")
+    "made": (F(T["a3"] - LEAD), F(T["yet"] - LEAD)),         # "A company that's never made a single physical product,"
     "share": (F(T["yet"] - LEAD), F(T["it"] - LEAD)),        # "yet it's one of the top shareholders in almost every ..."
     "stake": (F(T["it"] - LEAD), OPEN_END),                  # "It holds more of Nvidia than Jensen Huang ... ever did."
 }

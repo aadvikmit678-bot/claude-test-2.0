@@ -139,15 +139,11 @@ def palmer_lines():
 PORSCHE = [
     ("por", 30, 31, "Back in"), ("por", 32, 33, "the 1980s,"), ("por", 34, 35, "Larry Fink"), ("por", 36, 37, "was a"),
     ("por", 38, 39, "Wall Street"), ("word", 40, 40, "prodigy,"),
-    ("por", 41, 42, "but one"), ("por", 43, 44, "bad bet"), ("por", 45, 46, "cost him"),
-    ("big", 47, 49, "$100 million loss."),
+    ("skip", 41, 49, "_"),          # (v15: "but one bad bet cost him $100 million loss." -- s_bet writes it)
     ("por", 50, 52, "That was enough"), ("por", 53, 55, "to get him"), ("por", 56, 57, "thrown out"),
     ("por", 58, 60, "of Wall Street"), ("por", 61, 64, "and to convince him"), ("por", 65, 67, "of one thing."),
     ("por", 68, 69, "Wall Street"), ("por", 70, 71, "is terrible"), ("por", 72, 73, "at seeing"), ("word", 74, 74, "risk."),
-    ("por", 75, 75, "So,"), ("card", 76, 77, "IN|1988"), ("por", 78, 79, "he co-founded"), ("word", 80, 80, "BlackRock"),
-    ("por", 81, 82, "and built"), ("por", 83, 84, "a system"), ("por", 85, 87, "with one job"),
-    ("por", 88, 88, "calculating"), ("word", 89, 89, "risk."),
-    ("por", 90, 92, "He called it"), ("word", 93, 93, "Aladdin."),
+    ("skip", 75, 93, "_"),          # (v15: "So, in 1988, ... He called it Aladdin." -- s_risk writes it)
     ("por", 94, 95, "When the"), ("big", 96, 96, "2008"), ("por", 97, 98, "crisis hit,"),
     ("por", 99, 101, "the U.S. government"), ("por", 102, 102, "called"), ("por", 103, 105, "the one guy"),
     ("por", 106, 109, "Wall Street threw out"), ("por", 110, 111, "years ago"), ("por", 112, 114, "to clean up"),
