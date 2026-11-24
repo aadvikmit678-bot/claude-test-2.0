@@ -30,6 +30,15 @@ SPECIAL = {
     ("vo", 42): 0.08,    # "Sachs." -> "Amongst": straight in (the user)
     ("vo", 58): 0.26,    # "world," -> "BlackRock."
     ("rest", None): None,
+    # the new opening (Nov 24): the red ON EARTH card holds into its pause, the red "most evil" scene's rise needs
+    # the whole pause after "BlackRock." (no cut there), the others keep a short breath
+    ("open", 7): 0.36,    # "Earth." -> "Larry"
+    ("open", 13): 0.60,   # "BlackRock." -> "The": untouched (Fink rises through it)
+    ("open", 20): 0.24,   # "world." -> "A"
+    ("open", 36): 0.28,   # "touch." -> "A"
+    ("open", 58): 0.26,   # "company." -> "It"
+    ("open", 66): 0.24,   # "Huang," -> "more"
+    ("open", 72): 0.24,   # "Gates," -> "and"
 }
 REST_KEEP = {"it": 0.32, "mess—": 0.30}   # "He called it … Aladdin.", "the mess— … Larry Fink." keep their beat
 
@@ -88,13 +97,19 @@ def main():
     cuts = [c for c in cuts if not (c[2] == "did.")]          # that gap is where the Elon clip goes
     res["rest"] = {"cuts": [c[:2] for c in cuts], "why": [f"{c[2]} -> {c[3]}" for c in cuts],
                    "rest1_out": round(tail + 0.09, 3), "rest2_in": round(onset - 0.05, 3)}
+    # the new opening recording (new_starting_larry_fink_video.mp3): its pauses, and where "... ever did." has faded
+    op = json.load(open(f"{WD}/open.json"))
+    cuts, e, thr = cuts_for("open", f"{SRC}/open/open16.wav", op)
+    tail, _ = silence(e, thr, op[-1]["end"], op[-1]["end"] + 0.2)
+    res["open"] = {"cuts": [c[:2] for c in cuts], "why": [f"{c[2]} -> {c[3]}" for c in cuts],
+                   "open_out": round(min(tail + 0.09, len(e) / 100), 3)}
     json.dump(res, open(f"{WD}/pace.json", "w"), indent=1)
     for k, v in res.items():
         saved = sum(b - a for a, b in v["cuts"])
         print(f"{k}: {len(v['cuts'])} pauses cut, {saved:.2f} s saved")
         for (a, b), why in zip(v["cuts"], v["why"]):
             print(f"   {a:6.2f}-{b:6.2f} ({b - a:.2f}s)  {why}")
-    print("rest1 ends", res["rest"]["rest1_out"], "rest2 starts", res["rest"]["rest2_in"])
+    print("rest1 ends", res["rest"]["rest1_out"], "rest2 starts", res["rest"]["rest2_in"], "open ends", res["open"]["open_out"])
 
 
 if __name__ == "__main__":

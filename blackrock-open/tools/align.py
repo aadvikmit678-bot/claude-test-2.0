@@ -30,6 +30,7 @@ SAY = {
     "1988": "NINETEEN EIGHTY EIGHT", "2008": "TWO THOUSAND EIGHT", "500": "FIVE HUNDRED", "S&P": "S AND P",
     "U.S.": "U S", "JP": "J P", "CEO": "C E O", "DJ": "D J", "part-time": "PART TIME", "co-founded": "CO FOUNDED",
     "BlackRock": "BLACK ROCK", "BlackRock's": "BLACK ROCK'S", "Blackrock's": "BLACK ROCK'S", "Nvidia": "INVIDIA",
+    "15": "FIFTEEN",
 }
 SCALE = {"trillion", "million", "billion"}
 
@@ -108,11 +109,19 @@ def whisper_words(path):
 LINE = ("I don't think there's ever been a panel with as big an assemblage of financial talent and skill as you've "
         "been able to put together here.").split()
 
+# the new opening (Nov 24: new_starting_larry_fink_video.mp3, 24.63 s), as said
+OPEN = ("This is the most powerful man on Earth. Larry Fink, the CEO of BlackRock. The most evil company in the "
+        "world. A 15 trillion dollar cartel of weaponized capital that owns a piece of everything you touch. "
+        "A company that's never made a single physical product, yet it's one of the top shareholders in almost "
+        "every major U.S. company. It holds more of Nvidia than Jensen Huang, more of Microsoft than Bill Gates, "
+        "and more of Apple than Steve Jobs ever did.").split()
+
 JOBS = {
     "rest": (f"{SRC}/rest/rest16.wav", f"{SRC}/rest/transcript.json"),
     "vo": (f"{SRC}/vo16.wav", f"{SRC}/vo_dtw.json"),
     "rogan": (f"{AUD}/rogan_vocals.wav", f"{SRC}/rogan/transcript.json"),
     "line": (f"{AUD}/line.wav", LINE),
+    "open": (f"{SRC}/open/open16.wav", OPEN),
 }
 
 if __name__ == "__main__":

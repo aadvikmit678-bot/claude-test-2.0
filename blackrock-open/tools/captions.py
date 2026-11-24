@@ -1,7 +1,7 @@
 """The film's captions, every word on its own spoken onset (the force-aligned words of tools/words, through the paced
 clock of timing.py), in three styles the user chose (Nov 21):
 
-1. "jensen" -- from the panel line to "...than Steve Jobs ever did.": the Jensen Huang reel (DfxH1gUoKlp). One small
+1. "jensen" -- the opening, to "...than Steve Jobs ever did.": the Jensen Huang reel (DfxH1gUoKlp). One small
    line at the centre, Inter Display SemiBold, white with a soft shadow; the words cut in one at a time on their
    onsets and build a 2-4 word phrase that re-centres as it grows. Key words ("*") are set alone in Instrument Serif
    with the Dario white glow instead (and the Nvidia reel's DfpiReJKFLO: key words big and glowing). "[...]" is a span
@@ -25,34 +25,13 @@ LEAD = 0.03          # a word shows this much before its aligned onset (never la
 
 
 # ------------------------------------------------------------------ words with film times
-def vo_words():
-    out = []
-    for w in TM.ALIGN["vo"]:
-        if w["start"] is None:
-            continue
-        out.append((w["text"], TM.V(w["start"]), TM.V(w["end"])))
-        if w["text"].startswith("BlackRock"):
-            break
-    return out
-
-
-def rest_words(part):
-    out = []
-    for w in TM.ALIGN["rest"]:
-        first = w["start"] < TM.REST1_OUT
-        if (part == "rest1") == first:
-            out.append((w["text"], TM.R(w["start"]), TM.R(w["end"])))
-    return out
+def open_words():
+    return [(w["text"], TM.O(w["start"]), TM.O(w["end"])) for w in TM.ALIGN["open"]]
 
 
 def rogan_words():
     a = B["rogan"][0]
     return [(w["text"], F(a + w["start"]), F(a + w["end"])) for w in TM.ALIGN["rogan"]]
-
-
-def line_words():
-    L = TM.LINE
-    return [(w, t, L[i + 1][1] if i + 1 < len(L) else t + 0.4) for i, (w, t) in enumerate(L)]
 
 
 def _norm(w):
@@ -68,29 +47,26 @@ def _clean(w):
 
 
 # ------------------------------------------------------------------ 1. jensen (+ serif key words)
+# v9: the new opening. "[...]" is a span its scene writes itself (the wall's serif words, ON EARTH, the name mosaic,
+# the red scene, "world", the hook's italic line, the lockups around the factory card, "top shareholders"): no line.
+# "_" sets a phrase a little below the centre (under "top shareholders"); "^" sets it dark and low on the light
+# founders page, where the names and the numbers are written big.
 SCRIPT = {
-    "line": "I don't think | there's ever been | a panel | with as big an | assemblage | of financial talent | "
-            "and skill | as you've been able | to put together here.",
-    "vo": "These are the most | [powerful people on earth,] | "
-          "[a 60 trillion dollar cartel of weaponized capital that owns a piece of everything you touch.] | "
-          "[That's Jamie Dimon, the guy running JP Morgan Chase,] | "
-          "[David Solomon,] | a part-time DJ | and the CEO~of | [Goldman Sachs.] | Amongst them | [is this guy,] | "
-          "[the man who runs the most evil] | company in the world, | [BlackRock.]",
-    "rest1": "A company | that manages | [$15 trillion] | in assets | ^holds more of | ^Nvidia than | Jensen Huang, | "
-             "^more of | ^Microsoft than | Bill Gates, | ^and more of | ^Apple than | Steve Jobs | ever did.",
+    "open": "This is the most | [powerful man on Earth.] | [Larry Fink, the CEO of BlackRock.] | "
+            "[The most evil company in the world.] | "
+            "[A 15 trillion dollar cartel of weaponized capital that owns a piece of everything you touch.] | "
+            "[A company that's never made a single physical product,] | yet it's one of the | [top shareholders] | "
+            "_in almost every | _major U.S. company. | ^It holds more of | ^Nvidia than | ^Jensen Huang, | ^more of | "
+            "^Microsoft than | ^Bill Gates, | ^and more of | ^Apple than | ^Steve Jobs | ^ever did.",
 }
 
 
 def _words_of(part):
-    if part == "line":
-        return line_words()
-    if part == "vo":
-        return vo_words()
-    return rest_words("rest1")
+    return open_words()
 
 
 def jensen_chunks():
-    """[(kind, [(text, onset, end), ...])], kind "small" | "ink" | "emph" | "hidden"."""
+    """[(kind, [(text, onset, end), ...])], kind "small" | "ink" | "low" | "emph" | "hidden"."""
     out = []
     for part, script in SCRIPT.items():
         words = _words_of(part)
@@ -104,6 +80,8 @@ def jensen_chunks():
                 kind, raw = "emph", raw.lstrip("*")
             elif raw.startswith("^"):
                 kind, raw = "ink", raw.lstrip("^")
+            elif raw.startswith("_"):
+                kind, raw = "low", raw.lstrip("_")
             elif raw.startswith("%"):                    # white, a heavier halo (over the white brand maps)
                 kind, raw = "heavy", raw.lstrip("%")
             ws = []
@@ -111,7 +89,7 @@ def jensen_chunks():
                 if i >= len(words):
                     raise SystemExit(f"ran out of words in {part} at {tok!r}")
                 w, t, e = words[i]
-                if _norm(w)[:1] != _norm(tok)[:1]:
+                if _norm(w)[:1] != _norm(tok)[:1] and not (tok[:1].isdigit() or w[:1].isdigit()):
                     for j in range(i + 1, min(i + 4, len(words))):
                         if _norm(words[j][0])[:1] == _norm(tok)[:1]:
                             i, (w, t, e) = j, words[j]
@@ -126,12 +104,13 @@ def jensen_phrases():
     """[(start, end, [(text, onset, end)], kind)] -- a phrase holds until the next one starts (or 0.9 s after its
     last word ends, whichever is first)."""
     cs = jensen_chunks()
+    stop = B["open"][1]
     out = []
     for k, (kind, ws) in enumerate(cs):
         if kind == "hidden" or not ws:
             continue
-        nxt = cs[k + 1][1][0][1] if k + 1 < len(cs) and cs[k + 1][1] else B["rest1"][1]
-        end = min(nxt, ws[-1][2] + 0.9, B["rest1"][1])
+        nxt = cs[k + 1][1][0][1] if k + 1 < len(cs) and cs[k + 1][1] else stop
+        end = min(nxt, ws[-1][2] + 0.9, stop)
         out.append((F(ws[0][1]), F(min(nxt, max(end, ws[-1][1] + 6 / 60))), ws, kind))
     return out
 

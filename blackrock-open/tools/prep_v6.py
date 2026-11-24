@@ -138,8 +138,8 @@ def r_evil():
     # the small words (the reference: centred, ~54 px regular; the key word bold italic ~78 px with a glow spot)
     small = []
     cy = H * 0.5
-    for word, key, x, kind in (("the", "the3", 0.5, "r"), ("man", "man", 0.5, "b"), ("who", "who", 0.13, "r"),
-                               ("runs", "runs", 0.5, "r"), ("the", "the4", 0.87, "r")):
+    # v9 ("The most evil company in the world."): only "The" is said before the cut, so it is the one small word
+    for word, key, x, kind in (("the", "the3", 0.5, "r"),):
         if kind == "b":
             a = text_alpha(word, HEROS_B, 84, x * W, cy=cy, shear=0.21)
             gl = glow_of(a, [(9, 0.8), (40, 0.9), (110, 0.8)])
@@ -147,7 +147,6 @@ def r_evil():
             a = text_alpha(word, HEROS_R, 54, x * W, cy=cy)
             gl = glow_of(a, [(7, 0.6), (26, 0.35)])
         small.append((a, gl, at(key), key))
-    groups = {"the3": ("man",), "man": ("who",)}         # a word leaves when its group's next word comes
     # as wide as the reference's words ("terrible" ~1400 px, "boss" ~1500 px) so they read around him
     most_a = text_alpha("most", LIB, 720, W / 2, baseline=0.39 * H)
     evil_a = text_alpha("evil", LIB, 960, W / 2, baseline=0.89 * H)
@@ -177,7 +176,7 @@ def r_evil():
             for a, gl, ta, key in small:
                 if t < ta:
                     continue
-                nxt = {"the3": at("man"), "man": at("who")}.get(key, t_cut)
+                nxt = t_cut
                 if t >= nxt - 1 / FPS:
                     continue
                 op = smooth((t - ta) / 0.10)

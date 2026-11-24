@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""The sound: the panel line, the voiceover, the Rogan clip, a dark synthesized bed and the bundled SFX
-(Pixabay licence, see assets/sfx/CREDITS.md), mixed at 48 kHz.
+"""The sound: the new opening recording, Elon's question, the rest recording and a dark synthesized bed, mixed at
+48 kHz. No sound effects (the user); add_sfx() is the old, unused hit track.
 
 Writes assets/audio/mix.wav (with music and SFX) and assets/audio/mix_dry.wav (speech only), so the render can be
 re-muxed without SFX without rendering again.
@@ -134,21 +134,20 @@ def frames_to_times(start, durs):
 
 
 REST = os.path.abspath(f"{ROOT}/../blackrock-src/vo/rest/rest.mp3")   # the user's second recording (the rest)
+OPEN = os.path.abspath(f"{ROOT}/../blackrock-src/vo/open/open.mp3")   # the user's new opening recording (Nov 24)
 
 
 def main():
     T, B = TM.T, TM.B
     speech = np.zeros((N, 2), np.float32)
-    # Rogan: the voice only (Demucs htdemucs, two stems): the user, "remove the background music from the Elon Musk
-    # interview" -- the clip came with music under it (the music stem was within 1.5 dB of the voice)
-    line, vo, rogan, rest = load(f"{AUD}/line.wav"), load(f"{AUD}/vo.wav"), load(f"{AUD}/rogan_vocals.wav"), load(REST)
+    # v9: the new opening recording, then Elon's question (the voice only: Demucs htdemucs, the user asked for the
+    # clip's music to go), then the rest recording from "Back in the 1980s"
+    opening, rogan, rest = load(OPEN), load(f"{AUD}/rogan_vocals.wav"), load(REST)
     target = -19.0
-    place(speech, line * 10 ** ((target - rms_db(line)) / 20), 0.0, fade_in=0.01, fade_out=0.03)
-    # the voiceover and the rest recording go in piece by piece: the pauses timing.py cuts (tools/words/pace.json)
-    # are left out, each piece placed where the paced clock puts it (every cut is in silence; 6 ms fades)
-    place_paced(speech, vo * 10 ** ((target - rms_db(vo)) / 20), 0.0, TM.VO_END, TM.VO_CUTS, TM.V0)
+    # the opening and the rest recording go in piece by piece: the pauses timing.py cuts (tools/words/pace.json) are
+    # left out, each piece placed where the paced clock puts it (every cut is in silence; 6 ms fades)
+    place_paced(speech, opening * 10 ** ((target - rms_db(opening)) / 20), 0.0, TM.OPEN_OUT, TM.OPEN_CUTS, 0.0)
     g = 10 ** ((target - rms_db(rest)) / 20)
-    place_paced(speech, rest * g, 0.0, TM.REST1_OUT, TM.REST_CUTS, TM.REST1_AT)        # ... than Steve Jobs ever did.
     place(speech, rogan * 10 ** ((target + 1 - rms_db(rogan)) / 20), B["rogan"][0], fade_in=0.004, fade_out=0.08)
     place_paced(speech, rest * g, TM.REST2_IN, TM.REST_END, TM.REST_CUTS, TM.REST2_AT)  # Back in the 1980s ... in it.
 
@@ -157,15 +156,13 @@ def main():
     env = np.ones(len(d), np.float32)
     env[: int(1.5 * SR)] = np.linspace(0.0, 1.0, int(1.5 * SR))
     r0, r1 = int(B["rogan"][0] * SR), int(B["react"][1] * SR)
-    fade = int(0.12 * SR)                                # no music under Elon's question and Rogan's silent second
+    fade = int(0.12 * SR)                                # no music under Elon's question
     env[r0 - fade:r0] *= np.linspace(1.0, 0.0, fade)
     env[r0:r1] = 0.0
     env[r1:r1 + fade] *= np.linspace(0.0, 1.0, fade)
     env[-int(1.2 * SR):] *= np.linspace(1.0, 0.0, int(1.2 * SR))
     place(music, d * env[:, None], 0.0, fade_out=0.06)
     fx = np.zeros((N, 2), np.float32)
-    if USE_SFX:
-        add_sfx(music, fx, T, B)
 
     # duck the music under speech a little
     lvl = np.abs(speech).max(axis=1)

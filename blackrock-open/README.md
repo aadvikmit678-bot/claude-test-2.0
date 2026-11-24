@@ -1,4 +1,4 @@
-# BlackRock (16:9, 60 fps, 84.13 s)
+# BlackRock (16:9, 60 fps, 69.85 s)
 
 This is a HyperFrames project.
 
@@ -16,7 +16,8 @@ This is a HyperFrames project.
 
 ```
 npx --yes hyperframes@0.9.46 preview                 # Studio in the browser (http://localhost:3002)
-npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o renders/blackrock_v7_60fps.mp4
+npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o renders/blackrock_v9_60fps.mp4
+npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 --start 0 --end 23.9 -o renders/blackrock_v9_opening_60fps.mp4   # the new opening only
 ```
 
 ## Sync and pace
@@ -35,26 +36,26 @@ npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o rend
 
 ## Beats
 
+**v9 (Nov 24): a new opening.** The film now opens on the user's new recording ("This is the most powerful man on
+Earth. Larry Fink, the CEO of BlackRock. … more of Apple than Steve Jobs ever did.", 24.6 s, its six pauses tightened by
+0.64 s). It replaces the FII7 panel line, the Dimon / Solomon intros and the old "$15 trillion … ever did." part. Elon's
+question and the second half are unchanged, only moved earlier. Delivered on its own: `renders/blackrock_v9_opening_60fps.mp4`
+(0–23.9 s).
+
 | Film s | What |
 |---|---|
-| 0.00–6.70 | **The FII7 panel line.** Its captions and cuts sit on the aligned words ("with as big an" / "assemblage" / "of financial talent"). Then the panelists with white flashes: Fink, Schwarzman, **Jamie Dimon (3rd)**, **Ray Dalio (4th)**. |
-| 6.70–8.82 | **"These are the most powerful people".** The tile flash; "powerful" and "people" in the Dario serif white glow, blooming in on their words. |
-| 8.82–9.48 | **ON EARTH**, exactly as reel DdB8's "IT ISN'T":<br>• the tiles' last frames strobe, go negative for a frame and cyan for two;<br>• the user's red card;<br>• ON lands in its final place one reel frame 1.25× large, and EARTH joins on its word;<br>• League Gothic, caps about 15 % of the height. |
-| 9.48–10.80 | **"a $60 trillion".** The article flipbook at its own brightness, with no caption: the articles show "$60 trillion" themselves.<br>From "cartel" to "everything" the words are written in the "$100 million loss." italic with Dario's entrance: each word's place lights up as a glowing white bar, then the word appears, the big ones blown out and crisp four frames later. |
-| 10.80–11.48 | **"cartel".** The cartel clip's table flash, then the faces on the word; *cartel* big. |
-| 11.48–12.68 | **"of weaponized capital".** The blueprint pages flip under a continuous push, with no frame held. *of weaponized capital* is one italic line. |
-| 12.68–13.78 | **"that owns a piece of".** The user's ending video from its glasses for 0.45 s, each object moved down to the centre, then the brand maps ("everything you own"). "that owns" and "a piece of" are in the italic. |
-| 13.78–15.10 | **"everything you touch".** A cut on "everything" to the fingers meeting on "touch". Only "everything" is written, big, in the italic; it clears as the fingers meet. There is no "you touch." caption, and the puppet shot is gone. |
-| 15.10–16.87 | **"That's Jamie Dimon, the guy running".** refff's band (ON EARTH red) and flashes. "That's Jamie Dimon" sits inside the red band, top left, clear of his face, in the **JPMorgan Chase title type** (140 px) with a white glow and refff's flicker. "the guy running" stays centred below. |
-| 16.87–18.18 | **"JP Morgan Chase".** The OpenAI device, the title with a subtle white glow (so is Goldman Sachs'). |
-| 18.18–19.77 | **"David Solomon, a part-time".** The same device. "David" over "Solomon" (145 px) inside the red band beside his face, in the same title type with the glow and the flicker; "a part-time DJ" is the captions' line. |
-| 19.77–22.05 | **"DJ and the CEO of Goldman Sachs".** His DJ nights, then the JPMorgan device exactly. The two-up's left half is the Goldman Sachs tower sign, no longer Solomon at the panel again. Straight into "Amongst". |
-| 22.05–23.70 | **"Amongst them is this guy".** The spotlight reel: the table in its original colours (no grade, no grain), "Amongst them" in the captions' line (as "a part-time DJ"), then the face flash, the dark punch-in on Fink and "is this guy" under his face. |
-| 23.70–25.38 | **"the man who runs the most evil".** Reel DfhzVs8q9NH's "terrible boss" scene, rebuilt on the user's red with the user's Fink cut-outs.<br>• Fink rises slowly on the reference's curve while "the", "man", "who", "runs" and "the" come in as its small words.<br>• The horns fade in, then a smooth cut to the close-up.<br>• **most** and **evil** sit behind him as its **terrible** / **boss**.<br>• No grain is added on him: only the photo's own (the user).<br>See `notes/REF_TERRIBLE_BOSS.md`. |
-| 25.38–27.52 | **"company in the world, BlackRock."** |
-| 27.52–38.18 | **"A company that manages $15 trillion in assets … than Steve Jobs ever did."**<br>• The $15T montage, with "$15 trillion" in the Dario serif white glow.<br>• Think School's columns, Jensen, Gates and Jobs have no money overlay (corner softening only). |
-| 38.18–40.92 | **Elon: "Do you think BlackRock's a bad company?"** His own shot, through his short silent pause after "company?" (real video, no still), then a flash. The music is removed. It has the Palmer Luckey reel's look: a slow push, soft corners, grain, and stacked lowercase bold captions blurring in. |
-| 40.92–84.13 | **"Back in the 1980s" to the end.** The Porsche reel's look, on 72 real video shots. Each shot is cut on a word, and there are no stills. Details below. |
+| 0.00–1.67 | **"This is the most powerful man"**. The Nvidia reel's wall build (a tile every 3 reel frames from the bottom right, each white for a frame): nine different rooms of Fink, live. "powerful" and "man" in the Dario serif glow on their words. The wall ends on "IT ISN'T"'s lead-in (strobe, a negative frame, two cyan). |
+| 1.67–2.22 | **"on Earth."** Reel DdB8's "IT ISN'T" red card, as before. |
+| 2.22–4.72 | **"Larry Fink, the CEO of BlackRock."** The Hemant video's name mosaic: a big centre tile and three small ones down each side, each arriving as a white card, then a different clip of Fink. "Larry Fink" in the Dario serif with its bloom (the frame washes out for two frames as it lands), "the CEO of" in the bold grotesque word by word. On "BlackRock" every tile flips to BlackRock's own buildings (its lit tower in the middle says the name). |
+| 4.72–5.80 | **"The most evil"**. The red horned scene (reel DfhzVs8q9NH), re-timed: Fink rises through the pause, *most* / *evil* behind him. |
+| 5.80–7.10 | **"company in the world."** The Earth at night (its 0.5 s slowed with motion interpolation, the puppet strings painted out), "company in the" small and **world** big in the Dario serif (the Dario video's EARTH). |
+| 7.10–8.30 | **"A $15 trillion dollar"**. The user's sixteen "$15 trillion" headlines (Reuters, Yahoo Finance, Bloomberg, …) as the Opal reel's flipbook: every page placed so its own "$15 trillion" sits on one spot at the centre, at one height, in the lime highlight. |
+| 8.30–11.65 | **"cartel of weaponized capital that owns a piece of everything you touch."** As the user approved it (the cartel table, the blueprint push, the glasses and brand maps, the fingers), ending on the burst's white frame. |
+| 11.65–14.57 | **"A company that's never made a single physical product,"** The Hemant / Dario lockup: a card in the middle with things being made (circuit boards, a press, an assembly line), the words either side in the serif; on "product" the card flashes white and is gone, an empty frame. |
+| 14.57–18.07 | **"yet it's one of the top shareholders in almost every major US company."** "top shareholders" in the serif; around it, cards with 28 companies' marks and tickers pop in (white for two frames, as the Hemant video's cards), slowly from "one of the", faster and faster to "company". |
+| 18.07–23.90 | **"It holds more of Nvidia than Jensen Huang … than Steve Jobs ever did."** Think School's "Founders vs Blackrock" page as a motion graphic: its grey page, the product big on the left (the graphics card, the MS-DOS PC, the Macintosh), the founder switching on on its screen on his name (the Elon reel's old-TV device: Gates in green phosphor, Jobs in black and white; Jensen on a card), BlackRock's and the founder's bars on one scale with their figures rolling up in the serif (8.02 / 3.7, 8.18 / 1.34, 7.97 / 0.24 %), then "2.2× / 6.1× / 33× more". |
+| 23.90–26.63 | **Elon: "Do you think BlackRock's a bad company?"** As before. |
+| 26.63–69.85 | **"Back in the 1980s" to the end.** As before (the Porsche reel's look on 72 real shots). |
 
 **The second half in detail** (`tools/shotlist.py` REST2_V6, rendered by `tools/prep_v5.py rest2`):
 - **Footage, all real moving video:** every source was searched with a CLIP index, and each span was checked for real motion and for hidden cuts. The sources are:
@@ -95,13 +96,14 @@ npx --yes hyperframes@0.9.46 render --fps 60 --quality delivery --crf 14 -o rend
 ## Rebuild
 
 ```
-python -I tools/align.py          # (torch venv) the word alignment -> tools/words/{vo,rest,rogan,line}.json
+python -I tools/align.py          # (torch venv) the word alignment -> tools/words/{open,rest,rogan,...}.json
 python -I tools/pace.py           # the pauses cut out -> tools/words/pace.json
 python -E -s tools/prep_hook.py weap logos
 python -E -s tools/prep_v3.py tiles articles touch jpm rogan2   # + rest_shots(REST1 names), r_tsg, r_jensen, r_gates, r_jobs
 python -E -s tools/prep_v4.py finkflip cartel4 ceo4 dj4 orbit4 spot4 panel4 founders
 python -E -s tools/prep_v5.py rest2 rogan dimon5 solomon5 owns   # rest2 also renders in parallel: rest2p0 … rest2p3, then rest2join
 python -E -s tools/prep_v6.py evil
+python -E -s tools/prep_v9.py wall articles mosaic cuts products founders factory   # the v9 opening (+ prep_v3 touch, prep_v4 cartel4, prep_hook weap, prep_v5 owns)
 python -E -s tools/mix.py         # assets/audio/mix.wav (+ mix_dry.wav: speech only)
 python3 tools/build.py            # index.html + compositions/s_*.html
 ```

@@ -1,0 +1,494 @@
+[
+{
+"text": "This",
+"start": 0.1,
+"end": 0.28,
+"score": 0.996
+},
+{
+"text": "is",
+"start": 0.42,
+"end": 0.48,
+"score": 0.997
+},
+{
+"text": "the",
+"start": 0.52,
+"end": 0.58,
+"score": 0.996
+},
+{
+"text": "most",
+"start": 0.6,
+"end": 0.74,
+"score": 0.981
+},
+{
+"text": "powerful",
+"start": 0.86,
+"end": 1.28,
+"score": 0.942
+},
+{
+"text": "man",
+"start": 1.36,
+"end": 1.54,
+"score": 0.918
+},
+{
+"text": "on",
+"start": 1.66,
+"end": 1.72,
+"score": 0.994
+},
+{
+"text": "Earth.",
+"start": 1.881,
+"end": 2.061,
+"score": 0.989
+},
+{
+"text": "Larry",
+"start": 2.641,
+"end": 2.861,
+"score": 0.954
+},
+{
+"text": "Fink,",
+"start": 2.961,
+"end": 3.161,
+"score": 0.853
+},
+{
+"text": "the",
+"start": 3.461,
+"end": 3.541,
+"score": 0.9
+},
+{
+"text": "CEO",
+"start": 3.621,
+"end": 4.001,
+"score": 0.768
+},
+{
+"text": "of",
+"start": 4.181,
+"end": 4.221,
+"score": 1.0
+},
+{
+"text": "BlackRock.",
+"start": 4.321,
+"end": 4.741,
+"score": 0.958
+},
+{
+"text": "The",
+"start": 5.241,
+"end": 5.322,
+"score": 0.935
+},
+{
+"text": "most",
+"start": 5.342,
+"end": 5.502,
+"score": 0.924
+},
+{
+"text": "evil",
+"start": 5.702,
+"end": 5.902,
+"score": 0.961
+},
+{
+"text": "company",
+"start": 5.982,
+"end": 6.282,
+"score": 1.0
+},
+{
+"text": "in",
+"start": 6.382,
+"end": 6.422,
+"score": 0.999
+},
+{
+"text": "the",
+"start": 6.462,
+"end": 6.542,
+"score": 1.0
+},
+{
+"text": "world.",
+"start": 6.622,
+"end": 6.902,
+"score": 0.971
+},
+{
+"text": "A",
+"start": 7.402,
+"end": 7.422,
+"score": 0.998
+},
+{
+"text": "15",
+"start": 7.522,
+"end": 7.882,
+"score": 0.998
+},
+{
+"text": "trillion",
+"start": 8.022,
+"end": 8.362,
+"score": 0.873
+},
+{
+"text": "dollar",
+"start": 8.422,
+"end": 8.642,
+"score": 0.975
+},
+{
+"text": "cartel",
+"start": 8.722,
+"end": 9.103,
+"score": 0.983
+},
+{
+"text": "of",
+"start": 9.183,
+"end": 9.223,
+"score": 0.999
+},
+{
+"text": "weaponized",
+"start": 9.343,
+"end": 9.763,
+"score": 0.9
+},
+{
+"text": "capital",
+"start": 9.823,
+"end": 10.183,
+"score": 0.991
+},
+{
+"text": "that",
+"start": 10.263,
+"end": 10.363,
+"score": 1.0
+},
+{
+"text": "owns",
+"start": 10.423,
+"end": 10.563,
+"score": 0.961
+},
+{
+"text": "a",
+"start": 10.603,
+"end": 10.623,
+"score": 0.999
+},
+{
+"text": "piece",
+"start": 10.683,
+"end": 10.883,
+"score": 0.964
+},
+{
+"text": "of",
+"start": 10.943,
+"end": 10.983,
+"score": 1.0
+},
+{
+"text": "everything",
+"start": 11.183,
+"end": 11.523,
+"score": 0.986
+},
+{
+"text": "you",
+"start": 11.543,
+"end": 11.623,
+"score": 0.999
+},
+{
+"text": "touch.",
+"start": 11.703,
+"end": 11.943,
+"score": 1.0
+},
+{
+"text": "A",
+"start": 12.464,
+"end": 12.504,
+"score": 0.998
+},
+{
+"text": "company",
+"start": 12.544,
+"end": 12.784,
+"score": 0.99
+},
+{
+"text": "that's",
+"start": 12.824,
+"end": 12.984,
+"score": 0.997
+},
+{
+"text": "never",
+"start": 13.084,
+"end": 13.264,
+"score": 0.994
+},
+{
+"text": "made",
+"start": 13.324,
+"end": 13.484,
+"score": 0.939
+},
+{
+"text": "a",
+"start": 13.544,
+"end": 13.564,
+"score": 0.999
+},
+{
+"text": "single",
+"start": 13.724,
+"end": 13.984,
+"score": 0.995
+},
+{
+"text": "physical",
+"start": 14.064,
+"end": 14.344,
+"score": 0.965
+},
+{
+"text": "product,",
+"start": 14.424,
+"end": 14.764,
+"score": 0.986
+},
+{
+"text": "yet",
+"start": 15.024,
+"end": 15.164,
+"score": 1.0
+},
+{
+"text": "it's",
+"start": 15.284,
+"end": 15.384,
+"score": 0.998
+},
+{
+"text": "one",
+"start": 15.424,
+"end": 15.484,
+"score": 1.0
+},
+{
+"text": "of",
+"start": 15.504,
+"end": 15.564,
+"score": 0.977
+},
+{
+"text": "the",
+"start": 15.584,
+"end": 15.664,
+"score": 0.959
+},
+{
+"text": "top",
+"start": 15.704,
+"end": 15.925,
+"score": 0.97
+},
+{
+"text": "shareholders",
+"start": 15.985,
+"end": 16.465,
+"score": 0.993
+},
+{
+"text": "in",
+"start": 16.545,
+"end": 16.585,
+"score": 0.994
+},
+{
+"text": "almost",
+"start": 16.625,
+"end": 16.845,
+"score": 0.956
+},
+{
+"text": "every",
+"start": 17.025,
+"end": 17.205,
+"score": 0.97
+},
+{
+"text": "major",
+"start": 17.285,
+"end": 17.525,
+"score": 0.968
+},
+{
+"text": "U.S.",
+"start": 17.645,
+"end": 17.825,
+"score": 0.986
+},
+{
+"text": "company.",
+"start": 17.905,
+"end": 18.185,
+"score": 0.999
+},
+{
+"text": "It",
+"start": 18.645,
+"end": 18.685,
+"score": 1.0
+},
+{
+"text": "holds",
+"start": 18.745,
+"end": 18.905,
+"score": 0.999
+},
+{
+"text": "more",
+"start": 18.985,
+"end": 19.125,
+"score": 0.999
+},
+{
+"text": "of",
+"start": 19.165,
+"end": 19.205,
+"score": 0.988
+},
+{
+"text": "Nvidia",
+"start": 19.265,
+"end": 19.626,
+"score": 0.923
+},
+{
+"text": "than",
+"start": 19.686,
+"end": 19.786,
+"score": 0.976
+},
+{
+"text": "Jensen",
+"start": 19.866,
+"end": 20.146,
+"score": 0.759
+},
+{
+"text": "Huang,",
+"start": 20.186,
+"end": 20.446,
+"score": 0.49
+},
+{
+"text": "more",
+"start": 20.826,
+"end": 20.946,
+"score": 0.937
+},
+{
+"text": "of",
+"start": 20.966,
+"end": 21.006,
+"score": 1.0
+},
+{
+"text": "Microsoft",
+"start": 21.066,
+"end": 21.546,
+"score": 0.8
+},
+{
+"text": "than",
+"start": 21.566,
+"end": 21.666,
+"score": 0.952
+},
+{
+"text": "Bill",
+"start": 21.706,
+"end": 21.866,
+"score": 0.999
+},
+{
+"text": "Gates,",
+"start": 21.926,
+"end": 22.186,
+"score": 0.942
+},
+{
+"text": "and",
+"start": 22.546,
+"end": 22.626,
+"score": 0.986
+},
+{
+"text": "more",
+"start": 22.666,
+"end": 22.786,
+"score": 1.0
+},
+{
+"text": "of",
+"start": 22.806,
+"end": 22.867,
+"score": 0.999
+},
+{
+"text": "Apple",
+"start": 23.007,
+"end": 23.207,
+"score": 0.982
+},
+{
+"text": "than",
+"start": 23.247,
+"end": 23.347,
+"score": 1.0
+},
+{
+"text": "Steve",
+"start": 23.407,
+"end": 23.627,
+"score": 0.975
+},
+{
+"text": "Jobs",
+"start": 23.687,
+"end": 23.927,
+"score": 0.991
+},
+{
+"text": "ever",
+"start": 24.087,
+"end": 24.207,
+"score": 1.0
+},
+{
+"text": "did.",
+"start": 24.267,
+"end": 24.407,
+"score": 0.998
+}
+]
