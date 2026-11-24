@@ -1,0 +1,89 @@
+<template>
+<style>
+
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");font-weight:400;font-style:normal;}
+@font-face{font-family:"ISerif";src:url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2");font-weight:400;font-style:italic;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-Medium.otf") format("opentype");font-weight:500;font-style:normal;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
+@font-face{font-family:"InterD";src:url("assets/fonts/InterDisplay-ExtraBold.otf") format("opentype");font-weight:800;font-style:normal;}
+@font-face{font-family:"LGothic";src:url("assets/fonts/LeagueGothic-latin.woff2") format("woff2");font-weight:400;font-style:normal;}
+@font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
+@font-face{font-family:"InterSB";src:url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype");font-weight:600;font-style:normal;}
+@font-face{font-family:"HerosR";src:url("assets/fonts/TeXGyreHeros-Regular.otf") format("opentype");font-weight:400;font-style:normal;}
+@font-face{font-family:"Bodoni";src:url("assets/fonts/BodoniModa-96-600.ttf") format("truetype");font-weight:600;font-style:normal;}
+@font-face{font-family:"Michroma";src:url("assets/fonts/Michroma-latin.woff2") format("woff2");font-weight:400;font-style:normal;}
+
+
+#root{position:absolute;inset:0;overflow:hidden;background:#000;}
+.full{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;}
+.layer{position:absolute;inset:0;}
+.cap{position:absolute;left:0;right:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;pointer-events:none;}
+.nv{font-family:"InterD",sans-serif;font-weight:800;letter-spacing:-0.02em;color:#fff;text-transform:uppercase;}
+.hv{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.012em;color:#EEF0F0;text-transform:uppercase;line-height:1;white-space:nowrap;}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;}
+.jn{font-family:"HerosR",sans-serif;font-weight:400;font-size:60px;letter-spacing:-0.015em;line-height:1;color:#fff;white-space:nowrap;
+ -webkit-text-stroke:0.022em currentColor;text-shadow:0 0 10px rgba(255,255,255,0.36),0 0 26px rgba(255,255,255,0.16);}
+.jn.ink{color:#141414;text-shadow:none;}
+.jn.heavy{text-shadow:0 0 10px rgba(255,255,255,0.45),0 0 28px rgba(255,255,255,0.2);}
+.ser{font-family:"ISerif",serif;font-weight:400;line-height:1;color:#FBF8EC;white-space:nowrap;letter-spacing:0.005em;}
+.por{font-family:"ISerif",serif;font-style:italic;font-weight:400;line-height:1;color:#fff;white-space:nowrap;word-spacing:0.38em;}
+.por span{display:inline-block;opacity:0;}
+.pl{font-family:"Heros",sans-serif;font-weight:700;font-size:94px;line-height:1.02;letter-spacing:-0.015em;color:#EDEDEA;
+ text-shadow:0 0 12px rgba(255,255,255,0.35),0 0 30px rgba(255,255,255,0.14);}
+.pl span{display:inline-block;opacity:0;}
+.dline{display:flex;align-items:baseline;justify-content:center;font-family:"ISerif",serif;font-weight:400;line-height:1;
+ color:#fff;white-space:nowrap;letter-spacing:-0.04em;}
+.dw{position:relative;display:inline-block;}
+.dfl{position:absolute;left:-0.04em;right:-0.04em;top:0.34em;bottom:0.12em;opacity:0;background:#fff;
+ box-shadow:0 0 16px rgba(255,255,255,0.9),0 0 44px rgba(255,255,255,0.45);}
+.dwt{position:relative;display:inline-block;opacity:0;}
+.isnt{display:flex;align-items:baseline;gap:0.11em;font-family:"LGothic",sans-serif;font-weight:400;line-height:1;color:#fff;
+ white-space:nowrap;}
+.isnt span{display:inline-block;transform-origin:50% 55%;}
+.lock{position:absolute;display:flex;align-items:center;white-space:nowrap;pointer-events:none;}
+.gt{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.04em;line-height:1;color:#fff;white-space:nowrap;
+ text-shadow:0 0 14px rgba(255,255,255,0.55),0 0 40px rgba(255,255,255,0.28),0 0 90px rgba(255,255,255,0.12);}
+.wht2{position:absolute;inset:0;background:#f4f4f0;opacity:0;}
+.bigh{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.045em;line-height:1;color:#fff;white-space:nowrap;
+ text-shadow:0 0 16px rgba(255,255,255,0.32);}
+
+#root{background:transparent;}
+
+.pg{position:absolute;inset:0;background:#f6f6f4;}
+.pgi{position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0;}
+.yl{position:absolute;left:0;right:0;top:540px;height:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;
+ font-family:"ISerif",serif;font-size:230px;letter-spacing:-0.035em;line-height:1;color:#0b0b0b;}
+.yl span{display:inline-block;opacity:0;margin:0 0.15em;}
+.atoms{position:absolute;left:0;right:0;top:650px;height:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;}
+.atoms span{display:inline-block;font-family:"Michroma",sans-serif;font-size:136px;letter-spacing:0.01em;line-height:1.25;
+ color:#e9dbc1;-webkit-text-stroke:0.045em #e9dbc1;text-shadow:0 6px 24px rgba(0,0,0,0.38);}
+
+</style>
+<div id="root" data-composition-id="s_threw" data-width="1920" data-height="1080" data-duration="3.6167">
+<div id="s_threw-d1" class="clip layer" data-start="0.0000" data-duration="0.1000" data-track-index="3" style="z-index:90;background:#fff;opacity:0.82;"></div>
+<div id="s_threw-d2" class="clip layer" data-start="1.6000" data-duration="0.1000" data-track-index="3" style="z-index:90;background:#fff;opacity:0.82;"></div>
+<div id="s_threw-d3" class="clip layer" data-start="2.1833" data-duration="0.1000" data-track-index="3" style="z-index:90;background:#fff;opacity:0.82;"></div>
+<div id="s_threw-d4" class="clip layer" data-start="0.4333" data-duration="1.1667" data-track-index="3" style="z-index:10;"><div class="pg"></div></div>
+<img id="s_threw-i5" class="clip pgi" src="assets/img/v16_page_fink.jpg" alt="" data-start="0.4333" data-duration="1.1667" data-track-index="2" style="z-index:11;" />
+<div id="s_threw-d10" class="clip layer" data-start="0.4333" data-duration="1.1667" data-track-index="3" style="z-index:12;"><div class="yl"><span id="s_threw-yw6">threw</span><span id="s_threw-yw7">out</span><span id="s_threw-yw8">years</span><span id="s_threw-yw9">ago</span></div></div>
+<div id="s_threw-d11" class="clip layer" data-start="2.8500" data-duration="0.1000" data-track-index="3" style="z-index:20;background:#fff;"></div>
+<div id="s_threw-d12" class="clip layer" data-start="2.9500" data-duration="0.6667" data-track-index="3" style="z-index:21;"><div class="atoms"><span>LARRY FINK</span></div></div>
+</div>
+<script>
+(function(){
+  const tl = gsap.timeline({ paused: true });
+  tl.set({}, {}, 3.6167);
+  tl.set("#s_threw-i5",{opacity:0.0},0.4333);
+  tl.set("#s_threw-i5",{opacity:0.07},0.5333);
+  tl.set("#s_threw-i5",{opacity:0.13},0.6333);
+  tl.set("#s_threw-i5",{opacity:0.18},0.7333);
+  tl.set("#s_threw-i5",{opacity:0.22},0.8333);
+  tl.set("#s_threw-i5",{opacity:0.25},0.9333);
+  tl.set("#s_threw-yw6",{opacity:1},0.4333);
+  tl.set("#s_threw-yw7",{opacity:1},0.7167);
+  tl.set("#s_threw-yw8",{opacity:1},0.9333);
+  tl.set("#s_threw-yw9",{opacity:1},1.2500);
+  window.__timelines["s_threw"] = tl;
+})();
+</script>
+</template>

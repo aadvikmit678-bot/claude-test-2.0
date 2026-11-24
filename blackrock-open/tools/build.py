@@ -28,6 +28,7 @@ FONTS = """
 @font-face{font-family:"InterSB";src:url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype");font-weight:600;font-style:normal;}
 @font-face{font-family:"HerosR";src:url("assets/fonts/TeXGyreHeros-Regular.otf") format("opentype");font-weight:400;font-style:normal;}
 @font-face{font-family:"Bodoni";src:url("assets/fonts/BodoniModa-96-600.ttf") format("truetype");font-weight:600;font-style:normal;}
+@font-face{font-family:"Michroma";src:url("assets/fonts/Michroma-latin.woff2") format("woff2");font-weight:400;font-style:normal;}
 """
 # the Dario video's Instrument Serif glow (the user: "exactly like the Dario video ... with that white glow")
 SERIF_REST = "0 0 14px rgba(255,255,255,0.62),0 0 42px rgba(255,255,255,0.30),0 0 90px rgba(255,255,255,0.12)"
@@ -366,6 +367,38 @@ K_BLOOM = ("0 0 10px rgba(255,255,255,1),0 0 34px rgba(255,255,255,0.95),0 0 80p
 FINK_IN = F(T["powerful"] - TM.LEAD)
 
 
+
+# The Kalanick reel's "turning a crazy idea" (13.3-14.3 s), measured frame by frame (the width of its first word): the
+# line's scale every 0.1 s from its first word -- fast at first, then settling. v16 (the user: "a single" zooming in
+# looked very bad; "exactly like the reference ... how it flows"): this curve, smooth at 60 fps.
+GROW = [0.676, 0.760, 0.867, 0.921, 0.949, 0.969, 0.982, 0.987, 0.995, 1.0]
+
+
+def grow_scale(u):
+    """the reference's scale u seconds after the first word (monotone cubic between its 10 fps samples), then a slow
+    drift on"""
+    if u <= 0:
+        return GROW[0]
+    if u >= 0.9:
+        return 1.0 + 0.012 * min(1.0, (u - 0.9) / 0.9)
+    ys = GROW
+    n = len(ys)
+    d = [ys[i + 1] - ys[i] for i in range(n - 1)]
+    m = [d[0]] + [0.0 if d[i - 1] * d[i] <= 0 else 2 * d[i - 1] * d[i] / (d[i - 1] + d[i]) for i in range(1, n - 1)] + [d[-1]]
+    k = int(u / 0.1)
+    s = u / 0.1 - k
+    h00, h10, h01, h11 = 2 * s ** 3 - 3 * s ** 2 + 1, s ** 3 - 2 * s ** 2 + s, -2 * s ** 3 + 3 * s ** 2, s ** 3 - s ** 2
+    return h00 * ys[k] + h10 * m[k] + h01 * ys[k + 1] + h11 * m[k + 1]
+
+
+def grow_js(sc, el, t_in, t_end):
+    """the line's scale set on every frame from t_in to t_end (exact, seekable)"""
+    t = t_in
+    while t < t_end - 1e-6:
+        sc.js.append(f'tl.set("#{el}",{{scale:{grow_scale(t - t_in):.4f}}},{sc.at(t)});')
+        t = F(t + FR)
+
+
 def kflash(sc, wid, t, rest=K_REST, blur=6):
     sc.js.append(f'tl.set("#{wid}",{{opacity:1,filter:"blur({blur}px)",textShadow:"{K_BLOOM}"}},{sc.at(t)});')
     sc.js.append(f'tl.set("#{wid}",{{filter:"blur(0px)",textShadow:"{rest}"}},{sc.at(t + REEL)});')
@@ -389,6 +422,12 @@ def kline(sc, words, a, b, y, size, rest=K_REST, ls=-0.045, gap=0.12, color="#f4
 
 
 # ---- "This is the most powerful man on Earth." (0 to the name mosaic)
+# the Chainsmokers' rise (reel DgHoW0vhPvb n30-n49 at 30 fps): the states' times after the cut, and the share of the
+# rise (324 px = 0.30 of the frame) still to go
+RISE = 324
+RISE_T = [0.0, 0.1, 0.1667, 0.2333, 0.3333, 0.4, 0.4667, 0.5667, 0.6333]
+RISE_R = [1.0, 0.6, 0.413, 0.273, 0.173, 0.097, 0.043, 0.01, 0.0]
+
 FIRST_CSS = """
 .ff{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:960px 540px;}
 .pl{position:absolute;left:-140px;top:-79px;width:2200px;height:1238px;}
@@ -403,7 +442,7 @@ def s_first():
     on "Earth" a white flash over his cut-out and the background turns to BlackRock's building; a straight cut out."""
     a0, a1 = B["first"]
     sc = Scene("s_first", a0, a1, css=FIRST_CSS)
-    sc.video("v15_wall.mp4", a0, FINK_IN, z=1)
+    sc.video("v16_wall.mp4", a0, FINK_IN, z=1)          # (v16: its false colour shows the first state of the rise)
     kline(sc, [("This", F(T["this"] - 0.03)), ("is", F(T["is"] - 0.03)), ("the", F(T["the1"] - 0.03)),
                ("most", F(T["most1"] - 0.03))], F(T["this"] - 0.03), FINK_IN, 540, 150, K_HERO, z=30)
     t_e = F(T["earth"] - 0.03)
@@ -423,10 +462,18 @@ def s_first():
              f'<img id="{cut}" class="pl" src="assets/img/v10_fink_cut.png" alt="" style="z-index:3;" />'
              f'<img id="{wf}" class="pl" src="assets/img/v15_fink_white.png" alt="" style="z-index:4;opacity:0;" />')
     sc.add(f'<div id="{ff}" class="clip ff" {sc.timed(FINK_IN, a1)} data-track-index="3" style="z-index:5;">{inner}</div>')
-    # one subtle push, start to end
-    sc.js.append(f'tl.fromTo("#{ff}",{{scale:1.0}},{{scale:1.045,duration:{r4(a1 - FINK_IN)},ease:"none"}},{sc.at(FINK_IN)});')
-    # the arrival: one reel frame as a white silhouette (the reel's Chainsmokers), then the photo
-    sc.js.append(f'tl.set("#{wf}",{{opacity:1}},{sc.at(FINK_IN)});tl.set("#{wf}",{{opacity:0}},{sc.at(FINK_IN + 5 * FR)});')
+    # v16 (the user: "how the Chainsmokers image came from the bottom ... at that speed ... the texture"): the reel's
+    # 1.0-1.7 s measured frame by frame -- the duo rises 0.30 of the frame in 0.63 s on 12 fps states, easing out; the
+    # wall behind them zoomed in and soft, settling 1.08 -> 1.04 -> 1.0 in two of those states; a screen-door mesh over
+    # the frame. Then one subtle push.
+    for t, r in zip(RISE_T, RISE_R):
+        tt = F(FINK_IN + t)
+        sc.js.append(f'tl.set("#{cut}",{{y:{round(RISE * r)}}},{sc.at(tt)});tl.set("#{wf}",{{y:{round(RISE * r)}}},{sc.at(tt)});')
+    for t, s, bl in ((0.0, 1.08, 9), (6 * FR, 1.04, 3), (14 * FR, 1.0, 0)):
+        sc.js.append(f'tl.set("#{pa}",{{scale:{s},filter:"blur({bl}px)"}},{sc.at(F(FINK_IN + t))});')
+    t_up = F(FINK_IN + RISE_T[-1])
+    sc.js.append(f'tl.fromTo("#{ff}",{{scale:1.0}},{{scale:1.03,duration:{r4(a1 - t_up)},ease:"none"}},{sc.at(t_up)});')
+    sc.img("v16_mesh.png", FINK_IN, a1, z=8)
     # "Earth": the flash over his cut-out, out over 0.2 s, as the background changes
     sc.js.append(f'tl.set("#{wf}",{{opacity:1}},{sc.at(t_e)});')
     sc.js.append(f'tl.to("#{wf}",{{opacity:0,duration:0.2,ease:"power1.out"}},{sc.at(t_e + 2 * FR)});')
@@ -505,7 +552,7 @@ def s_hook():
     ends = starts[1:] + [F(T["touch"] - 0.03)]
     for p, a, b in zip(phrases, starts, ends):
         dario_line(sc, p, a, b, y=540, z=30, italic=False)
-    sc.video("r_touch3.mp4", *B["touch"], z=1)
+    sc.video("v16_touch.mp4", *B["touch"], z=1)       # (v16: at its own speed, on into the next shots)
     sc.write()
     return sc
 
@@ -574,8 +621,7 @@ def s_made():
         states.append(f'<div class="clip tline" {sc.timed(s0, s1)} data-track-index="3">{text}</div>')
     sc.add(f'<div class="turn" style="z-index:10;"><div id="{tl_id}" class="tl2">{"".join(states)}</div></div>')
     t_in = F(ws[0][1])
-    sc.js.append(f'tl.fromTo("#{tl_id}",{{scale:0.63}},{{scale:1.0,duration:{r4(F(ws[-1][1]) + 0.15 - t_in)},ease:"power2.out"}},{sc.at(t_in)});')
-    sc.js.append(f'tl.to("#{tl_id}",{{scale:1.03,duration:{r4(max(FR, t_x - F(ws[-1][1]) - 0.15))},ease:"none"}},{sc.at(F(ws[-1][1]) + 0.15)});')
+    grow_js(sc, tl_id, t_in, a1)                      # (v16: the reference's own curve, smooth)
     sc.js.append(f'tl.to("#{tl_id}",{{y:40,duration:{r4(6 * FR)},ease:"power1.in"}},{sc.at(t_x)});')
     sc.js.append(f'tl.to("#{tl_id}",{{y:300,duration:{r4(6 * FR)},ease:"power2.in"}},{sc.at(t_x + 6 * FR)});')
     sc.write()
@@ -800,7 +846,8 @@ def s_rest2():
 
 # ---- "but one bad bet cost him $100 million loss." (v15)
 BET_CSS = """
-.hb{position:absolute;left:1000px;top:190px;font-family:"ISerif",serif;font-size:196px;letter-spacing:-0.05em;line-height:0.84;
+.hbw{position:absolute;inset:0;transform-origin:960px 540px;}
+.hb{position:absolute;left:1100px;top:70px;font-family:"ISerif",serif;font-size:168px;letter-spacing:-0.05em;line-height:0.84;
  color:#f6f1e8;white-space:nowrap;}
 .hb span{display:inline-block;opacity:0;margin-right:0.16em;}
 """
@@ -816,18 +863,27 @@ def s_bet():
     t_c = F(TM.RT("cost") - TM.LEAD)
     a1 = F(RI(50) - TM.LEAD)
     sc = Scene("s_bet", a0, a1, css=BET_CSS)
-    sc.video("v15_bet.mp4", a0, t_c, z=1)
-    sc.video("v14_count.mp4", t_c, a1, z=1)
-    glow = "0 0 8px rgba(255,255,255,0.62),0 0 26px rgba(255,255,255,0.34),0 0 72px rgba(255,255,255,0.18)"
+    # v16 (the user: exactly like the Kalanick reel, "how, from the previous frame, cut to this frame, the typography
+    # is there"; the trader at his screens, the B-roll used before): its 9.1-9.6 s at 10 fps -- two reel frames of the
+    # shot smeared dark (the first word smeared with it), then the shot with the words already there, crisp with the
+    # soft glow, each next word on the reel frame of its onset; the picture and the words settle together
+    sc.video("v16_bet.mp4", a0, t_c, z=1)
+    sc.video("v16_count.mp4", t_c, a1, z=1)           # (v16: "$100 million" with a stronger white glow)
+    t_sharp = F(a0 + 2 * REEL)
+    q = lambda t: F(a0 + max(2, int((t - 0.03 - a0) / REEL + 1e-6)) * REEL)
     lines = []
-    for row in ([("but", RI(41)), ("one", RI(42))], [("bad", RI(43)), ("bet", RI(44))]):
+    for row in ([("but", t_sharp), ("one", q(RI(42)))], [("bad", q(RI(43))), ("bet", q(RI(44)))]):
         spans = []
         for w, t in row:
             wid = sc.uid("hw")
             spans.append(f'<span id="{wid}">{w}</span>')
-            kflash(sc, wid, F(max(t - 0.03, a0 + 6 * FR)), glow, blur=7)
+            sc.js.append(f'tl.set("#{wid}",{{opacity:1}},{sc.at(t)});')
         lines.append("".join(spans))
-    sc.div(a0, t_c, f'<div class="hb" style="text-shadow:{glow};">{"<br>".join(lines)}</div>', z=30, cls="layer")
+    wid = sc.uid("hbw")
+    sc.div(t_sharp, t_c, f'<div id="{wid}" class="hbw"><div class="hb" style="text-shadow:{K_HERO};">{"<br>".join(lines)}</div></div>',
+           z=30, cls="layer")
+    for k, s in enumerate((1.022, 1.008, 1.0)):
+        sc.js.append(f'tl.set("#{wid}",{{scale:{s}}},{sc.at(F(t_sharp + k * REEL))});')
     sc.write()
     return sc
 
@@ -849,6 +905,12 @@ RISK_CSS = """
 .ybox{display:inline-block;background:#f2c200;color:#fff;font-family:"HerosR",sans-serif;font-size:56px;letter-spacing:-0.015em;
  -webkit-text-stroke:0.022em currentColor;padding:8px 18px 12px;line-height:1;white-space:nowrap;}
 .sil{position:absolute;left:0;top:0;width:1920px;height:1080px;}
+.paper{position:absolute;inset:0;background:url("assets/img/paper_light.png") center/cover no-repeat;}
+.turn2{position:absolute;left:0;right:0;top:390px;height:300px;}
+.tl3{position:relative;width:1920px;height:300px;transform-origin:960px 150px;}
+.tline2{position:absolute;left:0;right:0;top:0;height:300px;display:flex;justify-content:center;align-items:center;white-space:nowrap;
+ font-family:"ISerif",serif;font-size:205px;letter-spacing:-0.05em;word-spacing:0.08em;line-height:1;color:#0c0c0c;
+ -webkit-text-stroke:0.006em #0c0c0c;}
 """
 
 
@@ -887,16 +949,22 @@ def s_risk():
            z=20, cls="layer")
     sc.div(F(t_br + 5 * FR), t_and, '<div class="page" style="background:#0b0b0b;"><div class="logo" style="color:#fff;">BlackRock</div></div>',
            z=20, cls="layer")
-    # "and built a system" -- the reel's "walked out to start": a white page, the italic serif building word by word
+    # "and built a system" (v16, the user: the type looked thin, the way it comes in should be much better, on the
+    # paper with the dark light behind): the paper of "A company that's never made"; the words one by one in the
+    # middle, black, larger, while the line grows on the Kalanick reel's curve (as "a single physical product")
     t_with = Lr(85)
-    sc.div(t_and, t_with, "", z=20, cls="layer wp")
-    spans = []
-    for w, i in (("and", 81), ("built", 82), ("a", 83), ("system", 84)):
-        wid = sc.uid("iw")
-        spans.append(f'<span id="{wid}">{w}</span>')
-        tw = max(Lr(i), t_and)                       # (v15: the Kalanick serif, upright; one reel frame soft, then crisp)
-        sc.js.append(f'tl.set("#{wid}",{{opacity:1,filter:"blur(5px)"}},{sc.at(tw)});tl.set("#{wid}",{{filter:"blur(0px)"}},{sc.at(tw + REEL)});')
-    sc.div(t_and, t_with, f'<div class="it">{"".join(spans)}</div>', z=22, cls="layer")
+    sc.div(t_and, t_with, "", z=20, cls="layer paper")
+    ws = [("and", t_and), ("built", Lr(82)), ("a", Lr(83)), ("system", Lr(84))]
+    tl_id = sc.uid("tl")
+    states = []
+    for k in range(len(ws)):
+        s0 = max(ws[k][1], t_and)
+        s1 = ws[k + 1][1] if k + 1 < len(ws) else t_with
+        if s1 - s0 < FR:
+            continue
+        states.append(f'<div class="clip tline2" {sc.timed(s0, s1)} data-track-index="3">{" ".join(w for w, _ in ws[:k + 1])}</div>')
+    sc.add(f'<div class="turn2" style="z-index:22;"><div id="{tl_id}" class="tl3">{"".join(states)}</div></div>')
+    grow_js(sc, tl_id, t_and, t_with)
     # "with one job" -- the reel's "just had the" (the data centre, the glass brain); "calculating" on the chalkboard
     t_calc, t_risk = Lr(88), Lr(89)
     sc.video("v15_job.mp4", Lr(86), t_calc, z=1)       # (the ring of screens, not the brain shot's burned-in text)
@@ -918,6 +986,100 @@ def s_risk():
     sc.div(t_al, a1, f'<div id="{aid}" class="bigb" style="font-size:250px;opacity:0;">ALADDIN</div>', z=30, cls="cap",
            style="top:540px;height:0;")
     kflash(sc, aid, t_al, "0 0 16px rgba(255,255,255,0.35)", blur=8)
+    sc.write()
+    return sc
+
+
+# ---- v16: "When the 2008 crisis hit, the U.S. government called the one guy"
+def s_crisis():
+    """"When the 2008": the Chainsmokers reel's date frame (28.17 s); "crisis hit,": reel DelkyjLP4p_'s grid (27.0 s);
+    "the U.S. government called the one guy": the earlier shots with its datamosh at the cuts (prep_v16 date, grid,
+    gov). The captions are s_caps'."""
+    LV = lambda i: F(RI(i) - TM.LEAD)
+    d0, g0, g1, v1 = LV(94), LV(97), LV(99), F(RI(106))
+    sc = Scene("s_crisis", d0, v1)
+    sc.video("v16_date.mp4", d0, g0, z=1)
+    sc.video("v16_grid.mp4", g0, g1, z=1)
+    sc.video("v16_gov.mp4", g1, v1, z=1)
+    sc.write()
+    return sc
+
+
+THREW_CSS = """
+.pg{position:absolute;inset:0;background:#f6f6f4;}
+.pgi{position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0;}
+.yl{position:absolute;left:0;right:0;top:540px;height:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;
+ font-family:"ISerif",serif;font-size:230px;letter-spacing:-0.035em;line-height:1;color:#0b0b0b;}
+.yl span{display:inline-block;opacity:0;margin:0 0.15em;}
+.atoms{position:absolute;left:0;right:0;top:650px;height:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;}
+.atoms span{display:inline-block;font-family:"Michroma",sans-serif;font-size:136px;letter-spacing:0.01em;line-height:1.25;
+ color:#e9dbc1;-webkit-text-stroke:0.045em #e9dbc1;text-shadow:0 6px 24px rgba(0,0,0,0.38);}
+"""
+
+
+def white_hit(sc, t, z=90, peak=0.82):
+    """the Kalanick reel's flashes ("Following years of controversy", 22.3 / 22.9 s): one reel frame of the next shot
+    blown out to white"""
+    sc.div(t, F(t + REEL), "", z=z, cls="layer", style=f"background:#fff;opacity:{peak};")
+
+
+def s_threw():
+    """"Wall Street threw out years ago, to clean up the mess -- Larry Fink." (v16, the user: the Kalanick reel from
+    34 s): "Wall Street" on the earlier shot; "threw out years ago" as its "8 years later" -- a white page, the words laid
+    out and coming in one by one in black, the man's photo fading in faint behind (ours Fink's); its controversy
+    flashes at the cuts; a white frame, then its ATOMS (ours LARRY FINK) in wide letters over his face."""
+    LV = lambda i: F(RI(i) - TM.LEAD)
+    w0, p0, m0, x0, f0, h0 = F(RI(106)), LV(108), F(RI(112)), F(RI(116)), LV(117), LV(119)
+    sc = Scene("s_threw", w0, h0, bg="transparent", css=THREW_CSS)
+    for t in (w0, m0, x0):
+        white_hit(sc, t)
+    sc.div(p0, m0, '<div class="pg"></div>', z=10, cls="layer")
+    pid = sc.img("v16_page_fink.jpg", p0, m0, z=11, cls="pgi")
+    for k, o in enumerate((0.0, 0.07, 0.13, 0.18, 0.22, 0.25)):
+        sc.js.append(f'tl.set("#{pid}",{{opacity:{o}}},{sc.at(F(p0 + k * REEL))});')
+    spans = []
+    for w, i in (("threw", 108), ("out", 109), ("years", 110), ("ago", 111)):
+        wid = sc.uid("yw")
+        spans.append(f'<span id="{wid}">{w}</span>')
+        sc.js.append(f'tl.set("#{wid}",{{opacity:1}},{sc.at(max(p0, LV(i)))});')
+    sc.div(p0, m0, f'<div class="yl">{"".join(spans)}</div>', z=12, cls="layer")
+    sc.div(f0, F(f0 + REEL), "", z=20, cls="layer", style="background:#fff;")
+    sc.div(F(f0 + REEL), h0, '<div class="atoms"><span>LARRY FINK</span></div>', z=21, cls="layer")
+    sc.write()
+    return sc
+
+
+MONEY_CSS = """
+.mcap{position:absolute;left:980px;right:0;top:952px;height:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;
+ font-family:"ISerif",serif;font-size:64px;letter-spacing:-0.035em;line-height:1;color:#2b2b2b;}
+.lbox{position:absolute;left:700px;top:0;width:520px;height:76px;margin-top:-38px;background:rgba(58,58,58,0.92);display:flex;
+ align-items:center;padding:0 22px;box-sizing:border-box;font-family:"ISerif",serif;font-size:50px;letter-spacing:-0.035em;
+ line-height:1;color:#fff;white-space:nowrap;}
+"""
+
+
+def s_money():
+    """"He came out of that crisis with 3x the money." (v16, the user: the Kalanick reel's money graphics): its 39.4-44 s
+    on white (prep_v16 money) -- the small dark line at the bottom building word by word (its "He's betting billions"),
+    then its grey label rising with the first stacks to the middle (its "And with $1.7 billion"); a flash into "Today,"."""
+    LV = lambda i: F(RI(i) - TM.LEAD)
+    h0, s0, e0 = LV(119), LV(125), F(RI(130))
+    sc = Scene("s_money", h0, F(e0 + REEL), bg="transparent", css=MONEY_CSS)
+    sc.video("v16_money.mp4", h0, e0, z=1)
+    ws = [("He", LV(119)), ("came", LV(120)), ("out", LV(121)), ("of", LV(122)), ("that", LV(123)), ("crisis", LV(124))]
+    for k in range(len(ws)):
+        a = max(ws[k][1], h0)
+        b = ws[k + 1][1] if k + 1 < len(ws) else s0
+        if b - a < FR:
+            continue
+        sc.div(a, b, f'<div class="mcap">{" ".join(w for w, _ in ws[:k + 1])}</div>', z=30, cls="layer")
+    bid, tid = sc.uid("lb"), sc.uid("lt")
+    sc.div(s0, e0, f'<div id="{bid}" class="lbox"><span id="{tid}">with</span></div>', z=30, cls="layer")
+    for k, y in enumerate((1000, 905, 800, 700, 620, 575, 560)):
+        sc.js.append(f'tl.set("#{bid}",{{y:{y}}},{sc.at(F(s0 + k * 5 * FR))});')
+    for txt, t in (("with 3x", LV(126)), ("with 3x the", LV(128)), ("with 3x the money.", LV(129))):
+        sc.js.append(f'tl.set("#{tid}",{{textContent:"{txt}"}},{sc.at(t)});')
+    white_hit(sc, e0)
     sc.write()
     return sc
 
@@ -1018,6 +1180,6 @@ def index(scenes):
 if __name__ == "__main__":
     os.makedirs(COMP, exist_ok=True)
     scenes = [s_first(), s_name(), s_hook(), s_made(), s_share(), s_us(), s_stake(), s_rogan(), s_rest2(), s_bet(), s_risk(),
-              s_caps()]
+              s_crisis(), s_threw(), s_money(), s_caps()]
     index(scenes)
     print("wrote", len(scenes), "scenes; total", TM.TOTAL)

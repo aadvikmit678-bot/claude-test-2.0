@@ -11,6 +11,7 @@
 @font-face{font-family:"InterSB";src:url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype");font-weight:600;font-style:normal;}
 @font-face{font-family:"HerosR";src:url("assets/fonts/TeXGyreHeros-Regular.otf") format("opentype");font-weight:400;font-style:normal;}
 @font-face{font-family:"Bodoni";src:url("assets/fonts/BodoniModa-96-600.ttf") format("truetype");font-weight:600;font-style:normal;}
+@font-face{font-family:"Michroma";src:url("assets/fonts/Michroma-latin.woff2") format("woff2");font-weight:400;font-style:normal;}
 
 
 #root{position:absolute;inset:0;overflow:hidden;background:#000;}
@@ -62,6 +63,12 @@
 .ybox{display:inline-block;background:#f2c200;color:#fff;font-family:"HerosR",sans-serif;font-size:56px;letter-spacing:-0.015em;
  -webkit-text-stroke:0.022em currentColor;padding:8px 18px 12px;line-height:1;white-space:nowrap;}
 .sil{position:absolute;left:0;top:0;width:1920px;height:1080px;}
+.paper{position:absolute;inset:0;background:url("assets/img/paper_light.png") center/cover no-repeat;}
+.turn2{position:absolute;left:0;right:0;top:390px;height:300px;}
+.tl3{position:relative;width:1920px;height:300px;transform-origin:960px 150px;}
+.tline2{position:absolute;left:0;right:0;top:0;height:300px;display:flex;justify-content:center;align-items:center;white-space:nowrap;
+ font-family:"ISerif",serif;font-size:205px;letter-spacing:-0.05em;word-spacing:0.08em;line-height:1;color:#0c0c0c;
+ -webkit-text-stroke:0.006em #0c0c0c;}
 
 </style>
 <div id="root" data-composition-id="s_risk" data-width="1920" data-height="1080" data-duration="7.3667">
@@ -73,20 +80,20 @@
 <img id="s_risk-i7" class="clip full" src="assets/img/v15_neg_br.jpg" alt="" data-start="2.0500" data-duration="0.0834" data-track-index="2" style="z-index:15;" />
 <div id="s_risk-d8" class="clip layer" data-start="2.1334" data-duration="0.0833" data-track-index="3" style="z-index:20;"><div class="page" style="background:#fbfbfa;"><div class="logo" style="color:#111;">BlackRock</div></div></div>
 <div id="s_risk-d9" class="clip layer" data-start="2.2167" data-duration="0.5833" data-track-index="3" style="z-index:20;"><div class="page" style="background:#0b0b0b;"><div class="logo" style="color:#fff;">BlackRock</div></div></div>
-<div id="s_risk-d10" class="clip layer wp" data-start="2.8000" data-duration="0.8334" data-track-index="3" style="z-index:20;"></div>
-<div id="s_risk-d15" class="clip layer" data-start="2.8000" data-duration="0.8334" data-track-index="3" style="z-index:22;"><div class="it"><span id="s_risk-iw11">and</span><span id="s_risk-iw12">built</span><span id="s_risk-iw13">a</span><span id="s_risk-iw14">system</span></div></div>
-<video id="s_risk-v16" class="clip full" src="assets/clips/v15_job.mp4" data-start="4.0000" data-duration="0.7334" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
-<div id="s_risk-d17" class="clip cap" data-start="3.6334" data-duration="0.3666" data-track-index="3" style="z-index:40;top:540px;height:0;"><div class="jn">with</div></div>
-<div id="s_risk-d18" class="clip cap" data-start="4.0000" data-duration="0.1834" data-track-index="3" style="z-index:40;top:540px;height:0;"><div class="jn">with one</div></div>
-<div id="s_risk-d19" class="clip cap" data-start="4.1834" data-duration="0.5500" data-track-index="3" style="z-index:40;top:540px;height:0;"><div class="jn">with one job</div></div>
-<div id="s_risk-d20" class="clip cap" data-start="4.7334" data-duration="0.6666" data-track-index="3" style="z-index:40;top:540px;height:0;"><div class="jn">calculating</div></div>
-<img id="s_risk-i21" class="clip full" src="assets/img/v15_neg_risk.jpg" alt="" data-start="5.3167" data-duration="0.0833" data-track-index="2" style="z-index:15;" />
-<div id="s_risk-d22" class="clip cap" data-start="5.4000" data-duration="0.4834" data-track-index="3" style="z-index:30;top:540px;height:0;"><div class="bigb" style="font-size:300px;">risk.</div></div>
-<img id="s_risk-sl23" class="clip sil" src="assets/img/v15_called_white.png" alt="" data-start="5.8834" data-duration="0.1666" data-track-index="2" style="z-index:25;" />
-<div id="s_risk-d24" class="clip cap" data-start="5.8834" data-duration="0.1166" data-track-index="3" style="z-index:40;top:600px;height:0;"><div class="ybox">He</div></div>
-<div id="s_risk-d25" class="clip cap" data-start="6.0000" data-duration="0.3000" data-track-index="3" style="z-index:40;top:600px;height:0;"><div class="ybox">He called</div></div>
-<div id="s_risk-d26" class="clip cap" data-start="6.3000" data-duration="0.3500" data-track-index="3" style="z-index:40;top:600px;height:0;"><div class="ybox">He called it</div></div>
-<div id="s_risk-d28" class="clip cap" data-start="6.6500" data-duration="0.7167" data-track-index="3" style="z-index:30;top:540px;height:0;"><div id="s_risk-al27" class="bigb" style="font-size:250px;opacity:0;">ALADDIN</div></div>
+<div id="s_risk-d10" class="clip layer paper" data-start="2.8000" data-duration="0.8334" data-track-index="3" style="z-index:20;"></div>
+<div class="turn2" style="z-index:22;"><div id="s_risk-tl11" class="tl3"><div class="clip tline2" data-start="2.8000" data-duration="0.1167" data-track-index="3">and</div><div class="clip tline2" data-start="2.9167" data-duration="0.2667" data-track-index="3">and built</div><div class="clip tline2" data-start="3.1834" data-duration="0.0666" data-track-index="3">and built a</div><div class="clip tline2" data-start="3.2500" data-duration="0.3834" data-track-index="3">and built a system</div></div></div>
+<video id="s_risk-v12" class="clip full" src="assets/clips/v15_job.mp4" data-start="4.0000" data-duration="0.7334" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
+<div id="s_risk-d13" class="clip cap" data-start="3.6334" data-duration="0.3666" data-track-index="3" style="z-index:40;top:540px;height:0;"><div class="jn">with</div></div>
+<div id="s_risk-d14" class="clip cap" data-start="4.0000" data-duration="0.1834" data-track-index="3" style="z-index:40;top:540px;height:0;"><div class="jn">with one</div></div>
+<div id="s_risk-d15" class="clip cap" data-start="4.1834" data-duration="0.5500" data-track-index="3" style="z-index:40;top:540px;height:0;"><div class="jn">with one job</div></div>
+<div id="s_risk-d16" class="clip cap" data-start="4.7334" data-duration="0.6666" data-track-index="3" style="z-index:40;top:540px;height:0;"><div class="jn">calculating</div></div>
+<img id="s_risk-i17" class="clip full" src="assets/img/v15_neg_risk.jpg" alt="" data-start="5.3167" data-duration="0.0833" data-track-index="2" style="z-index:15;" />
+<div id="s_risk-d18" class="clip cap" data-start="5.4000" data-duration="0.4834" data-track-index="3" style="z-index:30;top:540px;height:0;"><div class="bigb" style="font-size:300px;">risk.</div></div>
+<img id="s_risk-sl19" class="clip sil" src="assets/img/v15_called_white.png" alt="" data-start="5.8834" data-duration="0.1666" data-track-index="2" style="z-index:25;" />
+<div id="s_risk-d20" class="clip cap" data-start="5.8834" data-duration="0.1166" data-track-index="3" style="z-index:40;top:600px;height:0;"><div class="ybox">He</div></div>
+<div id="s_risk-d21" class="clip cap" data-start="6.0000" data-duration="0.3000" data-track-index="3" style="z-index:40;top:600px;height:0;"><div class="ybox">He called</div></div>
+<div id="s_risk-d22" class="clip cap" data-start="6.3000" data-duration="0.3500" data-track-index="3" style="z-index:40;top:600px;height:0;"><div class="ybox">He called it</div></div>
+<div id="s_risk-d24" class="clip cap" data-start="6.6500" data-duration="0.7167" data-track-index="3" style="z-index:30;top:540px;height:0;"><div id="s_risk-al23" class="bigb" style="font-size:250px;opacity:0;">ALADDIN</div></div>
 </div>
 <script>
 (function(){
@@ -94,12 +101,58 @@
   tl.set({}, {}, 7.3667);
   tl.set("#s_risk-yr3",{textContent:"2996"},0.5667);
   tl.set("#s_risk-yr3",{textContent:"1988"},0.6500);
-  tl.set("#s_risk-iw11",{opacity:1,filter:"blur(5px)"},2.8000);tl.set("#s_risk-iw11",{filter:"blur(0px)"},2.9000);
-  tl.set("#s_risk-iw12",{opacity:1,filter:"blur(5px)"},2.9167);tl.set("#s_risk-iw12",{filter:"blur(0px)"},3.0167);
-  tl.set("#s_risk-iw13",{opacity:1,filter:"blur(5px)"},3.1834);tl.set("#s_risk-iw13",{filter:"blur(0px)"},3.2834);
-  tl.set("#s_risk-iw14",{opacity:1,filter:"blur(5px)"},3.2500);tl.set("#s_risk-iw14",{filter:"blur(0px)"},3.3500);
-  tl.set("#s_risk-al27",{opacity:1,filter:"blur(8px)",textShadow:"0 0 10px rgba(255,255,255,1),0 0 34px rgba(255,255,255,0.95),0 0 80px rgba(255,255,255,0.75),0 0 160px rgba(255,255,255,0.45)"},6.6500);
-  tl.set("#s_risk-al27",{filter:"blur(0px)",textShadow:"0 0 16px rgba(255,255,255,0.35)"},6.7500);
+  tl.set("#s_risk-tl11",{scale:0.6760},2.8000);
+  tl.set("#s_risk-tl11",{scale:0.6898},2.8167);
+  tl.set("#s_risk-tl11",{scale:0.7033},2.8334);
+  tl.set("#s_risk-tl11",{scale:0.7167},2.8500);
+  tl.set("#s_risk-tl11",{scale:0.7305},2.8667);
+  tl.set("#s_risk-tl11",{scale:0.7449},2.8834);
+  tl.set("#s_risk-tl11",{scale:0.7600},2.9000);
+  tl.set("#s_risk-tl11",{scale:0.7772},2.9167);
+  tl.set("#s_risk-tl11",{scale:0.7964},2.9334);
+  tl.set("#s_risk-tl11",{scale:0.8163},2.9500);
+  tl.set("#s_risk-tl11",{scale:0.8356},2.9667);
+  tl.set("#s_risk-tl11",{scale:0.8530},2.9834);
+  tl.set("#s_risk-tl11",{scale:0.8670},3.0000);
+  tl.set("#s_risk-tl11",{scale:0.8785},3.0167);
+  tl.set("#s_risk-tl11",{scale:0.8889},3.0334);
+  tl.set("#s_risk-tl11",{scale:0.8984},3.0500);
+  tl.set("#s_risk-tl11",{scale:0.9069},3.0667);
+  tl.set("#s_risk-tl11",{scale:0.9144},3.0834);
+  tl.set("#s_risk-tl11",{scale:0.9210},3.1000);
+  tl.set("#s_risk-tl11",{scale:0.9268},3.1167);
+  tl.set("#s_risk-tl11",{scale:0.9320},3.1334);
+  tl.set("#s_risk-tl11",{scale:0.9367},3.1500);
+  tl.set("#s_risk-tl11",{scale:0.9410},3.1667);
+  tl.set("#s_risk-tl11",{scale:0.9451},3.1834);
+  tl.set("#s_risk-tl11",{scale:0.9490},3.2000);
+  tl.set("#s_risk-tl11",{scale:0.9528},3.2167);
+  tl.set("#s_risk-tl11",{scale:0.9565},3.2334);
+  tl.set("#s_risk-tl11",{scale:0.9599},3.2500);
+  tl.set("#s_risk-tl11",{scale:0.9632},3.2667);
+  tl.set("#s_risk-tl11",{scale:0.9662},3.2834);
+  tl.set("#s_risk-tl11",{scale:0.9690},3.3000);
+  tl.set("#s_risk-tl11",{scale:0.9716},3.3167);
+  tl.set("#s_risk-tl11",{scale:0.9742},3.3334);
+  tl.set("#s_risk-tl11",{scale:0.9766},3.3500);
+  tl.set("#s_risk-tl11",{scale:0.9787},3.3667);
+  tl.set("#s_risk-tl11",{scale:0.9806},3.3834);
+  tl.set("#s_risk-tl11",{scale:0.9820},3.4000);
+  tl.set("#s_risk-tl11",{scale:0.9831},3.4167);
+  tl.set("#s_risk-tl11",{scale:0.9839},3.4334);
+  tl.set("#s_risk-tl11",{scale:0.9846},3.4500);
+  tl.set("#s_risk-tl11",{scale:0.9853},3.4667);
+  tl.set("#s_risk-tl11",{scale:0.9861},3.4834);
+  tl.set("#s_risk-tl11",{scale:0.9870},3.5000);
+  tl.set("#s_risk-tl11",{scale:0.9882},3.5167);
+  tl.set("#s_risk-tl11",{scale:0.9895},3.5334);
+  tl.set("#s_risk-tl11",{scale:0.9910},3.5500);
+  tl.set("#s_risk-tl11",{scale:0.9925},3.5667);
+  tl.set("#s_risk-tl11",{scale:0.9938},3.5834);
+  tl.set("#s_risk-tl11",{scale:0.9950},3.6000);
+  tl.set("#s_risk-tl11",{scale:0.9960},3.6167);
+  tl.set("#s_risk-al23",{opacity:1,filter:"blur(8px)",textShadow:"0 0 10px rgba(255,255,255,1),0 0 34px rgba(255,255,255,0.95),0 0 80px rgba(255,255,255,0.75),0 0 160px rgba(255,255,255,0.45)"},6.6500);
+  tl.set("#s_risk-al23",{filter:"blur(0px)",textShadow:"0 0 16px rgba(255,255,255,0.35)"},6.7500);
   window.__timelines["s_risk"] = tl;
 })();
 </script>

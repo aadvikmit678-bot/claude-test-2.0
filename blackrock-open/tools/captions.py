@@ -144,12 +144,13 @@ PORSCHE = [
     ("por", 58, 60, "of Wall Street"), ("por", 61, 64, "and to convince him"), ("por", 65, 67, "of one thing."),
     ("por", 68, 69, "Wall Street"), ("por", 70, 71, "is terrible"), ("por", 72, 73, "at seeing"), ("word", 74, 74, "risk."),
     ("skip", 75, 93, "_"),          # (v15: "So, in 1988, ... He called it Aladdin." -- s_risk writes it)
-    ("por", 94, 95, "When the"), ("big", 96, 96, "2008"), ("por", 97, 98, "crisis hit,"),
+    ("skip", 94, 96, "_"),          # (v16: "When the 2008" -- the date frame writes the year)
+    ("por", 97, 98, "crisis hit,"),
     ("por", 99, 101, "the U.S. government"), ("por", 102, 102, "called"), ("por", 103, 105, "the one guy"),
-    ("por", 106, 109, "Wall Street threw out"), ("por", 110, 111, "years ago"), ("por", 112, 114, "to clean up"),
-    ("por", 115, 116, "the mess"), ("word", 117, 118, "Larry Fink."),
-    ("por", 119, 121, "He came out"), ("por", 122, 124, "of that crisis"), ("por", 125, 125, "with"),
-    ("big", 126, 127, "3x"), ("por", 128, 129, "the money."),
+    ("por", 106, 107, "Wall Street"),
+    ("skip", 108, 111, "_"),        # (v16: "threw out years ago" -- s_threw's white page)
+    ("por", 112, 114, "to clean up"), ("por", 115, 116, "the mess"),
+    ("skip", 117, 129, "_"),        # (v16: LARRY FINK, then s_money's lines)
     ("por", 130, 130, "Today,"), ("por", 131, 132, "every time"), ("por", 133, 135, "you buy the"),
     ("type", 136, 137, "S&P 500,"),
     ("por", 138, 139, "your money"), ("por", 140, 142, "ends up in"), ("por", 143, 145, "this guy’s hands."),
