@@ -26,7 +26,7 @@ LEAD = 0.03          # a word shows this much before its aligned onset (never la
 
 # ------------------------------------------------------------------ words with film times
 def open_words():
-    return [(w["text"], TM.O(w["start"]), TM.O(w["end"])) for w in TM.ALIGN["open"]]
+    return [(w["text"], TM.O(w["start"]), TM.O(w["end"])) for w in TM.ALIGN[TM.OPEN_REC]]
 
 
 def rogan_words():
@@ -52,12 +52,16 @@ def _clean(w):
 # "_" sets a phrase a little below the centre (under "top shareholders"); "^" sets it dark and low on the light
 # founders page, where the names and the numbers are written big.
 SCRIPT = {
-    "open": "This is the most | [powerful man on Earth.] | [Larry Fink, the CEO of BlackRock.] | "
-            "[The most evil company in the world.] | "
+    # v10 (the user's second new recording): every span a scene writes itself is "[...]" -- the first scene's line,
+    # the name, the red scene, "company ever" / BUILT, the hook's lines, the made frame, "top shareholders", "in almost
+    # every", "major", "U.S. company"; "yet it's one of the" is the caption line in the middle; on the founders' page
+    # the caption is dark and low ("^"), on the founders' own clips white in the middle
+    "open": "[This is the most powerful man on Earth.] | [Larry Fink, the CEO of BlackRock] | "
+            "[or how people call it, the most evil company ever built.] | "
             "[A 15 trillion dollar cartel of weaponized capital that owns a piece of everything you touch.] | "
             "[A company that's never made a single physical product,] | yet it's one of the | [top shareholders] | "
-            "_in almost every | _major U.S. company. | ^It holds more of | ^Nvidia than | ^Jensen Huang, | ^more of | "
-            "^Microsoft than | ^Bill Gates, | ^and more of | ^Apple than | ^Steve Jobs | ^ever did.",
+            "[in almost every major] | [U.S. company.] | ^It holds more of | ^Nvidia than | Jensen Huang, | "
+            "^more of | ^Microsoft than | Bill Gates, | ^and more of | ^Apple than | Steve Jobs | ever did.",
 }
 
 

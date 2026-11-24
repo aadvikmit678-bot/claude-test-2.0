@@ -1,11 +1,12 @@
 """The film's clock. Every boundary is snapped to the 60 fps frame grid (F).
 
-v9 (Nov 24): the film opens on the user's new recording (new_starting_larry_fink_video.mp3, 24.6 s): "This is the most
-powerful man on Earth. Larry Fink, the CEO of BlackRock. The most evil company in the world. A $15 trillion cartel of
-weaponized capital that owns a piece of everything you touch. A company that's never made a single physical product,
-yet it's one of the top shareholders in almost every major US company. It holds more of Nvidia than Jensen Huang, more
-of Microsoft than Bill Gates, and more of Apple than Steve Jobs ever did." -- then Elon's question and the second half
-("Back in the 1980s ..."), which are unchanged.
+v10 (Nov 24, evening): the film opens on the user's second new recording ("new audio.mp3", 29.7 s, slower on purpose,
+no pause cut): "This is the most powerful man on Earth. Larry Fink, the CEO of BlackRock or how people call it, the most
+evil company ever built. A $15 trillion dollar cartel of weaponized capital that owns a piece of everything you touch.
+A company that's never made a single physical product, yet it's one of the top shareholders in almost every major US
+company. It holds more of Nvidia than Jensen Huang, more of Microsoft than Bill Gates, and more of Apple than Steve Jobs
+ever did." -- then Elon's question and the second half ("Back in the 1980s ..."), which are unchanged.
+(v9's recording, new_starting_larry_fink_video.mp3, is still aligned in tools/words/open.json but no longer used.)
 
 Sources of the times:
 - the opening recording and the rest recording (rest.mp3): every word force-aligned to the sound (tools/align.py ->
@@ -31,10 +32,11 @@ def _load(name):
         return json.load(f)
 
 
-ALIGN = {k: _load(k) for k in ("open", "rest", "rogan")}
+ALIGN = {k: _load(k) for k in ("open", "open2", "rest", "rogan")}
+OPEN_REC = "open2"                    # the recording the film opens on
 PACE = _load("pace")
-OPEN_CUTS = PACE["open"]["cuts"]
-OPEN_OUT = PACE["open"]["open_out"]     # "... than Steve Jobs ever did." has fully faded (file seconds)
+OPEN_CUTS = PACE[OPEN_REC]["cuts"]      # (none: the user slowed this recording on purpose)
+OPEN_OUT = PACE[OPEN_REC]["open_out"]   # "... than Steve Jobs ever did." has fully faded (file seconds)
 REST_CUTS = PACE["rest"]["cuts"]
 REST1_OUT = PACE["rest"]["rest1_out"]   # the rest recording's first part (now replaced by the opening) ends here
 REST2_IN = PACE["rest"]["rest2_in"]     # just before "Back in the 1980s"
@@ -59,27 +61,28 @@ def O(t):
     return F(squeeze(t, OPEN_CUTS))
 
 
-# the opening's words by key: index into the aligned words (tools/words/open.json), ("end", i) for a word's end,
+# the opening's words by key: index into the aligned words (tools/words/open2.json), ("end", i) for a word's end,
 # (i, frac) for a point inside a word ("weapon|ized")
 OPEN_IDX = {
     "this": 0, "is": 1, "the1": 2, "most1": 3, "powerful": 4, "man": 5, "on": 6, "earth": 7, "earth_end": ("end", 7),
     "larry": 8, "fink": 9, "fink_end": ("end", 9), "the2": 10, "ceo": 11, "of0": 12, "blackrock": 13,
-    "blackrock_end": ("end", 13), "the3": 14, "most": 15, "evil": 16, "company": 17, "in": 18, "the5": 19, "world": 20,
-    "world_end": ("end", 20), "a": 21, "fifteen": 22, "trillion": 23, "dollar": 24, "cartel": 25, "of1": 26,
-    "weapon": 27, "ized": (27, 0.52), "capital": 28, "that": 29, "owns": 30, "a2": 31, "piece": 32, "of2": 33,
-    "everything": 34, "you": 35, "touch": 36, "touch_end": ("end", 36), "a3": 37, "company2": 38, "thats": 39,
-    "never": 40, "made": 41, "a4": 42, "single": 43, "physical": 44, "product": 45, "product_end": ("end", 45),
-    "yet": 46, "its": 47, "one": 48, "of3": 49, "the6": 50, "top": 51, "shareholders": 52,
-    "shareholders_end": ("end", 52), "in2": 53, "almost": 54, "every": 55, "major": 56, "us": 57, "company3": 58,
-    "company3_end": ("end", 58), "it": 59, "holds": 60, "more1": 61, "of4": 62, "nvidia": 63, "than1": 64,
-    "jensen": 65, "huang": 66, "huang_end": ("end", 66), "more2": 67, "of5": 68, "microsoft": 69, "than2": 70,
-    "bill": 71, "gates": 72, "gates_end": ("end", 72), "and": 73, "more3": 74, "of6": 75, "apple": 76, "than3": 77,
-    "steve": 78, "jobs": 79, "jobs_end": ("end", 79), "ever": 80, "did": 81, "did_end": ("end", 81),
+    "blackrock_end": ("end", 13), "or": 14, "how": 15, "people": 16, "call": 17, "it0": 18, "the3": 19, "most": 20,
+    "evil": 21, "evil_end": ("end", 21), "company": 22, "ever0": 23, "built": 24, "built_end": ("end", 24), "a": 25,
+    "fifteen": 26, "trillion": 27, "dollar": 28, "cartel": 29, "of1": 30, "weapon": 31, "ized": (31, 0.52),
+    "capital": 32, "that": 33, "owns": 34, "a2": 35, "piece": 36, "of2": 37, "everything": 38, "you": 39, "touch": 40,
+    "touch_end": ("end", 40), "a3": 41, "company2": 42, "thats": 43, "never": 44, "made": 45, "a4": 46, "single": 47,
+    "physical": 48, "product": 49, "product_end": ("end", 49), "yet": 50, "its": 51, "one": 52, "of3": 53,
+    "the6": 54, "top": 55, "shareholders": 56, "shareholders_end": ("end", 56), "in2": 57, "almost": 58, "every": 59,
+    "major": 60, "us": 61, "company3": 62, "company3_end": ("end", 62), "it": 63, "holds": 64, "more1": 65, "of4": 66,
+    "nvidia": 67, "than1": 68, "jensen": 69, "huang": 70, "huang_end": ("end", 70), "more2": 71, "of5": 72,
+    "microsoft": 73, "than2": 74, "bill": 75, "gates": 76, "gates_end": ("end", 76), "and": 77, "more3": 78,
+    "of6": 79, "apple": 80, "than3": 81, "steve": 82, "jobs": 83, "jobs_end": ("end", 83), "ever": 84, "did": 85,
+    "did_end": ("end", 85),
 }
 
 
 def _open_file(spec):
-    words = ALIGN["open"]
+    words = ALIGN[OPEN_REC]
     if isinstance(spec, int):
         return words[spec]["start"]
     if spec[0] == "end":
@@ -92,34 +95,35 @@ W = {k: round(_open_file(v), 3) for k, v in OPEN_IDX.items()}   # opening file s
 T = {k: O(v) for k, v in W.items()}                              # film seconds
 
 OPEN_END = F(O(OPEN_OUT) + 0.02)
-CARTEL_IN = F(T["cartel"] - 3 / 24)    # the cartel clip only for its table flash (frames 14-16 at 24 fps), the faces
-                                      # from "cartel"
-RISE = 0.40                            # the red scene: Fink's rise before the cut to the close-up
-EVIL_IN = F(T["most"] - 2 / FPS - RISE)
 LEAD = 2 / FPS                         # a picture changes two frames before its word (the references: 0-1 at 24 fps)
 NAME_LEAD = 14 / FPS                   # the name mosaic builds first, so the name lands on "Larry"
+EVIL_IN = F(T["or"] - 0.05)
+CARTEL_IN = F(T["cartel"] - LEAD)      # v10: straight from the cutouts to the cartel faces (no table flash: the user)            # the red scene: Fink rises through "or how people call it, the" (the v6 rise)
 
 TOUCH_END = F(T["touch"] + 15 / FPS)       # the touch clip is white on its frames 45-46, other footage from 47
 
 # beats (film seconds, frame-snapped)
 B = {
-    "wall": (0.0, T["on"]),                              # "This is the most powerful man": the wall of Finks
-    "earth": (T["on"], F(T["larry"] - NAME_LEAD)),       # "on Earth." the red card, held into the pause
-    # "Larry Fink, the CEO of BlackRock.": the Hemant video's name mosaic (a big centre tile, small ones either side),
+    # "This is the most powerful man on Earth.": reel DgHoW0vhPvb's opening (the photo wall, its textures) into the
+    # Kalanick reel's frame: Fink cut out in front of the line, the line in the serif behind him
+    "first": (0.0, F(T["larry"] - NAME_LEAD)),
+    # "Larry Fink, the CEO of BlackRock": the Hemant video's name mosaic (a big centre tile, small ones either side),
     # his clips first, BlackRock's from the word
     "name": (F(T["larry"] - NAME_LEAD), EVIL_IN),
-    "evil": (EVIL_IN, T["company"]),                     # "The most evil": the red horned scene
-    "company": (T["company"], T["a"]),                   # "company in the world."
-    "money": (T["a"], CARTEL_IN),                        # "A $15 trillion dollar": the article flipbook
-    "cartel": (CARTEL_IN, T["of1"]),                     # the cartel clip: its table flash, the faces on "cartel"
-    "weap": (T["of1"], T["that"]),                       # "of weaponized capital"
-    "logos": (T["that"], T["everything"]),               # "that owns a piece of"
+    # "or how people call it, the most evil": the red horned scene as v6 had it (the user: "like the original version
+    # ... a bit slow"): the rise under the small words, the cut to the close-up two frames before "most"
+    "evil": (EVIL_IN, F(T["company"] - LEAD)),
+    "built": (F(T["company"] - LEAD), F(T["a"] - LEAD)),     # "company ever built."
+    "money": (F(T["a"] - LEAD), CARTEL_IN),                  # "A $15 trillion dollar": the headline cutouts
+    "cartel": (CARTEL_IN, T["of1"]),                         # the cartel clip: its table flash, the faces on "cartel"
+    "weap": (T["of1"], T["that"]),                           # "of weaponized capital"
+    "logos": (T["that"], T["everything"]),                   # "that owns a piece of"
     # "everything you touch.": the fingers meet on "touch", the burst, and its white frames (the touch source.s 29;
     # after it the clip cuts to other footage, so the beat ends there)
     "touch": (T["everything"], TOUCH_END),
-    "made": (TOUCH_END, F(T["yet"] - LEAD)),             # "A company that's never made a single physical product,"
-    "share": (F(T["yet"] - LEAD), F(T["it"] - LEAD)),    # "yet it's one of the top shareholders in almost every ..."
-    "stake": (F(T["it"] - LEAD), OPEN_END),              # "It holds more of Nvidia than Jensen Huang ... ever did."
+    "made": (TOUCH_END, F(T["yet"] - LEAD)),                 # "A company that's never made a single physical product,"
+    "share": (F(T["yet"] - LEAD), F(T["it"] - LEAD)),        # "yet it's one of the top shareholders in almost every ..."
+    "stake": (F(T["it"] - LEAD), OPEN_END),                  # "It holds more of Nvidia than Jensen Huang ... ever did."
 }
 B["open"] = (0.0, OPEN_END)
 

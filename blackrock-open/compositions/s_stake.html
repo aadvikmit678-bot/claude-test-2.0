@@ -9,6 +9,8 @@
 @font-face{font-family:"LGothic";src:url("assets/fonts/LeagueGothic-latin.woff2") format("woff2");font-weight:400;font-style:normal;}
 @font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
 @font-face{font-family:"InterSB";src:url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype");font-weight:600;font-style:normal;}
+@font-face{font-family:"HerosR";src:url("assets/fonts/TeXGyreHeros-Regular.otf") format("opentype");font-weight:400;font-style:normal;}
+@font-face{font-family:"Bodoni";src:url("assets/fonts/BodoniModa-96-600.ttf") format("truetype");font-weight:600;font-style:normal;}
 
 
 #root{position:absolute;inset:0;overflow:hidden;background:#000;}
@@ -18,8 +20,8 @@
 .nv{font-family:"InterD",sans-serif;font-weight:800;letter-spacing:-0.02em;color:#fff;text-transform:uppercase;}
 .hv{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.012em;color:#EEF0F0;text-transform:uppercase;line-height:1;white-space:nowrap;}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;}
-.jn{font-family:"InterSB",sans-serif;font-weight:600;font-size:62px;letter-spacing:-0.05em;line-height:1;color:#fff;white-space:nowrap;
- text-shadow:0 0 10px rgba(255,255,255,0.40),0 0 28px rgba(255,255,255,0.18);}
+.jn{font-family:"HerosR",sans-serif;font-weight:400;font-size:60px;letter-spacing:-0.015em;line-height:1;color:#fff;white-space:nowrap;
+ -webkit-text-stroke:0.022em currentColor;text-shadow:0 0 10px rgba(255,255,255,0.36),0 0 26px rgba(255,255,255,0.16);}
 .jn.ink{color:#141414;text-shadow:none;}
 .jn.heavy{text-shadow:0 0 10px rgba(255,255,255,0.45),0 0 28px rgba(255,255,255,0.2);}
 .ser{font-family:"ISerif",serif;font-weight:400;line-height:1;color:#FBF8EC;white-space:nowrap;letter-spacing:0.005em;}
@@ -29,7 +31,7 @@
  text-shadow:0 0 12px rgba(255,255,255,0.35),0 0 30px rgba(255,255,255,0.14);}
 .pl span{display:inline-block;opacity:0;}
 .dline{display:flex;align-items:baseline;justify-content:center;font-family:"ISerif",serif;font-weight:400;line-height:1;
- color:#fff;white-space:nowrap;}
+ color:#fff;white-space:nowrap;letter-spacing:-0.04em;}
 .dw{position:relative;display:inline-block;}
 .dfl{position:absolute;left:-0.04em;right:-0.04em;top:0.34em;bottom:0.12em;opacity:0;background:#fff;
  box-shadow:0 0 16px rgba(255,255,255,0.9),0 0 44px rgba(255,255,255,0.45);}
@@ -38,7 +40,7 @@
  white-space:nowrap;}
 .isnt span{display:inline-block;transform-origin:50% 55%;}
 .lock{position:absolute;display:flex;align-items:center;white-space:nowrap;pointer-events:none;}
-.gt{font-family:"InterD",sans-serif;font-weight:700;letter-spacing:-0.035em;line-height:1;color:#fff;white-space:nowrap;
+.gt{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.04em;line-height:1;color:#fff;white-space:nowrap;
  text-shadow:0 0 14px rgba(255,255,255,0.55),0 0 40px rgba(255,255,255,0.28),0 0 90px rgba(255,255,255,0.12);}
 .wht2{position:absolute;inset:0;background:#f4f4f0;opacity:0;}
 
@@ -51,7 +53,7 @@
 .jcard{border-radius:14px;border:4px solid #141414;box-shadow:0 18px 40px rgba(0,0,0,0.28);}
 .k{position:absolute;left:1040px;font-family:"InterSB",sans-serif;font-weight:600;color:#5c5c5c;font-size:26px;letter-spacing:0.12em;line-height:1;white-space:nowrap;}
 .co{position:absolute;left:1036px;top:112px;font-family:"InterD",sans-serif;font-weight:800;font-size:124px;letter-spacing:-0.035em;color:#121212;line-height:1;white-space:nowrap;opacity:0;}
-.lab{position:absolute;left:1040px;font-family:"InterSB",sans-serif;font-weight:600;font-size:46px;letter-spacing:-0.03em;color:#141414;line-height:1;white-space:nowrap;}
+.lab{position:absolute;left:1040px;font-family:"HerosR",sans-serif;font-weight:400;font-size:48px;letter-spacing:-0.02em;color:#141414;line-height:1;white-space:nowrap;-webkit-text-stroke:0.022em currentColor;}
 .num{position:absolute;right:90px;font-family:"ISerif",serif;font-size:150px;letter-spacing:-0.01em;color:#141414;line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums lining-nums;}
 .trk{position:absolute;left:1040px;width:790px;height:26px;background:#c6c6c4;border-radius:3px;overflow:hidden;}
 .fill{position:absolute;left:0;top:0;width:790px;height:26px;transform-origin:0 50%;}
@@ -59,23 +61,28 @@
 .src{position:absolute;left:96px;top:1022px;font-family:"InterSB",sans-serif;font-size:21px;letter-spacing:0.04em;color:#5c5c5c;line-height:1;white-space:nowrap;}
 
 </style>
-<div id="root" data-composition-id="s_stake" data-width="1920" data-height="1080" data-duration="5.8333">
-<div id="s_stake-d3" class="clip layer" data-start="0.0000" data-duration="5.8333" data-track-index="3" style="z-index:4;"><div class="k" style="top:82px;">SHARE OF THE COMPANY</div><div class="lab" style="top:356px;">BlackRock</div><div id="s_stake-na1" class="num" style="top:300px;">0.00%</div><div class="trk" style="top:470px;"><div id="s_stake-fa2" class="fill" style="background:#141414;"></div></div><div class="trk" style="top:734px;"></div><div class="src">Source · Investopedia · Yahoo Finance</div></div>
-<div id="s_stake-pw4" class="pw" style="left:81px;top:230px;width:848px;height:580px;z-index:3;"><img id="s_stake-pw4-img" class="clip" src="assets/img/v9_gpu.png" alt="" data-start="0.3333" data-duration="1.8000" data-track-index="2" /></div>
-<div id="s_stake-sw5" class="scr jcard" style="left:560px;top:92px;width:400px;height:300px;z-index:5;"><video id="s_stake-v7" class="clip" src="assets/clips/v9_jensen.mp4" data-start="1.2166" data-duration="0.9167" data-media-start="0.0000" data-track-index="1" muted playsinline></video><div id="s_stake-wh6" class="wht2"></div></div>
-<div id="s_stake-d13" class="clip layer" data-start="0.0000" data-duration="2.1333" data-track-index="3" style="z-index:5;"><div id="s_stake-co8" class="co">Nvidia</div><div id="s_stake-lb9" class="lab" style="top:620px;opacity:0;">Jensen Huang</div><div id="s_stake-nb10" class="num" style="top:564px;opacity:0;color:#4a8600;">0.00%</div><div class="trk" style="top:734px;background:transparent;"><div id="s_stake-fb11" class="fill" style="background:#4a8600;"></div></div><div id="s_stake-bd12" class="bdg">2.2× more</div></div>
-<div id="s_stake-pw14" class="pw" style="left:89px;top:116px;width:832px;height:808px;z-index:3;"><img id="s_stake-pw14-img" class="clip" src="assets/img/v9_pc.png" alt="" data-start="2.1333" data-duration="1.6667" data-track-index="2" /></div>
-<div id="s_stake-sw15" class="scr" style="left:303px;top:200px;width:402px;height:296px;border-radius:16px;z-index:5;"><video id="s_stake-v17" class="clip" src="assets/clips/v9_gates.mp4" data-start="3.0166" data-duration="0.7834" data-media-start="0.0000" data-track-index="1" muted playsinline></video><div id="s_stake-wh16" class="wht2"></div></div>
-<div id="s_stake-d23" class="clip layer" data-start="2.1333" data-duration="1.6667" data-track-index="3" style="z-index:5;"><div id="s_stake-co18" class="co">Microsoft</div><div id="s_stake-lb19" class="lab" style="top:620px;opacity:0;">Bill Gates</div><div id="s_stake-nb20" class="num" style="top:564px;opacity:0;color:#c8431a;">0.00%</div><div class="trk" style="top:734px;background:transparent;"><div id="s_stake-fb21" class="fill" style="background:#c8431a;"></div></div><div id="s_stake-bd22" class="bdg">6.1× more</div></div>
-<div id="s_stake-pw24" class="pw" style="left:189px;top:120px;width:632px;height:800px;z-index:3;"><img id="s_stake-pw24-img" class="clip" src="assets/img/v9_mac.png" alt="" data-start="3.8000" data-duration="2.0333" data-track-index="2" /></div>
-<div id="s_stake-sw25" class="scr" style="left:293px;top:228px;width:416px;height:312px;border-radius:16px;z-index:5;"><video id="s_stake-v27" class="clip" src="assets/clips/v9_jobs.mp4" data-start="4.6666" data-duration="1.1667" data-media-start="0.0000" data-track-index="1" muted playsinline></video><div id="s_stake-wh26" class="wht2"></div></div>
-<div id="s_stake-d33" class="clip layer" data-start="3.8000" data-duration="2.0333" data-track-index="3" style="z-index:5;"><div id="s_stake-co28" class="co">Apple</div><div id="s_stake-lb29" class="lab" style="top:620px;opacity:0;">Steve Jobs</div><div id="s_stake-nb30" class="num" style="top:564px;opacity:0;color:#1676c8;">0.00%</div><div class="trk" style="top:734px;background:transparent;"><div id="s_stake-fb31" class="fill" style="background:#1676c8;"></div></div><div id="s_stake-bd32" class="bdg">33× more</div></div>
+<div id="root" data-composition-id="s_stake" data-width="1920" data-height="1080" data-duration="6.9666">
+<div id="s_stake-d3" class="clip layer" data-start="0.0000" data-duration="6.9666" data-track-index="3" style="z-index:4;"><div class="lab" data-layout-allow-overlap style="top:356px;">BlackRock</div><div id="s_stake-na1" class="num" data-layout-allow-overlap style="top:300px;">0.00%</div><div class="trk" style="top:470px;"><div id="s_stake-fa2" class="fill" style="background:#141414;"></div></div><div class="trk" style="top:734px;"></div></div>
+<div id="s_stake-pw4" class="pw" style="left:81px;top:230px;width:848px;height:580px;z-index:3;"><img id="s_stake-pw4-img" class="clip" src="assets/img/v9_gpu.png" alt="" data-start="0.4000" data-duration="2.1333" data-track-index="2" /></div>
+<div id="s_stake-d8" class="clip layer" data-start="0.0000" data-duration="1.4333" data-track-index="3" style="z-index:5;"><div id="s_stake-lb5" class="lab" data-layout-allow-overlap style="top:620px;opacity:0;">Jensen Huang</div><div id="s_stake-nb6" class="num" data-layout-allow-overlap style="top:564px;opacity:0;color:#4a8600;">0.00%</div><div class="trk" style="top:734px;background:transparent;"><div id="s_stake-fb7" class="fill" style="background:#4a8600;"></div></div></div>
+<video id="s_stake-v9" class="clip full" src="assets/clips/v3_r1_jensen.mp4" data-start="1.4333" data-duration="1.1000" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:20;"></video>
+<div id="s_stake-pw10" class="pw" style="left:89px;top:116px;width:832px;height:808px;z-index:3;"><img id="s_stake-pw10-img" class="clip" src="assets/img/v9_pc.png" alt="" data-start="2.5333" data-duration="2.0500" data-track-index="2" /></div>
+<div id="s_stake-d14" class="clip layer" data-start="2.5333" data-duration="1.0667" data-track-index="3" style="z-index:5;"><div id="s_stake-lb11" class="lab" data-layout-allow-overlap style="top:620px;opacity:0;">Bill Gates</div><div id="s_stake-nb12" class="num" data-layout-allow-overlap style="top:564px;opacity:0;color:#c8431a;">0.00%</div><div class="trk" style="top:734px;background:transparent;"><div id="s_stake-fb13" class="fill" style="background:#c8431a;"></div></div></div>
+<video id="s_stake-v15" class="clip full" src="assets/clips/v3_r1_gates.mp4" data-start="3.6000" data-duration="0.9833" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:20;"></video>
+<div id="s_stake-pw16" class="pw" style="left:189px;top:120px;width:632px;height:800px;z-index:3;"><img id="s_stake-pw16-img" class="clip" src="assets/img/v9_mac.png" alt="" data-start="4.5833" data-duration="2.3833" data-track-index="2" /></div>
+<div id="s_stake-d20" class="clip layer" data-start="4.5833" data-duration="1.0000" data-track-index="3" style="z-index:5;"><div id="s_stake-lb17" class="lab" data-layout-allow-overlap style="top:620px;opacity:0;">Steve Jobs</div><div id="s_stake-nb18" class="num" data-layout-allow-overlap style="top:564px;opacity:0;color:#1676c8;">0.00%</div><div class="trk" style="top:734px;background:transparent;"><div id="s_stake-fb19" class="fill" style="background:#1676c8;"></div></div></div>
+<video id="s_stake-v21" class="clip full" src="assets/clips/v3_r1_jobs.mp4" data-start="5.5833" data-duration="1.3833" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:20;"></video>
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
-  tl.set({}, {}, 5.8333);
+  tl.set({}, {}, 6.9666);
   tl.set("#s_stake-fa2",{scaleX:0},0);
+  tl.set("#s_stake-d3",{opacity:0},1.4333);
+  tl.set("#s_stake-d3",{opacity:1},2.5333);
+  tl.set("#s_stake-d3",{opacity:0},3.6000);
+  tl.set("#s_stake-d3",{opacity:1},4.5833);
+  tl.set("#s_stake-d3",{opacity:0},5.5833);
   tl.to("#s_stake-fa2",{scaleX:0.8020,duration:0.5,ease:"power3.out"},0.1000);
   tl.set("#s_stake-na1",{textContent:"0.00%"},0.1000);
   tl.set("#s_stake-na1",{textContent:"1.50%"},0.1333);
@@ -93,93 +100,72 @@
   tl.set("#s_stake-na1",{textContent:"8.00%"},0.5333);
   tl.set("#s_stake-na1",{textContent:"8.02%"},0.5666);
   tl.set("#s_stake-na1",{textContent:"8.02%"},0.6000);
-  tl.fromTo("#s_stake-pw4",{y:34,opacity:0},{y:0,opacity:1,duration:0.3,ease:"power3.out"},0.3333);
-  tl.set("#s_stake-sw5",{opacity:1},1.2166);tl.set("#s_stake-sw5",{opacity:0},2.1333);
-  tl.set("#s_stake-wh6",{opacity:1},1.2166);tl.set("#s_stake-wh6",{opacity:0},1.2500);
-  tl.set("#s_stake-fb11",{scaleX:0},0);
-  tl.set("#s_stake-co8",{opacity:1},0.6166);
-  tl.set("#s_stake-lb9",{opacity:1},1.2166);tl.set("#s_stake-nb10",{opacity:1},1.2166);
-  tl.to("#s_stake-fb11",{scaleX:0.3700,duration:0.4,ease:"power3.out"},1.2166);
-  tl.set("#s_stake-nb10",{textContent:"0.00%"},1.2166);
-  tl.set("#s_stake-nb10",{textContent:"0.85%"},1.2500);
-  tl.set("#s_stake-nb10",{textContent:"1.56%"},1.2833);
-  tl.set("#s_stake-nb10",{textContent:"2.14%"},1.3166);
-  tl.set("#s_stake-nb10",{textContent:"2.60%"},1.3500);
-  tl.set("#s_stake-nb10",{textContent:"2.97%"},1.3833);
-  tl.set("#s_stake-nb10",{textContent:"3.24%"},1.4166);
-  tl.set("#s_stake-nb10",{textContent:"3.43%"},1.4500);
-  tl.set("#s_stake-nb10",{textContent:"3.56%"},1.4833);
-  tl.set("#s_stake-nb10",{textContent:"3.64%"},1.5166);
-  tl.set("#s_stake-nb10",{textContent:"3.68%"},1.5500);
-  tl.set("#s_stake-nb10",{textContent:"3.70%"},1.5833);
-  tl.set("#s_stake-nb10",{textContent:"3.7%"},1.6166);
-  tl.fromTo("#s_stake-bd12",{opacity:0,scale:0.92},{opacity:1,scale:1,duration:0.2,ease:"power2.out"},1.7666);
-  tl.to("#s_stake-fa2",{scaleX:0.8180,duration:0.34,ease:"power3.out"},2.1333);
-  tl.set("#s_stake-na1",{textContent:"8.02%"},2.1333);
-  tl.set("#s_stake-na1",{textContent:"8.06%"},2.1666);
-  tl.set("#s_stake-na1",{textContent:"8.10%"},2.2000);
-  tl.set("#s_stake-na1",{textContent:"8.13%"},2.2333);
-  tl.set("#s_stake-na1",{textContent:"8.15%"},2.2666);
-  tl.set("#s_stake-na1",{textContent:"8.16%"},2.3000);
-  tl.set("#s_stake-na1",{textContent:"8.17%"},2.3333);
-  tl.set("#s_stake-na1",{textContent:"8.18%"},2.3666);
-  tl.set("#s_stake-na1",{textContent:"8.18%"},2.4000);
-  tl.set("#s_stake-na1",{textContent:"8.18%"},2.4333);
-  tl.set("#s_stake-na1",{textContent:"8.18%"},2.4666);
-  tl.fromTo("#s_stake-pw14",{y:34,opacity:0},{y:0,opacity:1,duration:0.3,ease:"power3.out"},2.1333);
-  tl.set("#s_stake-sw15",{opacity:1},3.0166);tl.set("#s_stake-sw15",{opacity:0},3.8000);
-  tl.set("#s_stake-wh16",{opacity:1},3.0166);tl.set("#s_stake-wh16",{opacity:0},3.0500);
-  tl.set("#s_stake-fb21",{scaleX:0},0);
-  tl.set("#s_stake-co18",{opacity:1},2.3833);
-  tl.set("#s_stake-lb19",{opacity:1},3.0166);tl.set("#s_stake-nb20",{opacity:1},3.0166);
-  tl.to("#s_stake-fb21",{scaleX:0.1340,duration:0.4,ease:"power3.out"},3.0166);
-  tl.set("#s_stake-nb20",{textContent:"0.00%"},3.0166);
-  tl.set("#s_stake-nb20",{textContent:"0.31%"},3.0500);
-  tl.set("#s_stake-nb20",{textContent:"0.56%"},3.0833);
-  tl.set("#s_stake-nb20",{textContent:"0.77%"},3.1166);
-  tl.set("#s_stake-nb20",{textContent:"0.94%"},3.1500);
-  tl.set("#s_stake-nb20",{textContent:"1.07%"},3.1833);
-  tl.set("#s_stake-nb20",{textContent:"1.17%"},3.2166);
-  tl.set("#s_stake-nb20",{textContent:"1.24%"},3.2500);
-  tl.set("#s_stake-nb20",{textContent:"1.29%"},3.2833);
-  tl.set("#s_stake-nb20",{textContent:"1.32%"},3.3166);
-  tl.set("#s_stake-nb20",{textContent:"1.33%"},3.3500);
-  tl.set("#s_stake-nb20",{textContent:"1.34%"},3.3833);
-  tl.set("#s_stake-nb20",{textContent:"1.34%"},3.4166);
-  tl.fromTo("#s_stake-bd22",{opacity:0,scale:0.92},{opacity:1,scale:1,duration:0.2,ease:"power2.out"},3.4666);
-  tl.to("#s_stake-fa2",{scaleX:0.7970,duration:0.34,ease:"power3.out"},3.8000);
-  tl.set("#s_stake-na1",{textContent:"8.18%"},3.8000);
-  tl.set("#s_stake-na1",{textContent:"8.12%"},3.8333);
-  tl.set("#s_stake-na1",{textContent:"8.08%"},3.8666);
-  tl.set("#s_stake-na1",{textContent:"8.04%"},3.9000);
-  tl.set("#s_stake-na1",{textContent:"8.02%"},3.9333);
-  tl.set("#s_stake-na1",{textContent:"8.00%"},3.9666);
-  tl.set("#s_stake-na1",{textContent:"7.98%"},4.0000);
-  tl.set("#s_stake-na1",{textContent:"7.98%"},4.0333);
-  tl.set("#s_stake-na1",{textContent:"7.97%"},4.0666);
-  tl.set("#s_stake-na1",{textContent:"7.97%"},4.1000);
-  tl.set("#s_stake-na1",{textContent:"7.97%"},4.1333);
-  tl.fromTo("#s_stake-pw24",{y:34,opacity:0},{y:0,opacity:1,duration:0.3,ease:"power3.out"},3.8000);
-  tl.set("#s_stake-sw25",{opacity:1},4.6666);tl.set("#s_stake-sw25",{opacity:0},5.8333);
-  tl.set("#s_stake-wh26",{opacity:1},4.6666);tl.set("#s_stake-wh26",{opacity:0},4.7000);
-  tl.set("#s_stake-fb31",{scaleX:0},0);
-  tl.set("#s_stake-co28",{opacity:1},4.2666);
-  tl.set("#s_stake-lb29",{opacity:1},4.6666);tl.set("#s_stake-nb30",{opacity:1},4.6666);
-  tl.to("#s_stake-fb31",{scaleX:0.0240,duration:0.4,ease:"power3.out"},4.6666);
-  tl.set("#s_stake-nb30",{textContent:"0.00%"},4.6666);
-  tl.set("#s_stake-nb30",{textContent:"0.06%"},4.7000);
-  tl.set("#s_stake-nb30",{textContent:"0.10%"},4.7333);
-  tl.set("#s_stake-nb30",{textContent:"0.14%"},4.7666);
-  tl.set("#s_stake-nb30",{textContent:"0.17%"},4.8000);
-  tl.set("#s_stake-nb30",{textContent:"0.19%"},4.8333);
-  tl.set("#s_stake-nb30",{textContent:"0.21%"},4.8666);
-  tl.set("#s_stake-nb30",{textContent:"0.22%"},4.9000);
-  tl.set("#s_stake-nb30",{textContent:"0.23%"},4.9333);
-  tl.set("#s_stake-nb30",{textContent:"0.24%"},4.9666);
-  tl.set("#s_stake-nb30",{textContent:"0.24%"},5.0000);
-  tl.set("#s_stake-nb30",{textContent:"0.24%"},5.0333);
-  tl.set("#s_stake-nb30",{textContent:"0.24%"},5.0666);
-  tl.fromTo("#s_stake-bd32",{opacity:0,scale:0.92},{opacity:1,scale:1,duration:0.2,ease:"power2.out"},5.1833);
+  tl.fromTo("#s_stake-pw4",{y:34,opacity:0},{y:0,opacity:1,duration:0.3,ease:"power3.out"},0.4000);
+  tl.set("#s_stake-fb7",{scaleX:0},0);
+  tl.set("#s_stake-lb5",{opacity:1},0.7333);tl.set("#s_stake-nb6",{opacity:1},0.7333);
+  tl.to("#s_stake-fb7",{scaleX:0.3700,duration:0.3,ease:"power3.out"},0.7333);
+  tl.set("#s_stake-nb6",{textContent:"0.00%"},0.7333);
+  tl.set("#s_stake-nb6",{textContent:"1.10%"},0.7666);
+  tl.set("#s_stake-nb6",{textContent:"1.96%"},0.8000);
+  tl.set("#s_stake-nb6",{textContent:"2.60%"},0.8333);
+  tl.set("#s_stake-nb6",{textContent:"3.07%"},0.8666);
+  tl.set("#s_stake-nb6",{textContent:"3.38%"},0.9000);
+  tl.set("#s_stake-nb6",{textContent:"3.56%"},0.9333);
+  tl.set("#s_stake-nb6",{textContent:"3.66%"},0.9666);
+  tl.set("#s_stake-nb6",{textContent:"3.69%"},1.0000);
+  tl.set("#s_stake-nb6",{textContent:"3.7%"},1.0333);
+  tl.to("#s_stake-fa2",{scaleX:0.8180,duration:0.34,ease:"power3.out"},2.5333);
+  tl.set("#s_stake-na1",{textContent:"8.02%"},2.5333);
+  tl.set("#s_stake-na1",{textContent:"8.06%"},2.5666);
+  tl.set("#s_stake-na1",{textContent:"8.10%"},2.6000);
+  tl.set("#s_stake-na1",{textContent:"8.13%"},2.6333);
+  tl.set("#s_stake-na1",{textContent:"8.15%"},2.6666);
+  tl.set("#s_stake-na1",{textContent:"8.16%"},2.7000);
+  tl.set("#s_stake-na1",{textContent:"8.17%"},2.7333);
+  tl.set("#s_stake-na1",{textContent:"8.18%"},2.7666);
+  tl.set("#s_stake-na1",{textContent:"8.18%"},2.8000);
+  tl.set("#s_stake-na1",{textContent:"8.18%"},2.8333);
+  tl.set("#s_stake-na1",{textContent:"8.18%"},2.8666);
+  tl.fromTo("#s_stake-pw10",{y:34,opacity:0},{y:0,opacity:1,duration:0.3,ease:"power3.out"},2.5333);
+  tl.set("#s_stake-fb13",{scaleX:0},0);
+  tl.set("#s_stake-lb11",{opacity:1},2.8333);tl.set("#s_stake-nb12",{opacity:1},2.8333);
+  tl.to("#s_stake-fb13",{scaleX:0.1340,duration:0.3,ease:"power3.out"},2.8333);
+  tl.set("#s_stake-nb12",{textContent:"0.00%"},2.8333);
+  tl.set("#s_stake-nb12",{textContent:"0.40%"},2.8666);
+  tl.set("#s_stake-nb12",{textContent:"0.71%"},2.9000);
+  tl.set("#s_stake-nb12",{textContent:"0.94%"},2.9333);
+  tl.set("#s_stake-nb12",{textContent:"1.11%"},2.9666);
+  tl.set("#s_stake-nb12",{textContent:"1.22%"},3.0000);
+  tl.set("#s_stake-nb12",{textContent:"1.29%"},3.0333);
+  tl.set("#s_stake-nb12",{textContent:"1.33%"},3.0666);
+  tl.set("#s_stake-nb12",{textContent:"1.34%"},3.1000);
+  tl.set("#s_stake-nb12",{textContent:"1.34%"},3.1333);
+  tl.to("#s_stake-fa2",{scaleX:0.7970,duration:0.34,ease:"power3.out"},4.5833);
+  tl.set("#s_stake-na1",{textContent:"8.18%"},4.5833);
+  tl.set("#s_stake-na1",{textContent:"8.12%"},4.6166);
+  tl.set("#s_stake-na1",{textContent:"8.08%"},4.6500);
+  tl.set("#s_stake-na1",{textContent:"8.04%"},4.6833);
+  tl.set("#s_stake-na1",{textContent:"8.02%"},4.7166);
+  tl.set("#s_stake-na1",{textContent:"8.00%"},4.7500);
+  tl.set("#s_stake-na1",{textContent:"7.98%"},4.7833);
+  tl.set("#s_stake-na1",{textContent:"7.98%"},4.8166);
+  tl.set("#s_stake-na1",{textContent:"7.97%"},4.8500);
+  tl.set("#s_stake-na1",{textContent:"7.97%"},4.8833);
+  tl.set("#s_stake-na1",{textContent:"7.97%"},4.9166);
+  tl.fromTo("#s_stake-pw16",{y:34,opacity:0},{y:0,opacity:1,duration:0.3,ease:"power3.out"},4.5833);
+  tl.set("#s_stake-fb19",{scaleX:0},0);
+  tl.set("#s_stake-lb17",{opacity:1},5.1000);tl.set("#s_stake-nb18",{opacity:1},5.1000);
+  tl.to("#s_stake-fb19",{scaleX:0.0240,duration:0.3,ease:"power3.out"},5.1000);
+  tl.set("#s_stake-nb18",{textContent:"0.00%"},5.1000);
+  tl.set("#s_stake-nb18",{textContent:"0.07%"},5.1333);
+  tl.set("#s_stake-nb18",{textContent:"0.13%"},5.1666);
+  tl.set("#s_stake-nb18",{textContent:"0.17%"},5.2000);
+  tl.set("#s_stake-nb18",{textContent:"0.20%"},5.2333);
+  tl.set("#s_stake-nb18",{textContent:"0.22%"},5.2666);
+  tl.set("#s_stake-nb18",{textContent:"0.23%"},5.3000);
+  tl.set("#s_stake-nb18",{textContent:"0.24%"},5.3333);
+  tl.set("#s_stake-nb18",{textContent:"0.24%"},5.3666);
+  tl.set("#s_stake-nb18",{textContent:"0.24%"},5.4000);
   window.__timelines["s_stake"] = tl;
 })();
 </script>

@@ -134,7 +134,7 @@ def frames_to_times(start, durs):
 
 
 REST = os.path.abspath(f"{ROOT}/../blackrock-src/vo/rest/rest.mp3")   # the user's second recording (the rest)
-OPEN = os.path.abspath(f"{ROOT}/../blackrock-src/vo/open/open.mp3")   # the user's new opening recording (Nov 24)
+OPEN = os.path.abspath(f"{ROOT}/../blackrock-src/vo/open2/open2.mp3")   # the user's second new opening (Nov 24 evening)
 
 
 def main():

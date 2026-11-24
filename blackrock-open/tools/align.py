@@ -116,12 +116,21 @@ OPEN = ("This is the most powerful man on Earth. Larry Fink, the CEO of BlackRoc
         "every major U.S. company. It holds more of Nvidia than Jensen Huang, more of Microsoft than Bill Gates, "
         "and more of Apple than Steve Jobs ever did.").split()
 
+# the second new opening (Nov 24 evening: "new audio.mp3", 29.73 s, slower), as said ("dollar" is said, though the
+# typed script leaves it out; read back by a greedy decode of the same model)
+OPEN2 = ("This is the most powerful man on Earth. Larry Fink, the CEO of BlackRock or how people call it, the most "
+         "evil company ever built. A 15 trillion dollar cartel of weaponized capital that owns a piece of everything "
+         "you touch. A company that's never made a single physical product, yet it's one of the top shareholders in "
+         "almost every major U.S. company. It holds more of Nvidia than Jensen Huang, more of Microsoft than Bill "
+         "Gates, and more of Apple than Steve Jobs ever did.").split()
+
 JOBS = {
     "rest": (f"{SRC}/rest/rest16.wav", f"{SRC}/rest/transcript.json"),
     "vo": (f"{SRC}/vo16.wav", f"{SRC}/vo_dtw.json"),
     "rogan": (f"{AUD}/rogan_vocals.wav", f"{SRC}/rogan/transcript.json"),
     "line": (f"{AUD}/line.wav", LINE),
     "open": (f"{SRC}/open/open16.wav", OPEN),
+    "open2": (f"{SRC}/open2/open2_16.wav", OPEN2),
 }
 
 if __name__ == "__main__":

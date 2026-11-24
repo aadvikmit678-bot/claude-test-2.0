@@ -103,13 +103,20 @@ def main():
     tail, _ = silence(e, thr, op[-1]["end"], op[-1]["end"] + 0.2)
     res["open"] = {"cuts": [c[:2] for c in cuts], "why": [f"{c[2]} -> {c[3]}" for c in cuts],
                    "open_out": round(min(tail + 0.09, len(e) / 100), 3)}
+    # v10 (Nov 24 evening): the user's second new opening ("new audio.mp3"), slower on purpose: no pause is cut, only
+    # where "... ever did." has faded is found
+    op2 = json.load(open(f"{WD}/open2.json"))
+    e2, thr2 = envelope(f"{SRC}/open2/open2_16.wav")
+    tail2, _ = silence(e2, thr2, op2[-1]["end"], min(op2[-1]["end"] + 0.2, len(e2) / 100 - 0.01))
+    res["open2"] = {"cuts": [], "why": [], "open_out": round(min(tail2 + 0.09, len(e2) / 100), 3)}
     json.dump(res, open(f"{WD}/pace.json", "w"), indent=1)
     for k, v in res.items():
         saved = sum(b - a for a, b in v["cuts"])
         print(f"{k}: {len(v['cuts'])} pauses cut, {saved:.2f} s saved")
         for (a, b), why in zip(v["cuts"], v["why"]):
             print(f"   {a:6.2f}-{b:6.2f} ({b - a:.2f}s)  {why}")
-    print("rest1 ends", res["rest"]["rest1_out"], "rest2 starts", res["rest"]["rest2_in"], "open ends", res["open"]["open_out"])
+    print("rest1 ends", res["rest"]["rest1_out"], "rest2 starts", res["rest"]["rest2_in"], "open ends", res["open"]["open_out"],
+          "open2 ends", res["open2"]["open_out"])
 
 
 if __name__ == "__main__":

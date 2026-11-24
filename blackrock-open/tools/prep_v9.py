@@ -182,6 +182,134 @@ def r_articles15():
     print(f"   articles: {len(pages)} pages over {n} frames ({per:.2f} frames a page)")
 
 
+# ------------------------------------------------------------------ 2b. the "$15 trillion" cutouts (v10)
+# Reel DfQMgjyTS1c's "Anthropic" headlines (22.42-23.25 s, read frame by frame at 12 fps; the user, Nov 24: "no
+# highlight ... blur on the sides ... curved ... small news cutouts ... not that square shape"): a light grey
+# screen, brightest a little above the middle and darker towards the edges, its corners cut by a curved dark rim (a
+# convex screen); on it one small headline cutout per reel frame with no page and no box (the page's white is the
+# screen's grey), the keyword on the same spot in every cutout at the size its page set it, in focus, and everything
+# around it going soft the further it is from the word -- the line's other words, the lines above and below, a
+# kicker, a picture -- the cutout's far edge cut off inside the blur. Ours: the user's screenshots, "$15" on one spot.
+CUT_ORDER = ["s01", "s08", "s03", "s13", "s02", "s10", "s17", "s06", "s11", "s07", "s09", "s16", "s04", "s15",
+             "s05", "s14"]
+CUT_TOKENS = {"s15": 2, "s05": 2}             # how many of the phrase's words make the anchor ("UsD 15"); else the first word
+CUT_VAR = [1.0, 0.86, 1.14, 0.92, 1.08, 0.82, 1.18, 0.95, 1.05, 0.88, 1.12, 0.9, 1.1, 0.97, 1.03, 0.93]   # each page's own size
+CUT_AX, CUT_AY = 830, 548           # the anchor ("$15")'s centre on screen (the reel: the keyword just left of middle)
+CUT_H = 84                          # the phrase's box height on screen (times CUT_VAR)
+CUT_PER = 5                         # frames a cutout (one reel frame at 12 fps)
+CUT_INVERT = {"s02", "s11", "s16"}  # light type on a dark or red page -> dark type on a light one
+CUT_SIG = [0.45, 1.2, 2.2, 3.5, 5.2, 7.5, 10.5, 14.5, 19.5]
+
+
+def cut_anchor_end(cols, h, k):
+    """x within the phrase box where its k-th word ends (the start of the k-th gap at least 0.2 box heights wide)."""
+    gap_min = max(3, int(round(0.2 * h)))
+    run, found, seen = 0, 0, False
+    for x, v in enumerate(cols):
+        if v:
+            if seen and run >= gap_min:
+                found += 1
+                if found == k:
+                    return x - run
+            run, seen = 0, True
+        else:
+            run += 1
+    return len(cols)
+
+
+def cut_backdrop():
+    """the reel's screen, measured on its frames 270-279: 248 a little above the middle, ~224 halfway up, ~180 at the
+    side, ~110 near a corner (neutral grey), falling more slowly towards the bottom"""
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    dx = (xx - W / 2) / (W / 2)
+    dyr = yy - 0.43 * H
+    dy = np.where(dyr < 0, dyr / (0.43 * H), dyr / (0.57 * H * 1.15))
+    L = np.clip(248 - 100 * (dx * dx + dy * dy), 60, 255)
+    return np.repeat(L[..., None], 3, axis=2)
+
+
+def cut_rim(n=14, soft=3.0):
+    """the convex screen's outline: a superellipse touching the frame at the middle of each edge, the corners dark"""
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    a, b = W / 2 + 0.5, H / 2 + 0.5
+    rho = (np.abs(xx - W / 2 + 0.5) / a) ** n + (np.abs(yy - H / 2 + 0.5) / b) ** n
+    rho = rho ** (1.0 / n)
+    return np.clip((1 - rho) * b / soft, 0, 1)[..., None]
+
+
+def cut_card(key, path, box, var):
+    """one cutout on the screen (float RGB, white where there is nothing) and its phrase box on screen"""
+    im = np.asarray(Image.open(path).convert("RGB")).astype(np.float32)
+    if key in CUT_INVERT:
+        g = im @ np.float32([0.299, 0.587, 0.114])
+        im = np.repeat((255 - g)[..., None], 3, axis=2)
+    ih, iw = im.shape[:2]
+    x0, y0, x1, y1 = box
+    hs = y1 - y0
+    ring = np.concatenate([im[max(0, y0 - 9):max(1, y0 - 3), x0:x1].reshape(-1, 3),
+                           im[min(ih - 1, y1 + 3):min(ih, y1 + 9), x0:x1].reshape(-1, 3)])
+    bg = np.median(ring, axis=0)
+    im = np.clip(im / np.maximum(bg, 1.0) * 255.0, 0, 255)          # the page's own colour -> white (gone)
+    ink = (255 - im[y0:y1, x0:x1].min(axis=2)) > 70
+    ax1 = x0 + cut_anchor_end(ink.any(axis=0), hs, CUT_TOKENS.get(key, 1))
+    acx, acy = (x0 + ax1) / 2, (y0 + y1) / 2
+    # the cutout: a few lines around the phrase, cut off left and right inside what will be blur
+    wx0, wx1 = max(0, int(x0 - 4.5 * hs)), min(iw, int(ax1 + 5.5 * hs))      # ~60 % of the frame, as the reel's
+    wy0, wy1 = max(0, int(y0 - 2.2 * hs)), min(ih, int(y1 + 3.0 * hs))
+    win = np.full((ih, iw, 3), 255, np.float32)
+    win[wy0:wy1, wx0:wx1] = im[wy0:wy1, wx0:wx1]
+    s = CUT_H * var / hs
+    M = np.float32([[s, 0, CUT_AX - s * acx], [0, s, CUT_AY - s * acy]])
+    big = cv2.warpAffine(win, M, (W, H), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_CONSTANT, borderValue=(255, 255, 255))
+    big = np.clip(big * 1.35 - cv2.GaussianBlur(big, (0, 0), 1.2) * 0.35, 0, 255)       # crisp after the upscale
+    pb = (s * (x0 - acx) + CUT_AX, s * (y0 - acy) + CUT_AY, s * (x1 - acx) + CUT_AX, s * (y1 - acy) + CUT_AY)
+    return big, pb
+
+
+def cut_focus(img, pb):
+    """the reel's focus (the user: "the outside is blurred in an oval"): sharp inside an oval round the phrase, softer
+    the further outside it, in every direction"""
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    px0, py0, px1, py1 = pb
+    cx, cy = (px0 + px1) / 2, (py0 + py1) / 2
+    ax, ay = (px1 - px0) / 2 + 34, (py1 - py0) / 2 + 20
+    d = np.sqrt(((xx - cx) / ax) ** 2 + ((yy - cy) / ay) ** 2)
+    sig = np.clip(0.45 + 6.5 * np.maximum(0, d - 1.0) ** 0.85, CUT_SIG[0], CUT_SIG[-1])
+    levels = [img if s_ < 0.5 else cv2.GaussianBlur(img, (0, 0), s_) for s_ in CUT_SIG]
+    idx = np.clip(np.searchsorted(CUT_SIG, sig) - 1, 0, len(CUT_SIG) - 2)
+    lo = np.take(np.float32(CUT_SIG), idx)
+    hi = np.take(np.float32(CUT_SIG), idx + 1)
+    u = np.clip((sig - lo) / (hi - lo), 0, 1)[..., None]
+    out = np.zeros_like(img)
+    for k in range(len(CUT_SIG) - 1):
+        m = (idx == k)[..., None]
+        if m.any():
+            out = np.where(m, levels[k] * (1 - u) + levels[k + 1] * u, out)
+    return out
+
+
+def r_cutouts15():
+    a0, a1 = TM.B["money"]
+    n = nf(a0, a1)                                   # 72: "A $15 trillion dollar"
+    boxes = json.load(open(f"{ROOT}/tools/words/shots15.json"))
+    names = {k[:3]: k for k in boxes}
+    back, rim = cut_backdrop(), cut_rim()
+    frames = []
+    for j, key in enumerate(CUT_ORDER):
+        nm = names[key]
+        card, pb = cut_card(key, f"{V9}/shots15/{nm}", boxes[nm]["box"], CUT_VAR[j % len(CUT_VAR)])
+        fr = back * (cut_focus(card, pb) / 255.0)    # the page's white is the screen's grey
+        fr = barrel(fr, W / 2, H / 2, 1180, 0.07)    # the screen's curve
+        fr = fr * rim + np.float32([22, 22, 24]) * (1 - rim)
+        frames.append(fr)
+        print(f"   {key}: phrase box on screen {tuple(round(v) for v in pb)}")
+    wr = Writer(f"{CLIPS}/v9_cutouts.mp4")
+    for i in range(n):
+        wr.write(frames[min(i // CUT_PER, len(frames) - 1)])
+    wr.close()
+    print(f"   cutouts: {len(frames)} over {n} frames ({CUT_PER} a cutout, the last {n - CUT_PER * (len(frames) - 1)})")
+
+
 # ------------------------------------------------------------------ 3. "Larry Fink, the CEO of BlackRock."
 # The Hemant video's name device (5.4-8.7 s, read every 0.1 s): a mosaic takes over the frame -- one big tile in the
 # middle, three small ones down each side, every tile arriving as a white card for a frame or two and then playing a
@@ -207,9 +335,9 @@ MOSAIC_FINK = {
 }
 MOSAIC_BR = {                        # from "BlackRock": (delay in frames, source, start s, cx, cy, crop width)
     "C": (0, "X", 174.70, 960, 540, 960),
-    "L1": (2, "BRL", 122.50, 760, 590, 1300), "R1": (3, "BR15", 214.10, 900, 560, 1300),
-    "L2": (4, "MF", 11.50, 958, 560, 1300), "R2": (5, "BRL", 588.50, 860, 560, 1300),
-    "L3": (6, "BRS", 4.90, 512, 288, 760), "R3": (7, "BRS", 0.00, 512, 290, 760),
+    "L1": (2, "BRL", 122.50, 760, 590, 1300), "R1": (3, "BR15", 213.70, 900, 560, 1300),
+    "L2": (4, "MF", 11.20, 958, 560, 1300), "R2": (5, "BRL", 588.50, 860, 560, 1300),
+    "L3": (6, "BRS", 4.65, 512, 288, 760), "R3": (7, "BRS", 0.00, 512, 290, 760),
 }
 
 
@@ -396,7 +524,7 @@ def r_founders():
     info = json.load(open(f"{ROOT}/tools/words/stake.json"))
     T = TM.T
     specs = {  # name -> (source, start s, crop centre x, y, crop width, look, (w, h), film seconds from, to)
-        "jensen": ("JENSEN", 14.50, 640, 175, 450, "colour", (480, 360), T["jensen"] - 0.03, T["more2"] - TM.LEAD),
+        "jensen": ("JENSEN", 14.38, 640, 175, 450, "colour", (480, 360), T["jensen"] - 0.03, T["more2"] - TM.LEAD),
         "gates": ("GATES", 9.50, 485, 250, 600, "green", tuple(info["pc"]["screen"][2:]), T["bill"] - 0.03, T["and"] - TM.LEAD),
         "jobs": ("JOBS", 0.40, 885, 235, 560, "mono", tuple(info["mac"]["screen"][2:]), T["steve"] - 0.03, TM.OPEN_END),
     }
@@ -427,7 +555,7 @@ def r_factory():
     wr.close()
 
 
-ALL = {"wall": r_wall, "articles": r_articles15, "mosaic": r_mosaic, "cuts": r_cuts, "products": r_products,
+ALL = {"wall": r_wall, "articles": r_articles15, "cutouts": r_cutouts15, "mosaic": r_mosaic, "cuts": r_cuts, "products": r_products,
        "founders": r_founders, "factory": r_factory}
 
 if __name__ == "__main__":

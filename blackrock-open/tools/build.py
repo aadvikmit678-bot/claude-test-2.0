@@ -26,6 +26,8 @@ FONTS = """
 @font-face{font-family:"LGothic";src:url("assets/fonts/LeagueGothic-latin.woff2") format("woff2");font-weight:400;font-style:normal;}
 @font-face{font-family:"Heros";src:url("assets/fonts/TeXGyreHeros-Bold.otf") format("opentype");font-weight:700;font-style:normal;}
 @font-face{font-family:"InterSB";src:url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype");font-weight:600;font-style:normal;}
+@font-face{font-family:"HerosR";src:url("assets/fonts/TeXGyreHeros-Regular.otf") format("opentype");font-weight:400;font-style:normal;}
+@font-face{font-family:"Bodoni";src:url("assets/fonts/BodoniModa-96-600.ttf") format("truetype");font-weight:600;font-style:normal;}
 """
 # the Dario video's Instrument Serif glow (the user: "exactly like the Dario video ... with that white glow")
 SERIF_REST = "0 0 14px rgba(255,255,255,0.62),0 0 42px rgba(255,255,255,0.30),0 0 90px rgba(255,255,255,0.12)"
@@ -44,8 +46,8 @@ BASE_CSS = """
 .nv{font-family:"InterD",sans-serif;font-weight:800;letter-spacing:-0.02em;color:#fff;text-transform:uppercase;}
 .hv{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.012em;color:#EEF0F0;text-transform:uppercase;line-height:1;white-space:nowrap;}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;}
-.jn{font-family:"InterSB",sans-serif;font-weight:600;font-size:62px;letter-spacing:-0.05em;line-height:1;color:#fff;white-space:nowrap;
- text-shadow:0 0 10px rgba(255,255,255,0.40),0 0 28px rgba(255,255,255,0.18);}
+.jn{font-family:"HerosR",sans-serif;font-weight:400;font-size:60px;letter-spacing:-0.015em;line-height:1;color:#fff;white-space:nowrap;
+ -webkit-text-stroke:0.022em currentColor;text-shadow:0 0 10px rgba(255,255,255,0.36),0 0 26px rgba(255,255,255,0.16);}
 .jn.ink{color:#141414;text-shadow:none;}
 .jn.heavy{text-shadow:0 0 10px rgba(255,255,255,0.45),0 0 28px rgba(255,255,255,0.2);}
 .ser{font-family:"ISerif",serif;font-weight:400;line-height:1;color:#FBF8EC;white-space:nowrap;letter-spacing:0.005em;}
@@ -55,7 +57,7 @@ BASE_CSS = """
  text-shadow:0 0 12px rgba(255,255,255,0.35),0 0 30px rgba(255,255,255,0.14);}
 .pl span{display:inline-block;opacity:0;}
 .dline{display:flex;align-items:baseline;justify-content:center;font-family:"ISerif",serif;font-weight:400;line-height:1;
- color:#fff;white-space:nowrap;}
+ color:#fff;white-space:nowrap;letter-spacing:-0.04em;}
 .dw{position:relative;display:inline-block;}
 .dfl{position:absolute;left:-0.04em;right:-0.04em;top:0.34em;bottom:0.12em;opacity:0;background:#fff;
  box-shadow:0 0 16px rgba(255,255,255,0.9),0 0 44px rgba(255,255,255,0.45);}
@@ -64,7 +66,7 @@ BASE_CSS = """
  white-space:nowrap;}
 .isnt span{display:inline-block;transform-origin:50% 55%;}
 .lock{position:absolute;display:flex;align-items:center;white-space:nowrap;pointer-events:none;}
-.gt{font-family:"InterD",sans-serif;font-weight:700;letter-spacing:-0.035em;line-height:1;color:#fff;white-space:nowrap;
+.gt{font-family:"Heros",sans-serif;font-weight:700;letter-spacing:-0.04em;line-height:1;color:#fff;white-space:nowrap;
  text-shadow:0 0 14px rgba(255,255,255,0.55),0 0 40px rgba(255,255,255,0.28),0 0 90px rgba(255,255,255,0.12);}
 .wht2{position:absolute;inset:0;background:#f4f4f0;opacity:0;}
 """
@@ -350,42 +352,144 @@ def grot_line(sc, words, a, b, y=540, size=96, z=60):
            style=f"top:{y}px;height:0;")
 
 
-def s_open():
-    """0 to "you touch.": the wall of Finks, ON EARTH, the name mosaic, the red scene, the world, the hook."""
-    sc = Scene("s_open", 0.0, B["touch"][1])
-    L = lambda k: T[k] - 0.03
-    # ---- "This is the most powerful man": the Nvidia reel's wall build with nine rooms of Fink; "powerful" and "man"
-    # in the Dario serif on their words (the old cut's "powerful" / "people"); the wall ends on "IT ISN'T"'s lead-in
-    a0, a1 = B["wall"]
-    n = round((a1 - a0) * 60)
-    sc.video("v9_wall.mp4", a0, a1, z=1)
-    serif(sc, "powerful", L("powerful"), F(T["man"] + FR), 200, y=540, z=30)
-    serif(sc, "man", F(T["man"] + FR), a0 + (n - 8) * FR, 200, y=540, z=30)   # (after the wall's first negative)
-    # ---- "on Earth.": reel DdB8's "IT ISN'T" card, as before
-    isnt_card(sc, B["earth"][0], B["earth"][1], "ON", "EARTH", T["earth"] + 0.02)
-    # ---- "Larry Fink, the CEO of BlackRock.": the Hemant video's name mosaic (prep_v9 r_mosaic). The name in the
-    # serif with its bloom over the middle, then the title in the grotesque, word by word; on "BlackRock" every tile
-    # flips to BlackRock's own buildings
+
+# ============================================================================== v10 (Nov 24, evening)
+# The Kalanick reel's serif (DdbK-PAT7O6, read frame by frame at 10 fps): Instrument Serif set tight, a soft white
+# halo; a word lands as one reel frame (6 of ours) of blur and bloom, then is crisp.
+REEL = 6 * FR
+K_REST = "0 0 4px rgba(255,255,255,0.40),0 0 14px rgba(255,255,255,0.20),0 0 34px rgba(255,255,255,0.10)"
+K_HERO = "0 0 6px rgba(255,255,255,0.50),0 0 20px rgba(255,255,255,0.26),0 0 50px rgba(255,255,255,0.12)"
+K_BLOOM = ("0 0 10px rgba(255,255,255,1),0 0 34px rgba(255,255,255,0.95),0 0 80px rgba(255,255,255,0.75),"
+           "0 0 160px rgba(255,255,255,0.45)")
+FINK_IN = F(T["powerful"] - TM.LEAD)
+
+
+def kflash(sc, wid, t, rest=K_REST, blur=6):
+    sc.js.append(f'tl.set("#{wid}",{{opacity:1,filter:"blur({blur}px)",textShadow:"{K_BLOOM}"}},{sc.at(t)});')
+    sc.js.append(f'tl.set("#{wid}",{{filter:"blur(0px)",textShadow:"{rest}"}},{sc.at(t + REEL)});')
+
+
+def kline(sc, words, a, b, y, size, rest=K_REST, ls=-0.045, gap=0.12, color="#f4efe6", z=60, flash=True):
+    """a Kalanick line: laid out whole and centred, each word landing on its onset in its own place"""
+    spans = []
+    for text, t in words:
+        wid = sc.uid("kw")
+        spans.append(f'<span id="{wid}" style="display:inline-block;opacity:0;margin:0 {gap}em;">'
+                     f'{_html.escape(text, quote=False)}</span>')
+        if flash:
+            kflash(sc, wid, t, rest)
+        else:
+            sc.js.append(f'tl.set("#{wid}",{{opacity:1}},{sc.at(t)});')
+    did = sc.div(a, b, f'<div style="display:flex;justify-content:center;align-items:baseline;font-family:\'ISerif\',serif;'
+                       f'font-size:{size}px;letter-spacing:{ls}em;line-height:1;color:{color};white-space:nowrap;'
+                       f'text-shadow:{rest};">{"".join(spans)}</div>', z=z, cls="cap", style=f"top:{y}px;height:0;")
+    return did
+
+
+# ---- "This is the most powerful man on Earth." (0 to the name mosaic)
+FIRST_CSS = """
+.ff{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:960px 540px;}
+.pl{position:absolute;left:-140px;top:-79px;width:2200px;height:1238px;}
+.bgv{position:absolute;left:-144px;top:-81px;width:2208px;height:1242px;object-fit:fill;}
+"""
+
+
+def s_first():
+    """v13 (the user, Nov 24): reel DgHoW0vhPvb's opening with "This is the most" written over it -- the smeared pan,
+    the grey wash, the wall of photos, the photocopy white, the false colour -- then, on "powerful", Fink's photo arrives
+    exactly as the reel's Chainsmokers do: cut out, in front of the same wall now soft, the frame pushing in slowly, and
+    "powerful man on Earth." written behind his head in the Kalanick serif; on "Earth" the Kalanick flash (one reel frame
+    of blur and bloom) and the background changes to BlackRock's building, warm light at the sides; out on a push and
+    blur into the name."""
+    a0, a1 = B["first"]
+    sc = Scene("s_first", a0, a1, css=FIRST_CSS)
+    sc.video("v13_wall.mp4", a0, FINK_IN, z=1)
+    # "This is the most" over the wall, each word landing on its own onset
+    kline(sc, [("This", F(T["this"] - 0.03)), ("is", F(T["is"] - 0.03)), ("the", F(T["the1"] - 0.03)),
+               ("most", F(T["most1"] - 0.03))], F(T["this"] - 0.03), FINK_IN, 540, 150, K_HERO, z=30)
+    t_e = F(T["earth"] - 0.03)
+    t_x = F(a1 - 5 * FR)
+    ff, pa, pb, cut, line = sc.uid("ff"), sc.uid("pa"), sc.uid("pb"), sc.uid("ct"), sc.uid("kl")
+    spans, words = [], [("powerful", FINK_IN), ("man", F(T["man"] - 0.03)), ("on", F(T["on"] - 0.03)), ("Earth.", t_e)]
+    for text, t in words:
+        wid = sc.uid("fw")
+        spans.append(f'<span id="{wid}" style="display:inline-block;opacity:0;margin:0 0.12em;">{text}</span>')
+        kflash(sc, wid, t, K_HERO, blur=7)
+    inner = (f'<img id="{pa}" class="clip pl" src="assets/img/v13_bg_wall.jpg" alt="" {sc.timed(FINK_IN, t_e)} '
+             f'data-track-index="2" style="z-index:1;" />'
+             f'<img id="{pb}" class="clip pl" src="assets/img/v12_bg_b.jpg" alt="" {sc.timed(t_e, a1)} '
+             f'data-track-index="2" style="z-index:1;" />'
+             f'<div id="{line}" data-layout-allow-overlap style="position:absolute;left:0;right:0;top:96px;display:flex;justify-content:center;'
+             f'align-items:baseline;font-family:\'ISerif\',serif;font-size:170px;letter-spacing:-0.045em;line-height:1;'
+             f'color:#f4efe6;white-space:nowrap;z-index:2;text-shadow:{K_HERO};">{"".join(spans)}</div>'
+             f'<img id="{cut}" class="pl" src="assets/img/v10_fink_cut.png" alt="" style="z-index:3;" />')
+    sc.add(f'<div id="{ff}" class="clip ff" {sc.timed(FINK_IN, a1)} data-track-index="3" style="z-index:5;">{inner}</div>')
+    # the Chainsmokers' arrival: in place after the false colour, then a slow push in
+    sc.js.append(f'tl.set("#{ff}",{{scale:1.0}},{sc.at(FINK_IN)});')
+    sc.js.append(f'tl.to("#{ff}",{{scale:1.05,duration:{r4(t_e - FINK_IN)},ease:"none"}},{sc.at(FINK_IN)});')
+    # the Kalanick flash on "Earth": blur and bloom for one reel frame, the background now BlackRock's building
+    sc.js.append(f'tl.set("#{ff}",{{filter:"blur(9px) brightness(1.75)"}},{sc.at(t_e)});')
+    sc.js.append(f'tl.set("#{ff}",{{filter:"blur(0px) brightness(1)",scale:0.95}},{sc.at(t_e + REEL)});')
+    sc.js.append(f'tl.to("#{ff}",{{scale:0.925,duration:{r4(t_x - t_e - REEL)},ease:"none"}},{sc.at(t_e + REEL)});')
+    sc.js.append(f'tl.to("#{ff}",{{scale:1.08,filter:"blur(14px) brightness(1)",duration:{r4(a1 - t_x)},ease:"power2.in"}},{sc.at(t_x)});')
+    sc.write()
+    return sc
+
+
+# ---- "Larry Fink, the CEO of BlackRock" (the v9 name mosaic, re-timed)
+def s_name():
     b0, b1 = B["name"]
+    sc = Scene("s_name", b0, b1)
+    L = lambda k: T[k] - 0.03
     sc.video("v9_mosaic.mp4", b0, b1, z=1)
     t_title = L("the2")
     dario_line(sc, [("Larry", L("larry"), 230, True), ("Fink", L("fink"), 230, True)], F(L("larry") - 2 * F25 - FR),
                F(t_title - FR), y=545, z=30, italic=False, gap=0.2)
-    # ("BlackRock" is not written: the tower's own lit sign says it, in the middle of the frame)
     grot_line(sc, [("the", L("the2")), ("CEO", L("ceo")), ("of", L("of0"))], t_title, F(L("blackrock")), y=545, size=124)
-    # ---- "The most evil": the red horned scene, as before (re-timed); then "company in the world." on the Earth at
-    # night, "world" big in the serif (the Dario video's EARTH)
-    sc.video("v6_evil.mp4", *B["evil"], z=1)
-    c0, c1 = B["company"]
-    sc.video("v9_earth.mp4", c0, c1, z=1)
-    dim(sc, c0, c1, k=0.18)
-    lockup(sc, [("company", c0, 96, False), ("in", L("in"), 96, False), ("the", L("the5"), 96, False)], c0, c1,
-           960, 378, z=30)
-    serif(sc, "world", L("world"), c1, 360, y=610, z=30)
-    # ---- "A $15 trillion dollar": the headline flipbook, the figure on one spot (no caption: the pages say it)
-    sc.video("v9_articles.mp4", *B["money"], z=1)
-    # ---- "cartel of weaponized capital that owns a piece of everything": as the user approved it (Nov 23)
-    sc.video("r_cartel4.mp4", *B["cartel"], z=1)
+    sc.write()
+    return sc
+
+
+# ---- "or how people call it, the most evil company ever built. A $15 trillion dollar cartel of weaponized capital
+# that owns a piece of everything you touch."
+HOOK_CSS = """
+.sw{position:absolute;font-family:"Heros",sans-serif;font-weight:700;font-size:78px;letter-spacing:-0.03em;color:#fff;
+ line-height:1;white-space:nowrap;opacity:0;text-shadow:0 0 8px rgba(255,255,255,0.55),0 0 24px rgba(255,255,255,0.28);}
+.noise{position:absolute;left:0;right:0;top:540px;height:0;display:flex;justify-content:center;align-items:center;}
+.noise span{display:inline-block;font-family:"Bodoni",serif;font-weight:600;font-size:777px;line-height:1;color:#ff1414;
+ transform-origin:50% 50%;text-shadow:0 0 18px rgba(255,0,0,0.65),0 0 60px rgba(255,20,20,0.5),0 0 140px rgba(255,40,40,0.35);}
+.rglow{position:absolute;inset:0;mix-blend-mode:screen;
+ background:radial-gradient(ellipse 30% 48% at 50% 50%,rgba(255,60,70,0.60),rgba(255,40,50,0.22) 55%,rgba(255,0,0,0) 80%);}
+"""
+
+
+def s_hook():
+    a0, a1 = B["evil"][0], B["touch"][1]
+    sc = Scene("s_hook", a0, a1, css=HOOK_CSS)
+    L = lambda k: T[k] - 0.03
+    # the red scene, as v6 had it (prep_v10 r_evil)
+    sc.video("v10_evil.mp4", *B["evil"], z=1)
+    # "company ever": reel DgHoW0vhPvb's "But behind ... all that": a black-and-white crowd in a haze, the words at the
+    # sides in the bold sans, each in on its word
+    c0, t_b, c1 = B["built"][0], F(T["built"] - TM.LEAD), B["built"][1]
+    sc.video("v10_company.mp4", c0, t_b, z=1)
+    for word, key, x in (("company", "company", 0.22), ("ever", "ever0", 0.47)):
+        wid = sc.uid("sw")
+        sc.div(c0, t_b, f'<div id="{wid}" class="sw" style="left:{x * 1920:.0f}px;top:502px;transform:translate(-50%,-50%);">'
+                        f'{word}</div>', z=30)
+        sc.js.append(f'tl.fromTo("#{wid}",{{opacity:0,filter:"blur(5px)"}},{{opacity:1,filter:"blur(0px)",duration:{r4(3 * FR)},'
+                     f'ease:"none"}},{sc.at(L(key))});')
+    # "built.": its NOISE: BlackRock's letters on its tower in black and white, a red light behind the word, the word
+    # in a tall red Bodoni -- two of its frames stretched wide, then condensed
+    sc.video("v10_built.mp4", t_b, c1, z=1)
+    sc.div(t_b, c1, "", z=5, cls="layer rglow")
+    nid = sc.uid("nz")
+    sc.div(t_b, c1, f'<div class="noise"><span id="{nid}">BUILT</span></div>', z=30, cls="layer")
+    sc.js.append(f'tl.set("#{nid}",{{scaleX:0.95}},{sc.at(t_b)});')
+    sc.js.append(f'tl.set("#{nid}",{{scaleX:0.28}},{sc.at(t_b + 4 * FR)});')
+    # "A $15 trillion dollar": the headline cutouts (no highlight, the oval focus), straight into the cartel's faces
+    sc.video("v9_cutouts.mp4", *B["money"], z=1)
+    sc.video("v10_cartel.mp4", *B["cartel"], z=1)
     sc.video("r_weap.mp4", *B["weap"], z=1)
     dim(sc, *B["weap"], k=0.45)
     sc.video("v6_owns.mp4", *B["logos"], z=1)
@@ -399,57 +503,86 @@ def s_open():
         [("everything", L("everything"), BIG, True)],
     ]
     starts = [F(p[0][1] - 2 * F25 - FR) for p in phrases]
-    ends = starts[1:] + [F(T["touch"] - 0.03)]          # "everything" until the fingers meet: the burst lands clean
+    starts[0] = max(starts[0], B["cartel"][0])
+    ends = starts[1:] + [F(T["touch"] - 0.03)]
     for p, a, b in zip(phrases, starts, ends):
-        dario_line(sc, p, a, b, y=540, z=30)
-    sc.video("r_touch3.mp4", *B["touch"], z=1)         # cut on "everything": the fingers meet on "touch"
+        dario_line(sc, p, a, b, y=540, z=30, italic=False)
+    sc.video("r_touch3.mp4", *B["touch"], z=1)
     sc.write()
     return sc
 
 
 # ---- "A company that's never made a single physical product,"
 MADE_CSS = """
-.card{position:absolute;overflow:hidden;border-radius:6px;}
+.paper{position:absolute;inset:0;background:url("assets/img/paper_light.png") center/cover no-repeat;}
+.card{position:absolute;overflow:hidden;border-radius:6px;box-shadow:0 26px 70px rgba(0,0,0,0.55),0 0 140px rgba(0,0,0,0.30);}
 .card video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;}
-.frame{position:absolute;border:2px solid rgba(255,255,255,0.92);border-radius:6px;box-shadow:0 0 22px rgba(255,255,255,0.4),inset 0 0 22px rgba(255,255,255,0.14);}
-.wht{position:absolute;inset:0;background:#f6f6f4;opacity:0;}
+.ink{position:absolute;top:540px;height:0;display:flex;align-items:center;white-space:nowrap;font-family:"ISerif",serif;
+ font-size:88px;letter-spacing:-0.03em;line-height:1;color:#0b0b0b;}
+.ink span{display:inline-block;opacity:0;margin:0 0.12em;}
+.whitep{position:absolute;inset:0;background:linear-gradient(to bottom,#dcdcdc 0%,#fbfbfb 16%,#fdfdfd 50%,#fbfbfb 84%,#dcdcdc 100%);}
+.turn{position:absolute;left:0;right:0;top:540px;height:0;display:flex;justify-content:center;align-items:center;}
+.turn .tl{display:flex;align-items:baseline;white-space:nowrap;font-family:"ISerif",serif;font-size:225px;letter-spacing:-0.055em;
+ line-height:1;color:#111;transform-origin:50% 50%;}
+.turn .tl span{display:inline-block;opacity:0;margin:0 0.11em;}
+.slam{position:absolute;left:40px;top:540px;height:0;display:flex;align-items:center;white-space:nowrap;font-family:"ISerif",serif;
+ font-size:1460px;letter-spacing:-0.055em;line-height:1;color:#111;}
 """
 
 
 def s_made():
-    """The Hemant / Dario lockup: a card in the middle with things being made (boards, a press, an assembly line),
-    the words either side of it in the serif; on "product" the card flashes white and is gone -- an empty frame."""
+    """The user (Nov 24): this frame, on the Pattinson video's paper with the dark light behind the card, the words
+    black, "A company that's" left of the card and "never made" right of it at one size, the card's footage fast and only
+    while that is said; then "a single physical product" as the Kalanick reel's "turning a crazy idea" (13.2-14.4 s):
+    one frame of the line's start enormous, then the line building word by word on white while it grows, then sinking
+    out of the frame into the next shot."""
     a0, a1 = B["made"]
     sc = Scene("s_made", a0, a1, css=MADE_CSS)
     L = lambda k: T[k] - 0.03
-    X, Y, CW, CH = 610, 343, 700, 394
-    t_out = F(L("product"))
-    fid, cid, wid, vid = sc.uid("fr"), sc.uid("cd"), sc.uid("wh"), sc.uid("v")
-    sc.div(t_out, a1, f'<div id="{fid}" class="frame" style="left:{X}px;top:{Y}px;width:{CW}px;height:{CH}px;"></div>', z=4)
+    t_k = F(T["a4"] - TM.LEAD)
+    sc.div(a0, t_k, "", z=1, cls="layer paper")
+    X, Y, CW, CH = 650, 366, 620, 349
+    cid, vid = sc.uid("cd"), sc.uid("v")
     sc.add(f'<div id="{cid}" class="card" style="left:{X}px;top:{Y}px;width:{CW}px;height:{CH}px;z-index:5;">'
-           f'<video id="{vid}" class="clip" src="assets/clips/v9_factory.mp4" {sc.timed(a0, t_out)} '
-           f'data-media-start="0.0000" data-track-index="1" muted playsinline></video>'
-           f'<div id="{wid}" class="wht"></div></div>')
-    sc.js.append(f'tl.fromTo("#{cid}",{{scale:0.94}},{{scale:1,duration:0.32,ease:"power3.out"}},0);')
-    sc.js.append(f'tl.set("#{wid}",{{opacity:1}},0);tl.set("#{wid}",{{opacity:0}},{r4(2 * FR)});')
-    sc.js.append(f'tl.set("#{wid}",{{opacity:1}},{sc.at(t_out)});tl.set("#{wid}",{{opacity:0}},{sc.at(t_out + 2 * FR)});')
-    SM, BG = 70, 124
-    lockup(sc, [("A", L("a3"), SM, False), ("company", L("company2"), SM, False), ("that’s", L("thats"), SM, False)],
-           a0, a1, 575, 478, align="right", z=30)
-    lockup(sc, [("never", L("never"), BG, True), ("made", L("made"), BG, True)], F(L("never") - 2 * F25 - FR), a1,
-           575, 590, align="right", z=30, gap=0.2)
-    lockup(sc, [("a", L("a4"), SM, False), ("single", L("single"), SM, False), ("physical", L("physical"), SM, False)],
-           F(L("a4") - 2 * F25 - FR), a1, 1345, 478, align="left", z=30)
-    lockup(sc, [("product", L("product"), BG, True)], F(L("product") - 2 * F25 - FR), a1, 1345, 590, align="left", z=30)
+           f'<video id="{vid}" class="clip" src="assets/clips/v10_factory.mp4" {sc.timed(a0, t_k)} '
+           f'data-media-start="0.0000" data-track-index="1" muted playsinline></video></div>')
+    sc.js.append(f'tl.fromTo("#{cid}",{{scale:0.96}},{{scale:1,duration:0.32,ease:"power3.out"}},0);')
+    sc.js.append(f'tl.set("#{cid}",{{opacity:0}},{sc.at(t_k)});')
+    for words, x, side in (([("A", "a3"), ("company", "company2"), ("that’s", "thats")], 612, "right"),
+                           ([("never", "never"), ("made", "made")], 1308, "left")):
+        spans = []
+        for w, k in words:
+            wid = sc.uid("iw")
+            spans.append(f'<span id="{wid}">{w}</span>')
+            sc.js.append(f'tl.fromTo("#{wid}",{{opacity:0,filter:"blur(6px)"}},{{opacity:1,filter:"blur(0px)",'
+                         f'duration:{r4(REEL)},ease:"none"}},{sc.at(L(k))});')
+        box = f"left:0;right:{1920 - x}px;justify-content:flex-end;" if side == "right" else f"left:{x}px;right:0;justify-content:flex-start;"
+        sc.div(a0, t_k, f'<div class="ink" style="{box}">{"".join(spans)}</div>', z=10, cls="layer")
+    # "a single physical product": the Kalanick "turning a crazy idea"
+    sc.div(t_k, a1, "", z=1, cls="layer whitep")
+    sc.div(t_k, F(t_k + REEL), '<div class="slam">a single</div>', z=10, cls="layer")
+    tl_id = sc.uid("tl")
+    spans = []
+    for w, k in (("a", "a4"), ("single", "single"), ("physical", "physical"), ("product", "product")):
+        wid = sc.uid("tw")
+        spans.append(f'<span id="{wid}">{w}</span>')
+        t = max(L(k), t_k + REEL)
+        sc.js.append(f'tl.to("#{wid}",{{opacity:1,duration:{r4(REEL)},ease:"none"}},{sc.at(t)});')
+    t_in, t_x = F(t_k + REEL), F(a1 - 12 * FR)
+    sc.div(t_in, a1, f'<div class="turn"><div id="{tl_id}" class="tl">{"".join(spans)}</div></div>', z=10, cls="layer")
+    sc.js.append(f'tl.fromTo("#{tl_id}",{{scale:0.63}},{{scale:1.0,duration:0.9,ease:"power2.out"}},{sc.at(t_in)});')
+    sc.js.append(f'tl.to("#{tl_id}",{{scale:1.012,duration:{r4(max(FR, t_x - t_in - 0.9))},ease:"none"}},{sc.at(t_in + 0.9)});')
+    sc.js.append(f'tl.to("#{tl_id}",{{y:40,duration:{r4(6 * FR)},ease:"power1.in"}},{sc.at(t_x)});')
+    sc.js.append(f'tl.to("#{tl_id}",{{y:290,duration:{r4(6 * FR)},ease:"power2.in"}},{sc.at(t_x + 6 * FR)});')
     sc.write()
     return sc
 
 
-# ---- "yet it's one of the top shareholders in almost every major US company."
+# ---- "yet it's one of the top shareholders in almost every major" (the cards done by "major"), then "U.S. company."
 SHARE_CSS = """
 .lc{position:absolute;width:238px;height:150px;border-radius:9px;background:#0e0e0e;border:1px solid rgba(255,255,255,0.2);opacity:0;}
 .lc img{position:absolute;left:83px;top:24px;width:72px;height:72px;}
-.lc span{position:absolute;left:0;right:0;top:112px;text-align:center;font-family:"InterSB",sans-serif;font-size:19px;letter-spacing:0.1em;color:#a8a8a8;line-height:1;}
+.lc span{position:absolute;left:0;right:0;top:112px;text-align:center;font-family:"Heros",sans-serif;font-weight:700;font-size:19px;letter-spacing:0.08em;color:#a8a8a8;line-height:1;}
 .lw{position:absolute;inset:0;border-radius:8px;background:#f6f6f4;}
 """
 LOGOS = [("apple", "AAPL"), ("microsoft", "MSFT"), ("nvidia", "NVDA"), ("amazon", "AMZN"), ("google", "GOOGL"),
@@ -461,35 +594,67 @@ LOGOS = [("apple", "AAPL"), ("microsoft", "MSFT"), ("nvidia", "NVDA"), ("amazon"
 # the order the cards arrive in (a fixed scatter over the 4 x 7 slots, nothing random at render time)
 SHARE_ORDER = [10, 24, 3, 17, 6, 21, 13, 0, 27, 8, 19, 5, 15, 22, 11, 2, 25, 9, 18, 26, 1, 14, 20, 7, 23, 4, 16, 12]
 
+SHARE_CSS += """
+.mid{position:absolute;left:0;right:0;top:540px;height:0;display:flex;justify-content:center;align-items:center;}
+.big{font-family:"Heros",sans-serif;font-weight:700;font-size:250px;letter-spacing:-0.045em;line-height:1;color:#fff;white-space:nowrap;
+ text-shadow:0 0 14px rgba(255,255,255,0.45),0 0 40px rgba(255,255,255,0.22);}
+"""
+
 
 def s_share():
-    """The Hemant video's cards (white cards popping in, then their pictures) with the companies' marks: "top
-    shareholders" in the serif in the middle, and from "one of the" to "major US company" a card for one company after
-    another fills the frame around it, slowly at first and faster and faster."""
-    a0, a1 = B["share"]
+    """The Hemant video's cards with the companies' marks round "top shareholders" (the serif, in the middle), one card
+    after another, faster and faster, all in by "major" (the user); "in almost every" in the middle in the caption sans,
+    "major" big in the sans, then the cut to the flag (s_us)."""
+    a0, a1 = B["share"][0], F(T["us"] - TM.LEAD)
     sc = Scene("s_share", a0, a1, css=SHARE_CSS)
     L = lambda k: T[k] - 0.03
-    lockup(sc, [("top", L("top"), 104, False), ("shareholders", L("shareholders"), 214, True)],
-           F(L("top") - 2 * F25 - FR), a1, 960, 545, z=30, gap=0.22)
+    t_in2 = F(L("in2"))
+    lockup(sc, [("top", L("top"), 172, True), ("shareholders", L("shareholders"), 172, True)],
+           F(L("top") - 2 * F25 - FR), t_in2, 960, 545, z=30, gap=0.22)
+    # "in almost every": the caption line, building word by word in the middle
+    ws = [("in", L("in2")), ("almost", L("almost")), ("every", L("every"))]
+    t_major = F(L("major"))
+    for k in range(len(ws)):
+        s0 = F(ws[k][1])
+        s1 = F(ws[k + 1][1]) if k + 1 < len(ws) else t_major
+        text = " ".join(w for w, _ in ws[:k + 1])
+        sc.div(s0, s1, f'<div class="jn">{text}</div>', z=30, cls="cap", style="top:540px;height:0;")
+    mid = sc.uid("mj")
+    sc.div(t_major, a1, f'<div class="mid"><div id="{mid}" class="big">major</div></div>', z=30, cls="layer")
     rows, cols = [100, 270, 810, 980], [180 + 260 * k for k in range(7)]
-    t0, t1 = L("one"), L("company3")
+    t0, t1 = L("one"), F(L("major") - 4 * FR)
     N = len(SHARE_ORDER)
     cards = []
     for j, slot in enumerate(SHARE_ORDER):
         slug, tick = LOGOS[slot]
         r, c = divmod(slot, 7)
         cid, wid = sc.uid("lc"), sc.uid("lw")
+        tid = sc.uid("tk")
         cards.append(f'<div id="{cid}" class="lc" style="left:{cols[c] - 119}px;top:{rows[r] - 75}px;">'
-                     f'<img src="assets/logos/{slug}.svg" alt="" /><span>{tick}</span><div id="{wid}" class="lw"></div></div>')
-        t = t0 + (t1 - t0) * (j / (N - 1)) ** 0.62     # a card every ~19 frames at first, every 3 by "company"
-        sc.js.append(f'tl.set("#{cid}",{{opacity:1}},{sc.at(t)});tl.set("#{wid}",{{opacity:0}},{sc.at(t + 2 * FR)});')
+                     f'<img src="assets/logos/{slug}.svg" alt="" /><span id="{tid}" style="opacity:0;">{tick}</span><div id="{wid}" class="lw"></div></div>')
+        t = t0 + (t1 - t0) * (j / (N - 1)) ** 0.62
+        sc.js.append(f'tl.set("#{cid}",{{opacity:1}},{sc.at(t)});tl.set("#{wid}",{{opacity:0}},{sc.at(t + 2 * FR)});'
+                     f'tl.set("#{tid}",{{opacity:1}},{sc.at(t + 2 * FR)});')
     sc.div(a0, a1, "".join(cards), z=6)
     sc.write()
     return sc
 
 
-# ---- "It holds more of Nvidia than Jensen Huang, more of Microsoft than Bill Gates, and more of Apple than Steve
-# Jobs ever did."
+def s_us():
+    """"U.S. company.": the Kalanick reel's "global company" on the Earth (16.7-17.5 s): a cut to the picture (the
+    user's flag), the words small in the middle in the serif, blooming in, coloured squares jumping about; then a cut to
+    a closer framing, the words staying (prep_v10 r_flag)."""
+    a0, a1 = F(T["us"] - TM.LEAD), B["share"][1]
+    sc = Scene("s_us", a0, a1)
+    sc.video("v10_flag.mp4", a0, a1, z=1)
+    kline(sc, [("U.S.", F(T["us"] - 0.03)), ("company", F(T["company3"] - 0.03))], a0, a1, 560, 108, K_HERO, z=30)
+    sc.write()
+    return sc
+
+
+# ---- "It holds more of Nvidia than Jensen Huang ...": the v9 page (the user: "the format is correct"), without its
+# label, the company's name, the "× more" badge, the source line and the founder's card; on each founder's name the
+# earlier versions' full-frame clip of him (prep_v10 r_founders: v3_r1_jensen / gates / jobs)
 STAKE = json.load(open(f"{ROOT}/tools/words/stake.json"))
 PAGE = "rgb(%d,%d,%d)" % tuple(STAKE["page"])
 STAKE_CSS = """
@@ -500,7 +665,7 @@ STAKE_CSS = """
 .jcard{border-radius:14px;border:4px solid #141414;box-shadow:0 18px 40px rgba(0,0,0,0.28);}
 .k{position:absolute;left:1040px;font-family:"InterSB",sans-serif;font-weight:600;color:#5c5c5c;font-size:26px;letter-spacing:0.12em;line-height:1;white-space:nowrap;}
 .co{position:absolute;left:1036px;top:112px;font-family:"InterD",sans-serif;font-weight:800;font-size:124px;letter-spacing:-0.035em;color:#121212;line-height:1;white-space:nowrap;opacity:0;}
-.lab{position:absolute;left:1040px;font-family:"InterSB",sans-serif;font-weight:600;font-size:46px;letter-spacing:-0.03em;color:#141414;line-height:1;white-space:nowrap;}
+.lab{position:absolute;left:1040px;font-family:"HerosR",sans-serif;font-weight:400;font-size:48px;letter-spacing:-0.02em;color:#141414;line-height:1;white-space:nowrap;-webkit-text-stroke:0.022em currentColor;}
 .num{position:absolute;right:90px;font-family:"ISerif",serif;font-size:150px;letter-spacing:-0.01em;color:#141414;line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums lining-nums;}
 .trk{position:absolute;left:1040px;width:790px;height:26px;background:#c6c6c4;border-radius:3px;overflow:hidden;}
 .fill{position:absolute;left:0;top:0;width:790px;height:26px;transform-origin:0 50%;}
@@ -529,73 +694,57 @@ def count(sc, eid, v0, v1, t0, dur, final):
     sc.js.append(f'tl.set("#{eid}",{{textContent:"{final}"}},{sc.at(t0 + n * FR)});')
 
 
+
+
 def s_stake():
-    """Think School's "Founders vs Blackrock" page as a motion graphic (the user: "the TV, MacBook and the bar ... a
-    much better motion graphic"): the page's own grey; the product big on the left, rising in on the company's name;
-    the founder switching on on its screen on his name (the Elon reel's old-TV device: Gates in green on the MS-DOS
-    monitor, Jobs in black and white on the Macintosh; Jensen on a card over the graphics card); on the right two
-    bars on one scale -- BlackRock's and the founder's -- their figures rolling up in the serif, and how many times
-    more BlackRock holds landing after the founder's bar has stopped."""
+    """The v9 page without its label, the company's name, the "× more" badge and the source line (the user): the
+    product, BlackRock's share (its bar and figure) and, on the company's name, the founder's (his name, figure and
+    bar, in his company's colour) -- then on the founder's name the earlier versions' clip of him."""
     a0, a1 = B["stake"]
     sc = Scene("s_stake", a0, a1, bg=PAGE, css=STAKE_CSS)
     L = lambda k: T[k] - 0.03
-    cuts_ = [a0, F(T["more2"] - TM.LEAD), F(T["and"] - TM.LEAD), a1]
+    LD = lambda k: F(T[k] - TM.LEAD)
+    cuts_ = [a0, LD("more2"), LD("and"), a1]
     CX, CY = 505, 520
-    # the fixed parts of the right column
     na, fa = sc.uid("na"), sc.uid("fa")
-    static = (f'<div class="k" style="top:82px;">SHARE OF THE COMPANY</div>'
-              f'<div class="lab" style="top:356px;">BlackRock</div>'
-              f'<div id="{na}" class="num" style="top:300px;">0.00%</div>'
+    static = (f'<div class="lab" data-layout-allow-overlap style="top:356px;">BlackRock</div>'
+              f'<div id="{na}" class="num" data-layout-allow-overlap style="top:300px;">0.00%</div>'
               f'<div class="trk" style="top:470px;"><div id="{fa}" class="fill" style="background:#141414;"></div></div>'
-              f'<div class="trk" style="top:734px;"></div>'
-              f'<div class="src">Source · Investopedia · Yahoo Finance</div>')
-    sc.div(a0, a1, static, z=4)
+              f'<div class="trk" style="top:734px;"></div>')
+    stat = sc.div(a0, a1, static, z=4)
     sc.js.append(f'tl.set("#{fa}",{{scaleX:0}},0);')
+    for k, fd in enumerate(FOUNDERS):                  # under each founder's clip the page is hidden
+        sc.js.append(f'tl.set("#{stat}",{{opacity:0}},{sc.at(LD(fd["w_f"]))});')
+        if k + 1 < len(FOUNDERS):
+            sc.js.append(f'tl.set("#{stat}",{{opacity:1}},{sc.at(cuts_[k + 1])});')
     prev = 0.0
     for k, fd in enumerate(FOUNDERS):
         s0, s1 = cuts_[k], cuts_[k + 1]
-        t_co, t_f = L(fd["w_co"]), L(fd["w_f"])
-        t_b = F(T[fd["w_l"]] + 0.20)                      # the multiple lands after the founder's bar has stopped
+        t_co = L(fd["w_co"])                            # the founder's row comes on the company's name
+        t_f = LD(fd["w_f"])                             # the cut to the founder's clip on his name
         pr = STAKE[fd["key"]]
         px, py = CX - pr["w"] // 2, CY - pr["h"] // 2
-        # BlackRock's bar and figure: up from nothing on "holds more of", then moving to each company's figure
         t_a = L("holds") if k == 0 else s0
         d_a = 0.5 if k == 0 else 0.34
         sc.js.append(f'tl.to("#{fa}",{{scaleX:{fd["br"] / FULL:.4f},duration:{d_a},ease:"power3.out"}},{sc.at(t_a)});')
         count(sc, na, prev, fd["br"], t_a, d_a, f'{fd["br"]:.2f}%')
         prev = fd["br"]
-        # the product, rising in on the company's name
         pw = sc.uid("pw")
-        t_p = L("more1") if k == 0 else s0                # in on "more of", so the page is never half empty
+        t_p = L("more1") if k == 0 else s0
         sc.add(f'<div id="{pw}" class="pw" style="left:{px}px;top:{py}px;width:{pr["w"]}px;height:{pr["h"]}px;z-index:3;">'
                f'<img id="{pw}-img" class="clip" src="assets/img/v9_{fd["key"]}.png" alt="" {sc.timed(t_p, s1)} data-track-index="2" /></div>')
         sc.js.append(f'tl.fromTo("#{pw}",{{y:34,opacity:0}},{{y:0,opacity:1,duration:0.3,ease:"power3.out"}},{sc.at(t_p)});')
-        # the founder on its screen, switched on on his name
-        sw, wh, vid = sc.uid("sw"), sc.uid("wh"), sc.uid("v")
-        if "screen" in pr:
-            sx, sy, ww, hh = pr["screen"]
-            box, cls = f"left:{px + sx}px;top:{py + sy}px;width:{ww}px;height:{hh}px;border-radius:16px;", "scr"
-        else:
-            box, cls = "left:560px;top:92px;width:400px;height:300px;", "scr jcard"
-        sc.add(f'<div id="{sw}" class="{cls}" style="{box}z-index:5;">'
-               f'<video id="{vid}" class="clip" src="assets/clips/{fd["vid"]}" {sc.timed(t_f, s1)} data-media-start="0.0000" '
-               f'data-track-index="1" muted playsinline></video><div id="{wh}" class="wht2"></div></div>')
-        sc.js.append(f'tl.set("#{sw}",{{opacity:1}},{sc.at(t_f)});tl.set("#{sw}",{{opacity:0}},{sc.at(s1)});')
-        sc.js.append(f'tl.set("#{wh}",{{opacity:1}},{sc.at(t_f)});tl.set("#{wh}",{{opacity:0}},{sc.at(t_f + 2 * FR)});')
-        # the right column for this company: its name, the founder's label, figure and bar, and the multiple
-        co, lb, nb, fb, bd = sc.uid("co"), sc.uid("lb"), sc.uid("nb"), sc.uid("fb"), sc.uid("bd")
-        dyn = (f'<div id="{co}" class="co">{fd["co"]}</div>'
-               f'<div id="{lb}" class="lab" style="top:620px;opacity:0;">{fd["who"]}</div>'
-               f'<div id="{nb}" class="num" style="top:564px;opacity:0;color:{fd["color"]};">0.00%</div>'
-               f'<div class="trk" style="top:734px;background:transparent;"><div id="{fb}" class="fill" style="background:{fd["color"]};"></div></div>'
-               f'<div id="{bd}" class="bdg">{fd["mult"]}</div>')
-        sc.div(s0, s1, dyn, z=5)
+        lb, nb, fb = sc.uid("lb"), sc.uid("nb"), sc.uid("fb")
+        dyn = (f'<div id="{lb}" class="lab" data-layout-allow-overlap style="top:620px;opacity:0;">{fd["who"]}</div>'
+               f'<div id="{nb}" class="num" data-layout-allow-overlap style="top:564px;opacity:0;color:{fd["color"]};">0.00%</div>'
+               f'<div class="trk" style="top:734px;background:transparent;"><div id="{fb}" class="fill" style="background:{fd["color"]};"></div></div>')
+        sc.div(s0, t_f, dyn, z=5)
         sc.js.append(f'tl.set("#{fb}",{{scaleX:0}},0);')
-        sc.js.append(f'tl.set("#{co}",{{opacity:1}},{sc.at(t_co)});')
-        sc.js.append(f'tl.set("#{lb}",{{opacity:1}},{sc.at(t_f)});tl.set("#{nb}",{{opacity:1}},{sc.at(t_f)});')
-        sc.js.append(f'tl.to("#{fb}",{{scaleX:{fd["fo"] / FULL:.4f},duration:0.4,ease:"power3.out"}},{sc.at(t_f)});')
-        count(sc, nb, 0.0, fd["fo"], t_f, 0.4, fd["fo_s"])
-        sc.js.append(f'tl.fromTo("#{bd}",{{opacity:0,scale:0.92}},{{opacity:1,scale:1,duration:0.2,ease:"power2.out"}},{sc.at(t_b)});')
+        sc.js.append(f'tl.set("#{lb}",{{opacity:1}},{sc.at(t_co)});tl.set("#{nb}",{{opacity:1}},{sc.at(t_co)});')
+        sc.js.append(f'tl.to("#{fb}",{{scaleX:{fd["fo"] / FULL:.4f},duration:0.3,ease:"power3.out"}},{sc.at(t_co)});')
+        count(sc, nb, 0.0, fd["fo"], t_co, 0.3, fd["fo_s"])
+        clip = {"gpu": "v3_r1_jensen.mp4", "pc": "v3_r1_gates.mp4", "mac": "v3_r1_jobs.mp4"}[fd["key"]]
+        sc.video(clip, t_f, s1, z=20)
     sc.write()
     return sc
 
@@ -729,6 +878,6 @@ def index(scenes):
 
 if __name__ == "__main__":
     os.makedirs(COMP, exist_ok=True)
-    scenes = [s_open(), s_made(), s_share(), s_stake(), s_rogan(), s_rest2(), s_caps()]
+    scenes = [s_first(), s_name(), s_hook(), s_made(), s_share(), s_us(), s_stake(), s_rogan(), s_rest2(), s_caps()]
     index(scenes)
     print("wrote", len(scenes), "scenes; total", TM.TOTAL)
