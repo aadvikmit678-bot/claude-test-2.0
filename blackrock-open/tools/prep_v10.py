@@ -852,6 +852,7 @@ def r_wall4():
 # it on the word.
 ISF = f"{ROOT}/assets/fonts/InstrumentSerif-Regular.woff2"
 ISF_I = f"{ROOT}/assets/fonts/InstrumentSerif-Italic.woff2"
+LOSS_TEXT = "$100 million loss."                 # (v17: "$100 million loss" -- no full stops, the user)
 COUNT_VALUES = ["$1", "$7", "$18", "$31", "$46", "$60", "$73", "$84", "$92", "$97", "$100"]
 
 
@@ -887,7 +888,7 @@ def r_count():
     t_loss = TM.R(TM.ALIGN["rest"][49]["start"]) - 0.03             # "loss."
     size = 250
     masks = [text_mask(f"{v} million", ISF, size) for v in COUNT_VALUES]
-    full = text_mask("$100 million loss.", ISF, size)
+    full = text_mask(LOSS_TEXT, ISF, size)
     cut_x = masks[-1].shape[1] + int(0.10 * size)             # where "loss." starts in the full line
     L = int(size * 1.08)                                            # the roll's step: one line
     cy = 470                                                        # the number line's centre

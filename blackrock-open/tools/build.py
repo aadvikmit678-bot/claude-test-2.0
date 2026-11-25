@@ -399,6 +399,49 @@ def grow_js(sc, el, t_in, t_end):
         t = F(t + FR)
 
 
+ISF_PATH = f"{ROOT}/assets/fonts/InstrumentSerif-Regular.woff2"
+GLIDE = 0.28                                # seconds a re-centring glide takes
+
+
+def glide_line(sc, words, t_in, t_end, wrap_id, size, track, color="#111", extra=""):
+    """v17 (the user: "and built a system" much better and smooth, "a single physical product" the same and smoother
+    still): the line laid out once, each word appearing in its own place on its onset, the line gliding (eased, 0.28 s)
+    so that what is visible stays centred -- no jump when a word lands -- and the wrapper growing on the reference curve,
+    stretched over the words when they come slower than the reel's. Returns the line's HTML (a clip, t_in to t_end)."""
+    from PIL import ImageFont
+    f = ImageFont.truetype(ISF_PATH, size)
+    trk = track * size
+    wlen = lambda txt: sum(f.getlength(ch) + trk for ch in txt)
+    gap = f.getlength(" ") + trk + 0.08 * size
+    ws = [wlen(w) for w, _ in words]
+    xs, x = [], 0.0
+    for k, w in enumerate(ws):
+        xs.append(x)
+        x += w + (gap if k < len(ws) - 1 else 0)
+    full = x
+    cen = [(full - (xs[k] + ws[k])) / 2 for k in range(len(ws))]
+    lid = sc.uid("gl")
+    spans = []
+    for k, (w, t) in enumerate(words):
+        sid = sc.uid("gw")
+        mr = f"margin-right:{gap:.1f}px;" if k < len(words) - 1 else ""
+        spans.append(f'<span id="{sid}" style="display:inline-block;opacity:0;{mr}">{_html.escape(w, quote=False)}</span>')
+        sc.js.append(f'tl.set("#{sid}",{{opacity:1}},{sc.at(max(t, t_in))});')
+    D = max(0.9, max(t for _, t in words) - t_in + 0.3)
+    t = t_in
+    while t < t_end - 1e-6:
+        x = cen[0]
+        for k in range(1, len(words)):
+            u = min(1.0, max(0.0, (t - max(words[k][1], t_in)) / GLIDE))
+            x += (cen[k] - cen[k - 1]) * (1 - (1 - u) ** 3)
+        sc.js.append(f'tl.set("#{lid}",{{x:{x:.2f}}},{sc.at(t)});tl.set("#{wrap_id}",{{scale:{grow_scale((t - t_in) * 0.9 / D):.4f}}},{sc.at(t)});')
+        t = F(t + FR)
+    return (f'<div id="{lid}" class="clip" {sc.timed(t_in, t_end)} data-track-index="3" style="position:absolute;'
+            f'left:{960 - full / 2:.1f}px;top:0;height:300px;display:flex;align-items:center;white-space:nowrap;'
+            f'font-family:\'ISerif\',serif;font-size:{size}px;letter-spacing:{track}em;line-height:1;color:{color};{extra}">'
+            f'{"".join(spans)}</div>')
+
+
 def kflash(sc, wid, t, rest=K_REST, blur=6):
     sc.js.append(f'tl.set("#{wid}",{{opacity:1,filter:"blur({blur}px)",textShadow:"{K_BLOOM}"}},{sc.at(t)});')
     sc.js.append(f'tl.set("#{wid}",{{filter:"blur(0px)",textShadow:"{rest}"}},{sc.at(t + REEL)});')
@@ -427,6 +470,7 @@ def kline(sc, words, a, b, y, size, rest=K_REST, ls=-0.045, gap=0.12, color="#f4
 RISE = 324
 RISE_T = [0.0, 0.1, 0.1667, 0.2333, 0.3333, 0.4, 0.4667, 0.5667, 0.6333]
 RISE_R = [1.0, 0.6, 0.413, 0.273, 0.173, 0.097, 0.043, 0.01, 0.0]
+STEP12 = 5                                  # frames per 12 fps state
 
 FIRST_CSS = """
 .ff{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:960px 540px;}
@@ -447,33 +491,65 @@ def s_first():
                ("most", F(T["most1"] - 0.03))], F(T["this"] - 0.03), FINK_IN, 540, 150, K_HERO, z=30)
     t_e = F(T["earth"] - 0.03)
     ff, pa, pb, cut, line, wf = sc.uid("ff"), sc.uid("pa"), sc.uid("pb"), sc.uid("ct"), sc.uid("kl"), sc.uid("wf")
-    spans, words = [], [("powerful", FINK_IN), ("man", F(T["man"] - 0.03)), ("on", F(T["on"] - 0.03)), ("Earth.", t_e)]
+    spans, words = [], [("Powerful", FINK_IN), ("man", F(T["man"] - 0.03)), ("on", F(T["on"] - 0.03)), ("Earth", t_e)]  # (v17)
     for text, t in words:
         wid = sc.uid("fw")
         spans.append(f'<span id="{wid}" style="display:inline-block;opacity:0;margin:0 0.12em;">{text}</span>')
         kflash(sc, wid, t, K_HERO, blur=7)
-    inner = (f'<img id="{pa}" class="clip pl" src="assets/img/v15_bg_wall.jpg" alt="" {sc.timed(FINK_IN, t_e)} '
+    inner = (f'<img id="{pa}" class="clip pl" src="assets/img/v17_bg_wall.jpg" alt="" {sc.timed(FINK_IN, t_e)} '
              f'data-track-index="2" style="z-index:1;" />'
-             f'<img id="{pb}" class="clip pl" src="assets/img/v12_bg_b.jpg" alt="" {sc.timed(t_e, a1)} '
+             f'<img id="{pb}" class="clip pl" src="assets/img/v17_bg_b.jpg" alt="" {sc.timed(t_e, a1)} '
              f'data-track-index="2" style="z-index:1;" />'
              f'<div id="{line}" data-layout-allow-overlap style="position:absolute;left:0;right:0;top:96px;display:flex;justify-content:center;'
              f'align-items:baseline;font-family:\'ISerif\',serif;font-size:170px;letter-spacing:-0.045em;line-height:1;'
              f'color:#f4efe6;white-space:nowrap;z-index:2;text-shadow:{K_HERO};">{"".join(spans)}</div>'
-             f'<img id="{cut}" class="pl" src="assets/img/v10_fink_cut.png" alt="" style="z-index:3;" />'
-             f'<img id="{wf}" class="pl" src="assets/img/v15_fink_white.png" alt="" style="z-index:4;opacity:0;" />')
+             f'<img id="{cut}" class="pl" src="assets/img/v10_fink_cut.png" alt="" style="z-index:3;transform-origin:1040px 879px;" />'
+             f'<img id="{wf}" class="pl" src="assets/img/v15_fink_white.png" alt="" style="z-index:4;opacity:0;transform-origin:1040px 879px;" />')
     sc.add(f'<div id="{ff}" class="clip ff" {sc.timed(FINK_IN, a1)} data-track-index="3" style="z-index:5;">{inner}</div>')
     # v16 (the user: "how the Chainsmokers image came from the bottom ... at that speed ... the texture"): the reel's
     # 1.0-1.7 s measured frame by frame -- the duo rises 0.30 of the frame in 0.63 s on 12 fps states, easing out; the
     # wall behind them zoomed in and soft, settling 1.08 -> 1.04 -> 1.0 in two of those states; a screen-door mesh over
     # the frame. Then one subtle push.
-    for t, r in zip(RISE_T, RISE_R):
-        tt = F(FINK_IN + t)
-        sc.js.append(f'tl.set("#{cut}",{{y:{round(RISE * r)}}},{sc.at(tt)});tl.set("#{wf}",{{y:{round(RISE * r)}}},{sc.at(tt)});')
-    for t, s, bl in ((0.0, 1.08, 9), (6 * FR, 1.04, 3), (14 * FR, 1.0, 0)):
-        sc.js.append(f'tl.set("#{pa}",{{scale:{s},filter:"blur({bl}px)"}},{sc.at(F(FINK_IN + t))});')
-    t_up = F(FINK_IN + RISE_T[-1])
+    # v17 (the user: after coming up his picture "just becomes still ... makes the video less animated"; the reel's duo
+    # are footage and never stop): the rise as the reel's, then he keeps moving -- on up slowly and a touch closer, on the
+    # same 12 fps states -- and the wall behind settles (1.08 -> 1.04 -> 1.0, soft to sharp), then drifts gently the
+    # other way; the subtle push over all of it. No texture over the frame any more (the user).
+    span = a1 - FINK_IN
+    t_rise = RISE_T[-1]
+
+    def fink_state(u):
+        if u < t_rise - 1e-6:
+            k = max(i for i, tt in enumerate(RISE_T) if tt <= u + 1e-6)
+            y = RISE * RISE_R[k]
+        else:
+            v = (u - t_rise) / (span - t_rise)
+            y = -24 * (1 - (1 - v) ** 2)
+        return y, 1.0 + 0.035 * (u / span)
+
+    def bg_state(u):
+        if u < 6 * FR - 1e-6:
+            return 1.08, 9, 0.0
+        if u < 14 * FR - 1e-6:
+            return 1.04, 3, 0.0
+        v = (u - 14 * FR) / (span - 14 * FR)
+        return 1.0 + 0.03 * v, 0, 18 * v
+
+    times = {F(FINK_IN + t) for t in RISE_T} | {F(FINK_IN + 6 * FR), F(FINK_IN + 14 * FR)}
+    t = F(FINK_IN + t_rise)
+    while t < a1 - 1e-6:
+        times.add(t)
+        t = F(t + STEP12 * FR)
+    for tt in sorted(times):
+        if tt >= a1:
+            continue
+        u = tt - FINK_IN
+        y, s = fink_state(u)
+        bs, bl, by = bg_state(u)
+        sc.js.append(f'tl.set("#{cut}",{{y:{y:.1f},scale:{s:.4f}}},{sc.at(tt)});tl.set("#{wf}",{{y:{y:.1f},scale:{s:.4f}}},{sc.at(tt)});')
+        sc.js.append(f'tl.set("#{pa}",{{scale:{bs:.4f},y:{by:.1f},filter:"blur({bl}px)"}},{sc.at(tt)});'
+                     f'tl.set("#{pb}",{{scale:{bs:.4f},y:{by:.1f},filter:"blur({bl}px)"}},{sc.at(tt)});')
+    t_up = F(FINK_IN + t_rise)
     sc.js.append(f'tl.fromTo("#{ff}",{{scale:1.0}},{{scale:1.03,duration:{r4(a1 - t_up)},ease:"none"}},{sc.at(t_up)});')
-    sc.img("v16_mesh.png", FINK_IN, a1, z=8)
     # "Earth": the flash over his cut-out, out over 0.2 s, as the background changes
     sc.js.append(f'tl.set("#{wf}",{{opacity:1}},{sc.at(t_e)});')
     sc.js.append(f'tl.to("#{wf}",{{opacity:0,duration:0.2,ease:"power1.out"}},{sc.at(t_e + 2 * FR)});')
@@ -592,7 +668,7 @@ def s_made():
     X, Y, CW, CH = 650, 366, 620, 349
     cid, vid = sc.uid("cd"), sc.uid("v")
     sc.add(f'<div id="{cid}" class="card" style="left:{X}px;top:{Y}px;width:{CW}px;height:{CH}px;z-index:5;">'
-           f'<video id="{vid}" class="clip" src="assets/clips/v10_factory.mp4" {sc.timed(a0, t_k)} '
+           f'<video id="{vid}" class="clip" src="assets/clips/v17_card.mp4" {sc.timed(a0, t_k)} '
            f'data-media-start="0.0000" data-track-index="1" muted playsinline></video></div>')
     sc.js.append(f'tl.fromTo("#{cid}",{{scale:0.96}},{{scale:1,duration:0.32,ease:"power3.out"}},0);')
     sc.js.append(f'tl.set("#{cid}",{{opacity:0}},{sc.at(t_k)});')
@@ -613,15 +689,10 @@ def s_made():
     tl_id = sc.uid("tl")
     ws = [("a", max(L("a4"), t_k)), ("single", L("single")), ("physical", L("physical")), ("product", L("product"))]
     t_x = F(a1 - 12 * FR)
-    states = []
-    for k in range(len(ws)):
-        s0 = F(ws[k][1])
-        s1 = F(ws[k + 1][1]) if k + 1 < len(ws) else a1
-        text = " ".join(w for w, _ in ws[:k + 1])
-        states.append(f'<div class="clip tline" {sc.timed(s0, s1)} data-track-index="3">{text}</div>')
-    sc.add(f'<div class="turn" style="z-index:10;"><div id="{tl_id}" class="tl2">{"".join(states)}</div></div>')
     t_in = F(ws[0][1])
-    grow_js(sc, tl_id, t_in, a1)                      # (v16: the reference's own curve, smooth)
+    # (v17: as "and built a system" -- the line gliding as it builds, the growth stretched over the words)
+    line = glide_line(sc, [(w, F(t)) for w, t in ws], t_in, a1, tl_id, 225, -0.055)
+    sc.add(f'<div class="turn" style="z-index:10;"><div id="{tl_id}" class="tl2">{line}</div></div>')
     sc.js.append(f'tl.to("#{tl_id}",{{y:40,duration:{r4(6 * FR)},ease:"power1.in"}},{sc.at(t_x)});')
     sc.js.append(f'tl.to("#{tl_id}",{{y:300,duration:{r4(6 * FR)},ease:"power2.in"}},{sc.at(t_x + 6 * FR)});')
     sc.write()
@@ -868,7 +939,7 @@ def s_bet():
     # shot smeared dark (the first word smeared with it), then the shot with the words already there, crisp with the
     # soft glow, each next word on the reel frame of its onset; the picture and the words settle together
     sc.video("v16_bet2.mp4", a0, t_c, z=1)
-    sc.video("v16_count.mp4", t_c, a1, z=1)           # (v16: "$100 million" with a stronger white glow)
+    sc.video("v17_count.mp4", t_c, a1, z=1)           # (v16: "$100 million" with a stronger white glow)
     t_sharp = F(a0 + 2 * REEL)
     q = lambda t: F(a0 + max(2, int((t - 0.03 - a0) / REEL + 1e-6)) * REEL)
     lines = []
@@ -956,15 +1027,8 @@ def s_risk():
     sc.div(t_and, t_with, "", z=20, cls="layer paper")
     ws = [("and", t_and), ("built", Lr(82)), ("a", Lr(83)), ("system", Lr(84))]
     tl_id = sc.uid("tl")
-    states = []
-    for k in range(len(ws)):
-        s0 = max(ws[k][1], t_and)
-        s1 = ws[k + 1][1] if k + 1 < len(ws) else t_with
-        if s1 - s0 < FR:
-            continue
-        states.append(f'<div class="clip tline2" {sc.timed(s0, s1)} data-track-index="3">{" ".join(w for w, _ in ws[:k + 1])}</div>')
-    sc.add(f'<div class="turn2" style="z-index:22;"><div id="{tl_id}" class="tl3">{"".join(states)}</div></div>')
-    grow_js(sc, tl_id, t_and, t_with)
+    line = glide_line(sc, ws, t_and, t_with, tl_id, 205, -0.05, color="#0c0c0c", extra="-webkit-text-stroke:0.006em #0c0c0c;")
+    sc.add(f'<div class="turn2" style="z-index:22;"><div id="{tl_id}" class="tl3">{line}</div></div>')
     # "with one job" -- the reel's "just had the" (the data centre, the glass brain); "calculating" on the chalkboard
     t_calc, t_risk = Lr(88), Lr(89)
     sc.video("v15_job.mp4", Lr(86), t_calc, z=1)       # (the ring of screens, not the brain shot's burned-in text)
@@ -973,7 +1037,7 @@ def s_risk():
     sc.img("v15_neg_risk.jpg", F(t_risk - 5 * FR), t_risk, z=15)
     # "risk." -- the reel's "biggest": big, bold, lowercase, on the next shot
     t_hc = F(RI(90) - TM.LEAD)
-    sc.div(t_risk, t_hc, '<div class="bigb" style="font-size:300px;">risk.</div>', z=30, cls="cap", style="top:540px;height:0;")
+    sc.div(t_risk, t_hc, '<div class="bigb" style="font-size:300px;">risk</div>', z=30, cls="cap", style="top:540px;height:0;")
     # "He called it" -- the reel's "Now elon's": the man's white silhouette for two reel frames, the yellow label
     t_al = Lr(93)
     sc.add(f'<img id="{sc.uid("sl")}" class="clip sil" src="assets/img/v15_called_white.png" alt="" {sc.timed(t_hc, F(t_hc + 10 * FR))} '
@@ -998,8 +1062,8 @@ def s_crisis():
     LV = lambda i: F(RI(i) - TM.LEAD)
     d0, g0, g1, v1 = LV(94), LV(97), LV(99), F(RI(106))
     sc = Scene("s_crisis", d0, v1)
-    sc.video("v16_date.mp4", d0, g0, z=1)
-    sc.video("v16_grid.mp4", g0, g1, z=1)
+    sc.video("v17_date.mp4", d0, g0, z=1)
+    sc.video("v17_grid.mp4", g0, g1, z=1)
     sc.video("v16_gov.mp4", g1, v1, z=1)
     sc.write()
     return sc
@@ -1033,10 +1097,7 @@ def s_threw():
     sc = Scene("s_threw", w0, h0, bg="transparent", css=THREW_CSS)
     for t in (w0, m0, x0):
         white_hit(sc, t)
-    sc.div(p0, m0, '<div class="pg"></div>', z=10, cls="layer")
-    pid = sc.img("v16_page_fink.jpg", p0, m0, z=11, cls="pgi")
-    for k, o in enumerate((0.0, 0.07, 0.13, 0.18, 0.22, 0.25)):
-        sc.js.append(f'tl.set("#{pid}",{{opacity:{o}}},{sc.at(F(p0 + k * REEL))});')
+    sc.video("v17_page.mp4", p0, m0, z=10)           # (v17: Fink talking, faint on the page -- not a still)
     spans = []
     for w, i in (("threw", 108), ("out", 109), ("years", 110), ("ago", 111)):
         wid = sc.uid("yw")
@@ -1050,11 +1111,12 @@ def s_threw():
 
 
 MONEY_CSS = """
-.mcap{position:absolute;left:980px;right:0;top:952px;height:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;
- font-family:"ISerif",serif;font-size:64px;letter-spacing:-0.035em;line-height:1;color:#2b2b2b;}
-.lbox{position:absolute;left:700px;top:0;width:520px;height:76px;margin-top:-38px;background:rgba(58,58,58,0.92);display:flex;
- align-items:center;padding:0 22px;box-sizing:border-box;font-family:"ISerif",serif;font-size:50px;letter-spacing:-0.035em;
- line-height:1;color:#fff;white-space:nowrap;}
+.mcap{position:absolute;left:0;right:0;top:905px;height:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;
+ font-family:"ISerif",serif;font-size:80px;letter-spacing:-0.035em;line-height:1;color:#222;}
+.lbox{position:absolute;top:0;width:0;height:104px;margin-top:-52px;background:rgba(58,58,58,0.92);overflow:hidden;}
+.lbox .lt{position:absolute;left:28px;top:0;height:104px;display:block;line-height:104px;font-family:"ISerif",serif;font-size:72px;
+ letter-spacing:-0.035em;color:#fff;white-space:pre;}
+.lbox .lt span{opacity:0;}
 """
 
 
@@ -1065,7 +1127,7 @@ def s_money():
     LV = lambda i: F(RI(i) - TM.LEAD)
     h0, s0, e0 = LV(119), LV(125), F(RI(130))
     sc = Scene("s_money", h0, F(e0 + REEL), bg="transparent", css=MONEY_CSS)
-    sc.video("v16_money.mp4", h0, e0, z=1)
+    sc.video("v17_money.mp4", h0, e0, z=1)
     ws = [("He", LV(119)), ("came", LV(120)), ("out", LV(121)), ("of", LV(122)), ("that", LV(123)), ("crisis", LV(124))]
     for k in range(len(ws)):
         a = max(ws[k][1], h0)
@@ -1073,12 +1135,34 @@ def s_money():
         if b - a < FR:
             continue
         sc.div(a, b, f'<div class="mcap">{" ".join(w for w, _ in ws[:k + 1])}</div>', z=30, cls="layer")
-    bid, tid = sc.uid("lb"), sc.uid("lt")
-    sc.div(s0, e0, f'<div id="{bid}" class="lbox"><span id="{tid}">with</span></div>', z=30, cls="layer")
+    # "with 3x the money" (v17, the user: bigger; the box should not come in whole first -- it grows with the words,
+    # left to right): each word turns on at its onset and the box opens over it (0.2 s, eased), the line ending centred
+    from PIL import ImageFont
+    fnt = ImageFont.truetype(ISF_PATH, 72)
+    trk = -0.035 * 72
+    wlen = lambda txt: sum(fnt.getlength(ch) + trk for ch in txt)
+    words = [("with", LV(125)), ("3x", LV(126)), ("the", LV(128)), ("money", LV(129))]
+    pad = 28
+    widths = [wlen(" ".join(w for w, _ in words[:k + 1])) + 2 * pad for k in range(len(words))]
+    left = 960 - widths[-1] / 2
+    bid = sc.uid("lb")
+    spans = []
+    for k, (w, t) in enumerate(words):
+        sid = sc.uid("lw")
+        spans.append(f'<span id="{sid}">{w}</span>' + (" " if k < len(words) - 1 else ""))
+        sc.js.append(f'tl.set("#{sid}",{{opacity:1}},{sc.at(max(t, s0))});')
+    sc.div(s0, e0, f'<div id="{bid}" class="lbox" style="left:{left:.1f}px;"><div class="lt">{"".join(spans)}</div></div>',
+           z=30, cls="layer")
+    t = s0
+    while t < e0 - 1e-6:
+        w = 0.0
+        for k, (_, tw) in enumerate(words):
+            u = min(1.0, max(0.0, (t - max(tw, s0)) / 0.2))
+            w += ((widths[k] - (widths[k - 1] if k else 0.0)) * (1 - (1 - u) ** 3))
+        sc.js.append(f'tl.set("#{bid}",{{width:{w:.1f}}},{sc.at(t)});')
+        t = F(t + FR)
     for k, y in enumerate((1000, 905, 800, 700, 620, 575, 560)):
         sc.js.append(f'tl.set("#{bid}",{{y:{y}}},{sc.at(F(s0 + k * 5 * FR))});')
-    for txt, t in (("with 3x", LV(126)), ("with 3x the", LV(128)), ("with 3x the money.", LV(129))):
-        sc.js.append(f'tl.set("#{tid}",{{textContent:"{txt}"}},{sc.at(t)});')
     white_hit(sc, e0)
     sc.write()
     return sc
@@ -1105,6 +1189,13 @@ def hl_line(sc, words, t_end, y=545):
         sc.div(s0, s1, f'<div class="jn">{_html.escape(text, quote=False)}</div>', z=60, cls="cap", style=f"top:{y}px;height:0;")
 
 
+def depunct(w):
+    """v17 (the user: "remove any full stop or commas"): a trailing comma or full stop off a caption word; an
+    abbreviation's dots ("U.S.") stay"""
+    w = w.rstrip(",")
+    return w[:-1] if w.endswith(".") and w.count(".") == 1 else w
+
+
 def s_caps():
     sc = Scene("s_caps", 0.0, TM.TOTAL, bg="transparent")
     # 1. the Jensen reel's line (and the serif key words) to "...ever did."
@@ -1127,6 +1218,7 @@ def s_caps():
     for a, b, kind, words, text in CAP.porsche_phrases():
         if kind in ("skip", "card"):
             continue
+        words = [(depunct(w), t) for w, t in words]
         if kind == "big":
             size = {"2008": 330, "3x": 420}.get(text, 240)
             sc.div(a, b, f'<div class="bigh" style="font-size:{size}px;">{_html.escape(text, quote=False)}</div>', z=60, cls="cap",

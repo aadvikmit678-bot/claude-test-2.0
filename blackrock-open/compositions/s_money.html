@@ -49,28 +49,135 @@
 
 #root{background:transparent;}
 
-.mcap{position:absolute;left:980px;right:0;top:952px;height:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;
- font-family:"ISerif",serif;font-size:64px;letter-spacing:-0.035em;line-height:1;color:#2b2b2b;}
-.lbox{position:absolute;left:700px;top:0;width:520px;height:76px;margin-top:-38px;background:rgba(58,58,58,0.92);display:flex;
- align-items:center;padding:0 22px;box-sizing:border-box;font-family:"ISerif",serif;font-size:50px;letter-spacing:-0.035em;
- line-height:1;color:#fff;white-space:nowrap;}
+.mcap{position:absolute;left:0;right:0;top:905px;height:0;display:flex;justify-content:center;align-items:center;white-space:nowrap;
+ font-family:"ISerif",serif;font-size:80px;letter-spacing:-0.035em;line-height:1;color:#222;}
+.lbox{position:absolute;top:0;width:0;height:104px;margin-top:-52px;background:rgba(58,58,58,0.92);overflow:hidden;}
+.lbox .lt{position:absolute;left:28px;top:0;height:104px;display:block;line-height:104px;font-family:"ISerif",serif;font-size:72px;
+ letter-spacing:-0.035em;color:#fff;white-space:pre;}
+.lbox .lt span{opacity:0;}
 
 </style>
 <div id="root" data-composition-id="s_money" data-width="1920" data-height="1080" data-duration="2.9500">
-<video id="s_money-v1" class="clip full" src="assets/clips/v16_money.mp4" data-start="0.0000" data-duration="2.8500" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
+<video id="s_money-v1" class="clip full" src="assets/clips/v17_money.mp4" data-start="0.0000" data-duration="2.8500" data-media-start="0.0000" data-track-index="1" muted playsinline style="z-index:1;"></video>
 <div id="s_money-d2" class="clip layer" data-start="0.0000" data-duration="0.1500" data-track-index="3" style="z-index:30;"><div class="mcap">He</div></div>
 <div id="s_money-d3" class="clip layer" data-start="0.1500" data-duration="0.2000" data-track-index="3" style="z-index:30;"><div class="mcap">He came</div></div>
 <div id="s_money-d4" class="clip layer" data-start="0.3500" data-duration="0.1166" data-track-index="3" style="z-index:30;"><div class="mcap">He came out</div></div>
 <div id="s_money-d5" class="clip layer" data-start="0.4666" data-duration="0.0500" data-track-index="3" style="z-index:30;"><div class="mcap">He came out of</div></div>
 <div id="s_money-d6" class="clip layer" data-start="0.5166" data-duration="0.1834" data-track-index="3" style="z-index:30;"><div class="mcap">He came out of that</div></div>
 <div id="s_money-d7" class="clip layer" data-start="0.7000" data-duration="0.4500" data-track-index="3" style="z-index:30;"><div class="mcap">He came out of that crisis</div></div>
-<div id="s_money-d10" class="clip layer" data-start="1.1500" data-duration="1.7000" data-track-index="3" style="z-index:30;"><div id="s_money-lb8" class="lbox"><span id="s_money-lt9">with</span></div></div>
-<div id="s_money-d11" class="clip layer" data-start="2.8500" data-duration="0.1000" data-track-index="3" style="z-index:90;background:#fff;opacity:0.82;"></div>
+<div id="s_money-d13" class="clip layer" data-start="1.1500" data-duration="1.7000" data-track-index="3" style="z-index:30;"><div id="s_money-lb8" class="lbox" style="left:728.9px;"><div class="lt"><span id="s_money-lw9">with</span> <span id="s_money-lw10">3x</span> <span id="s_money-lw11">the</span> <span id="s_money-lw12">money</span></div></div></div>
+<div id="s_money-d14" class="clip layer" data-start="2.8500" data-duration="0.1000" data-track-index="3" style="z-index:90;background:#fff;opacity:0.82;"></div>
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
   tl.set({}, {}, 2.9500);
+  tl.set("#s_money-lw9",{opacity:1},1.1500);
+  tl.set("#s_money-lw10",{opacity:1},1.4000);
+  tl.set("#s_money-lw11",{opacity:1},2.2000);
+  tl.set("#s_money-lw12",{opacity:1},2.3333);
+  tl.set("#s_money-lb8",{width:0.0},1.1500);
+  tl.set("#s_money-lb8",{width:36.0},1.1666);
+  tl.set("#s_money-lb8",{width:66.3},1.1833);
+  tl.set("#s_money-lb8",{width:91.0},1.2000);
+  tl.set("#s_money-lb8",{width:110.7},1.2166);
+  tl.set("#s_money-lb8",{width:126.2},1.2333);
+  tl.set("#s_money-lb8",{width:137.8},1.2500);
+  tl.set("#s_money-lb8",{width:146.0},1.2666);
+  tl.set("#s_money-lb8",{width:151.6},1.2833);
+  tl.set("#s_money-lb8",{width:155.0},1.3000);
+  tl.set("#s_money-lb8",{width:156.7},1.3166);
+  tl.set("#s_money-lb8",{width:157.4},1.3333);
+  tl.set("#s_money-lb8",{width:157.5},1.3500);
+  tl.set("#s_money-lb8",{width:157.5},1.3666);
+  tl.set("#s_money-lb8",{width:157.5},1.3833);
+  tl.set("#s_money-lb8",{width:157.5},1.4000);
+  tl.set("#s_money-lb8",{width:171.0},1.4166);
+  tl.set("#s_money-lb8",{width:182.3},1.4333);
+  tl.set("#s_money-lb8",{width:191.6},1.4500);
+  tl.set("#s_money-lb8",{width:199.0},1.4666);
+  tl.set("#s_money-lb8",{width:204.8},1.4833);
+  tl.set("#s_money-lb8",{width:209.2},1.5000);
+  tl.set("#s_money-lb8",{width:212.3},1.5166);
+  tl.set("#s_money-lb8",{width:214.4},1.5333);
+  tl.set("#s_money-lb8",{width:215.6},1.5500);
+  tl.set("#s_money-lb8",{width:216.3},1.5666);
+  tl.set("#s_money-lb8",{width:216.5},1.5833);
+  tl.set("#s_money-lb8",{width:216.6},1.6000);
+  tl.set("#s_money-lb8",{width:216.6},1.6166);
+  tl.set("#s_money-lb8",{width:216.6},1.6333);
+  tl.set("#s_money-lb8",{width:216.6},1.6500);
+  tl.set("#s_money-lb8",{width:216.6},1.6666);
+  tl.set("#s_money-lb8",{width:216.6},1.6833);
+  tl.set("#s_money-lb8",{width:216.6},1.7000);
+  tl.set("#s_money-lb8",{width:216.6},1.7166);
+  tl.set("#s_money-lb8",{width:216.6},1.7333);
+  tl.set("#s_money-lb8",{width:216.6},1.7500);
+  tl.set("#s_money-lb8",{width:216.6},1.7666);
+  tl.set("#s_money-lb8",{width:216.6},1.7833);
+  tl.set("#s_money-lb8",{width:216.6},1.8000);
+  tl.set("#s_money-lb8",{width:216.6},1.8166);
+  tl.set("#s_money-lb8",{width:216.6},1.8333);
+  tl.set("#s_money-lb8",{width:216.6},1.8500);
+  tl.set("#s_money-lb8",{width:216.6},1.8666);
+  tl.set("#s_money-lb8",{width:216.6},1.8833);
+  tl.set("#s_money-lb8",{width:216.6},1.9000);
+  tl.set("#s_money-lb8",{width:216.6},1.9166);
+  tl.set("#s_money-lb8",{width:216.6},1.9333);
+  tl.set("#s_money-lb8",{width:216.6},1.9500);
+  tl.set("#s_money-lb8",{width:216.6},1.9666);
+  tl.set("#s_money-lb8",{width:216.6},1.9833);
+  tl.set("#s_money-lb8",{width:216.6},2.0000);
+  tl.set("#s_money-lb8",{width:216.6},2.0166);
+  tl.set("#s_money-lb8",{width:216.6},2.0333);
+  tl.set("#s_money-lb8",{width:216.6},2.0500);
+  tl.set("#s_money-lb8",{width:216.6},2.0666);
+  tl.set("#s_money-lb8",{width:216.6},2.0833);
+  tl.set("#s_money-lb8",{width:216.6},2.1000);
+  tl.set("#s_money-lb8",{width:216.6},2.1166);
+  tl.set("#s_money-lb8",{width:216.6},2.1333);
+  tl.set("#s_money-lb8",{width:216.6},2.1500);
+  tl.set("#s_money-lb8",{width:216.6},2.1666);
+  tl.set("#s_money-lb8",{width:216.6},2.1833);
+  tl.set("#s_money-lb8",{width:216.6},2.2000);
+  tl.set("#s_money-lb8",{width:234.9},2.2166);
+  tl.set("#s_money-lb8",{width:250.3},2.2333);
+  tl.set("#s_money-lb8",{width:262.9},2.2500);
+  tl.set("#s_money-lb8",{width:273.0},2.2666);
+  tl.set("#s_money-lb8",{width:280.8},2.2833);
+  tl.set("#s_money-lb8",{width:286.7},2.3000);
+  tl.set("#s_money-lb8",{width:290.9},2.3166);
+  tl.set("#s_money-lb8",{width:293.8},2.3333);
+  tl.set("#s_money-lb8",{width:333.6},2.3500);
+  tl.set("#s_money-lb8",{width:366.0},2.3666);
+  tl.set("#s_money-lb8",{width:392.4},2.3833);
+  tl.set("#s_money-lb8",{width:413.2},2.4000);
+  tl.set("#s_money-lb8",{width:429.4},2.4166);
+  tl.set("#s_money-lb8",{width:441.5},2.4333);
+  tl.set("#s_money-lb8",{width:450.3},2.4500);
+  tl.set("#s_money-lb8",{width:456.1},2.4666);
+  tl.set("#s_money-lb8",{width:459.6},2.4833);
+  tl.set("#s_money-lb8",{width:461.5},2.5000);
+  tl.set("#s_money-lb8",{width:462.1},2.5166);
+  tl.set("#s_money-lb8",{width:462.2},2.5333);
+  tl.set("#s_money-lb8",{width:462.2},2.5500);
+  tl.set("#s_money-lb8",{width:462.2},2.5666);
+  tl.set("#s_money-lb8",{width:462.2},2.5833);
+  tl.set("#s_money-lb8",{width:462.2},2.6000);
+  tl.set("#s_money-lb8",{width:462.2},2.6166);
+  tl.set("#s_money-lb8",{width:462.2},2.6333);
+  tl.set("#s_money-lb8",{width:462.2},2.6500);
+  tl.set("#s_money-lb8",{width:462.2},2.6666);
+  tl.set("#s_money-lb8",{width:462.2},2.6833);
+  tl.set("#s_money-lb8",{width:462.2},2.7000);
+  tl.set("#s_money-lb8",{width:462.2},2.7166);
+  tl.set("#s_money-lb8",{width:462.2},2.7333);
+  tl.set("#s_money-lb8",{width:462.2},2.7500);
+  tl.set("#s_money-lb8",{width:462.2},2.7666);
+  tl.set("#s_money-lb8",{width:462.2},2.7833);
+  tl.set("#s_money-lb8",{width:462.2},2.8000);
+  tl.set("#s_money-lb8",{width:462.2},2.8166);
+  tl.set("#s_money-lb8",{width:462.2},2.8333);
   tl.set("#s_money-lb8",{y:1000},1.1500);
   tl.set("#s_money-lb8",{y:905},1.2333);
   tl.set("#s_money-lb8",{y:800},1.3166);
@@ -78,9 +185,6 @@
   tl.set("#s_money-lb8",{y:620},1.4833);
   tl.set("#s_money-lb8",{y:575},1.5666);
   tl.set("#s_money-lb8",{y:560},1.6500);
-  tl.set("#s_money-lt9",{textContent:"with 3x"},1.4000);
-  tl.set("#s_money-lt9",{textContent:"with 3x the"},2.2000);
-  tl.set("#s_money-lt9",{textContent:"with 3x the money."},2.3333);
   window.__timelines["s_money"] = tl;
 })();
 </script>

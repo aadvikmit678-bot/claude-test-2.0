@@ -298,6 +298,7 @@ GRID_SHOTS = {"TL": ("AX", 4.5, 0.42, 0.55, 1.05), "BL": ("BR15", 462.0, 0.50, 0
 GRID_SWAP = {"R": (40, ("BM", 7.5, 0.55, 0.50, 1.0)), "BL": (42, ("UNT", 1131.0, 0.30, 0.62, 1.2))}
 GRID_WHITE = [("TL", 9), ("BL", 14), ("C", 19), ("R", 24), ("LED", 29)]          # each 5 frames, one after another
 LED_VALUES = [(0, "-153"), (9, "-498"), (31, "-777")]
+GRID_DATE, GRID_OUT = "v16_date.mp4", "v16_grid.mp4"      # (v17 renders it again after its moving clock)
 
 
 def tile_clip(key, t0, n, tw, th, cx, cy, zoom=1.0):
@@ -350,7 +351,7 @@ def r_grid():
         swaps[name] = (f0, tile_clip(key, t0, n, x1 - x0, y1 - y0, cx, cy, z))
     lx0, ly0, lx1, ly1 = TILES["LED"]
     leds = {v: led_tile(v, lx1 - lx0, ly1 - ly0) for _, v in LED_VALUES}
-    date_last = grab(f"{CLIPS}/v16_date.mp4", 0.0, nf(Lr(94), Lr(97)))[-1].astype(np.float32)
+    date_last = grab(f"{CLIPS}/{GRID_DATE}", 0.0, nf(Lr(94), Lr(97)))[-1].astype(np.float32)
     nxt = grab(f"{CLIPS}/v6_rest2.mp4", g1 - B["rest2"][0], 1)[0].astype(np.float32)
 
     def grid(i):
@@ -373,7 +374,7 @@ def r_grid():
         return fr
 
     k_in, k_out = 5, n - 6
-    wr = Writer(f"{CLIPS}/v16_grid.mp4")
+    wr = Writer(f"{CLIPS}/{GRID_OUT}")
     for i in range(n):
         if i < k_in:
             fr = datamosh(date_last, grid(k_in), (i + 1) / (k_in + 1), seed=9300 + i // 2)
@@ -498,12 +499,15 @@ def stack_layout():
     return out
 
 
+MONEY = dict(fink_s=0.92, fink_x=-205, cash_w=700, cash_x=990, cash_y=452, out="v16_money.mp4")
+
+
 def r_money():
     h0, s0, e0 = Lr(119), Lr(125), F(RI(130))  # (to v6_rest2's own cut into "Today,")
     n, nA = nf(h0, e0), nf(h0, s0)
     cash = sprite(f"{V16}/money_stack.png")
     fink = np.asarray(Image.open(f"{DL}/v10/larry_new_cut.png").convert("RGBA")).astype(np.float32)
-    fs = 0.92
+    fs = MONEY["fink_s"]
     fink = cv2.resize(fink, (int(fink.shape[1] * fs), int(fink.shape[0] * fs)), interpolation=cv2.INTER_AREA)
     fh, fw = fink.shape[:2]
     bg = page_bg()
@@ -513,7 +517,7 @@ def r_money():
     def handoff(t):
         fr = bg.copy()
         # Fink from the left, his raised hand reaching to the right (the reel's robot hand)
-        fx_final = -205 + 20 * min(1.0, t / 0.9)
+        fx_final = MONEY["fink_x"] + 20 * min(1.0, t / 0.9)
         fx = fx_final - 760 * (1 - ease_out(t / 0.45))
         wipe = None
         if t >= 0.78:
@@ -522,11 +526,11 @@ def r_money():
             shadow_rgba(fr, fink, fx + fw / 2, (H - fh) + fh / 2, off=(22, 18), blur=26, amt=0.16)
             paste_rgba(fr, fink, fx + fw / 2, (H - fh) + fh / 2, clip_x=wipe)
         # the cash from the right, into his fingers
-        cw = 700
+        cw = MONEY["cash_w"]
         cs = scaled(cash, cw, 0.0, "c")
-        cx_final = 990 + cw / 2 - 40 * min(1.0, t / 0.9)
+        cx_final = MONEY["cash_x"] + cw / 2 - 40 * min(1.0, t / 0.9)
         cx = cx_final + 1250 * (1 - ease_out(t / 0.45))
-        cy = 452
+        cy = MONEY["cash_y"]
         if t > 0.95:                                      # the drop
             u = (t - 0.95) / max(0.05, tA - 0.95)
             cy += 900 * u * u
@@ -551,7 +555,7 @@ def r_money():
         return fr
 
     cache = {}
-    wr = Writer(f"{CLIPS}/v16_money.mp4")
+    wr = Writer(f"{CLIPS}/{MONEY['out']}")
     for i in range(n):
         st = i // STEP
         t = st * STEP / FPS
