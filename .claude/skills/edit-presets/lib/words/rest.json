@@ -1,0 +1,1016 @@
+[
+{
+"text": "A",
+"start": 0.14,
+"end": 0.16,
+"score": 0.999
+},
+{
+"text": "company",
+"start": 0.24,
+"end": 0.52,
+"score": 0.96
+},
+{
+"text": "that",
+"start": 0.58,
+"end": 0.68,
+"score": 0.962
+},
+{
+"text": "manages",
+"start": 0.74,
+"end": 1.12,
+"score": 0.953
+},
+{
+"text": "$15",
+"start": 1.34,
+"end": 1.86,
+"score": 1.0
+},
+{
+"text": "trillion",
+"start": 2.04,
+"end": 3.001,
+"score": 0.947
+},
+{
+"text": "in",
+"start": 3.061,
+"end": 3.101,
+"score": 0.859
+},
+{
+"text": "assets",
+"start": 3.241,
+"end": 3.641,
+"score": 0.971
+},
+{
+"text": "holds",
+"start": 3.981,
+"end": 4.181,
+"score": 0.987
+},
+{
+"text": "more",
+"start": 4.281,
+"end": 4.441,
+"score": 0.964
+},
+{
+"text": "of",
+"start": 4.501,
+"end": 4.541,
+"score": 0.997
+},
+{
+"text": "Nvidia",
+"start": 4.621,
+"end": 4.981,
+"score": 0.955
+},
+{
+"text": "than",
+"start": 5.061,
+"end": 5.161,
+"score": 0.988
+},
+{
+"text": "Jensen",
+"start": 5.241,
+"end": 5.561,
+"score": 0.663
+},
+{
+"text": "Huang,",
+"start": 5.661,
+"end": 5.921,
+"score": 0.615
+},
+{
+"text": "more",
+"start": 6.341,
+"end": 6.501,
+"score": 0.968
+},
+{
+"text": "of",
+"start": 6.541,
+"end": 6.581,
+"score": 0.999
+},
+{
+"text": "Microsoft",
+"start": 6.661,
+"end": 7.201,
+"score": 0.807
+},
+{
+"text": "than",
+"start": 7.281,
+"end": 7.381,
+"score": 0.963
+},
+{
+"text": "Bill",
+"start": 7.441,
+"end": 7.621,
+"score": 0.827
+},
+{
+"text": "Gates,",
+"start": 7.701,
+"end": 8.002,
+"score": 0.958
+},
+{
+"text": "and",
+"start": 8.402,
+"end": 8.502,
+"score": 0.932
+},
+{
+"text": "more",
+"start": 8.542,
+"end": 8.682,
+"score": 0.952
+},
+{
+"text": "of",
+"start": 8.722,
+"end": 8.762,
+"score": 0.999
+},
+{
+"text": "Apple",
+"start": 8.942,
+"end": 9.182,
+"score": 0.976
+},
+{
+"text": "than",
+"start": 9.242,
+"end": 9.342,
+"score": 0.993
+},
+{
+"text": "Steve",
+"start": 9.442,
+"end": 9.742,
+"score": 0.954
+},
+{
+"text": "Jobs",
+"start": 9.802,
+"end": 10.062,
+"score": 0.962
+},
+{
+"text": "ever",
+"start": 10.282,
+"end": 10.442,
+"score": 0.984
+},
+{
+"text": "did.",
+"start": 10.502,
+"end": 10.662,
+"score": 0.993
+},
+{
+"text": "Back",
+"start": 11.402,
+"end": 11.562,
+"score": 0.952
+},
+{
+"text": "in",
+"start": 11.602,
+"end": 11.642,
+"score": 0.995
+},
+{
+"text": "the",
+"start": 11.682,
+"end": 11.742,
+"score": 0.987
+},
+{
+"text": "1980s,",
+"start": 11.782,
+"end": 12.462,
+"score": 0.893
+},
+{
+"text": "Larry",
+"start": 12.722,
+"end": 12.962,
+"score": 0.939
+},
+{
+"text": "Fink",
+"start": 13.083,
+"end": 13.283,
+"score": 0.924
+},
+{
+"text": "was",
+"start": 13.343,
+"end": 13.443,
+"score": 1.0
+},
+{
+"text": "a",
+"start": 13.503,
+"end": 13.523,
+"score": 0.995
+},
+{
+"text": "Wall",
+"start": 13.603,
+"end": 13.823,
+"score": 0.953
+},
+{
+"text": "Street",
+"start": 13.863,
+"end": 14.063,
+"score": 1.0
+},
+{
+"text": "prodigy,",
+"start": 14.163,
+"end": 14.643,
+"score": 0.999
+},
+{
+"text": "but",
+"start": 15.103,
+"end": 15.203,
+"score": 0.973
+},
+{
+"text": "one",
+"start": 15.403,
+"end": 15.523,
+"score": 0.97
+},
+{
+"text": "bad",
+"start": 15.603,
+"end": 15.783,
+"score": 0.998
+},
+{
+"text": "bet",
+"start": 15.863,
+"end": 16.063,
+"score": 0.992
+},
+{
+"text": "cost",
+"start": 16.183,
+"end": 16.423,
+"score": 0.984
+},
+{
+"text": "him",
+"start": 16.463,
+"end": 16.543,
+"score": 0.999
+},
+{
+"text": "$100",
+"start": 16.763,
+"end": 17.263,
+"score": 0.976
+},
+{
+"text": "million",
+"start": 17.423,
+"end": 18.123,
+"score": 0.975
+},
+{
+"text": "loss.",
+"start": 18.203,
+"end": 18.504,
+"score": 0.954
+},
+{
+"text": "That",
+"start": 19.164,
+"end": 19.264,
+"score": 1.0
+},
+{
+"text": "was",
+"start": 19.304,
+"end": 19.384,
+"score": 0.998
+},
+{
+"text": "enough",
+"start": 19.424,
+"end": 19.604,
+"score": 0.966
+},
+{
+"text": "to",
+"start": 19.644,
+"end": 19.684,
+"score": 1.0
+},
+{
+"text": "get",
+"start": 19.724,
+"end": 19.804,
+"score": 1.0
+},
+{
+"text": "him",
+"start": 19.844,
+"end": 19.924,
+"score": 0.892
+},
+{
+"text": "thrown",
+"start": 20.044,
+"end": 20.304,
+"score": 1.0
+},
+{
+"text": "out",
+"start": 20.364,
+"end": 20.444,
+"score": 0.992
+},
+{
+"text": "of",
+"start": 20.464,
+"end": 20.504,
+"score": 0.999
+},
+{
+"text": "Wall",
+"start": 20.564,
+"end": 20.764,
+"score": 0.952
+},
+{
+"text": "Street",
+"start": 20.804,
+"end": 21.044,
+"score": 0.959
+},
+{
+"text": "and",
+"start": 21.184,
+"end": 21.264,
+"score": 0.999
+},
+{
+"text": "to",
+"start": 21.304,
+"end": 21.364,
+"score": 0.952
+},
+{
+"text": "convince",
+"start": 21.404,
+"end": 21.744,
+"score": 0.995
+},
+{
+"text": "him",
+"start": 21.784,
+"end": 21.884,
+"score": 0.932
+},
+{
+"text": "of",
+"start": 22.024,
+"end": 22.084,
+"score": 0.998
+},
+{
+"text": "one",
+"start": 22.304,
+"end": 22.424,
+"score": 1.0
+},
+{
+"text": "thing.",
+"start": 22.504,
+"end": 22.704,
+"score": 0.993
+},
+{
+"text": "Wall",
+"start": 23.284,
+"end": 23.485,
+"score": 0.896
+},
+{
+"text": "Street",
+"start": 23.545,
+"end": 23.785,
+"score": 0.93
+},
+{
+"text": "is",
+"start": 23.945,
+"end": 24.005,
+"score": 0.964
+},
+{
+"text": "terrible",
+"start": 24.165,
+"end": 24.705,
+"score": 0.978
+},
+{
+"text": "at",
+"start": 24.825,
+"end": 24.865,
+"score": 1.0
+},
+{
+"text": "seeing",
+"start": 24.945,
+"end": 25.205,
+"score": 0.975
+},
+{
+"text": "risk.",
+"start": 25.285,
+"end": 25.505,
+"score": 0.932
+},
+{
+"text": "So,",
+"start": 26.245,
+"end": 26.385,
+"score": 0.999
+},
+{
+"text": "in",
+"start": 26.605,
+"end": 26.645,
+"score": 1.0
+},
+{
+"text": "1988,",
+"start": 26.725,
+"end": 27.445,
+"score": 0.981
+},
+{
+"text": "he",
+"start": 27.625,
+"end": 27.705,
+"score": 0.967
+},
+{
+"text": "co-founded",
+"start": 27.805,
+"end": 28.305,
+"score": 0.979
+},
+{
+"text": "BlackRock",
+"start": 28.385,
+"end": 28.866,
+"score": 0.969
+},
+{
+"text": "and",
+"start": 29.046,
+"end": 29.126,
+"score": 0.993
+},
+{
+"text": "built",
+"start": 29.166,
+"end": 29.346,
+"score": 0.952
+},
+{
+"text": "a",
+"start": 29.426,
+"end": 29.446,
+"score": 0.998
+},
+{
+"text": "system",
+"start": 29.506,
+"end": 29.806,
+"score": 0.966
+},
+{
+"text": "with",
+"start": 29.886,
+"end": 30.006,
+"score": 0.999
+},
+{
+"text": "one",
+"start": 30.246,
+"end": 30.346,
+"score": 0.919
+},
+{
+"text": "job\u2014",
+"start": 30.426,
+"end": 30.666,
+"score": 1.0
+},
+{
+"text": "calculating",
+"start": 31.146,
+"end": 31.706,
+"score": 0.972
+},
+{
+"text": "risk.",
+"start": 31.806,
+"end": 32.026,
+"score": 0.999
+},
+{
+"text": "He",
+"start": 32.566,
+"end": 32.626,
+"score": 1.0
+},
+{
+"text": "called",
+"start": 32.686,
+"end": 32.926,
+"score": 0.93
+},
+{
+"text": "it",
+"start": 32.986,
+"end": 33.026,
+"score": 1.0
+},
+{
+"text": "Aladdin.",
+"start": 33.346,
+"end": 33.726,
+"score": 0.995
+},
+{
+"text": "When",
+"start": 34.367,
+"end": 34.467,
+"score": 0.999
+},
+{
+"text": "the",
+"start": 34.507,
+"end": 34.567,
+"score": 0.998
+},
+{
+"text": "2008",
+"start": 34.607,
+"end": 35.207,
+"score": 0.968
+},
+{
+"text": "crisis",
+"start": 35.247,
+"end": 35.607,
+"score": 0.951
+},
+{
+"text": "hit,",
+"start": 35.667,
+"end": 35.827,
+"score": 0.93
+},
+{
+"text": "the",
+"start": 36.087,
+"end": 36.167,
+"score": 0.999
+},
+{
+"text": "U.S.",
+"start": 36.267,
+"end": 36.467,
+"score": 0.903
+},
+{
+"text": "government",
+"start": 36.527,
+"end": 36.887,
+"score": 0.982
+},
+{
+"text": "called",
+"start": 36.927,
+"end": 37.127,
+"score": 0.999
+},
+{
+"text": "the",
+"start": 37.167,
+"end": 37.227,
+"score": 0.982
+},
+{
+"text": "one",
+"start": 37.427,
+"end": 37.547,
+"score": 0.999
+},
+{
+"text": "guy",
+"start": 37.607,
+"end": 37.767,
+"score": 0.997
+},
+{
+"text": "Wall",
+"start": 37.887,
+"end": 38.067,
+"score": 1.0
+},
+{
+"text": "Street",
+"start": 38.127,
+"end": 38.327,
+"score": 0.983
+},
+{
+"text": "threw",
+"start": 38.347,
+"end": 38.507,
+"score": 0.599
+},
+{
+"text": "out",
+"start": 38.627,
+"end": 38.727,
+"score": 0.995
+},
+{
+"text": "years",
+"start": 38.847,
+"end": 39.107,
+"score": 0.999
+},
+{
+"text": "ago",
+"start": 39.168,
+"end": 39.328,
+"score": 0.978
+},
+{
+"text": "to",
+"start": 39.488,
+"end": 39.568,
+"score": 0.892
+},
+{
+"text": "clean",
+"start": 39.628,
+"end": 39.808,
+"score": 0.995
+},
+{
+"text": "up",
+"start": 39.848,
+"end": 39.908,
+"score": 0.999
+},
+{
+"text": "the",
+"start": 39.968,
+"end": 40.028,
+"score": 0.998
+},
+{
+"text": "mess\u2014",
+"start": 40.068,
+"end": 40.308,
+"score": 0.982
+},
+{
+"text": "Larry",
+"start": 40.908,
+"end": 41.148,
+"score": 0.999
+},
+{
+"text": "Fink.",
+"start": 41.248,
+"end": 41.448,
+"score": 0.966
+},
+{
+"text": "He",
+"start": 42.148,
+"end": 42.228,
+"score": 0.954
+},
+{
+"text": "came",
+"start": 42.288,
+"end": 42.448,
+"score": 1.0
+},
+{
+"text": "out",
+"start": 42.488,
+"end": 42.568,
+"score": 1.0
+},
+{
+"text": "of",
+"start": 42.608,
+"end": 42.648,
+"score": 0.997
+},
+{
+"text": "that",
+"start": 42.668,
+"end": 42.788,
+"score": 0.939
+},
+{
+"text": "crisis",
+"start": 42.848,
+"end": 43.228,
+"score": 0.96
+},
+{
+"text": "with",
+"start": 43.288,
+"end": 43.428,
+"score": 0.974
+},
+{
+"text": "three",
+"start": 43.548,
+"end": 43.808,
+"score": 0.926
+},
+{
+"text": "times",
+"start": 43.908,
+"end": 44.268,
+"score": 0.978
+},
+{
+"text": "the",
+"start": 44.349,
+"end": 44.409,
+"score": 0.999
+},
+{
+"text": "money.",
+"start": 44.469,
+"end": 44.669,
+"score": 0.941
+},
+{
+"text": "Today,",
+"start": 45.289,
+"end": 45.589,
+"score": 0.958
+},
+{
+"text": "every",
+"start": 46.029,
+"end": 46.209,
+"score": 0.984
+},
+{
+"text": "time",
+"start": 46.269,
+"end": 46.449,
+"score": 0.999
+},
+{
+"text": "you",
+"start": 46.489,
+"end": 46.569,
+"score": 0.933
+},
+{
+"text": "buy",
+"start": 46.629,
+"end": 46.729,
+"score": 0.987
+},
+{
+"text": "the",
+"start": 46.809,
+"end": 46.889,
+"score": 0.991
+},
+{
+"text": "S&P",
+"start": 47.029,
+"end": 47.189,
+"score": 0.516
+},
+{
+"text": "500,",
+"start": 47.369,
+"end": 47.869,
+"score": 0.994
+},
+{
+"text": "your",
+"start": 48.189,
+"end": 48.369,
+"score": 0.998
+},
+{
+"text": "money",
+"start": 48.429,
+"end": 48.649,
+"score": 0.988
+},
+{
+"text": "ends",
+"start": 48.789,
+"end": 48.929,
+"score": 0.981
+},
+{
+"text": "up",
+"start": 48.989,
+"end": 49.049,
+"score": 1.0
+},
+{
+"text": "in",
+"start": 49.109,
+"end": 49.149,
+"score": 0.998
+},
+{
+"text": "this",
+"start": 49.249,
+"end": 49.409,
+"score": 0.992
+},
+{
+"text": "guy's",
+"start": 49.469,
+"end": 49.71,
+"score": 0.894
+},
+{
+"text": "hands.",
+"start": 49.75,
+"end": 50.05,
+"score": 0.999
+},
+{
+"text": "A",
+"start": 50.69,
+"end": 50.73,
+"score": 0.995
+},
+{
+"text": "company",
+"start": 50.79,
+"end": 51.09,
+"score": 0.965
+},
+{
+"text": "that",
+"start": 51.13,
+"end": 51.23,
+"score": 0.987
+},
+{
+"text": "has",
+"start": 51.27,
+"end": 51.35,
+"score": 0.983
+},
+{
+"text": "never",
+"start": 51.51,
+"end": 51.75,
+"score": 0.997
+},
+{
+"text": "made",
+"start": 51.81,
+"end": 51.99,
+"score": 0.928
+},
+{
+"text": "a",
+"start": 52.07,
+"end": 52.09,
+"score": 0.999
+},
+{
+"text": "single",
+"start": 52.25,
+"end": 52.55,
+"score": 0.987
+},
+{
+"text": "product,",
+"start": 52.63,
+"end": 53.01,
+"score": 0.962
+},
+{
+"text": "but",
+"start": 53.37,
+"end": 53.45,
+"score": 1.0
+},
+{
+"text": "everything",
+"start": 53.63,
+"end": 53.93,
+"score": 0.996
+},
+{
+"text": "you",
+"start": 53.97,
+"end": 54.05,
+"score": 1.0
+},
+{
+"text": "own,",
+"start": 54.21,
+"end": 54.37,
+"score": 0.923
+},
+{
+"text": "everything",
+"start": 54.811,
+"end": 55.091,
+"score": 0.989
+},
+{
+"text": "you",
+"start": 55.131,
+"end": 55.211,
+"score": 0.998
+},
+{
+"text": "touch,",
+"start": 55.351,
+"end": 55.651,
+"score": 0.999
+},
+{
+"text": "has",
+"start": 56.071,
+"end": 56.171,
+"score": 1.0
+},
+{
+"text": "a",
+"start": 56.251,
+"end": 56.271,
+"score": 0.999
+},
+{
+"text": "piece",
+"start": 56.351,
+"end": 56.551,
+"score": 0.999
+},
+{
+"text": "of",
+"start": 56.611,
+"end": 56.651,
+"score": 1.0
+},
+{
+"text": "him",
+"start": 56.711,
+"end": 56.811,
+"score": 0.996
+},
+{
+"text": "in",
+"start": 56.971,
+"end": 57.011,
+"score": 1.0
+},
+{
+"text": "it.",
+"start": 57.111,
+"end": 57.151,
+"score": 0.999
+}
+]

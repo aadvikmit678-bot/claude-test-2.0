@@ -1,0 +1,44 @@
+[
+{
+"text": "Do",
+"start": 0.422,
+"end": 0.462,
+"score": 0.35
+},
+{
+"text": "you",
+"start": 0.522,
+"end": 0.582,
+"score": 0.971
+},
+{
+"text": "think",
+"start": 0.622,
+"end": 0.723,
+"score": 0.998
+},
+{
+"text": "Blackrock's",
+"start": 1.104,
+"end": 1.566,
+"score": 0.765
+},
+{
+"text": "a",
+"start": 1.827,
+"end": 1.847,
+"score": 0.017
+},
+{
+"text": "bad",
+"start": 1.907,
+"end": 2.047,
+"score": 0.864
+},
+{
+"text": "company?",
+"start": 2.128,
+"end": 2.409,
+"score": 0.998
+}
+]
